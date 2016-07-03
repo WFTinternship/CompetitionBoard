@@ -15,6 +15,14 @@ public class Member {
         this.memberId = memberId;
     }
 
+    public Member(String name, String surName, String position, String email) {
+
+        this.name = name;
+        this.surName = surName;
+        this.position = position;
+        this.email = email;
+    }
+
     public int getMemberId() {
         return memberId;
     }
@@ -63,15 +71,20 @@ public class Member {
         this.participantId = participantId;
     }
 
+
     @Override
     public String toString() {
-        return "Member{" +
-                "memberId=" + memberId +
-                ", name='" + name + '\'' +
-                ", surName='" + surName + '\'' +
-                ", position='" + position + '\'' +
-                ", email='" + email + '\'' +
-                ", participantId=" + participantId +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        sb.append("memberId: ").append(memberId).append("\n");
+        sb.append("name: ").append(name).append("\n");
+        sb.append("surname: ").append(surName).append("\n");
+        sb.append("position: ").append(position).append("\n");
+        sb.append("email: ").append(email).append("\n");
+        sb.append("participantId: ").append(participantId).append("\n");
+        sb.append("*******************************************************************************************");
+        sb.append("\n");
+
+       return sb.toString();
     }
 }

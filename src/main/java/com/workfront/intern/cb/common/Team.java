@@ -4,7 +4,7 @@ public class Team {
     private int teamId;
     private String teamName;
     private int teamMemberId;
-    private int paricipantId;
+    private int participantId;
 
     public Team(int teamId) {
         this.teamId = teamId;
@@ -34,21 +34,25 @@ public class Team {
         this.teamMemberId = teamMemberId;
     }
 
-    public int getParicipantId() {
-        return paricipantId;
+    public int getParticipantId() {
+        return participantId;
     }
 
-    public void setParicipantId(int paricipantId) {
-        this.paricipantId = paricipantId;
+    public void setParticipantId(int participantId) {
+        this.participantId = participantId;
     }
 
     @Override
     public String toString() {
-        return "Team{" +
-                "teamId=" + teamId +
-                ", teamName='" + teamName + '\'' +
-                ", teamMemberId=" + teamMemberId +
-                ", paricipantId=" + paricipantId +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        sb.append("teamId: ").append(teamId).append("\n");
+        sb.append("teamName: ").append(teamName).append("\n");
+        sb.append("teamMemberId: ").append(teamMemberId).append("\n");
+        sb.append("participantId: ").append(participantId).append("\n");
+        sb.append("*******************************************************************************************");
+        sb.append("\n");
+
+        return sb.toString();
     }
 }

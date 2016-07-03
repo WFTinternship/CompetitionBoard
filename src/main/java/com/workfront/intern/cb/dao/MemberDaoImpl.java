@@ -43,21 +43,20 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
     @Override
     public List<Member> getAllMembers() {
-        List<Member> membersList = new ArrayList<>();
-        String sql = "SELECT * FROM member";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Member member;
+        List<Member> membersList = new ArrayList<>();
+        String sql = "SELECT * FROM member";
 
         try {
             ComboPooledDataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-
-            member = new Member();
-            if (rs.next()) {
+            while (rs.next()) {
+                member = new Member();
                 extractMemberFromResultSet(rs, member);
                 membersList.add(member);
             }
@@ -66,8 +65,39 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         } finally {
             closeConnection(conn, ps, rs);
         }
-
         return membersList;
+    }
+
+    @Override
+    public boolean addMember(Member member) {
+        int row = 0;
+        //TODO
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//
+//        String sql = "INSERT INTO " +
+//                        "member(member_id, name, surname, position, email, participant_id) " +
+//                        "VALUES (?,?,?,?,?,?)";
+//        try {
+//            ComboPooledDataSource dataSource = DBManager.getDataSource();
+//            conn = dataSource.getConnection();
+//            ps = conn.prepareStatement(sql);
+//            ps.setInt(1, member.getMemberId());
+//            ps.setString(2, member.getName());
+//            ps.setString(3, member.getSurName());
+//            ps.setString(4, member.getPosition());
+//            ps.setString(5, member.getEmail());
+//            ps.setInt(6, member.getParticipantId());
+//            row = ps.executeUpdate();
+//
+//        } catch (PropertyVetoException | SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            closeConnection(conn, ps, rs);
+//        }
+//
+        return row == 1;
     }
 
     @Override
@@ -82,7 +112,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
     private Member extractMemberFromResultSet(ResultSet rs, Member member) {
         try {
-            member.setMemberId(rs.getInt("member_id"));
+//            member.setMemberId(rs.getInt("member_id"));
             member.setName(rs.getString("name"));
             member.setSurName(rs.getString("surname"));
             member.setPosition(rs.getString("position"));
@@ -95,10 +125,18 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
     }
 
     public static void main(String[] args) {
-        Member member = new MemberDaoImpl().getMemberById(2);
-        System.out.println(member);
+//        Member member = new MemberDaoImpl().getMemberById(2);
+//        System.out.println(member);
+
 //        List<Member> memberList = new MemberDaoImpl().getAllMembers();
 //        System.out.println(memberList);
+
+        boolean added = new MemberDaoImpl().addMember(new Member("Artik", "Babayan", " ", " "));
+        if (added) {
+            System.out.println("ok");
+        } else {
+            System.out.println("err");
+        }
 
     }
 }
