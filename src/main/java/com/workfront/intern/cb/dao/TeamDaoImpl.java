@@ -5,7 +5,6 @@ import com.workfront.intern.cb.common.Team;
 import java.util.List;
 
 public class TeamDaoImpl implements TeamDao {
-
     @Override
     public int getTeamById(int id) {
         return 0;
@@ -17,13 +16,13 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public void updateMember(Team team) {
-
+    public boolean updateMember(Team team) {
+        return true;
     }
 
     @Override
-    public void deleteMember(Team team) {
-
+    public boolean deleteMember(Team team) {
+        return true;
     }
 
 }

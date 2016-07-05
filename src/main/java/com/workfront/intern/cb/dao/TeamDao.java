@@ -7,6 +7,6 @@ import java.util.List;
 public interface TeamDao {
     int getTeamById(int id);
     List<Team> getAllTeams();
-    void updateMember(Team team);
-    void deleteMember(Team team);
+    boolean updateMember(Team team);
+    boolean deleteMember(Team team);
 }

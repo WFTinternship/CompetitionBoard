@@ -1,52 +1,46 @@
 package com.workfront.intern.cb.common;
 
-public class Team {
-    private int teamId;
+public class Team extends Participant {
     private String teamName;
-    private int teamMemberId;
     private int participantId;
 
-    public Team(int teamId) {
-        this.teamId = teamId;
-    }
+    private int teamMemberId;
 
-    public int getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
+    public Team() {
     }
 
     public String getTeamName() {
         return teamName;
     }
 
-    public void setTeamName(String teamName) {
+    public Team setTeamName(String teamName) {
         this.teamName = teamName;
+        return this;
     }
 
     public int getTeamMemberId() {
         return teamMemberId;
     }
 
-    public void setTeamMemberId(int teamMemberId) {
+    public Team setTeamMemberId(int teamMemberId) {
         this.teamMemberId = teamMemberId;
+        return this;
     }
 
     public int getParticipantId() {
         return participantId;
     }
 
-    public void setParticipantId(int participantId) {
+    public Team setParticipantId(int participantId) {
         this.participantId = participantId;
+        return this;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append("teamId: ").append(teamId).append("\n");
+        sb.append("teamId: ").append(id).append("\n");
         sb.append("teamName: ").append(teamName).append("\n");
         sb.append("teamMemberId: ").append(teamMemberId).append("\n");
         sb.append("participantId: ").append(participantId).append("\n");
