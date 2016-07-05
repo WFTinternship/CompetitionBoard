@@ -92,6 +92,8 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs;
+
+        //????????????????????/
         String sql_participant = "INSERT INTO participant(participant_id, is_team, avatar, participant_info) values (?,?,?,?)";
         String sql_member = "INSERT INTO member(member_id, name, surname, position, email) VALUES (?,?,?,?,?)";
 
@@ -152,6 +154,12 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return true;
     }
 
+    /**
+     *
+     * @param rs
+     * @param member
+     * @return
+     */
     private Member extractMemberFromResultSet(ResultSet rs, Member member) {
 //        Member member = new Member();
         try {

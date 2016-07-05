@@ -1,22 +1,25 @@
 package com.workfront.intern.cb.common;
 
 public class Manager {
-    private int managerId;
+    private int id;
     private String login;
-    private String pass;
+    private String password;
 
-    public Manager(int managerId, String login, String pass) {
-        this.managerId = managerId;
+    public Manager() {
+    }
+
+    public Manager(int id, String login, String password) {
+        this.id = id;
         this.login = login;
-        this.pass = pass;
+        this.password = password;
     }
 
-    public int getManagerId() {
-        return managerId;
+    public int getId() {
+        return id;
     }
 
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -27,21 +30,21 @@ public class Manager {
         this.login = login;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append("managerId: ").append(managerId).append("\n");
+        sb.append("id: ").append(id).append("\n");
         sb.append("login: ").append(login).append("\n");
-        sb.append("pass: ").append(pass).append("\n");
+        sb.append("password: ").append(password).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 

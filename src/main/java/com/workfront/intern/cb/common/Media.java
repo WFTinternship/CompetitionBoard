@@ -43,11 +43,11 @@ public class Media {
 //        this.tournamentId = tournamentId;
 //    }
 //
-//    public int getManagerId() {
+//    public int getId() {
 //        return managerId;
 //    }
 //
-//    public void setManagerId(int managerId) {
+//    public void setId(int managerId) {
 //        this.managerId = managerId;
 //    }
 //

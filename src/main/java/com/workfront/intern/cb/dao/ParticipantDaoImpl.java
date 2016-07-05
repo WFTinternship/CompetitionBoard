@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Participant;
 
 import java.beans.PropertyVetoException;
@@ -24,7 +25,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Participant participant = null;
-        String sql = "SELECT * FROM participant WHERE participant_id=?";
+        String sql = "SELECT * FROM participant INNER JOIN member ON participant_id=member_id \n" +
+                "WHERE participant_id=?;";
 
         try {
             ComboPooledDataSource dataSource = DBManager.getDataSource();
@@ -33,11 +35,17 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
+            //??????????
+            participant = new Member();
             if (rs.next()) {
                 participant.setId(rs.getInt("participant_id"));
                 participant.setIsTeam(rs.getBoolean("is_team"));
                 participant.setAvatar(rs.getString("avatar"));
                 participant.setParticipantInfo(rs.getString("participant_info"));
+
+
+
+
             }
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
@@ -180,14 +188,14 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * @return
      */
     private Participant extractParticipantFromResultSet(ResultSet rs, Participant participant) {
-        try {
-            participant.setId(rs.getInt("participant_id"));
-            participant.setIsTeam(rs.getBoolean("is_team"));
-            participant.setAvatar(rs.getString("avatar"));
-            participant.setParticipantInfo(rs.getString("participant_info"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            participant.setId(rs.getInt("participant_id"));
+//            participant.setIsTeam(rs.getBoolean("is_team"));
+//            participant.setAvatar(rs.getString("avatar"));
+//            participant.setParticipantInfo(rs.getString("participant_info"));
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return participant;
     }
 
