@@ -1,23 +1,16 @@
 package com.workfront.intern.cb.dao;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Participant;
 
+import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
 import java.util.List;
 
 public class MemberDaoImpl extends GenericDao implements MemberDao {
     /**
      * method returns member by memberId
-     *
-     * @param id
-     * @return
      */
     @Override
     public Member getMemberById(int id) {
@@ -26,19 +19,18 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         ResultSet rs = null;
         Member member = null;
 
-        String sql = "SELECT * FROM participant" +
-                " INNER JOIN member ON participant_id=member_id WHERE participant_id=?";
+        String sql = "SELECT * FROM participant p" +
+                " INNER JOIN member m ON p.participant_id = m.member_id WHERE p.participant_id=?";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
-            member = new Member();
             if (rs.next()) {
-                extractMemberFromResultSet(rs, member);
+                member = extractMemberFromResultSet(rs);
             }
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
@@ -48,120 +40,74 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return member;
     }
 
-    /**
-     * method returns member list
-     *
-     * @return
-     */
     @Override
     public List<Member> getMemberList() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Member member;
-        List<Member> membersList = new ArrayList<>();
-        String sql = "SELECT * FROM participant INNER JOIN member ON participant_id=member_id";
-
-        try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                member = new Member();
-                extractMemberFromResultSet(rs, member);
-                membersList.add(member);
-            }
-        } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(conn, ps, rs);
-        }
-        return membersList;
+        return null;
     }
 
-    /**
-     * adding member to db
-     *
-     * @param member
-     * @return
-     */
     @Override
     public boolean addMember(Member member) {
         int row = 0;
         Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
+        PreparedStatement ps_participant = null;
+        PreparedStatement ps_member = null;
+        ResultSet rs = null;
+        Participant participant;
 
-        //????????????????????/
-        String sql_participant = "INSERT INTO participant(participant_id, is_team, avatar, participant_info) values (?,?,?,?)";
+        String sql_participant = "INSERT INTO participant(is_team, avatar, participant_info) VALUES (?,?,?)";
         String sql_member = "INSERT INTO member(member_id, name, surname, position, email) VALUES (?,?,?,?,?)";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             conn.setAutoCommit(false);
-            ps = conn.prepareStatement(sql_participant, ps.RETURN_GENERATED_KEYS);
+            ps_participant = conn.prepareStatement(sql_participant, Statement.RETURN_GENERATED_KEYS);
 
-            rs = ps.getGeneratedKeys();
-            int id = 1;
-            while(rs.next()){
-                id = rs.getInt(1);
+            participant = new Member();
+            ps_participant.setBoolean(1, participant.isTeam());
+            ps_participant.setString(2, participant.getAvatar());
+            ps_participant.setString(3, participant.getParticipantInfo());
+            row = ps_participant.executeUpdate();
+
+            rs = ps_participant.getGeneratedKeys();
+            int memberId = 0;
+            if (rs.next()) {
+                memberId = rs.getInt(1);
             }
-            PreparedStatement ps1;
-            ps1 = conn.prepareStatement(sql_member);
-            member = new Member();
-            ps1.setInt(1, id);
-            ps1.setString(2, member.getName() );
-            ps1.setString(3, member.getSurName() );
-            ps1.setString(4, member.getPosition());
-            ps1.setString(5, member.getEmail() );
-            row =  ps1.executeUpdate();
-            conn.commit();
 
+            if (row == 1) {
+                ps_member = conn.prepareStatement(sql_member);
+                ps_member.setInt(1, memberId);
+                ps_member.setString(2, member.getName());
+                ps_member.setString(3, member.getSurName());
+                ps_member.setString(4, member.getPosition());
+                ps_member.setString(5, member.getEmail());
+                ps_member.executeUpdate();
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(conn, ps_participant, rs);
         }
-
-
         return row == 1;
     }
 
-    /**
-     * update member parameters
-     *
-     * @param memberId
-     * @param name
-     * @param surName
-     * @param position
-     * @param email
-     * @param participantId
-     * @return
-     */
-    @Override
-    public boolean updateMember(int memberId, String name, String surName, String position,
-                                String email, int participantId) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        int rows = 0;
-        String sql = "UPDATE member SET name=?, surname=?, position=?, email=?, participant_id=? WHERE member_id=?";
 
-       return rows == 1;
+    @Override
+    public boolean updateMember(int memberId, String name, String surName, String position, String email, int participantId) {
+        return false;
     }
 
     @Override
     public boolean deleteMember(Member member) {
-        return true;
+        return false;
     }
 
-    /**
-     *
-     * @param rs
-     * @param member
-     * @return
-     */
-    private Member extractMemberFromResultSet(ResultSet rs, Member member) {
-//        Member member = new Member();
+    private Member extractMemberFromResultSet(ResultSet rs) {
+        Member member = new Member();
         try {
             member.setId(rs.getInt("participant_id"));
             member.setIsTeam(rs.getBoolean("is_team"));
@@ -177,16 +123,19 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return member;
     }
 
+
     public static void main(String[] args) {
         /**
          * Testing
          * */
-//        Member member = new MemberDaoImpl().getMemberById(10);
+//        Member member = new MemberDaoImpl().getMemberById(2);
 //        System.out.println(member);
+        boolean add = new MemberDaoImpl().addMember(
+                new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com"));
+
 
 //        List<Member> memberList = new MemberDaoImpl().getMemberList();
 //        System.out.println(memberList);
-
 
 
     }

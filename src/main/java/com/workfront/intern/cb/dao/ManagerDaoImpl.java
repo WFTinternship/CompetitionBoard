@@ -3,6 +3,7 @@ package com.workfront.intern.cb.dao;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.workfront.intern.cb.common.Manager;
 
+import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,9 +17,6 @@ import java.util.List;
 public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     /**
      * returning manager by id
-     *
-     * @param id
-     * @return
      */
     @Override
     public Manager getManagerById(int id) {
@@ -29,7 +27,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "SELECT * FROM manager WHERE manager_id=?";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -48,9 +46,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
     /**
      * returning manager by login
-     *
-     * @param login
-     * @return
+
      */
     @Override
     public Manager getManagerByLogin(String login) {
@@ -61,7 +57,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "SELECT * FROM manager WHERE login=?";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, login);
@@ -81,8 +77,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
     /**
      * return all managers in db
-     *
-     * @return
      */
     @Override
     public List<Manager> getManagerList() {
@@ -94,7 +88,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         Manager manager;
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -114,10 +108,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
     /**
      * added new manager in db
-     *
-     * @param login
-     * @param pass
-     * @return
      */
     @Override
     public boolean addManager(String login, String pass) {
@@ -127,10 +117,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
-
             ps.setString(1, login);
             ps.setString(2, passToEncrypt(pass));
             rows = ps.executeUpdate();
@@ -145,37 +134,34 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
     /**
      * delete manager by id
-     *
-     * @param id
-     * @return
      */
     @Override
     public boolean deleteManagerById(int id) {
         Connection conn = null;
         PreparedStatement ps = null;
         int rows = 0;
-
         String sql = "DELETE FROM manager WHERE manager_id=?";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rows = ps.executeUpdate();
+
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             closeConnection(conn, ps);
         }
+
+
         return rows == 1;
     }
 
     /**
      * delete manager by login and password
-     *
-     * @param login, password
-     * @return
      */
     @Override
     public boolean deleteManagerByLogin(String login, String password) {
@@ -186,7 +172,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "DELETE FROM manager WHERE login=? and password=?";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, login);
@@ -201,10 +187,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     }
 
     /**
-     * @param rs
-     * @param manager
-     * @return
-     */
+     *
+     * */
     private Manager extractManagerFromResultSet(ResultSet rs, Manager manager) {
         try {
             manager.setId(rs.getInt("manager_id"));
@@ -218,9 +202,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
     /**
      * method encrypt password, uses SHA-256.
-     *
-     * @param password
-     * @return
      */
     private static String passToEncrypt(String password) {
         StringBuffer sb = null;

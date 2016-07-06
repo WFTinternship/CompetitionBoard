@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.*;
 
@@ -33,7 +34,7 @@ public class DBManager {
     /**
      * create and return connection with DB, use connection pool method
      */
-    static ComboPooledDataSource getDataSource() throws PropertyVetoException {
+    static DataSource getDataSource() throws PropertyVetoException {
         poolConn.setDriverClass(DB_DRIVER);
         poolConn.setJdbcUrl(DB_URL + DB_NAME + DB_CONNECTION_PROPERTIES);
         poolConn.setUser(DB_LOGIN);

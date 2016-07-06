@@ -4,6 +4,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Participant;
 
+import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +16,6 @@ import java.util.List;
 public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * method returns participant by participantId
-     *
-     * @param id
-     * @return
      */
     @Override
     public Participant getParticipantById(int id) {
@@ -29,21 +27,17 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 "WHERE participant_id=?;";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
-            //??????????
-            participant = new Member();
             if (rs.next()) {
                 participant.setId(rs.getInt("participant_id"));
                 participant.setIsTeam(rs.getBoolean("is_team"));
                 participant.setAvatar(rs.getString("avatar"));
                 participant.setParticipantInfo(rs.getString("participant_info"));
-
-
 
 
             }
@@ -57,8 +51,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
     /**
      * method returns all participant
-     *
-     * @return
      */
     @Override
     public List<Participant> getParticipantList() {
@@ -70,7 +62,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         String sql = "SELECT * FROM participant";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -91,9 +83,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * adding participant to db.
      * return one (1) if the row is added
-     *
-     * @param participant
-     * @return
      */
     @Override
     public boolean addParticipant(Participant participant) {
@@ -103,7 +92,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         String sql = "INSERT INTO participant(is_team, avatar, participant_info) VALUES(?, ?, ?)";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setBoolean(1, participant.isTeam());
@@ -120,12 +109,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
     /**
      * update participant parameters in db
-     *
-     * @param participantId
-     * @param isTeam
-     * @param avatar
-     * @param participantInfo
-     * @return
      */
     @Override
     public boolean updateParticipant(int participantId, boolean isTeam, String avatar, String participantInfo) {
@@ -135,7 +118,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         String sql = "UPDATE participant SET is_team=?, avatar=?, participant_info=? WHERE participant_id=?";
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setBoolean(1, isTeam);
@@ -155,9 +138,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * method deleting participant by id in db.
      * return one (1) if the row is deleted
-     *
-     * @param id
-     * @return
      */
     @Override
     public boolean deleteParticipantById(int id) {
@@ -167,7 +147,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         int rows = 0;
 
         try {
-            ComboPooledDataSource dataSource = DBManager.getDataSource();
+            DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
