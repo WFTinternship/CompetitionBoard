@@ -123,7 +123,6 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return member;
     }
 
-
     public static void main(String[] args) {
         /**
          * Testing
@@ -133,10 +132,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         boolean add = new MemberDaoImpl().addMember(
                 new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com"));
 
-
 //        List<Member> memberList = new MemberDaoImpl().getMemberList();
 //        System.out.println(memberList);
-
-
     }
 }
