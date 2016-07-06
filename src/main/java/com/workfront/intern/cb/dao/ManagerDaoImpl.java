@@ -1,6 +1,5 @@
 package com.workfront.intern.cb.dao;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.workfront.intern.cb.common.Manager;
 
 import javax.sql.DataSource;
@@ -39,7 +38,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(conn, ps, rs);
+            closeResources(conn, ps, rs);
         }
         return manager;
     }
@@ -70,7 +69,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(conn, ps, rs);
+            closeResources(conn, ps, rs);
         }
         return manager;
     }
@@ -101,7 +100,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(conn, ps, rs);
+            closeResources(conn, ps, rs);
         }
         return managerList;
     }
@@ -127,7 +126,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(conn, ps);
+            closeResources(conn, ps);
         }
         return rows == 1;
     }
@@ -153,7 +152,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             e.printStackTrace();
         }
         finally {
-            closeConnection(conn, ps);
+            closeResources(conn, ps);
         }
 
 
@@ -181,7 +180,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } catch (PropertyVetoException | SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(conn, ps);
+            closeResources(conn, ps);
         }
         return rows == 1;
     }

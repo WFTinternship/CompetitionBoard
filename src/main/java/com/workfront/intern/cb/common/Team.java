@@ -7,6 +7,7 @@ public class Team extends Participant {
     private int teamMemberId;
 
     public Team() {
+        isTeam = true;
     }
 
     public String getTeamName() {

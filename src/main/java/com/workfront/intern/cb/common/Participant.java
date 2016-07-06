@@ -19,11 +19,6 @@ public abstract class Participant {
         return isTeam;
     }
 
-    public Participant setIsTeam(boolean isTeam) {
-        this.isTeam = isTeam;
-        return this;
-    }
-
     public String getAvatar() {
         return avatar;
     }

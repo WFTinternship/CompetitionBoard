@@ -7,6 +7,7 @@ public class Member extends Participant {
     private String email;
 
     public Member() {
+        isTeam = false;
     }
 
     public String getName() {

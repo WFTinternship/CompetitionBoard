@@ -1,16 +1,22 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Member;
-import com.workfront.intern.cb.common.Participant;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.*;
 
 public class MemberDaoImpl extends GenericDao implements MemberDao {
+    private static final Logger LOG = Logger.getLogger(MemberDaoImpl.class);
+
     /**
-     * method returns member by memberId
+     * Gets member by memberId
      */
     @Override
     public Member getMemberById(int id) {
@@ -19,8 +25,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         ResultSet rs = null;
         Member member = null;
 
-        String sql = "SELECT * FROM participant p" +
-                " INNER JOIN member m ON p.participant_id = m.member_id WHERE p.participant_id=?";
+        String sql = "SELECT * FROM participant p " +
+                "INNER JOIN member m ON p.participant_id = m.member_id " +
+                "WHERE p.participant_id=?";
 
         try {
             DataSource dataSource = DBManager.getDataSource();
@@ -33,9 +40,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
                 member = extractMemberFromResultSet(rs);
             }
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } finally {
-            closeConnection(conn, ps, rs);
+            closeResources(conn, ps, rs);
         }
         return member;
     }
@@ -47,54 +54,61 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
     @Override
     public boolean addMember(Member member) {
-        int row = 0;
+        boolean inserted = false;
         Connection conn = null;
-        PreparedStatement ps_participant = null;
-        PreparedStatement ps_member = null;
-        ResultSet rs = null;
-        Participant participant;
 
         String sql_participant = "INSERT INTO participant(is_team, avatar, participant_info) VALUES (?,?,?)";
         String sql_member = "INSERT INTO member(member_id, name, surname, position, email) VALUES (?,?,?,?,?)";
 
         try {
+            // acquire polled connection
             DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
+
+            // start transaction
             conn.setAutoCommit(false);
-            ps_participant = conn.prepareStatement(sql_participant, Statement.RETURN_GENERATED_KEYS);
 
-            participant = new Member();
-            ps_participant.setBoolean(1, participant.isTeam());
-            ps_participant.setString(2, participant.getAvatar());
-            ps_participant.setString(3, participant.getParticipantInfo());
-            row = ps_participant.executeUpdate();
+            // prepare base participant insert query
+            PreparedStatement ps = conn.prepareStatement(sql_participant, Statement.RETURN_GENERATED_KEYS);
+            ps.setBoolean(1, member.isTeam());
+            ps.setString(2, member.getAvatar());
+            ps.setString(3, member.getParticipantInfo());
 
-            rs = ps_participant.getGeneratedKeys();
+            // insert base participant info
+            ps.executeUpdate();
+
+            // acquire assigned ID
+            ResultSet rs = ps.getGeneratedKeys();
             int memberId = 0;
             if (rs.next()) {
                 memberId = rs.getInt(1);
             }
+            rs.close();
+            ps.close();
 
-            if (row == 1) {
-                ps_member = conn.prepareStatement(sql_member);
-                ps_member.setInt(1, memberId);
-                ps_member.setString(2, member.getName());
-                ps_member.setString(3, member.getSurName());
-                ps_member.setString(4, member.getPosition());
-                ps_member.setString(5, member.getEmail());
-                ps_member.executeUpdate();
-                conn.commit();
-            } else {
-                conn.rollback();
-            }
+            // prepare member insert query
+            ps = conn.prepareStatement(sql_member);
+            ps.setInt(1, memberId);
+            ps.setString(2, member.getName());
+            ps.setString(3, member.getSurName());
+            ps.setString(4, member.getPosition());
+            ps.setString(5, member.getEmail());
+
+            // insert member data
+            ps.executeUpdate();
+            rs.close();
+            ps.close();
+
+            // commit transaction
+            conn.commit();
+            inserted = true;
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } finally {
-            closeConnection(conn, ps_participant, rs);
+            closeResources(conn);
         }
-        return row == 1;
+        return inserted;
     }
-
 
     @Override
     public boolean updateMember(int memberId, String name, String surName, String position, String email, int participantId) {
@@ -107,20 +121,40 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
     }
 
     private Member extractMemberFromResultSet(ResultSet rs) {
-        Member member = new Member();
+        List<Member> memberList = extractMemberListFromResultSet(rs);
+        return memberList.size() == 0 ? null : memberList.get(0);
+    }
+
+    private List<Member> extractMemberListFromResultSet(ResultSet rs) {
+        Map<Integer, Member> items = new HashMap<>();
         try {
-            member.setId(rs.getInt("participant_id"));
-            member.setIsTeam(rs.getBoolean("is_team"));
-            member.setAvatar(rs.getString("avatar"));
-            member.setParticipantInfo(rs.getString("participant_info"));
-            member.setName(rs.getString("name"));
-            member.setSurName(rs.getString("surname"));
-            member.setPosition(rs.getString("position"));
-            member.setEmail(rs.getString("email"));
-        } catch (SQLException e) {
-            e.printStackTrace();
+            while (rs.next()){
+                int id = rs.getInt("participant_id");
+
+                if (!items.containsKey(id)) {
+                    Member member = new Member();
+
+                    member.setId(id);
+                    member.setAvatar(rs.getString("avatar"));
+                    member.setParticipantInfo(rs.getString("participant_info"));
+                    member.setName(rs.getString("name"));
+                    member.setSurName(rs.getString("surname"));
+                    member.setPosition(rs.getString("position"));
+                    member.setEmail(rs.getString("email"));
+
+                    items.put(id, member);
+                }
+            }
+        } catch (SQLException ex) {
+            LOG.error(ex.getMessage(), ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
         }
-        return member;
+        return new ArrayList<>(items.values());
     }
 
     public static void main(String[] args) {
@@ -129,8 +163,12 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
          * */
 //        Member member = new MemberDaoImpl().getMemberById(2);
 //        System.out.println(member);
-        boolean add = new MemberDaoImpl().addMember(
-                new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com"));
+
+        Member member = new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com");
+        member.setAvatar("avatar_" + System.currentTimeMillis());
+        member.setParticipantInfo("info_" + System.currentTimeMillis());
+
+        boolean add = new MemberDaoImpl().addMember(member);
 
 //        List<Member> memberList = new MemberDaoImpl().getMemberList();
 //        System.out.println(memberList);
