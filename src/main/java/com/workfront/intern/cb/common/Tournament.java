@@ -12,14 +12,7 @@ public class Tournament {
     private int tournamentFormatId;
     private int managerId;
 
-    public Tournament(int tournamentId) {
-        this.tournamentId = tournamentId;
-    }
-
-    public Tournament(int tournamentId, String tournamentName, int managerId) {
-        this.tournamentId = tournamentId;
-        this.tournamentName = tournamentName;
-        this.managerId = managerId;
+    public Tournament() {
     }
 
     public int getTournamentId() {

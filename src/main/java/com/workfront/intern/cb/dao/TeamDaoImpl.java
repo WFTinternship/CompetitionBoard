@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamDaoImpl extends GenericDao implements TeamDao {
-    private static final Logger LOG = Logger.getLogger(MemberDaoImpl.class);
+    private static final Logger LOG = Logger.getLogger(TeamDaoImpl.class);
 
     //Gets team by memberId
     @Override
@@ -47,7 +47,7 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Team team = null;
+        Team team;
         List<Team> teamList = new ArrayList<>();
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id";
 
@@ -68,6 +68,7 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
         return teamList;
     }
 
+    //Adding new team ind db
     @Override
     public boolean addTeam(Team team) {
         boolean inserted = false;
@@ -171,7 +172,9 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
             updated = true;
         } catch (PropertyVetoException | SQLException e) {
             try {
-                conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
@@ -210,29 +213,5 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
             LOG.error(e.getMessage(), e);
         }
         return team;
-    }
-
-    public static void main(String[] args) {
-//        Team team = new TeamDaoImpl().getTeamById(7);
-//        System.out.println(team);
-
-//        List<Team> teamList = new TeamDaoImpl().getTeamList();
-//        System.out.println(teamList);
-
-//        Team team = new Team();
-//        team.setTeamName("Bavariya");
-//        team.setAvatar("avatar_bavariya");
-//        team.setParticipantInfo("bla bla bla");
-//        boolean added = new TeamDaoImpl().addTeam(team);
-
-//        boolean deleted = new TeamDaoImpl().deleteMember(27);
-
-        Team team = new Team();
-        team.setId(25);
-        team.setAvatar("avatar_" + System.currentTimeMillis());
-        team.setParticipantInfo("info_" + System.currentTimeMillis());
-        team.setTeamName("Manchestr");
-
-        boolean updateMember = new TeamDaoImpl().updateMember(team);
     }
 }

@@ -197,27 +197,14 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
     //Deleting member by id
     @Override
     public boolean deleteMemberById(int id) {
-        boolean deleted = false;
-        Connection conn = null;
-        PreparedStatement ps = null;
+        boolean deleted;
         String sql = "DELETE FROM member WHERE member_id=?";
+        deleted = deleteEntity(sql, id);
 
-//        try {
-//            DataSource dataSource = DBManager.getDataSource();
-//            conn = dataSource.getConnection();
-//            ps = conn.prepareStatement(sql);
-//            ps.setInt(1, id);
-//            ps.executeUpdate();
-//            deleted = true;
-//        } catch (PropertyVetoException | SQLException e) {
-//            LOG.error(e.getMessage(), e);
-//        } finally {
-//            closeResources(conn, ps);
-//        }
         return deleted;
     }
 
-    //Extracting specific data of Memeber from ResultSet
+    //Extracting specific data of Member from ResultSet
     private static Member extractMemberFromResultSet(ResultSet rs) {
         Member member = new Member();
         try {
@@ -233,31 +220,5 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             LOG.error(e.getMessage(), e);
         }
         return member;
-    }
-
-    public static void main(String[] args) {
-//        Member member = new MemberDaoImpl().getMemberById(2);
-//        System.out.println(member);
-//
-//        Member member = new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com");
-//        member.setAvatar("avatar_" + System.currentTimeMillis());
-//        member.setParticipantInfo("info_" + System.currentTimeMillis());
-//        boolean add = new MemberDaoImpl().addMember(member);
-
-//        List<Member> memberList = new MemberDaoImpl().getMemberList();
-//        System.out.println(memberList);
-
-//        boolean deleted = new MemberDaoImpl().deleteMemberById(14);
-
-//        Member member = new Member();
-//        member.setId(10);
-//        member.setAvatar("avatar_" + System.currentTimeMillis());
-//        member.setParticipantInfo("info_" + System.currentTimeMillis());//
-//        member.setName("Axjik");
-//        member.setSurName("Sirun");
-//        member.setPosition("internnnnnnnnnn");
-//        member.setEmail("gmail.com");
-
-//        boolean updateMember = new MemberDaoImpl().updateMember(member);
     }
 }
