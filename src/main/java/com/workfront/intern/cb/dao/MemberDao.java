@@ -1,7 +1,6 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Member;
-
 import java.util.List;
 
 public interface MemberDao {
