@@ -20,7 +20,6 @@ public abstract class GenericDao {
                 e.printStackTrace();
             }
         }
-
         if (ps != null) {
             try {
                 ps.close();

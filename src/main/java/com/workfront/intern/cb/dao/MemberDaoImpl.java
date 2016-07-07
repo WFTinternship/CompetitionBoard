@@ -1,33 +1,26 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Member;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.*;
 
 public class MemberDaoImpl extends GenericDao implements MemberDao {
     private static final Logger LOG = Logger.getLogger(MemberDaoImpl.class);
 
-    /**
-     * Gets member by memberId
-     */
+    //Gets member by memberId
     @Override
     public Member getMemberById(int id) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Member member = null;
-
-        String sql = "SELECT * FROM participant p " +
-                "INNER JOIN member m ON p.participant_id = m.member_id " +
-                "WHERE p.participant_id=?";
+        String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id " +
+                "WHERE m.member_id=?;";
 
         try {
             DataSource dataSource = DBManager.getDataSource();
@@ -35,7 +28,6 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-
             if (rs.next()) {
                 member = extractMemberFromResultSet(rs);
             }
@@ -47,11 +39,35 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return member;
     }
 
+    //Get all members
     @Override
     public List<Member> getMemberList() {
-        return null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Member member;
+        List<Member> memberList = new ArrayList<>();
+        String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id";
+
+        try {
+            DataSource dataSource = DBManager.getDataSource();
+            conn = dataSource.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                member = extractMemberFromResultSet(rs);
+                memberList.add(member);
+            }
+        } catch (PropertyVetoException | SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return memberList;
     }
 
+    // add member to db
     @Override
     public boolean addMember(Member member) {
         boolean inserted = false;
@@ -103,6 +119,13 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             conn.commit();
             inserted = true;
         } catch (PropertyVetoException | SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                LOG.error(e.getMessage(), e);
+            }
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn);
@@ -110,67 +133,136 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return inserted;
     }
 
+    //Updating specific data of member
     @Override
-    public boolean updateMember(int memberId, String name, String surName, String position, String email, int participantId) {
-        return false;
-    }
+    public boolean updateMember(Member member) {
+        boolean updated = false;
+        Connection conn = null;
+        String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
+        String sql_member = "UPDATE member SET name=?, surname=?, position=?, email=? WHERE member_id=?";
 
-    @Override
-    public boolean deleteMember(Member member) {
-        return false;
-    }
-
-    private Member extractMemberFromResultSet(ResultSet rs) {
-        List<Member> memberList = extractMemberListFromResultSet(rs);
-        return memberList.size() == 0 ? null : memberList.get(0);
-    }
-
-    private List<Member> extractMemberListFromResultSet(ResultSet rs) {
-        Map<Integer, Member> items = new HashMap<>();
         try {
-            while (rs.next()){
-                int id = rs.getInt("participant_id");
+            // acquire polled connection
+            DataSource dataSource = DBManager.getDataSource();
+            conn = dataSource.getConnection();
 
-                if (!items.containsKey(id)) {
-                    Member member = new Member();
+            // start transaction
+            conn.setAutoCommit(false);
 
-                    member.setId(id);
-                    member.setAvatar(rs.getString("avatar"));
-                    member.setParticipantInfo(rs.getString("participant_info"));
-                    member.setName(rs.getString("name"));
-                    member.setSurName(rs.getString("surname"));
-                    member.setPosition(rs.getString("position"));
-                    member.setEmail(rs.getString("email"));
+            PreparedStatement ps_participant = conn.prepareStatement(sql_participant);
+            ps_participant.setString(1, member.getAvatar());
+            ps_participant.setString(2, member.getParticipantInfo());
+            ps_participant.setInt(3, member.getId());
 
-                    items.put(id, member);
+            // update base participant info
+            ps_participant.executeUpdate();
+
+            PreparedStatement ps_member = conn.prepareStatement(sql_member);
+            ps_member.setString(1, member.getName());
+            ps_member.setString(2, member.getSurName());
+            ps_member.setString(3, member.getPosition());
+            ps_member.setString(4, member.getEmail());
+            ps_member.setInt(5, member.getId());
+
+            // update member data
+            ps_member.executeUpdate();
+
+            ps_member.close();
+            ps_participant.close();
+
+            // commit transaction
+            conn.commit();
+            updated = true;
+        } catch (PropertyVetoException | SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
                 }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
-        } catch (SQLException ex) {
-            LOG.error(ex.getMessage(), ex);
+            LOG.error(e.getMessage(), e);
         } finally {
             try {
-                rs.close();
-            } catch (SQLException ex) {
-                LOG.error(ex.getMessage(), ex);
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        return new ArrayList<>(items.values());
+        return updated;
+    }
+
+    @Override
+    public boolean deleteMemberById(int id) {
+        boolean deleted = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "DELETE FROM member WHERE member_id=?";
+
+        try {
+            DataSource dataSource = DBManager.getDataSource();
+            conn = dataSource.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            deleted = true;
+        } catch (PropertyVetoException | SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            closeResources(conn, ps);
+        }
+        return deleted;
+    }
+
+    private static Member extractMemberFromResultSet(ResultSet rs) {
+        Member member = new Member();
+        try {
+            member.setId(rs.getInt("participant_id"));
+            member.setAvatar(rs.getString("avatar"));
+            member.setParticipantInfo(rs.getString("participant_info"));
+            member.setId(rs.getInt("member_id"));
+            member.setName(rs.getString("name"));
+            member.setSurName(rs.getString("surname"));
+            member.setPosition(rs.getString("position"));
+            member.setEmail(rs.getString("email"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return member;
     }
 
     public static void main(String[] args) {
-        /**
-         * Testing
-         * */
 //        Member member = new MemberDaoImpl().getMemberById(2);
 //        System.out.println(member);
-
-        Member member = new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com");
-        member.setAvatar("avatar_" + System.currentTimeMillis());
-        member.setParticipantInfo("info_" + System.currentTimeMillis());
-
-        boolean add = new MemberDaoImpl().addMember(member);
+//
+//        Member member = new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com");
+//        member.setAvatar("avatar_" + System.currentTimeMillis());
+//        member.setParticipantInfo("info_" + System.currentTimeMillis());
+//        boolean add = new MemberDaoImpl().addMember(member);
 
 //        List<Member> memberList = new MemberDaoImpl().getMemberList();
 //        System.out.println(memberList);
+
+//        boolean deleted = new MemberDaoImpl().deleteMemberById(14);
+
+//        Member member = new Member();
+//        member.setId(10);
+//        member.setAvatar("avatar_" + System.currentTimeMillis());
+//        member.setParticipantInfo("info_" + System.currentTimeMillis());
+//
+//        member.setName("Axjik");
+//        member.setSurName("Sirun");
+//        member.setPosition("internnnnnnnnnn");
+//        member.setEmail("gmail.com");
+//        boolean updateMember = new MemberDaoImpl().updateMember(member);
     }
 }

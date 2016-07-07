@@ -50,11 +50,16 @@ public class Member extends Participant {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append("id: ").append(id).append("\n");
+        sb.append("participant_id: ").append(id).append("\n");
+        sb.append("avatar: ").append(avatar).append("\n");
+        sb.append("participant_info: ").append(participantInfo).append("\n");
+        sb.append("member_id: ").append(id).append("\n");
         sb.append("name: ").append(name).append("\n");
         sb.append("surname: ").append(surName).append("\n");
         sb.append("position: ").append(position).append("\n");
         sb.append("email: ").append(email).append("\n");
+
+
         sb.append("*******************************************************************************************");
         sb.append("\n");
 
