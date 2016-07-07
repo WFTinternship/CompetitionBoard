@@ -239,30 +239,4 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         }
         return member;
     }
-
-    public static void main(String[] args) {
-//        Member member = new MemberDaoImpl().getMemberById(2);
-//        System.out.println(member);
-//
-//        Member member = new Member().setName("Axjik").setSurName("Sirun").setPosition("intern").setEmail("gmail.com");
-//        member.setAvatar("avatar_" + System.currentTimeMillis());
-//        member.setParticipantInfo("info_" + System.currentTimeMillis());
-//        boolean add = new MemberDaoImpl().addMember(member);
-
-//        List<Member> memberList = new MemberDaoImpl().getMemberList();
-//        System.out.println(memberList);
-
-//        boolean deleted = new MemberDaoImpl().deleteMemberById(14);
-
-//        Member member = new Member();
-//        member.setId(10);
-//        member.setAvatar("avatar_" + System.currentTimeMillis());
-//        member.setParticipantInfo("info_" + System.currentTimeMillis());
-//
-//        member.setName("Axjik");
-//        member.setSurName("Sirun");
-//        member.setPosition("internnnnnnnnnn");
-//        member.setEmail("gmail.com");
-//        boolean updateMember = new MemberDaoImpl().updateMember(member);
-    }
 }
