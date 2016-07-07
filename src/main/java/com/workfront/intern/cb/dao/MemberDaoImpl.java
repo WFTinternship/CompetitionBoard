@@ -99,8 +99,8 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             if (rs.next()) {
                 memberId = rs.getInt(1);
             }
-            rs.close();
             ps.close();
+            rs.close();
 
             // prepare member insert query
             ps = conn.prepareStatement(sql_member);
@@ -112,8 +112,8 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
             // insert member data
             ps.executeUpdate();
-            rs.close();
             ps.close();
+            rs.close();
 
             // commit transaction
             conn.commit();
@@ -124,7 +124,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
                     conn.rollback();
                 }
             } catch (SQLException e1) {
-                LOG.error(e.getMessage(), e);
+                LOG.error(e.getMessage(), e1);
             }
             LOG.error(e.getMessage(), e);
         } finally {
@@ -167,8 +167,8 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             // update member data
             ps_member.executeUpdate();
 
-            ps_member.close();
             ps_participant.close();
+            ps_member.close();
 
             // commit transaction
             conn.commit();
@@ -179,7 +179,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
                     conn.rollback();
                 }
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                LOG.error(e1.getMessage(), e1);
             }
             LOG.error(e.getMessage(), e);
         } finally {
@@ -194,6 +194,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return updated;
     }
 
+    //Deleting member by id
     @Override
     public boolean deleteMemberById(int id) {
         boolean deleted = false;
@@ -201,28 +202,22 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         PreparedStatement ps = null;
         String sql = "DELETE FROM member WHERE member_id=?";
 
-        try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            deleted = true;
-        } catch (PropertyVetoException | SQLException e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            closeResources(conn, ps);
-        }
+//        try {
+//            DataSource dataSource = DBManager.getDataSource();
+//            conn = dataSource.getConnection();
+//            ps = conn.prepareStatement(sql);
+//            ps.setInt(1, id);
+//            ps.executeUpdate();
+//            deleted = true;
+//        } catch (PropertyVetoException | SQLException e) {
+//            LOG.error(e.getMessage(), e);
+//        } finally {
+//            closeResources(conn, ps);
+//        }
         return deleted;
     }
 
+    //Extracting specific data of Memeber from ResultSet
     private static Member extractMemberFromResultSet(ResultSet rs) {
         Member member = new Member();
         try {
@@ -257,12 +252,12 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 //        Member member = new Member();
 //        member.setId(10);
 //        member.setAvatar("avatar_" + System.currentTimeMillis());
-//        member.setParticipantInfo("info_" + System.currentTimeMillis());
-//
+//        member.setParticipantInfo("info_" + System.currentTimeMillis());//
 //        member.setName("Axjik");
 //        member.setSurName("Sirun");
 //        member.setPosition("internnnnnnnnnn");
 //        member.setEmail("gmail.com");
+
 //        boolean updateMember = new MemberDaoImpl().updateMember(member);
     }
 }

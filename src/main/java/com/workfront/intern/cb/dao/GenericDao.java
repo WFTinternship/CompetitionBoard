@@ -1,18 +1,19 @@
 package com.workfront.intern.cb.dao;
 
+import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 import java.sql.*;
 
-public abstract class GenericDao {
-
-    protected void closeResources(Connection conn) {
+abstract class GenericDao {
+    void closeResources(Connection conn) {
         closeResources(conn, null);
     }
 
-    protected void closeResources(Connection conn, Statement ps) {
+    void closeResources(Connection conn, Statement ps) {
         closeResources(conn, ps, null);
     }
 
-    protected void closeResources(Connection conn, Statement ps, ResultSet rs) {
+    void closeResources(Connection conn, Statement ps, ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();
@@ -35,5 +36,24 @@ public abstract class GenericDao {
                 e.printStackTrace();
             }
         }
+    }
+
+    Boolean deleteEntity(String sql, int id) {
+        boolean deleted = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            DataSource dataSource = DBManager.getDataSource();
+            conn = dataSource.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            deleted = true;
+        } catch (PropertyVetoException | SQLException e) {
+//            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+        return deleted;
     }
 }
