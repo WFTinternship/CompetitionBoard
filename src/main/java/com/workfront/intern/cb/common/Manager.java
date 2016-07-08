@@ -14,6 +14,13 @@ public class Manager {
         this.password = password;
     }
 
+    public static Manager getManagerById(int id){
+        Manager manager = new Manager();
+        manager.setId(id);
+        return manager;
+    }
+
+
     public int getId() {
         return id;
     }
@@ -37,6 +44,8 @@ public class Manager {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 
     @Override
     public String toString() {

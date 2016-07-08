@@ -67,7 +67,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return memberList;
     }
 
-    // add member to db
+    //Adding member to db
     @Override
     public boolean addMember(Member member) {
         boolean inserted = false;

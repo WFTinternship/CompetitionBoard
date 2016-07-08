@@ -1,5 +1,6 @@
 package com.workfront.intern.cb.common;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Tournament {
@@ -9,11 +10,9 @@ public class Tournament {
     private Date endDate;
     private String location;
     private String tournamentDescription;
-    private int tournamentFormatId;
-    private int managerId;
-
-    public Tournament() {
-    }
+    private TournamentFormat tournamentFormat;
+    private Manager manager;
+    private int manager_id;
 
     public int getTournamentId() {
         return tournamentId;
@@ -63,20 +62,33 @@ public class Tournament {
         this.tournamentDescription = tournamentDescription;
     }
 
-    public int getTournamentFormatId() {
-        return tournamentFormatId;
+    public TournamentFormat getTournamentFormat() {
+        return tournamentFormat;
     }
 
-    public void setTournamentFormatId(int tournamentFormatId) {
-        this.tournamentFormatId = tournamentFormatId;
+    public void setTournamentFormat(TournamentFormat tournamentFormat) {
+        this.tournamentFormat = tournamentFormat;
     }
 
-    public int getManagerId() {
-        return managerId;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
+    public int getManager_id() {
+        return manager_id;
+    }
+
+    public void setManager_id(int manager_id) {
+        this.manager_id = manager_id;
+    }
+
+    private static String dateFormated(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+        return dateFormat.format(date);
     }
 
     @Override
@@ -89,11 +101,15 @@ public class Tournament {
         sb.append("endDate: ").append(endDate).append("\n");
         sb.append("location: ").append(location).append("\n");
         sb.append("tournamentDescription: ").append(tournamentDescription).append("\n");
-        sb.append("tournamentFormatId: ").append(tournamentFormatId).append("\n");
-        sb.append("managerId: ").append(managerId).append("\n");
+        sb.append("tournamentFormatId: ").append(tournamentFormat.getFormatId()).append("\n");
+        sb.append("tournamentManagerId: ").append(manager.getId()).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 
         return sb.toString();
+    }
+
+    public void setManager(int manager_id) {
+        this.manager_id=manager_id;
     }
 }

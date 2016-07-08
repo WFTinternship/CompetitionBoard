@@ -1,10 +1,13 @@
 package com.workfront.intern.cb.dao;
 
-public interface TournamentDao {
-    //todo
-//    create
-//    read
-//    update
-//    delete
+import com.workfront.intern.cb.common.Tournament;
+import java.util.List;
+
+interface TournamentDao {
+    Tournament getTournamentById(int id);
+    List<Tournament> getTournamentList();
+    boolean addTournament(Tournament tournament);
+    boolean updateTournament(Tournament tournament);
+    boolean deleteTournamentById(int id);
 
 }

@@ -3,7 +3,7 @@ package com.workfront.intern.cb.dao;
 import com.workfront.intern.cb.common.Member;
 import java.util.List;
 
-public interface MemberDao {
+interface MemberDao {
     Member getMemberById(int id);
     List<Member> getMemberList();
     boolean addMember(Member member);

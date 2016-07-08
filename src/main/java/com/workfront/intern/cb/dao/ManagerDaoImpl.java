@@ -226,23 +226,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     }
 
     public static void main(String[] args) {
-        boolean addToDb = new ManagerDaoImpl().addManager("artbabayan", "art123");
+        boolean addToDb = new ManagerDaoImpl().addManager("user20user", "123456");
         System.out.println(addToDb);
-
-//        Manager manager = new ManagerDaoImpl().getManagerById(1);
-//        System.out.println(manager);
-
-//        Manager manager = new ManagerDaoImpl().getManagerByLogin("arturbabayan");
-//        System.out.println(manager);
-
-//        List<Manager> managerList = new ManagerDaoImpl().getManagerList();
-//        System.out.println(managerList);
-
-//        boolean deleteByLoginAndPassword = new ManagerDaoImpl().deleteManagerByLogin("artbabayan", "");
-//        System.out.println(deleteByLoginAndPassword);
-//
-//        boolean deleteById = new ManagerDaoImpl().deleteManagerById(16);
-//        System.out.println(deleteById);
-
     }
 }
