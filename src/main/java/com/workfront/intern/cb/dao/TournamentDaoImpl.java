@@ -66,6 +66,34 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournamentList;
     }
 
+    //Gets all tournament by manager id
+    @Override
+    public List<Tournament> getTournamentListByManager(int id) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Tournament tournament;
+        List<Tournament> tournamentListByManager = new ArrayList<>();
+        String sql = "SELECT * FROM tournament WHERE manager_id=?";
+
+        try {
+            DataSource dataSource = DBManager.getDataSource();
+            conn = dataSource.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                tournament = extractTournamentFromResultSet(rs);
+                tournamentListByManager.add(tournament);
+            }
+        } catch (PropertyVetoException | SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return tournamentListByManager;
+    }
+
     //Adding tournament to db
     @Override
     public boolean addTournament(Tournament tournament) {
@@ -155,6 +183,11 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             LOG.error(e.getMessage(), e);
         }
         return tournament;
+    }
+
+    public static void main(String[] args) {
+        List<Tournament> list = new TournamentDaoImpl().getTournamentListByManager(3);
+        System.out.println(list);
     }
 }
 
