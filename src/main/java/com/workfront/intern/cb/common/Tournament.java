@@ -1,18 +1,25 @@
 package com.workfront.intern.cb.common;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Tournament {
     private int tournamentId;
     private String tournamentName;
-    private Date startDate;
-    private Date endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
     private String location;
     private String tournamentDescription;
     private TournamentFormat tournamentFormat;
     private Manager manager;
-    private int manager_id;
+
+    public Manager getManager() {
+        return manager;
+    }
+
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
 
     public int getTournamentId() {
         return tournamentId;
@@ -30,19 +37,19 @@ public class Tournament {
         this.tournamentName = tournamentName;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
@@ -70,26 +77,7 @@ public class Tournament {
         this.tournamentFormat = tournamentFormat;
     }
 
-    public Manager getManager() {
-        return manager;
-    }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-
-    public int getManager_id() {
-        return manager_id;
-    }
-
-    public void setManager_id(int manager_id) {
-        this.manager_id = manager_id;
-    }
-
-    private static String dateFormated(Date date){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
-        return dateFormat.format(date);
-    }
 
     @Override
     public String toString() {
@@ -109,7 +97,5 @@ public class Tournament {
         return sb.toString();
     }
 
-    public void setManager(int manager_id) {
-        this.manager_id=manager_id;
-    }
+
 }

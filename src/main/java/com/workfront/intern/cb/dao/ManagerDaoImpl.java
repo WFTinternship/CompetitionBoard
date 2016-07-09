@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Manager;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -14,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerDaoImpl extends GenericDao implements ManagerDao {
-    /**
-     * returning manager by id
-     */
+    private static final Logger LOG = Logger.getLogger(ManagerDaoImpl.class);
+
+    //Returning manager by id
     @Override
     public Manager getManagerById(int id) {
         Connection conn = null;
@@ -32,21 +33,17 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                manager = new Manager();
-                extractManagerFromResultSet(rs, manager);
+                manager = extractManagerFromResultSet(rs);
             }
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
         return manager;
     }
 
-    /**
-     * returning manager by login
-
-     */
+    //Returning manager by login
     @Override
     public Manager getManagerByLogin(String login) {
         Connection conn = null;
@@ -61,22 +58,18 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps = conn.prepareStatement(sql);
             ps.setString(1, login);
             rs = ps.executeQuery();
-
             if (rs.next()) {
-                manager = new Manager();
-                extractManagerFromResultSet(rs, manager);
+                manager = extractManagerFromResultSet(rs);
             }
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
         return manager;
     }
 
-    /**
-     * return all managers in db
-     */
+    //Return all managers in db
     @Override
     public List<Manager> getManagerList() {
         Connection conn = null;
@@ -91,23 +84,19 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-
             while (rs.next()) {
-                manager = new Manager();
-                extractManagerFromResultSet(rs, manager);
+                manager = extractManagerFromResultSet(rs);
                 managerList.add(manager);
             }
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
         return managerList;
     }
 
-    /**
-     * added new manager in db
-     */
+    //Added new manager in db
     @Override
     public boolean addManager(String login, String pass) {
         Connection conn = null;
@@ -122,18 +111,15 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps.setString(1, login);
             ps.setString(2, passToEncrypt(pass));
             rows = ps.executeUpdate();
-
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
         return rows == 1;
     }
 
-    /**
-     * delete manager by id
-     */
+    //Deleting manager by id
     @Override
     public boolean deleteManagerById(int id) {
         Connection conn = null;
@@ -147,28 +133,21 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rows = ps.executeUpdate();
-
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
+            LOG.error(e.getMessage(), e);
+        } finally {
             closeResources(conn, ps);
         }
-
-
         return rows == 1;
     }
 
-    /**
-     * delete manager by login and password
-     */
+    //Deleting manager by login and password
     @Override
     public boolean deleteManagerByLogin(String login, String password) {
         Connection conn = null;
         PreparedStatement ps = null;
         int rows = 0;
-
-        String sql = "DELETE FROM manager WHERE login=? and password=?";
+        String sql = "DELETE FROM manager WHERE login=? AND password=?";
 
         try {
             DataSource dataSource = DBManager.getDataSource();
@@ -178,30 +157,27 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps.setString(2, password);
             rows = ps.executeUpdate();
         } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
         return rows == 1;
     }
 
-    /**
-     *
-     * */
-    private Manager extractManagerFromResultSet(ResultSet rs, Manager manager) {
+    //Extracting specific data of Manager from ResultSet
+    private Manager extractManagerFromResultSet(ResultSet rs) {
+        Manager manager = new Manager();
         try {
             manager.setId(rs.getInt("manager_id"));
             manager.setLogin(rs.getString("login"));
             manager.setPassword(rs.getString("password"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
         return manager;
     }
 
-    /**
-     * method encrypt password, uses SHA-256.
-     */
+    //Method encrypt password, uses SHA-256.
     private static String passToEncrypt(String password) {
         StringBuffer sb = null;
         String passToEncrypt = null;
@@ -213,8 +189,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
             //convert the byte to hex format
             sb = new StringBuffer();
-            for (int i = 0; i < byteData.length; i++) {
-                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            for (byte aByteData : byteData) {
+                sb.append(Integer.toString((aByteData & 0xff) + 0x100, 16).substring(1));
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -223,10 +199,5 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             passToEncrypt = sb.toString();
         }
         return passToEncrypt;
-    }
-
-    public static void main(String[] args) {
-        boolean addToDb = new ManagerDaoImpl().addManager("user20user", "123456");
-        System.out.println(addToDb);
     }
 }
