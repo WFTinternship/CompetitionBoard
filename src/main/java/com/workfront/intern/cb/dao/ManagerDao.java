@@ -8,8 +8,6 @@ public interface ManagerDao {
     Manager getManagerById(int id);
     Manager getManagerByLogin(String login);
     List<Manager> getManagerList();
-    boolean addManager(String login, String password);
+    boolean addManager(Manager manager);
     boolean deleteManagerById(int id);
-    boolean deleteManagerByLogin(String login, String password);
-
 }
