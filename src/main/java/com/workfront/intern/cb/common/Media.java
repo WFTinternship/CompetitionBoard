@@ -4,10 +4,18 @@ public class Media {
     private int mediaId;
     private String photo;
     private String video;
-    private int tournamentId;
+    private Tournament tournament;
     private Manager manager;
 
     public Media() {
+    }
+
+    public Media(int mediaId, String photo, String video, Tournament tournament, Manager manager) {
+        this.mediaId = mediaId;
+        this.photo = photo;
+        this.video = video;
+        this.tournament = tournament;
+        this.manager = manager;
     }
 
     public int getMediaId() {
@@ -34,12 +42,12 @@ public class Media {
         this.video = video;
     }
 
-    public int getTournamentId() {
-        return tournamentId;
+    public Tournament getTournament() {
+        return tournament;
     }
 
-    public void setTournamentId(int tournamentId) {
-        this.tournamentId = tournamentId;
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     public Manager getManager() {
@@ -57,7 +65,7 @@ public class Media {
         sb.append("mediaId: ").append(mediaId).append("\n");
         sb.append("photo: ").append(photo).append("\n");
         sb.append("video: ").append(video).append("\n");
-        sb.append("tournamentId: ").append(tournamentId).append("\n");
+        sb.append("tournamentId: ").append(tournament.getTournamentId()).append("\n");
         sb.append("managerId: ").append(manager.getId()).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");

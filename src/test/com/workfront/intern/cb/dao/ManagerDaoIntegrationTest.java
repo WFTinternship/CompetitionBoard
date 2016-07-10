@@ -6,10 +6,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
+
 public class ManagerDaoIntegrationTest extends BaseTest {
 
-    ManagerDao managerDao = new ManagerDaoImpl();
-    Manager manager;
+    private ManagerDao managerDao = new ManagerDaoImpl();
+    private Manager manager;
+
+    private Manager createManager() {
+        manager = new Manager();
+        return manager;
+    }
 
     @Before
     public void beforeTest() {
@@ -24,61 +31,59 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         }
     }
 
-    private Manager createManager() {
-        return null;
-    }
 
     // region <TEST CASES>
-
-    @Test
-    public void getManagerById_notFound() {
-
-    }
+//    @Test
+//    public void getManagerById_notFound() {
+//
+//    }
 
     @Test
     public void getManagerById_found() {
+        Manager manager = new ManagerDaoImpl().getManagerById(5);
+        assertNotNull(".....", manager);
 
     }
 
-    @Test
-    public void getManagerByLogin_notFound() {
-
-    }
-
-    @Test
-    public void getManagerByLogin_found() {
-
-    }
-
-    @Test
-    public void getManagerList_emptyList() {
-
-    }
-
-    @Test
-    public void getManagerList_found() {
-
-    }
-
-    @Test
-    public void addManager_invalidData() {
-
-    }
-
-    @Test
-    public void addManager_created() {
-
-    }
-
-    @Test
-    public void deleteManagerById_notFound() {
-
-    }
-
-    @Test
-    public void deleteManagerById_deleted() {
-
-    }
+//    @Test
+//    public void getManagerByLogin_notFound() {
+//
+//    }
+//
+//    @Test
+//    public void getManagerByLogin_found() {
+//
+//    }
+//
+//    @Test
+//    public void getManagerList_emptyList() {
+//
+//    }
+//
+//    @Test
+//    public void getManagerList_found() {
+//
+//    }
+//
+//    @Test
+//    public void addManager_invalidData() {
+//
+//    }
+//
+//    @Test
+//    public void addManager_created() {
+//
+//    }
+//
+//    @Test
+//    public void deleteManagerById_notFound() {
+//
+//    }
+//
+//    @Test
+//    public void deleteManagerById_deleted() {
+//
+//    }
 
     // endregion
 }

@@ -12,12 +12,14 @@ public class Tournament {
     private TournamentFormat tournamentFormat;
     private Manager manager;
 
-    public Manager getManager() {
-        return manager;
+
+    public Tournament() {
     }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
+    public Tournament getTournamentByid(int id) {
+        Tournament tournament = new Tournament();
+        tournament.setTournamentId(id);
+        return tournament;
     }
 
     public int getTournamentId() {
@@ -76,7 +78,13 @@ public class Tournament {
         this.tournamentFormat = tournamentFormat;
     }
 
+    public Manager getManager() {
+        return manager;
+    }
 
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
 
     @Override
     public String toString() {
@@ -89,7 +97,6 @@ public class Tournament {
         sb.append("location: ").append(location).append("\n");
         sb.append("tournamentDescription: ").append(tournamentDescription).append("\n");
         sb.append("tournamentFormatId: ").append(tournamentFormat.getFormatId()).append("\n");
-        sb.append("tournamentManagerId: ").append(manager.getId()).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 
