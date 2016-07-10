@@ -34,10 +34,10 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
 
     // region <TEST CASES>
-//    @Test
-//    public void getManagerById_notFound() {
-//
-//    }
+    @Test
+    public void getManagerById_notFound() {
+
+    }
 
     @Test
     public void getManagerById_found() {
