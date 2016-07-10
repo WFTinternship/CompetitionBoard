@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ManagerDaoIntegrationTest extends BaseTest {
@@ -15,6 +16,8 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     private Manager createManager() {
         manager = new Manager();
+        manager.setLogin(MANAGER_LOGIN);
+        manager.setPassword(MANAGER_PASSWORD);
         return manager;
     }
 
@@ -26,9 +29,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @After
     public void afterTest() {
-        if (manager != null) {
-            managerDao.deleteManagerById(manager.getId());
-        }
+        managerDao.deleteManagerById(manager.getId());
     }
 
 
@@ -40,15 +41,13 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getManagerById_found() {
-        Manager manager = new ManagerDaoImpl().getManagerById(5);
-        assertNotNull(".....", manager);
-
+        assertNotNull(manager);
     }
 
-//    @Test
-//    public void getManagerByLogin_notFound() {
-//
-//    }
+    @Test
+    public void getManagerByLogin_notFound() {
+        assertEquals("Test is ok!", MANAGER_LOGIN, manager.getLogin());
+    }
 //
 //    @Test
 //    public void getManagerByLogin_found() {

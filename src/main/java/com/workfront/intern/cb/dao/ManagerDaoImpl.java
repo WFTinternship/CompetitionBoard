@@ -154,4 +154,10 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         }
         return manager;
     }
+
+    public static void main(String[] args) {
+       Manager manager = new ManagerDaoImpl().getManagerById(2);
+        System.out.println(manager.getId());
+
+    }
 }

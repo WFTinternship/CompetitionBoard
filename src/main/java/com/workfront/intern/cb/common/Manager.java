@@ -8,7 +8,7 @@ public class Manager {
     public Manager() {
     }
 
-    public Manager(int id, String login, String password) {
+    public Manager(String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
