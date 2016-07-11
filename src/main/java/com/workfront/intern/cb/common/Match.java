@@ -2,9 +2,9 @@ package com.workfront.intern.cb.common;
 
 public class Match {
     private int matchId;
-    private Group group;
-    private Participant participantOneId;
-    private Participant participantTwoId;
+    private int groupId;
+    private int participantOneId;
+    private int participantTwoId;
     private int scoreParticipantOne;
     private int scoreParticipantTwo;
 
@@ -19,27 +19,27 @@ public class Match {
         this.matchId = matchId;
     }
 
-    public Group getGroup() {
-        return group;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
-    public Participant getParticipantOneId() {
+    public int getParticipantOneId() {
         return participantOneId;
     }
 
-    public void setParticipantOneId(Participant participantOneId) {
+    public void setParticipantOneId(int participantOneId) {
         this.participantOneId = participantOneId;
     }
 
-    public Participant getParticipantTwoId() {
+    public int getParticipantTwoId() {
         return participantTwoId;
     }
 
-    public void setParticipantTwoId(Participant participantTwoId) {
+    public void setParticipantTwoId(int participantTwoId) {
         this.participantTwoId = participantTwoId;
     }
 
@@ -64,9 +64,9 @@ public class Match {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("matchId: ").append(matchId).append("\n");
-        sb.append("groupId: ").append(group.getGroupId()).append("\n");
-        sb.append("participantFirstId: ").append(participantOneId.getId()).append("\n");
-        sb.append("participantSecondId: ").append(participantTwoId.getId()).append("\n");
+        sb.append("groupId: ").append(getGroupId()).append("\n");
+        sb.append("participantFirstId: ").append(getParticipantOneId()).append("\n");
+        sb.append("participantSecondId: ").append(getParticipantTwoId()).append("\n");
         sb.append("scoreParticipantFirst: ").append(scoreParticipantOne).append("\n");
         sb.append("scoreParticipantSecond: ").append(scoreParticipantTwo).append("\n");
         sb.append("*******************************************************************************************");
