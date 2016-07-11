@@ -10,6 +10,14 @@ public class Media {
     public Media() {
     }
 
+
+    public Media(String photo, String video, Tournament tournament, Manager manager) {
+        this.photo = photo;
+        this.video = video;
+        this.tournament = tournament;
+        this.manager = manager;
+    }
+
     public Media(int mediaId, String photo, String video, Tournament tournament, Manager manager) {
         this.mediaId = mediaId;
         this.photo = photo;

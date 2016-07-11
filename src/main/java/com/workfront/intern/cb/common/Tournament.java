@@ -16,7 +16,7 @@ public class Tournament {
     public Tournament() {
     }
 
-    public Tournament getTournamentByid(int id) {
+    public Tournament getTournamentById(int id) {
         Tournament tournament = new Tournament();
         tournament.setTournamentId(id);
         return tournament;
