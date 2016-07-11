@@ -16,17 +16,7 @@ import java.util.List;
 public class GroupDaoImpl extends GenericDao implements GroupDao {
     private static final Logger LOG = Logger.getLogger(GroupDaoImpl.class);
 
-    @Override
-    public int getParticipantsCount(Tournament tournament) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        String sql = "SELECT * FROM `group` WHERE tournament_id";
-
-        return 0;
-    }
-
+    // Gets group list in specific tournament
     @Override
     public List<Group> getGroupInTournamentList(int id) {
         Connection conn = null;
@@ -34,7 +24,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         ResultSet rs = null;
         String sql = "SELECT * FROM `group` WHERE tournament_id=?";
         List<Group> groupList = new ArrayList<>();
-        Group group = null;
+        Group group;
 
         try {
             DataSource dataSource = DBManager.getDataSource();
@@ -67,12 +57,5 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             LOG.error(e.getMessage(), e);
         }
         return group;
-    }
-
-
-    public static void main(String[] args) {
-        List<Group> groupList = new ArrayList<>();
-        groupList = new GroupDaoImpl().getGroupInTournamentList(1);
-        System.out.println(groupList);
     }
 }
