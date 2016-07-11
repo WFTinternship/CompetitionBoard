@@ -67,6 +67,7 @@ public class Group {
         sb.append("tournamentId: ").append(tournament.getTournamentId()).append("\n");
         sb.append("round: ").append(round).append("\n");
         sb.append("nextRoundParticipants: ").append(nextRoundParticipnats).append("\n");
+        sb.append("tournamentId: ").append(tournament.getTournamentId()).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 
