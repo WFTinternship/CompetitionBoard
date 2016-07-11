@@ -3,9 +3,9 @@ package com.workfront.intern.cb.common;
 public class Group {
     private int groupId;
     private int participantsCount;
-    private Tournament tournament;
     private int round;
     private int nextRoundParticipnats;
+    private Tournament tournament;
 
     public Group() {
     }

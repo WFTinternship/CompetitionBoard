@@ -32,7 +32,6 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         managerDao.deleteManagerById(manager.getId());
     }
 
-
     // region <TEST CASES>
     @Test
     public void getManagerById_notFound() {

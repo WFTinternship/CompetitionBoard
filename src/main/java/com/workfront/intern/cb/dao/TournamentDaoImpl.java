@@ -100,14 +100,18 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         boolean inserted = false;
         Connection conn = null;
         PreparedStatement ps = null;
+        int rows = 0;
+
         String sql = "INSERT INTO " +
                 "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id)\n" +
                 "VALUES (?,?,?,?,?,?,?)";
 
         try {
+            // Acquire polled connection
             DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
-            ps = conn.prepareStatement(sql);
+
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, tournament.getTournamentName());
             ps.setTimestamp(2, tournament.getStartDate());
             ps.setTimestamp(3, tournament.getEndDate());
@@ -115,14 +119,20 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setString(5, tournament.getTournamentDescription());
             ps.setInt(6, tournament.getTournamentFormat().getFormatId());
             ps.setInt(7, tournament.getManager().getId());
-            ps.executeUpdate();
-            inserted = true;
+
+            // insert base participant info
+            rows = ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                tournament.setTournamentId(rs.getInt(1));
+            }
         } catch (PropertyVetoException | SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
-        return inserted;
+        return rows == 1;
     }
 
     //Updating specific data of tournament
@@ -183,11 +193,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             LOG.error(e.getMessage(), e);
         }
         return tournament;
-    }
-
-    public static void main(String[] args) {
-        List<Tournament> list = new TournamentDaoImpl().getTournamentListByManager(3);
-        System.out.println(list);
     }
 }
 

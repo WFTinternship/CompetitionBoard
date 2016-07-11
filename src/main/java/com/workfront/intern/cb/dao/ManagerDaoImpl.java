@@ -6,12 +6,7 @@ import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,17 +96,27 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     @Override
     public boolean addManager(Manager manager) {
         Connection conn = null;
-        PreparedStatement ps = null;
-        int rows = 0;
         String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
 
+        PreparedStatement ps = null;
+        int rows = 0;
         try {
+            // acquire polled connection
             DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
-            ps = conn.prepareStatement(sql);
+
+            // prepare base participant insert query
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, manager.getLogin());
             ps.setString(2, StringHelper.passToEncrypt(manager.getPassword()));
+
+            // insert base participant info
             rows = ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                manager.setId(rs.getInt(1));
+            }
         } catch (PropertyVetoException | SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
