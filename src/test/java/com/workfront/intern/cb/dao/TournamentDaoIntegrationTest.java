@@ -4,6 +4,7 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Tournament;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 public class TournamentDaoIntegrationTest extends BaseTest {
     private TournamentDao tournamentDao = new TournamentDaoImpl();
@@ -24,5 +25,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     public void afterTest() {
 
     }
+
 
 }

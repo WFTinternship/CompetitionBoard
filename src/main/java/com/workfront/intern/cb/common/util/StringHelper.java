@@ -28,5 +28,4 @@ public class StringHelper {
         }
         return passToEncrypt;
     }
-
 }

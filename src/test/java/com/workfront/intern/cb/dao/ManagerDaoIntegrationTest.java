@@ -17,6 +17,8 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     private Manager manager;
     private Manager result;
 
+    private List<Manager> managerList;
+
     private Manager createManager() {
         manager = new Manager();
         manager.setLogin(MANAGER_LOGIN);
@@ -24,15 +26,6 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
         return manager;
     }
-
-//    private List<Manager> createManagerList() {
-//        resultList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            manager = createManager();
-//            resultList.add(manager);
-//        }
-//        return resultList;
-//    }
 
     @Before
     public void beforeTest() {
@@ -42,9 +35,19 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @After
     public void afterTest() {
+        // Deleting 'manager' of manager type field after passed test
         managerDao.deleteManagerById(manager.getId());
-        if (result != null){
+
+        // Deleting 'result' of manager type field after passed test
+        if (result != null) {
             managerDao.deleteManagerById(result.getId());
+        }
+
+        if (managerList != null) {
+            int m = managerList.size();
+            for (int i = result.getId(); i < m; i++) {
+                managerDao.deleteManagerById(i);
+            }
         }
     }
 
@@ -63,7 +66,6 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     @Test
     public void getManagerByLogin_notFound() {
         result = managerDao.getManagerByLogin(MANAGER_NON_EXISTING_LOGIN);
-
         assertNull(MESSAGE_TEST_COMPLITE_ERROR, result);
     }
 
@@ -72,30 +74,25 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         assertNotNull(manager.getLogin());
     }
 
-    @Test
-    public void getManagerList_emptyList() {
-        //TODO
-//        List<Manager> emptyList;
-//        emptyList = managerDao.getManagerList();
-//        emptyList.removeAll
-//
-//        assertEquals(MESSAGE_TEST_COMPLITE_ERROR, 0, emptyList.size());
-    }
+//    @Test
+//    public void getManagerList_emptyList() {
+//        resultList = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            resultList.add(manager);
+//        }
+//    }
 
     @Test
     public void getManagerList_found() {
-        List<Manager> resultList = new ArrayList<>();
+        managerList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            resultList.add(manager);
+            result = new Manager();
+            result.setLogin(MANAGER_LOGIN + i);
+            result.setPassword(MANAGER_PASSWORD + i);
+            managerDao.addManager(result);
         }
-        resultList = managerDao.getManagerList();
-
-        assertNotNull(MESSAGE_TEST_COMPLITE_ERROR, resultList);
-    }
-
-    @Test
-    public void addManager_invalidData() {
-
+        managerList = managerDao.getManagerList();
+        assertNotNull(MESSAGE_TEST_COMPLITE_ERROR, managerList);
     }
 
     @Test
@@ -104,14 +101,12 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         result.setLogin(MANAGER_LOGIN);
         result.setPassword(MANAGER_PASSWORD);
         boolean added = managerDao.addManager(result);
-
         assertTrue(added);
     }
 
     @Test
     public void deleteManagerById_notFound() {
         boolean deleted = managerDao.deleteManagerById(NON_EXISTING_ID);
-
         assertFalse(deleted);
     }
 
