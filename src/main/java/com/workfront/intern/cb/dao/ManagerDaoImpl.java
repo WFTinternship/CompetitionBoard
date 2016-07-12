@@ -20,13 +20,18 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Manager manager = null;
-        String sql = "SELECT * FROM manager WHERE manager_id=?";
 
+        String sql = "SELECT * FROM manager WHERE manager_id=?";
         try {
+            // Acquire connection
             DataSource dataSource = DBManager.getDataSource();
             conn = dataSource.getConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+
+            // Execute statement
             rs = ps.executeQuery();
             if (rs.next()) {
                 manager = extractManagerFromResultSet(rs);
@@ -56,6 +61,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 manager = extractManagerFromResultSet(rs);
+            } else {
+                return null;
             }
         } catch (PropertyVetoException | SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -161,7 +168,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     }
 
     public static void main(String[] args) {
-       Manager manager = new ManagerDaoImpl().getManagerById(2);
+        Manager manager = new ManagerDaoImpl().getManagerById(9999);
         System.out.println(manager.getId());
 
     }

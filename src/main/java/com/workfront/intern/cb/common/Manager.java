@@ -4,17 +4,18 @@ public class Manager {
     private int id;
     private String login;
     private String password;
+    private Manager nonExisting = null;
 
     public Manager() {
     }
 
-    public Manager(String login, String password) {
+    public Manager(int id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
     }
 
-    public Manager getManagerById(int id){
+    public Manager getManagerById(int id) {
         Manager manager = new Manager();
         manager.setId(id);
         return manager;
@@ -43,7 +44,6 @@ public class Manager {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 
     @Override
