@@ -24,8 +24,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "SELECT * FROM manager WHERE manager_id=?";
         try {
             // Acquire connection
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            conn = DBManager.getPooledConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -36,7 +35,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             if (rs.next()) {
                 manager = extractManagerFromResultSet(rs);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -141,12 +140,11 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "DELETE FROM manager WHERE manager_id=?";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            conn = DBManager.getPooledConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rows = ps.executeUpdate();
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
@@ -154,16 +152,33 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return rows == 1;
     }
 
-    //Extracting specific data of Manager from ResultSet
-    private Manager extractManagerFromResultSet(ResultSet rs) {
-        Manager manager = new Manager();
+    @Override
+    public boolean deleteAll() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        int rows = 0;
+        String sql = "DELETE FROM manager";
+
         try {
-            manager.setId(rs.getInt("manager_id"));
-            manager.setLogin(rs.getString("login"));
-            manager.setPassword(rs.getString("password"));
+            conn = DBManager.getPooledConnection();
+            ps = conn.prepareStatement(sql);
+            rows = ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
         }
+        return rows > 0;
+    }
+
+    //Extracting specific data of Manager from ResultSet
+    private Manager extractManagerFromResultSet(ResultSet rs) throws SQLException {
+        Manager manager = new Manager();
+
+        manager.setId(rs.getInt("manager_id"));
+        manager.setLogin(rs.getString("login"));
+        manager.setPassword(rs.getString("password"));
+
         return manager;
     }
 

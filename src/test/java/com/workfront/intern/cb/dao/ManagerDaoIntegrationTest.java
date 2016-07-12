@@ -2,106 +2,137 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class ManagerDaoIntegrationTest extends BaseTest {
+    protected final String MANAGER_LOGIN = "user_test";
+    protected final String MANAGER_PASSWORD = "123456";
 
     private ManagerDao managerDao = new ManagerDaoImpl();
-    private Manager manager;
-    private Manager result;
+    private Manager testManager;
 
-    private List<Manager> managerList;
+    private Manager createRandomManager() {
+        testManager = new Manager();
+        testManager.setLogin(MANAGER_LOGIN);
+        testManager.setPassword(MANAGER_PASSWORD);
 
-    private Manager createManager() {
-        manager = new Manager();
-        manager.setLogin(MANAGER_LOGIN);
-        manager.setPassword(MANAGER_PASSWORD);
-
-        return manager;
+        return testManager;
     }
 
     @Before
     public void beforeTest() {
-        manager = createManager();
-        managerDao.addManager(manager);
+        // Delete all remaining objects
+        managerDao.deleteAll();
+
+        // Initialize random manager instance
+        testManager = createRandomManager();
+        assertEquals(0, testManager.getId());
+
+        // Save to database
+        managerDao.addManager(testManager);
+
+        // Validate ID
+        assertTrue(testManager.getId() > 0);
     }
 
     @After
     public void afterTest() {
         // Deleting 'manager' of manager type field after passed test
-        managerDao.deleteManagerById(manager.getId());
-
-        // Deleting 'result' of manager type field after passed test
-        if (result != null) {
-            managerDao.deleteManagerById(result.getId());
-        }
-
-        if (managerList != null) {
-            int m = managerList.size();
-            for (int i = result.getId(); i < m; i++) {
-                managerDao.deleteManagerById(i);
-            }
+        if (testManager != null) {
+            managerDao.deleteManagerById(testManager.getId());
+        } else {
+            System.out.println("WARNING: testManager was null after test execution");
         }
     }
 
     // region <TEST CASES>
+
     @Test
     public void getManagerById_notFound() {
-        result = managerDao.getManagerById(NON_EXISTING_ID);
-        assertNull(MESSAGE_TEST_COMPLITE_ERROR, result);
+        // Testing method
+        Manager manager = managerDao.getManagerById(NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, manager);
     }
 
     @Test
     public void getManagerById_found() {
-        assertNotNull(manager.getId());
+        int targetId = testManager.getId();
+
+        // Testing method
+        Manager manager = managerDao.getManagerById(targetId);
+
+        assertNotNull(manager);
+        assertEquals(testManager.getId(), manager.getId());
+        assertEquals(testManager.getLogin(), manager.getLogin());
+        assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
     }
 
     @Test
     public void getManagerByLogin_notFound() {
-        result = managerDao.getManagerByLogin(MANAGER_NON_EXISTING_LOGIN);
-        assertNull(MESSAGE_TEST_COMPLITE_ERROR, result);
+        // Testing method
+        Manager manager = managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, manager);
     }
 
     @Test
     public void getManagerByLogin_found() {
-        assertNotNull(manager.getLogin());
+        String targetLogin = testManager.getLogin();
+
+        // Testing method
+        Manager manager = managerDao.getManagerByLogin(targetLogin);
+
+        assertNotNull(manager);
+        assertEquals(testManager.getId(), manager.getId());
+        assertEquals(testManager.getLogin(), manager.getLogin());
+        assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
     }
 
-//    @Test
-//    public void getManagerList_emptyList() {
-//        resultList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            resultList.add(manager);
-//        }
-//    }
+    @Test
+    public void getManagerList_emptyList() {
+        boolean deleted = managerDao.deleteManagerById(testManager.getId());
+        assertTrue(deleted);
+
+        // Testing method
+        List<Manager> managerList = managerDao.getManagerList();
+
+        assertNotNull(managerList);
+        assertEquals(0, managerList.size());
+    }
 
     @Test
     public void getManagerList_found() {
-        managerList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            result = new Manager();
-            result.setLogin(MANAGER_LOGIN + i);
-            result.setPassword(MANAGER_PASSWORD + i);
-            managerDao.addManager(result);
-        }
-        managerList = managerDao.getManagerList();
-        assertNotNull(MESSAGE_TEST_COMPLITE_ERROR, managerList);
+        // Testing method
+        List<Manager> managerList = managerDao.getManagerList();
+
+        assertNotNull(managerList);
+        assertEquals(1, managerList.size());
+
+        Manager manager = managerList.get(0);
+        assertEquals(testManager.getId(), manager.getId());
+        assertEquals(testManager.getLogin(), manager.getLogin());
+        assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
     }
 
     @Test
     public void addManager_created() {
-        result = new Manager();
-        result.setLogin(MANAGER_LOGIN);
-        result.setPassword(MANAGER_PASSWORD);
-        boolean added = managerDao.addManager(result);
+        // Initialize random manager instance
+        Manager manager = createRandomManager();
+        assertEquals(0, manager.getId());
+
+        // Testing method
+        boolean added = managerDao.addManager(manager);
+
         assertTrue(added);
+        assertTrue(manager.getId() > 0);
     }
 
     @Test
@@ -112,8 +143,9 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void deleteManagerById_deleted() {
-        boolean deleted = managerDao.deleteManagerById(manager.getId());
+        boolean deleted = managerDao.deleteManagerById(testManager.getId());
         assertTrue(deleted);
     }
+
     // endregion
 }

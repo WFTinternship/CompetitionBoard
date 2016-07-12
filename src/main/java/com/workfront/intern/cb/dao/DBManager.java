@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class DBManager {
     private static final String DB_LOGIN = "root";
-    private static final String DB_PASS = "root";
+    private static final String DB_PASS = "attask";
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME = "competition_board";
@@ -32,7 +32,21 @@ public class DBManager {
     }
 
     /**
-     * create and return connection with DB, use connection pool method
+     * create and return polled connection with DB, use connection pool method
+     * @return
+     */
+    public static Connection getPooledConnection() {
+        Connection dbConnection = null;
+        try {
+            dbConnection = getDataSource().getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dbConnection;
+    }
+
+    /**
+     * create and return DataSource with DB, use connection pool method
      */
     static DataSource getDataSource() throws PropertyVetoException {
         poolConn.setDriverClass(DB_DRIVER);
