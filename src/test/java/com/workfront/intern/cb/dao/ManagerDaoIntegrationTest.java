@@ -45,13 +45,13 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getManagerByLogin_notFound() {
-        assertEquals("Test is ok!", MANAGER_LOGIN, manager.getLogin());
     }
-//
-//    @Test
-//    public void getManagerByLogin_found() {
-//
-//    }
+
+    @Test
+    public void getManagerByLogin_found() {
+        assertNotNull(MESSAGE_TEST_COMPLITE_OK, manager.getLogin());
+
+    }
 //
 //    @Test
 //    public void getManagerList_emptyList() {
