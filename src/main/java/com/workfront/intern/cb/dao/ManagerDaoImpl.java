@@ -13,7 +13,7 @@ import java.util.List;
 public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     private static final Logger LOG = Logger.getLogger(ManagerDaoImpl.class);
 
-    //Returning manager by id
+    // Returning manager by id
     @Override
     public Manager getManagerById(int id) {
         Connection conn = null;
@@ -164,7 +164,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     }
 
     @Override
-    public boolean deleteAll() {
+    public boolean deleteAllManager() {
         Connection conn = null;
         PreparedStatement ps = null;
         int rows = 0;

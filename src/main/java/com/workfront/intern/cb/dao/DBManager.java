@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class DBManager {
     private static final String DB_LOGIN = "root";
-    private static final String DB_PASS = "attask";
+    private static final String DB_PASS = "root";
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME = "competition_board";
@@ -52,10 +52,10 @@ public class DBManager {
         poolConn.setJdbcUrl(DB_URL + DB_NAME + DB_CONNECTION_PROPERTIES);
         poolConn.setUser(DB_LOGIN);
         poolConn.setPassword(DB_PASS);
-        poolConn.setInitialPoolSize(5);
-        poolConn.setMinPoolSize(5);
-        poolConn.setAcquireIncrement(5);
-        poolConn.setMaxPoolSize(20);
+        poolConn.setInitialPoolSize(50);
+        poolConn.setMinPoolSize(50);
+        poolConn.setAcquireIncrement(50);
+        poolConn.setMaxPoolSize(100);
         poolConn.setMaxStatements(100);
 
         return poolConn;

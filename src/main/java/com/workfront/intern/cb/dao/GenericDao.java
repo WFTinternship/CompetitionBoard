@@ -9,14 +9,17 @@ import java.sql.*;
 abstract class GenericDao {
     private static final Logger LOG = Logger.getLogger(GenericDao.class);
 
+    // Closed entity resources, when Statement and ResultSet of null
     void closeResources(Connection conn) {
         closeResources(conn, null);
     }
 
+    // Closed entity resources, when ResultSet of null
     void closeResources(Connection conn, Statement ps) {
         closeResources(conn, ps, null);
     }
 
+    // Closed entity resources
     void closeResources(Connection conn, Statement ps, ResultSet rs) {
         if (rs != null) {
             try {
@@ -32,7 +35,6 @@ abstract class GenericDao {
                 LOG.error(e.getMessage(), e);
             }
         }
-
         if (conn != null) {
             try {
                 conn.close();
@@ -42,22 +44,36 @@ abstract class GenericDao {
         }
     }
 
-    //deleted specific entity by sql and id
+    // Deleted specific entity by sql
+    boolean deleteEntity(String sql) {
+        boolean deleted;
+        deleted = deleteEntity(sql, 0);
+
+        return deleted;
+    }
+
+    // Deleted specific entity by sql and id
     boolean deleteEntity(String sql, int id) {
         boolean deleted = false;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            deleted = true;
-        } catch (PropertyVetoException | SQLException e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps);
+        if (sql != null && id > 0) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                // Acquire connection
+                conn = DBManager.getPooledConnection();
+
+                // Initialize statement
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, id);
+
+                // Execute statement
+                ps.executeUpdate();
+                deleted = true;
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            } finally {
+                closeResources(conn, ps);
+            }
         }
         return deleted;
     }

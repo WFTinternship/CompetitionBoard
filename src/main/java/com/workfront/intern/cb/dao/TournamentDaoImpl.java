@@ -14,7 +14,7 @@ import java.util.List;
 public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     private static final Logger LOG = Logger.getLogger(TournamentDaoImpl.class);
 
-    //Gets tournament by memberId
+    //Gets tournament by tournament id
     @Override
     public Tournament getTournamentById(int id) {
         Connection conn = null;
@@ -24,15 +24,19 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         String sql = "SELECT * FROM tournament WHERE tournament_id=?";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+
+            // Execute statement
             rs = ps.executeQuery();
             if (rs.next()) {
                 tournament = extractTournamentFromResultSet(rs);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -49,16 +53,21 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         List<Tournament> tournamentList = new ArrayList<>();
         Tournament tournament;
         String sql = "SELECT * FROM tournament";
+
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
+
+            // Execute statement
             rs = ps.executeQuery();
             while (rs.next()) {
                 tournament = extractTournamentFromResultSet(rs);
                 tournamentList.add(tournament);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -77,16 +86,20 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         String sql = "SELECT * FROM tournament WHERE manager_id=?";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+
+            // Execute statement
             rs = ps.executeQuery();
             while (rs.next()) {
                 tournament = extractTournamentFromResultSet(rs);
                 tournamentListByManager.add(tournament);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -100,17 +113,17 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         boolean inserted = false;
         Connection conn = null;
         PreparedStatement ps = null;
-        int rows = 0;
+        ResultSet rs = null;
 
         String sql = "INSERT INTO " +
                 "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id)\n" +
                 "VALUES (?,?,?,?,?,?,?)";
 
         try {
-            // Acquire polled connection
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
 
+            // Initialize statement
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, tournament.getTournamentName());
             ps.setTimestamp(2, tournament.getStartDate());
@@ -120,19 +133,21 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setInt(6, tournament.getTournamentFormat().getFormatId());
             ps.setInt(7, tournament.getManager().getId());
 
-            // insert base participant info
-            rows = ps.executeUpdate();
+            // Execute statement
+            ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
+            // insert base participant info
+            rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 tournament.setTournamentId(rs.getInt(1));
             }
-        } catch (PropertyVetoException | SQLException e) {
+            inserted = true;
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps);
+            closeResources(conn, ps, rs);
         }
-        return rows == 1;
+        return inserted;
     }
 
     //Updating specific data of tournament
@@ -145,8 +160,10 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
                 "tournament_description=?, tournament_format_id=?, manager_id=? WHERE tournament_id=?";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, tournament.getTournamentName());
             ps.setTimestamp(2, tournament.getStartDate());
@@ -156,10 +173,12 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setInt(6, tournament.getTournamentFormat().getFormatId());
             ps.setInt(7, tournament.getManager().getId());
             ps.setInt(8, tournament.getTournamentId());
+
+            // Execute statement
             ps.executeUpdate();
 
             updated = true;
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
@@ -177,21 +196,28 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return deleted;
     }
 
+    @Override
+    public boolean deleteTournamentAll() {
+        boolean deletedAll;
+
+        String sql = "DELETE FROM tournament";
+        deletedAll = deleteEntity(sql);
+
+        return deletedAll;
+    }
+
     //Extracting specific data of Tournament from ResultSet
-    private static Tournament extractTournamentFromResultSet(ResultSet rs) {
+    private static Tournament extractTournamentFromResultSet(ResultSet rs) throws SQLException {
         Tournament tournament = new Tournament();
-        try {
-            tournament.setTournamentId(rs.getInt("tournament_id"));
-            tournament.setTournamentName(rs.getString("tournament_name"));
-            tournament.setStartDate(rs.getTimestamp("start_date"));
-            tournament.setEndDate(rs.getTimestamp("end_date"));
-            tournament.setLocation(rs.getString("location"));
-            tournament.setTournamentDescription(rs.getString("tournament_description"));
-            tournament.setTournamentFormat(TournamentFormat.getTournamentFormatById(rs.getInt("tournament_format_id")));
-            tournament.setManager(new Manager().getManagerById(rs.getInt("manager_id")));
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
+        tournament.setTournamentId(rs.getInt("tournament_id"));
+        tournament.setTournamentName(rs.getString("tournament_name"));
+        tournament.setStartDate(rs.getTimestamp("start_date"));
+        tournament.setEndDate(rs.getTimestamp("end_date"));
+        tournament.setLocation(rs.getString("location"));
+        tournament.setTournamentDescription(rs.getString("tournament_description"));
+        tournament.setTournamentFormat(TournamentFormat.getTournamentFormatById(rs.getInt("tournament_format_id")));
+        tournament.setManager(new Manager().getManagerById(rs.getInt("manager_id")));
+
         return tournament;
     }
 }

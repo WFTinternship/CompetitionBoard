@@ -12,13 +12,14 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ManagerDaoIntegrationTest extends BaseTest {
-    private final String MANAGER_LOGIN = "user_test";
-    private final String MANAGER_PASSWORD = "123456";
 
     private ManagerDao managerDao = new ManagerDaoImpl();
     private Manager testManager;
 
     private Manager createRandomManager() {
+        String MANAGER_LOGIN = "user_test";
+        String MANAGER_PASSWORD = "123456";
+
         testManager = new Manager();
         testManager.setLogin(MANAGER_LOGIN);
         testManager.setPassword(MANAGER_PASSWORD);
@@ -29,7 +30,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     @Before
     public void beforeTest() {
         // Delete all remaining objects
-        managerDao.deleteAll();
+        managerDao.deleteAllManager();
 
         // Initialize random manager instance
         testManager = createRandomManager();
