@@ -4,7 +4,9 @@ import com.workfront.intern.cb.common.Match;
 
 import java.util.List;
 
-interface MatchDao {
+public interface MatchDao {
+
     Match getMatchByGroupId(int id);
+
     List<Match> getMatchList();
 }

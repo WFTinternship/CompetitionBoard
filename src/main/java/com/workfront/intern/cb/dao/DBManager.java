@@ -17,7 +17,7 @@ public class DBManager {
     private static ComboPooledDataSource poolConn = new ComboPooledDataSource();
 
     /**
-     * create and return connection with DB, non pools
+     * Create and return connection with DB, non pools
      */
     public static Connection getDBConnection() {
         Connection dbConnection = null;
@@ -31,9 +31,9 @@ public class DBManager {
         return dbConnection;
     }
 
-
-    // Create and return polled connection with DB, use connection pool method
-
+    /**
+     * Create and return polled connection with DB, use connection pool method
+     */
     public static Connection getPooledConnection() {
         Connection dbConnection = null;
         try {
@@ -45,15 +45,15 @@ public class DBManager {
     }
 
     /**
-     * create and return DataSource with DB, use connection pool method
+     * Create and return DataSource with DB, use connection pool method
      */
-    static DataSource getDataSource() throws PropertyVetoException {
+    private static DataSource getDataSource() throws PropertyVetoException {
         poolConn.setDriverClass(DB_DRIVER);
         poolConn.setJdbcUrl(DB_URL + DB_NAME + DB_CONNECTION_PROPERTIES);
         poolConn.setUser(DB_LOGIN);
         poolConn.setPassword(DB_PASS);
         poolConn.setInitialPoolSize(50);
-        poolConn.setMinPoolSize(50);
+        poolConn.setMinPoolSize(10);
         poolConn.setAcquireIncrement(50);
         poolConn.setMaxPoolSize(100);
         poolConn.setMaxStatements(100);

@@ -23,15 +23,16 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
                 "WHERE m.member_id=?;";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
                 member = extractMemberFromResultSet(rs);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -50,8 +51,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
 
@@ -59,7 +61,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
                 member = extractMemberFromResultSet(rs);
                 memberList.add(member);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -77,9 +79,8 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         String sql_member = "INSERT INTO member(member_id, name, surname, position, email) VALUES (?,?,?,?,?)";
 
         try {
-            // acquire polled connection
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
 
             // start transaction
             conn.setAutoCommit(false);
@@ -118,11 +119,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             // commit transaction
             conn.commit();
             inserted = true;
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             try {
-                if (conn != null) {
-                    conn.rollback();
-                }
+                conn.rollback();
             } catch (SQLException e1) {
                 LOG.error(e.getMessage(), e1);
             }
@@ -142,9 +141,8 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         String sql_member = "UPDATE member SET name=?, surname=?, position=?, email=? WHERE member_id=?";
 
         try {
-            // acquire polled connection
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
 
             // start transaction
             conn.setAutoCommit(false);
@@ -173,11 +171,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             // commit transaction
             conn.commit();
             updated = true;
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             try {
-                if (conn != null) {
-                    conn.rollback();
-                }
+                conn.rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }

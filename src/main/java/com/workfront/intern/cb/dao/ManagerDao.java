@@ -4,7 +4,7 @@ import com.workfront.intern.cb.common.Manager;
 
 import java.util.List;
 
-interface ManagerDao {
+public interface ManagerDao {
 
     Manager getManagerById(int id);
 
@@ -16,5 +16,5 @@ interface ManagerDao {
 
     boolean deleteManagerById(int id);
 
-    boolean deleteAllManager();
+    boolean deleteAll();
 }

@@ -9,8 +9,11 @@ public class Tournament {
     private Timestamp endDate;
     private String location;
     private String tournamentDescription;
-    private TournamentFormat tournamentFormat;
-    private Manager manager;
+//    private TournamentFormat tournamentFormat;
+//    private Manager manager;
+
+    private int tournamentFormatId;
+    private int managerId;
 
 
     public Tournament() {
@@ -20,6 +23,22 @@ public class Tournament {
         Tournament tournament = new Tournament();
         tournament.setTournamentId(id);
         return tournament;
+    }
+
+    public int getTournamentFormatId() {
+        return tournamentFormatId;
+    }
+
+    public void setTournamentFormatId(int tournamentFormatId) {
+        this.tournamentFormatId = tournamentFormatId;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
     }
 
     public int getTournamentId() {
@@ -70,21 +89,21 @@ public class Tournament {
         this.tournamentDescription = tournamentDescription;
     }
 
-    public TournamentFormat getTournamentFormat() {
-        return tournamentFormat;
-    }
-
-    public void setTournamentFormat(TournamentFormat tournamentFormat) {
-        this.tournamentFormat = tournamentFormat;
-    }
-
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
+//    public TournamentFormat getTournamentFormat() {
+//        return tournamentFormat;
+//    }
+//
+//    public void setTournamentFormat(TournamentFormat tournamentFormat) {
+//        this.tournamentFormat = tournamentFormat;
+//    }
+//
+//    public Manager getManager() {
+//        return manager;
+//    }
+//
+//    public void setManager(Manager manager) {
+//        this.manager = manager;
+//    }
 
     @Override
     public String toString() {
@@ -96,7 +115,7 @@ public class Tournament {
         sb.append("endDate: ").append(endDate).append("\n");
         sb.append("location: ").append(location).append("\n");
         sb.append("tournamentDescription: ").append(tournamentDescription).append("\n");
-        sb.append("tournamentFormatId: ").append(tournamentFormat.getFormatId()).append("\n");
+//        sb.append("tournamentFormatId: ").append(tournamentFormat.getFormatId()).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 

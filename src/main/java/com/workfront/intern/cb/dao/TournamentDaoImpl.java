@@ -14,7 +14,9 @@ import java.util.List;
 public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     private static final Logger LOG = Logger.getLogger(TournamentDaoImpl.class);
 
-    //Gets tournament by tournament id
+    /**
+     * Gets tournament by tournament id
+     */
     @Override
     public Tournament getTournamentById(int id) {
         Connection conn = null;
@@ -44,7 +46,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournament;
     }
 
-    //Gets all tournament
+    /**
+     * Gets all tournament
+     */
     @Override
     public List<Tournament> getTournamentList() {
         Connection conn = null;
@@ -75,7 +79,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournamentList;
     }
 
-    //Gets all tournament by manager id
+    /**
+     * Gets all tournament by manager id
+     */
     @Override
     public List<Tournament> getTournamentListByManager(int id) {
         Connection conn = null;
@@ -107,7 +113,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournamentListByManager;
     }
 
-    //Adding tournament to db
+    /**
+     * Adds tournament to db
+     */
     @Override
     public boolean addTournament(Tournament tournament) {
         boolean inserted = false;
@@ -130,8 +138,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setTimestamp(3, tournament.getEndDate());
             ps.setString(4, tournament.getLocation());
             ps.setString(5, tournament.getTournamentDescription());
-            ps.setInt(6, tournament.getTournamentFormat().getFormatId());
-            ps.setInt(7, tournament.getManager().getId());
+            ps.setInt(6, tournament.getTournamentFormatId());
+            ps.setInt(7, tournament.getManagerId());
 
             // Execute statement
             ps.executeUpdate();
@@ -150,7 +158,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return inserted;
     }
 
-    //Updating specific data of tournament
+    /**
+     * Updates specific data tournament
+     */
     @Override
     public boolean updateTournament(Tournament tournament) {
         boolean updated = false;
@@ -170,8 +180,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setTimestamp(3, tournament.getEndDate());
             ps.setString(4, tournament.getLocation());
             ps.setString(5, tournament.getTournamentDescription());
-            ps.setInt(6, tournament.getTournamentFormat().getFormatId());
-            ps.setInt(7, tournament.getManager().getId());
+            ps.setInt(6, tournament.getTournamentFormatId());
+            ps.setInt(7, tournament.getManagerId());
             ps.setInt(8, tournament.getTournamentId());
 
             // Execute statement
@@ -186,7 +196,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return updated;
     }
 
-    //Deleting tournament by id
+    /**
+     * Deletes tournament by id
+     */
     @Override
     public boolean deleteTournamentById(int id) {
         boolean deleted;
@@ -196,8 +208,11 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return deleted;
     }
 
+    /**
+     * Removes all tournaments
+     */
     @Override
-    public boolean deleteTournamentAll() {
+    public boolean deleteAll() {
         boolean deletedAll;
 
         String sql = "DELETE FROM tournament";
@@ -215,10 +230,37 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         tournament.setEndDate(rs.getTimestamp("end_date"));
         tournament.setLocation(rs.getString("location"));
         tournament.setTournamentDescription(rs.getString("tournament_description"));
-        tournament.setTournamentFormat(TournamentFormat.getTournamentFormatById(rs.getInt("tournament_format_id")));
-        tournament.setManager(new Manager().getManagerById(rs.getInt("manager_id")));
+        tournament.setTournamentFormatId(rs.getInt("tournament_format_id"));
+        tournament.setManagerId(rs.getInt("manager_id"));
 
         return tournament;
+    }
+
+    public static void main(String[] args) {
+        Tournament testTournament = new Tournament();
+        Manager manager = new Manager();
+        manager.setId(1);
+        manager.setLogin("aaa");
+        manager.setPassword("123");
+
+
+        //TODO change names of fields to small
+        String tournamentName = "THE BEST OF IF THE BEST";
+        Timestamp startDate = Timestamp.valueOf("2020-08-08 10:00:00");
+        Timestamp endDate = Timestamp.valueOf("2020-08-08 20:00:00");
+        String location = "Yerevan, Armenia";
+        String tournamentDescription = "Tournament begins gentlemen, welcome";
+        int tournamentFormatId = TournamentFormat.OLYMPIC.getFormatId();
+        int managerId = new Manager().getId();
+
+        testTournament.setTournamentName(tournamentName);
+        testTournament.setStartDate(startDate);
+        testTournament.setEndDate(endDate);
+        testTournament.setLocation(location);
+        testTournament.setTournamentDescription(tournamentDescription);
+        testTournament.setTournamentFormatId(tournamentFormatId);
+        testTournament.setManagerId(managerId);
+
     }
 }
 

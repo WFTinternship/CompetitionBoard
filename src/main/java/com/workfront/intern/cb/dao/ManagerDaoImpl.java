@@ -13,7 +13,9 @@ import java.util.List;
 public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     private static final Logger LOG = Logger.getLogger(ManagerDaoImpl.class);
 
-    // Returning manager by id
+    /**
+     * Returns manager by id
+     */
     @Override
     public Manager getManagerById(int id) {
         Connection conn = null;
@@ -43,7 +45,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return manager;
     }
 
-    //Returning manager by login
+    /**
+     * Returns manager by login
+     */
     @Override
     public Manager getManagerByLogin(String login) {
         Connection conn = null;
@@ -73,7 +77,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return manager;
     }
 
-    //Return all managers in db
+    /**
+     * Returns all managers in db
+     */
     @Override
     public List<Manager> getManagerList() {
         Connection conn = null;
@@ -103,7 +109,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return managerList;
     }
 
-    //Added new manager in db
+    /**
+     * Adds new manager in db
+     */
     @Override
     public boolean addManager(Manager manager) {
         Connection conn = null;
@@ -135,7 +143,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return rows == 1;
     }
 
-    // Deleting manager by id
+    /**
+     * Deletes manager by id
+     */
     @Override
     public boolean deleteManagerById(int id) {
         Connection conn = null;
@@ -163,8 +173,11 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return rows == 1;
     }
 
+    /**
+     * Removes all managers
+     */
     @Override
-    public boolean deleteAllManager() {
+    public boolean deleteAll() {
         Connection conn = null;
         PreparedStatement ps = null;
         int rows = 0;
@@ -187,7 +200,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return rows > 0;
     }
 
-    //Extracting specific data of Manager from ResultSet
+    /**
+     * Extracting specific data of Manager from ResultSet
+     */
     private Manager extractManagerFromResultSet(ResultSet rs) throws SQLException {
         Manager manager = new Manager();
 

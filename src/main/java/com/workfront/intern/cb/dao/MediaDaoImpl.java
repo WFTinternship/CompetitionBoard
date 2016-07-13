@@ -17,7 +17,9 @@ import java.util.List;
 public class MediaDaoImpl extends GenericDao implements MediaDao {
     private static final Logger LOG = Logger.getLogger(MediaDaoImpl.class);
 
-    // Gets all media by specific manager
+    /**
+     * Gets all media by specific manager
+     */
     @Override
     public List<Media> getMediaByManager(int id) {
         List<Media> mediaByManagerList;
@@ -27,7 +29,9 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return mediaByManagerList;
     }
 
-    // Gets all media by specific tournament
+    /**
+     * Gets all media by specific tournament
+     */
     @Override
     public List<Media> getMediaByTournament(int id) {
         List<Media> mediaByTournamentList;
@@ -46,15 +50,20 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         String sql = "INSERT INTO media(photo, tournament_id, manager_id) VALUES(?, ?, ?)";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, media.getPhoto());
             ps.setInt(2, media.getTournament().getTournamentId());
             ps.setInt(3, media.getManager().getId());
+
+            // Execute statement
             ps.executeUpdate();
+
             inserted = true;
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
@@ -62,7 +71,9 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return inserted;
     }
 
-    // Adding video to db by specific manager and tournament
+    /**
+     * Adds video to db by specific manager and tournament
+     */
     @Override
     public boolean addVideo(Media media) {
         boolean inserted = false;
@@ -70,15 +81,19 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         PreparedStatement ps = null;
         String sql = "INSERT INTO media(video, tournament_id, manager_id) VALUES(?, ?, ?)";
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, media.getVideo());
             ps.setInt(2, media.getTournament().getTournamentId());
             ps.setInt(3, media.getManager().getId());
+
+            // Execute statement
             ps.executeUpdate();
             inserted = true;
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
@@ -86,7 +101,9 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return inserted;
     }
 
-    // Deleting media by id
+    /**
+     * Deletes media by id
+     */
     @Override
     public boolean deleteMedia(Media media) {
         boolean deleted;
@@ -96,7 +113,9 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return deleted;
     }
 
-    // Gets specific data list of deleteMedia from sql query
+    /**
+     * Gets specific data list of deleteMedia from sql query
+     */
     private List<Media> getSpecificMediaList(String sql, int id) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -104,16 +123,20 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         Media media;
         List<Media> mediaList = new ArrayList<>();
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+
+            // Execute statement
             rs = ps.executeQuery();
             while (rs.next()) {
                 media = extractMediaFromResultSet(rs);
                 mediaList.add(media);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -121,7 +144,9 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return mediaList;
     }
 
-    //Extracting specific data of deleteMedia from ResultSet
+    /**
+     * Extracting specific data of deleteMedia from ResultSet
+     */
     private static Media extractMediaFromResultSet(ResultSet rs) {
         Media media = new Media();
         try {

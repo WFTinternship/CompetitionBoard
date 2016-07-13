@@ -16,21 +16,10 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     private ManagerDao managerDao = new ManagerDaoImpl();
     private Manager testManager;
 
-//    private Manager createRandomManager() {
-//        String MANAGER_LOGIN = "user_test";
-//        String MANAGER_PASSWORD = "123456";
-//
-//        testManager = new Manager();
-//        testManager.setLogin(MANAGER_LOGIN);
-//        testManager.setPassword(MANAGER_PASSWORD);
-//
-//        return testManager;
-//    }
-
     @Before
     public void beforeTest() {
         // Delete all remaining objects
-        managerDao.deleteAllManager();
+        managerDao.deleteAll();
 
         // Initialize random manager instance
         testManager = createRandomManager();

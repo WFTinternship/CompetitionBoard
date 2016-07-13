@@ -4,6 +4,6 @@ import com.workfront.intern.cb.common.Group;
 
 import java.util.List;
 
-interface GroupDao {
+public interface GroupDao {
     List<Group> getGroupInTournamentList(int id);
 }

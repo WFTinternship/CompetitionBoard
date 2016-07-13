@@ -3,33 +3,18 @@ package com.workfront.intern.cb.dao;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.util.StringHelper;
+import com.workfront.intern.cb.common.TournamentFormat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TournamentDaoIntegrationTest extends BaseTest {
     private ManagerDao managerDao = new ManagerDaoImpl();
     private TournamentDao tournamentDao = new TournamentDaoImpl();
     private Tournament testTournament;
     private Manager testManager;
-
-
-    private Tournament createRandomTournament() {
-        String TOURNAMENT_NAME = "THE BEST OF IF THE BEST";
-        String START_DATE = "2020-08-08 10:00:00";
-        String END_DATE = "2020-08-08 20:00:00";
-        String LOCATION = "Yerevan, Armenia";
-        String TOURNAMENT_DESCRIPTION = "Tournament begins gentlemen, welcome";
-        int TOURNAMENT_FORMAT_ID = 1;
-        int MANAGER_ID = 1;
-
-        return testTournament;
-    }
 
     @Before
     public void beforeTest() {
@@ -47,8 +32,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         // Validate ID
         assertTrue(testManager.getId() > 0);
         assertTrue(testTournament.getTournamentId() > 0);
-
-
     }
 
     @After
@@ -67,7 +50,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         } else {
             System.out.println("WARNING: testTournament was null after test execution");
         }
-
     }
 
     @Test
@@ -88,10 +70,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(testTournament.getEndDate(), tournament.getEndDate());
         assertEquals(testTournament.getLocation(), tournament.getLocation());
         assertEquals(testTournament.getTournamentDescription(), tournament.getTournamentDescription());
-        assertEquals(testTournament.getTournamentFormat(), tournament.getTournamentFormat());
-        assertEquals(testTournament.getManager(), tournament.getManager());
-
-
+        assertEquals(testTournament.getTournamentFormatId(), tournament.getTournamentFormatId());
+        assertEquals(testTournament.getManagerId(), tournament.getManagerId());
     }
 
     @Test
@@ -106,22 +86,15 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     public void addTournament_created() {
     }
 
-
     @Test
     public void updateTournament_updated() {
-
     }
-
 
     @Test
     public void deleteTournamentById_notFound() {
-
     }
 
     @Test
     public void deleteTournamentById_found() {
-
     }
-
-
 }

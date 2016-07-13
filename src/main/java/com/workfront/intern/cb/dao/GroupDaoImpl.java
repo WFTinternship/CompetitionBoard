@@ -4,8 +4,6 @@ import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Tournament;
 import org.apache.log4j.Logger;
 
-import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,8 +25,8 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         Group group;
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            conn = DBManager.getPooledConnection();
+
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -36,7 +34,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
                 group = extractGroupFromResultSet(rs);
                 groupList.add(group);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);

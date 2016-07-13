@@ -9,17 +9,23 @@ import java.sql.*;
 abstract class GenericDao {
     private static final Logger LOG = Logger.getLogger(GenericDao.class);
 
-    // Closed entity resources, when Statement and ResultSet of null
+    /**
+     * Closed DB resources, when Statement and ResultSet of null
+     */
     void closeResources(Connection conn) {
         closeResources(conn, null);
     }
 
-    // Closed entity resources, when ResultSet of null
+    /**
+     * Closed DB resources, when ResultSet of null
+     */
     void closeResources(Connection conn, Statement ps) {
         closeResources(conn, ps, null);
     }
 
-    // Closed entity resources
+    /**
+     * Closed DB resources
+     */
     void closeResources(Connection conn, Statement ps, ResultSet rs) {
         if (rs != null) {
             try {
@@ -44,7 +50,9 @@ abstract class GenericDao {
         }
     }
 
-    // Deleted specific entity by sql
+    /**
+     * Deletes specific entity by sql
+     */
     boolean deleteEntity(String sql) {
         boolean deleted;
         deleted = deleteEntity(sql, 0);
@@ -52,7 +60,9 @@ abstract class GenericDao {
         return deleted;
     }
 
-    // Deleted specific entity by sql and id
+    /**
+     * Deletes specific entity by sql an id
+     */
     boolean deleteEntity(String sql, int id) {
         boolean deleted = false;
         if (sql != null && id > 0) {

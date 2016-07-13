@@ -20,8 +20,9 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         String sql = "SELECT * FROM `match` WHERE group_id=?";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -35,7 +36,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
                 match.setScoreParticipantTwo(rs.getInt("score_participant_2"));
 
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeResources(conn, ps, rs);

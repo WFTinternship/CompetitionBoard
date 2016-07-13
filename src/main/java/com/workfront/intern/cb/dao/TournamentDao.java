@@ -4,7 +4,8 @@ import com.workfront.intern.cb.common.Tournament;
 
 import java.util.List;
 
-interface TournamentDao {
+public interface TournamentDao {
+
     Tournament getTournamentById(int id);
 
     List<Tournament> getTournamentListByManager(int id);
@@ -17,6 +18,5 @@ interface TournamentDao {
 
     boolean deleteTournamentById(int id);
 
-    boolean deleteTournamentAll();
-
+    boolean deleteAll();
 }

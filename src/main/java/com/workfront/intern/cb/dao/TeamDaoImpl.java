@@ -21,20 +21,18 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
         Team team = null;
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id WHERE team_id=?";
 
+
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            try {
-                conn = dataSource.getConnection();
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1, id);
-                rs = ps.executeQuery();
-                if (rs.next()) {
-                    team = extractTeamFromResultSet(rs);
-                }
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                team = extractTeamFromResultSet(rs);
             }
-        } catch (PropertyVetoException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -52,15 +50,16 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 team = extractTeamFromResultSet(rs);
                 teamList.add(team);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -78,9 +77,8 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
         String sql_team = "INSERT INTO team (team_id, team_name) VALUES (?,?)";
 
         try {
-            // acquire polled connection
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
 
             // start transaction
             conn.setAutoCommit(false);
@@ -115,9 +113,8 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
             // commit transaction
             conn.commit();
             inserted = true;
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             try {
-                assert conn != null;
                 conn.rollback();
             } catch (SQLException e1) {
                 LOG.error(e.getMessage(), e1);
@@ -144,8 +141,8 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
 
         // acquire polled connection
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
 
             // start transaction
             conn.setAutoCommit(false);
@@ -170,11 +167,9 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
             // commit transaction
             conn.commit();
             updated = true;
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             try {
-                if (conn != null) {
-                    conn.rollback();
-                }
+                conn.rollback();
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
