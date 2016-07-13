@@ -9,12 +9,8 @@ public class Tournament {
     private Timestamp endDate;
     private String location;
     private String tournamentDescription;
-//    private TournamentFormat tournamentFormat;
-//    private Manager manager;
-
     private int tournamentFormatId;
     private int managerId;
-
 
     public Tournament() {
     }
@@ -88,22 +84,6 @@ public class Tournament {
     public void setTournamentDescription(String tournamentDescription) {
         this.tournamentDescription = tournamentDescription;
     }
-
-//    public TournamentFormat getTournamentFormat() {
-//        return tournamentFormat;
-//    }
-//
-//    public void setTournamentFormat(TournamentFormat tournamentFormat) {
-//        this.tournamentFormat = tournamentFormat;
-//    }
-//
-//    public Manager getManager() {
-//        return manager;
-//    }
-//
-//    public void setManager(Manager manager) {
-//        this.manager = manager;
-//    }
 
     @Override
     public String toString() {

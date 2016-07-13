@@ -122,6 +122,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        int row = 0;
 
         String sql = "INSERT INTO " +
                 "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id)\n" +
@@ -133,6 +134,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
             // Initialize statement
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
             ps.setString(1, tournament.getTournamentName());
             ps.setTimestamp(2, tournament.getStartDate());
             ps.setTimestamp(3, tournament.getEndDate());
@@ -142,7 +144,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setInt(7, tournament.getManagerId());
 
             // Execute statement
-            ps.executeUpdate();
+            row = ps.executeUpdate();
 
             // insert base participant info
             rs = ps.getGeneratedKeys();
@@ -155,7 +157,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         } finally {
             closeResources(conn, ps, rs);
         }
-        return inserted;
+        return row == 1;
     }
 
     /**
@@ -234,33 +236,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         tournament.setManagerId(rs.getInt("manager_id"));
 
         return tournament;
-    }
-
-    public static void main(String[] args) {
-        Tournament testTournament = new Tournament();
-        Manager manager = new Manager();
-        manager.setId(1);
-        manager.setLogin("aaa");
-        manager.setPassword("123");
-
-
-        //TODO change names of fields to small
-        String tournamentName = "THE BEST OF IF THE BEST";
-        Timestamp startDate = Timestamp.valueOf("2020-08-08 10:00:00");
-        Timestamp endDate = Timestamp.valueOf("2020-08-08 20:00:00");
-        String location = "Yerevan, Armenia";
-        String tournamentDescription = "Tournament begins gentlemen, welcome";
-        int tournamentFormatId = TournamentFormat.OLYMPIC.getFormatId();
-        int managerId = new Manager().getId();
-
-        testTournament.setTournamentName(tournamentName);
-        testTournament.setStartDate(startDate);
-        testTournament.setEndDate(endDate);
-        testTournament.setLocation(location);
-        testTournament.setTournamentDescription(tournamentDescription);
-        testTournament.setTournamentFormatId(tournamentFormatId);
-        testTournament.setManagerId(managerId);
-
     }
 }
 
