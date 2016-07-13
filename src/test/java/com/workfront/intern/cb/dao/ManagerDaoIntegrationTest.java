@@ -12,8 +12,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ManagerDaoIntegrationTest extends BaseTest {
-    protected final String MANAGER_LOGIN = "user_test";
-    protected final String MANAGER_PASSWORD = "123456";
+    private final String MANAGER_LOGIN = "user_test";
+    private final String MANAGER_PASSWORD = "123456";
 
     private ManagerDao managerDao = new ManagerDaoImpl();
     private Manager testManager;

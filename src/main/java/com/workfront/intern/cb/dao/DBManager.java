@@ -31,10 +31,9 @@ public class DBManager {
         return dbConnection;
     }
 
-    /**
-     * create and return polled connection with DB, use connection pool method
-     * @return
-     */
+
+    // Create and return polled connection with DB, use connection pool method
+
     public static Connection getPooledConnection() {
         Connection dbConnection = null;
         try {

@@ -53,17 +53,19 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "SELECT * FROM manager WHERE login=?";
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, login);
+
+            // Execute statement
             rs = ps.executeQuery();
             if (rs.next()) {
                 manager = extractManagerFromResultSet(rs);
-            } else {
-                return null;
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -82,15 +84,18 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         Manager manager;
 
         try {
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
+
             while (rs.next()) {
                 manager = extractManagerFromResultSet(rs);
                 managerList.add(manager);
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
@@ -107,9 +112,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         PreparedStatement ps = null;
         int rows = 0;
         try {
-            // acquire polled connection
-            DataSource dataSource = DBManager.getDataSource();
-            conn = dataSource.getConnection();
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
 
             // prepare base participant insert query
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -123,7 +127,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             if (rs.next()) {
                 manager.setId(rs.getInt(1));
             }
-        } catch (PropertyVetoException | SQLException e) {
+        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
@@ -131,7 +135,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return rows == 1;
     }
 
-    //Deleting manager by id
+    // Deleting manager by id
     @Override
     public boolean deleteManagerById(int id) {
         Connection conn = null;
@@ -140,9 +144,16 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "DELETE FROM manager WHERE manager_id=?";
 
         try {
+            // Acquire connection
             conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
+
+            // Initialize statement
             ps.setInt(1, id);
+
+            // Execute statement
             rows = ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -160,8 +171,13 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "DELETE FROM manager";
 
         try {
+            // Acquire connection
             conn = DBManager.getPooledConnection();
+
+            // Initialize statement
             ps = conn.prepareStatement(sql);
+
+            // Execute statement
             rows = ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -180,11 +196,5 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         manager.setPassword(rs.getString("password"));
 
         return manager;
-    }
-
-    public static void main(String[] args) {
-        Manager manager = new ManagerDaoImpl().getManagerById(9999);
-        System.out.println(manager.getId());
-
     }
 }
