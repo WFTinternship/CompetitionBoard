@@ -159,6 +159,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
         deleted = deleteEntity(sql, id);
         return deleted;
+
+
     }
 
     /**
@@ -199,7 +201,5 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         manager.setPassword(rs.getString("password"));
 
         return manager;
-
-
     }
 }

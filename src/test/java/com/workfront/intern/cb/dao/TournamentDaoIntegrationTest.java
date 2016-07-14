@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -154,21 +155,49 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void addTournament_created() {
-        // Initialize random tournament instance
-        Tournament tournament = createRandomTournament();
-        tournament.setManagerId(testManager.getId());
-
-        assertEquals(0, tournament.getTournamentId());
-
-        // Testing method
-        boolean added = tournamentDao.addTournament(tournament);
-
-        assertTrue(added);
-        assertTrue(tournament.getTournamentId() > 0);
+//        // Initialize random tournament instance
+//        testManager = createRandomManager();
+//        managerDao.addManager(testManager);
+//
+//        int targetId = testManager.getId();
+//
+//        Tournament tournament = createRandomTournament();
+//        tournament.setManagerId(targetId);
+//
+//        assertEquals(0, tournament.getTournamentId());
+//
+//        // Testing method
+//        boolean added = tournamentDao.addTournament(tournament);
+//
+//        assertTrue(added);
+//        assertTrue(tournament.getTournamentId() > 0);
     }
 
     @Test
     public void updateTournament() {
+        String updatedTournamentName = "UPDATED, THE BEST OF IF THE BEST";
+        Timestamp startDate = Timestamp.valueOf("2020-08-08 10:00:00");
+        Timestamp endDate = Timestamp.valueOf("2020-08-08 20:00:00");
+        String location = "Yerevan, Armenia";
+        String  updatedTournamentDescription = "UPDATED, Tournament begins gentlemen, welcome";
+
+        int targetId = testTournament.getTournamentId();
+        // Testing method
+        Tournament tournament = tournamentDao.getTournamentById(targetId);
+
+        tournament.setTournamentName(updatedTournamentName);
+        tournament.setStartDate(startDate);
+        tournament.setEndDate(endDate);
+        tournament.setLocation(location);
+        tournament.setTournamentDescription(updatedTournamentDescription);
+//        testTournament.setTournamentFormatId(tournamentFormat.getFormatId());
+        tournament.setManagerId(testManager.getId());
+
+        boolean updated = new TournamentDaoImpl().updateTournament(tournament);
+
+        assertTrue(updated);
+        assertNotSame(testTournament.getTournamentName(), tournament.getTournamentName());
+
     }
 
     @Test
@@ -180,17 +209,15 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void deleteTournamentById_found() {
-//        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-//
-//        assertTrue(deleted);
+        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
+
+        assertTrue(deleted);
     }
 
     @Test
     public void deleteAll() {
-//        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-//
-//        assertTrue(deleted);
+        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
 
-
+        assertTrue(deleted);
     }
 }
