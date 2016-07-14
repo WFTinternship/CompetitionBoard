@@ -159,8 +159,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
         deleted = deleteEntity(sql, id);
         return deleted;
-
-
     }
 
     /**
