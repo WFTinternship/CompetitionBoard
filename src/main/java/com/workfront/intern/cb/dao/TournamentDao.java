@@ -6,16 +6,21 @@ import java.util.List;
 
 public interface TournamentDao {
 
+    // CREATE
+    boolean addTournament(Tournament tournament);
+
+    // READ
     Tournament getTournamentById(int id);
 
     List<Tournament> getTournamentListByManager(int id);
 
     List<Tournament> getTournamentList();
 
-    boolean addTournament(Tournament tournament);
-
+    // UPDATE
     boolean updateTournament(Tournament tournament);
 
+
+    // DELETE
     boolean deleteTournamentById(int id);
 
     boolean deleteAll();

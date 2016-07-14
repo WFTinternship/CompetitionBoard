@@ -41,6 +41,16 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return mediaByTournamentList;
     }
 
+    @Override
+    public boolean updatePhoto(Media media) {
+        return false;
+    }
+
+    @Override
+    public boolean updateVideo(Media media) {
+        return false;
+    }
+
     // Adding photo to db by specific manager and tournament
     @Override
     public boolean addPhoto(Media media) {
@@ -56,8 +66,8 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, media.getPhoto());
-            ps.setInt(2, media.getTournament().getTournamentId());
-            ps.setInt(3, media.getManager().getId());
+            ps.setInt(2, media.getTournamentId());
+            ps.setInt(3, media.getManagerId());
 
             // Execute statement
             ps.executeUpdate();
@@ -87,8 +97,8 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, media.getVideo());
-            ps.setInt(2, media.getTournament().getTournamentId());
-            ps.setInt(3, media.getManager().getId());
+            ps.setInt(2, media.getTournamentId());
+            ps.setInt(3, media.getManagerId());
 
             // Execute statement
             ps.executeUpdate();
@@ -105,11 +115,11 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Deletes media by id
      */
     @Override
-    public boolean deleteMedia(Media media) {
+    public boolean deleteMedia(int id) {
         boolean deleted;
         String sql = "DELETE FROM media WHERE media_id=?";
 
-        deleted = deleteEntity(sql, media.getMediaId());
+        deleted = deleteEntity(sql, id);
         return deleted;
     }
 
@@ -153,8 +163,8 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             media.setMediaId(rs.getInt("media_id"));
             media.setPhoto(rs.getString("photo"));
             media.setVideo(rs.getString("video"));
-            media.setTournament(new Tournament().getTournamentById(rs.getInt("tournament_id")));
-            media.setManager(new Manager().getManagerById(rs.getInt("manager_id")));
+            media.setTournamentId(rs.getInt("tournament_id"));
+            media.setManagerId(rs.getInt("manager_id"));
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

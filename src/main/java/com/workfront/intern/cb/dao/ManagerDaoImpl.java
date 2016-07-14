@@ -109,6 +109,11 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return managerList;
     }
 
+    @Override
+    public boolean updateManager(String managerLogin) {
+        return false;
+    }
+
     /**
      * Adds new manager in db
      */

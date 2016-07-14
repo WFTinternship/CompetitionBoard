@@ -45,6 +45,26 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
     }
 
     @Override
+    public boolean updateMatch(Match match) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteMatch(int id) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        return false;
+    }
+
+    @Override
+    public boolean addMatch(Match match) {
+        return false;
+    }
+
+    @Override
     public List<Match> getMatchList() {
         return null;
     }

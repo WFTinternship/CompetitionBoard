@@ -4,26 +4,10 @@ public class Media {
     private int mediaId;
     private String photo;
     private String video;
-    private Tournament tournament;
-    private Manager manager;
+    private int tournamentId;
+    private int managerId;
 
     public Media() {
-    }
-
-
-    public Media(String photo, String video, Tournament tournament, Manager manager) {
-        this.photo = photo;
-        this.video = video;
-        this.tournament = tournament;
-        this.manager = manager;
-    }
-
-    public Media(int mediaId, String photo, String video, Tournament tournament, Manager manager) {
-        this.mediaId = mediaId;
-        this.photo = photo;
-        this.video = video;
-        this.tournament = tournament;
-        this.manager = manager;
     }
 
     public int getMediaId() {
@@ -50,20 +34,20 @@ public class Media {
         this.video = video;
     }
 
-    public Tournament getTournament() {
-        return tournament;
+    public int getTournamentId() {
+        return tournamentId;
     }
 
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
+    public void setTournamentId(int tournamentId) {
+        this.tournamentId = tournamentId;
     }
 
-    public Manager getManager() {
-        return manager;
+    public int getManagerId() {
+        return managerId;
     }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
     }
 
     @Override
@@ -73,8 +57,8 @@ public class Media {
         sb.append("mediaId: ").append(mediaId).append("\n");
         sb.append("photo: ").append(photo).append("\n");
         sb.append("video: ").append(video).append("\n");
-        sb.append("tournamentId: ").append(tournament.getTournamentId()).append("\n");
-        sb.append("managerId: ").append(manager.getId()).append("\n");
+        sb.append("tournamentId: ").append(getTournamentId()).append("\n");
+        sb.append("managerId: ").append(getManagerId()).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 

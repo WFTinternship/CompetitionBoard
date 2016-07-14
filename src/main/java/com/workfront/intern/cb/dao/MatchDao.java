@@ -6,7 +6,19 @@ import java.util.List;
 
 public interface MatchDao {
 
+    // CREATE
+    boolean addMatch(Match match);
+
+    // READ
+    List<Match> getMatchList();
+
     Match getMatchByGroupId(int id);
 
-    List<Match> getMatchList();
+    // UPDATE
+    boolean updateMatch(Match match);
+
+    // DELETE
+    boolean deleteMatch(int id);
+
+    boolean deleteAll();
 }

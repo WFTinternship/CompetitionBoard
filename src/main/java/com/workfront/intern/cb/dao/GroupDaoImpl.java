@@ -8,38 +8,69 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDaoImpl extends GenericDao implements GroupDao {
     private static final Logger LOG = Logger.getLogger(GroupDaoImpl.class);
 
+    @Override
+    public boolean addGroup(Group group) {
+        return false;
+    }
+
     // Gets group list in specific tournament
     @Override
-    public List<Group> getGroupInTournamentList(int id) {
+    public Group getGroupById(int id) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM `group` WHERE tournament_id=?";
-        List<Group> groupList = new ArrayList<>();
-        Group group;
+        Group group = null;
 
+        String sql = "SELECT * FROM `group` WHERE tournament_id=?";
         try {
+            // Acquire connection
             conn = DBManager.getPooledConnection();
 
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+
+            // update member data
             rs = ps.executeQuery();
             while (rs.next()) {
                 group = extractGroupFromResultSet(rs);
-                groupList.add(group);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
-        return groupList;
+        return group;
+    }
+
+    @Override
+    public List<Group> getTournamentGroups(int tournamentId) {
+        return null;
+    }
+
+    @Override
+    public List<Group> getAllGroups() {
+        return null;
+    }
+
+    @Override
+    public boolean updateGroup(Group group) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteGroup(int id) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        return false;
     }
 
     //Extracting specific data of Group from ResultSet

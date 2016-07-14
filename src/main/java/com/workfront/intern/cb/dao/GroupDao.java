@@ -5,5 +5,21 @@ import com.workfront.intern.cb.common.Group;
 import java.util.List;
 
 public interface GroupDao {
-    List<Group> getGroupInTournamentList(int id);
+    // CREATE
+    boolean addGroup(Group group);
+
+    // READ
+    Group getGroupById(int id);
+
+    List<Group> getTournamentGroups(int tournamentId);
+
+    List<Group> getAllGroups();
+
+    // UPDATE
+    boolean updateGroup(Group group);
+
+    // DELETE
+    boolean deleteGroup(int id);
+
+    boolean deleteAll();
 }

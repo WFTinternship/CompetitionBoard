@@ -28,6 +28,8 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
+
+            // update member data
             rs = ps.executeQuery();
             if (rs.next()) {
                 member = extractMemberFromResultSet(rs);
@@ -192,12 +194,17 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
     //Deleting member by id
     @Override
-    public boolean deleteMemberById(int id) {
+    public boolean deleteMember(int id) {
         boolean deleted;
         String sql = "DELETE FROM member WHERE member_id=?";
         deleted = deleteEntity(sql, id);
 
         return deleted;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        return false;
     }
 
     //Extracting specific data of Member from ResultSet
