@@ -75,6 +75,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournamentList;
     }
 
+
+
     /**
      * Gets all tournament by manager id
      */
@@ -114,7 +116,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      */
     @Override
     public boolean addTournament(Tournament tournament) {
-        boolean inserted = false;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -147,7 +148,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             if (rs.next()) {
                 tournament.setTournamentId(rs.getInt(1));
             }
-            inserted = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -160,7 +160,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Updates specific data tournament
      */
     @Override
-    public boolean updateTournament(Tournament tournament) {
+    public boolean updateTournament(int id, Tournament tournament) {
         boolean updated = false;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -234,6 +234,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
         return tournament;
     }
+
 }
 
 

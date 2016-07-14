@@ -8,12 +8,6 @@ public class Manager {
     public Manager() {
     }
 
-    public Manager(int id, String login, String password) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-    }
-
     public Manager getManagerById(int id) {
         Manager manager = new Manager();
         manager.setId(id);

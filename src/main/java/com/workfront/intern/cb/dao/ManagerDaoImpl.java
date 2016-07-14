@@ -109,9 +109,32 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return managerList;
     }
 
+    /**
+     * Updates existing manager in db
+     */
+    //TODO
     @Override
-    public boolean updateManager(String managerLogin) {
-        return false;
+    public boolean updateManager(int id, Manager manager) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        int rows = 0;
+
+        String sql = "UPDATE manager SET login=? WHERE manager_id=?";
+        try {
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, manager.getLogin());
+            ps.setInt(2, manager.getId());
+
+            // Execute statement
+            rows = ps.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+        return rows == 1;
     }
 
     /**
@@ -200,4 +223,5 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
         return manager;
     }
+
 }

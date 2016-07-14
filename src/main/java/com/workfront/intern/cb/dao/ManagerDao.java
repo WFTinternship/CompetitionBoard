@@ -17,7 +17,7 @@ public interface ManagerDao {
     List<Manager> getManagerList();
 
     // UPDATE
-    boolean updateManager(String managerLogin);
+    boolean updateManager(int id, Manager manager);
 
     // DELETE
     boolean deleteManagerById(int id);

@@ -3,6 +3,7 @@ package com.workfront.intern.cb.dao;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.TournamentFormat;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
@@ -153,17 +154,15 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(testTournament.getManagerId(), tournament.getManagerId());
     }
 
+    //TODO
     @Test
     public void addTournament_created() {
 //        // Initialize random tournament instance
-//        testManager = createRandomManager();
-//        managerDao.addManager(testManager);
-//
 //        int targetId = testManager.getId();
 //
+//        // Testing method
 //        Tournament tournament = createRandomTournament();
 //        tournament.setManagerId(targetId);
-//
 //        assertEquals(0, tournament.getTournamentId());
 //
 //        // Testing method
@@ -171,35 +170,49 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 //
 //        assertTrue(added);
 //        assertTrue(tournament.getTournamentId() > 0);
+
+
+
     }
 
     @Test
     public void updateTournament() {
-//        String updatedTournamentName = "UPDATED, THE BEST OF IF THE BEST";
-//        Timestamp startDate = Timestamp.valueOf("2020-08-08 10:00:00");
-//        Timestamp endDate = Timestamp.valueOf("2020-08-08 20:00:00");
-//        String location = "Yerevan, Armenia";
-//        String  updatedTournamentDescription = "UPDATED, Tournament begins gentlemen, welcome";
-//
-//        int targetId = testManager.getId();
-//
-//        // Testing method
-//        Tournament tournament = createRandomTournament();
-//        tournament.setTournamentName(updatedTournamentName);
-//        tournament.setStartDate(startDate);
-//        tournament.setEndDate(endDate);
-//        tournament.setLocation(location);
-//        tournament.setTournamentDescription(updatedTournamentDescription);
-//        testTournament.setTournamentFormatId(tournamentFormat.getFormatId());
-//        tournament.setManagerId(targetId);
-//
-//        boolean updated = new TournamentDaoImpl().updateTournament(tournament);
-//        // ????
-//        testTournament  = new TournamentDaoImpl().getTournamentById(targetId);
-//
-//        assertTrue(updated);
-////        assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
-//        assertEquals(testTournament.getTournamentName(), tournament.getTournamentName());
+        // Testing method
+        Tournament tournament = createRandomTournament();
+
+        // Tournament new data
+        String nameUpdate = "UPDATED, THE BEST OF IF THE BEST";
+        Timestamp startDateUpdate = Timestamp.valueOf("2020-08-08 10:00:00");
+        Timestamp endDateUpdated = Timestamp.valueOf("2020-08-08 20:00:00");
+        String locationUpdated = "Yerevan, Armenia";
+        String descriptionUpdated = "UPDATED, Tournament begins gentlemen, welcome";
+
+        int targetId = testManager.getId();
+        int tournamentId = testTournament.getTournamentId();
+
+        tournament.setTournamentId(tournamentId);
+        tournament.setTournamentId(testTournament.getTournamentId());
+        tournament.setTournamentName(nameUpdate);
+        tournament.setStartDate(startDateUpdate);
+        tournament.setEndDate(endDateUpdated);
+        tournament.setLocation(locationUpdated);
+        tournament.setTournamentDescription(descriptionUpdated);
+        testTournament.setTournamentFormatId(TournamentFormat.ROUND_ROBBIN.getFormatId());
+        tournament.setManagerId(targetId);
+
+        // Updates specific tournament in db
+        boolean updated = new TournamentDaoImpl().updateTournament(tournamentId, tournament);
+        testTournament = new TournamentDaoImpl().getTournamentById(tournamentId);
+
+        assertTrue(updated);
+        assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
+        assertEquals(testTournament.getTournamentName(), tournament.getTournamentName());
+        assertEquals(testTournament.getStartDate(), tournament.getStartDate());
+        assertEquals(testTournament.getEndDate(), tournament.getEndDate());
+        assertEquals(testTournament.getLocation(), tournament.getLocation());
+        assertEquals(testTournament.getTournamentDescription(), tournament.getTournamentDescription());
+        assertEquals(testTournament.getTournamentFormatId(), tournament.getTournamentFormatId());
+        assertEquals(testTournament.getManagerId(), tournament.getManagerId());
     }
 
     @Test

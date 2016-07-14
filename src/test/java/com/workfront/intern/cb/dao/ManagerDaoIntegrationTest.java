@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
@@ -127,6 +128,16 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void updateManager() {
+        // Testing method
+        Manager manager = createRandomManager();
+        String loginUpdate = "userUpdate";
+        String passwordUpdate = "123456";
+
+        manager.setLogin(loginUpdate);
+        manager.setPassword(passwordUpdate);
+
+//        boolean update = new ManagerDupdateaoImpl().updateManager();
+
     }
 
     @Test
