@@ -181,23 +181,25 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         String location = "Yerevan, Armenia";
         String  updatedTournamentDescription = "UPDATED, Tournament begins gentlemen, welcome";
 
-        int targetId = testTournament.getTournamentId();
-        // Testing method
-        Tournament tournament = tournamentDao.getTournamentById(targetId);
+        int targetId = testManager.getId();
 
+        // Testing method
+        Tournament tournament = createRandomTournament();
         tournament.setTournamentName(updatedTournamentName);
         tournament.setStartDate(startDate);
         tournament.setEndDate(endDate);
         tournament.setLocation(location);
         tournament.setTournamentDescription(updatedTournamentDescription);
 //        testTournament.setTournamentFormatId(tournamentFormat.getFormatId());
-        tournament.setManagerId(testManager.getId());
+        tournament.setManagerId(targetId);
 
         boolean updated = new TournamentDaoImpl().updateTournament(tournament);
+        // ????
+        testTournament  = new TournamentDaoImpl().getTournamentById(targetId);
 
         assertTrue(updated);
-        assertNotSame(testTournament.getTournamentName(), tournament.getTournamentName());
-
+//        assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
+        assertEquals(testTournament.getTournamentName(), tournament.getTournamentName());
     }
 
     @Test
