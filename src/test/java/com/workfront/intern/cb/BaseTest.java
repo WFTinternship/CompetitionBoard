@@ -1,6 +1,10 @@
 package com.workfront.intern.cb;
 
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.TournamentFormat;
+
+import java.sql.Timestamp;
 
 public class BaseTest {
 

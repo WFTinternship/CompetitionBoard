@@ -125,7 +125,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         int row = 0;
 
         String sql = "INSERT INTO " +
-                "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id)\n" +
+                "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id) " +
                 "VALUES (?,?,?,?,?,?,?)";
 
         try {
