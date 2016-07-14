@@ -84,7 +84,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateTournament_updated() {
+    public void updateTournament() {
     }
 
     @Test
@@ -93,5 +93,9 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void deleteTournamentById_found() {
+    }
+
+    @Test
+    public void deleteAll_deleted() {
     }
 }

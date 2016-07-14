@@ -196,6 +196,11 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
         return deleted;
     }
 
+    @Override
+    public boolean deleteAll() {
+        return false;
+    }
+
     // Extracting specific data of Team from ResultSet
     private static Team extractTeamFromResultSet(ResultSet rs) {
         Team team = new Team();

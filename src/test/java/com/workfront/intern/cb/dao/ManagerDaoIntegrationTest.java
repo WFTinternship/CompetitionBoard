@@ -126,6 +126,10 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test
+    public void updateManager() {
+    }
+
+    @Test
     public void deleteManagerById_notFound() {
         boolean deleted = managerDao.deleteManagerById(NON_EXISTING_ID);
         assertFalse(deleted);
@@ -135,6 +139,10 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     public void deleteManagerById_deleted() {
         boolean deleted = managerDao.deleteManagerById(testManager.getId());
         assertTrue(deleted);
+    }
+
+    @Test
+    public void deleteAll() {
     }
 
     // endregion

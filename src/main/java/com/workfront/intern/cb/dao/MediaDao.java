@@ -22,6 +22,7 @@ public interface MediaDao {
 
     // DELETE
     boolean deleteMedia(int id);
+    boolean deleteAll();
 
 
 }

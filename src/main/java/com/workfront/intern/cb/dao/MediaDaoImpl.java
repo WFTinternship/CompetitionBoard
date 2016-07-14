@@ -123,6 +123,11 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return deleted;
     }
 
+    @Override
+    public boolean deleteAll() {
+        return false;
+    }
+
     /**
      * Gets specific data list of deleteMedia from sql query
      */
