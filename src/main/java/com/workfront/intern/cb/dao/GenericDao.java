@@ -64,7 +64,7 @@ abstract class GenericDao {
      * Deletes specific entity by sql an id
      */
     boolean deleteEntity(String sql, int id) {
-        boolean deleted = false;
+        int rows = 0;
         if (sql != null && id > 0) {
             Connection conn = null;
             PreparedStatement ps = null;
@@ -77,14 +77,13 @@ abstract class GenericDao {
                 ps.setInt(1, id);
 
                 // Execute statement
-                ps.executeUpdate();
-                deleted = true;
+                rows = ps.executeUpdate();
             } catch (SQLException e) {
                 LOG.error(e.getMessage(), e);
             } finally {
                 closeResources(conn, ps);
             }
         }
-        return deleted;
+        return rows == 1;
     }
 }

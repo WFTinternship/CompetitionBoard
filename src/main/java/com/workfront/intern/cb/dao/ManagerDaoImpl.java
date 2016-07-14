@@ -153,29 +153,12 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      */
     @Override
     public boolean deleteManagerById(int id) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        int rows = 0;
+        boolean deleted;
+
         String sql = "DELETE FROM manager WHERE manager_id=?";
 
-        try {
-            // Acquire connection
-            conn = DBManager.getPooledConnection();
-
-            // Initialize statement
-            ps = conn.prepareStatement(sql);
-
-            // Initialize statement
-            ps.setInt(1, id);
-
-            // Execute statement
-            rows = ps.executeUpdate();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps);
-        }
-        return rows == 1;
+        deleted = deleteEntity(sql, id);
+        return deleted;
     }
 
     /**
@@ -216,5 +199,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         manager.setPassword(rs.getString("password"));
 
         return manager;
+
+
     }
 }

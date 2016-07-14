@@ -200,9 +200,10 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     @Override
     public boolean deleteTournamentById(int id) {
         boolean deleted;
-        String sql = "DELETE FROM tournament WHERE tournament_id=?";
-        deleted = deleteEntity(sql, id);
 
+        String sql = "DELETE FROM tournament WHERE tournament_id=?";
+
+        deleted = deleteEntity(sql, id);
         return deleted;
     }
 

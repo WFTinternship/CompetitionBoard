@@ -132,17 +132,20 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     @Test
     public void deleteManagerById_notFound() {
         boolean deleted = managerDao.deleteManagerById(NON_EXISTING_ID);
+
         assertFalse(deleted);
     }
 
     @Test
     public void deleteManagerById_deleted() {
         boolean deleted = managerDao.deleteManagerById(testManager.getId());
+
         assertTrue(deleted);
     }
 
     @Test
     public void deleteAll() {
+        //TODO
     }
 
     // endregion
