@@ -8,12 +8,6 @@ public class Manager {
     public Manager() {
     }
 
-    public Manager getManagerById(int id) {
-        Manager manager = new Manager();
-        manager.setId(id);
-        return manager;
-    }
-
     public int getId() {
         return id;
     }

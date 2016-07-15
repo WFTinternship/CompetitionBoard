@@ -25,11 +25,11 @@ public class BaseTest {
      * Creates manager
      */
     protected static Manager createRandomManager() {
-        String managerLogin = "user_test";
+        String managerLoginRandom = "user_test" + Math.random();
         String managerPassword = "123456";
 
         Manager testManager = new Manager();
-        testManager.setLogin(managerLogin);
+        testManager.setLogin(managerLoginRandom);
         testManager.setPassword(managerPassword);
 
         return testManager;
