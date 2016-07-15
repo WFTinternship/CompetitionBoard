@@ -76,7 +76,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     }
 
 
-
     /**
      * Gets all tournament by manager id
      */
@@ -180,7 +179,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setString(5, tournament.getTournamentDescription());
             ps.setInt(6, tournament.getTournamentFormatId());
             ps.setInt(7, tournament.getManagerId());
-            ps.setInt(8, tournament.getTournamentId());
+            ps.setInt(8, id);
 
             // Execute statement
             ps.executeUpdate();
@@ -234,7 +233,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
         return tournament;
     }
-
 }
 
 

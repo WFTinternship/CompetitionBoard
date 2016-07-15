@@ -2,7 +2,6 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
@@ -129,15 +128,20 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     @Test
     public void updateManager() {
         // Testing method
-        Manager manager = createRandomManager();
-        String loginUpdate = "userUpdate";
-        String passwordUpdate = "123456";
+        String passwordUpdate = StringHelper.passToEncrypt("updatedPassword");
+        int targetId = testManager.getId();
+        testManager.setPassword(passwordUpdate);
 
-        manager.setLogin(loginUpdate);
-        manager.setPassword(passwordUpdate);
+        boolean update = new ManagerDaoImpl().updateManager(targetId, testManager);
 
-//        boolean update = new ManagerDupdateaoImpl().updateManager();
+        assertTrue(update);
 
+        // Initialize random manager instance
+        Manager manager = new ManagerDaoImpl().getManagerById(targetId);
+
+        assertEquals(testManager.getId(), manager.getId());
+        assertEquals(testManager.getLogin(), manager.getLogin());
+        assertEquals(testManager.getPassword(), manager.getPassword());
     }
 
     @Test
@@ -156,7 +160,12 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void deleteAll() {
-        //TODO
+        boolean deleteAll = managerDao.deleteAll();
+        assertTrue(deleteAll);
+
+        int targetId = testManager.getId();
+        List<Manager> managerList = new ManagerDaoImpl().getManagerList();
+        assertEquals(0, managerList.size());
     }
 
     // endregion
