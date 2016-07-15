@@ -211,12 +211,26 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      */
     @Override
     public boolean deleteAll() {
-        boolean deletedAll;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        int rows = 0;
 
-        String sql = "DELETE FROM tournament";
-        deletedAll = deleteEntity(sql);
+        try {
+            String sql = "DELETE FROM tournament";
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
 
-        return deletedAll;
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+
+            // Execute statement
+            rows = ps.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+        return rows > 0;
     }
 
     //Extracting specific data of Tournament from ResultSet
@@ -232,6 +246,11 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         tournament.setManagerId(rs.getInt("manager_id"));
 
         return tournament;
+    }
+
+
+    public static void main(String[] args) {
+        boolean del = new TournamentDaoImpl().deleteAll();
     }
 
 }

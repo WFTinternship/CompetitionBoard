@@ -4,8 +4,6 @@ import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.apache.log4j.Logger;
 
-import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -192,9 +190,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         Connection conn = null;
         PreparedStatement ps = null;
         int rows = 0;
-        String sql = "DELETE FROM manager";
 
         try {
+            String sql = "DELETE FROM manager";
             // Acquire connection
             conn = DBManager.getPooledConnection();
 
@@ -224,5 +222,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return manager;
     }
 
+    public static void main(String[] args) {
+        boolean del = new ManagerDaoImpl().deleteAll();
+    }
 
 }

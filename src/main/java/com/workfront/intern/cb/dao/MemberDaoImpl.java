@@ -3,8 +3,6 @@ package com.workfront.intern.cb.dao;
 import com.workfront.intern.cb.common.Member;
 import org.apache.log4j.Logger;
 
-import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,8 @@
 package com.workfront.intern.cb.dao;
 
-import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
-import com.workfront.intern.cb.common.Tournament;
 import org.apache.log4j.Logger;
 
-import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

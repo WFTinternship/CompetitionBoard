@@ -2,8 +2,6 @@ package com.workfront.intern.cb.dao;
 
 import org.apache.log4j.Logger;
 
-import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.sql.*;
 
 abstract class GenericDao {
@@ -48,16 +46,6 @@ abstract class GenericDao {
                 LOG.error(e.getMessage(), e);
             }
         }
-    }
-
-    /**
-     * Deletes specific entity by sql
-     */
-    boolean deleteEntity(String sql) {
-        boolean deleted;
-        deleted = deleteEntity(sql, 0);
-
-        return deleted;
     }
 
     /**

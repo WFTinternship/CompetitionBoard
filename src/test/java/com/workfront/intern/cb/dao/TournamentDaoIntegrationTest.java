@@ -233,7 +233,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         boolean deleteAll = tournamentDao.deleteAll();
         assertTrue(deleteAll);
 
-//        List<Tournament> tournamentList = tournamentDao.getTournamentList();
-//        assertEquals(0, tournamentList.size());
+        List<Tournament> tournamentList = tournamentDao.getTournamentList();
+        assertEquals(0, tournamentList.size());
     }
 }
