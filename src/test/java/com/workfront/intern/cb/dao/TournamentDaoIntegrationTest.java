@@ -4,7 +4,6 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.TournamentFormat;
-import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -231,8 +230,10 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void deleteAll() {
-        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
+        boolean deleteAll = tournamentDao.deleteAll();
+        assertTrue(deleteAll);
 
-        assertTrue(deleted);
+        List<Tournament> tournamentList = new TournamentDaoImpl().getTournamentList();
+        assertEquals(0, tournamentList.size());
     }
 }

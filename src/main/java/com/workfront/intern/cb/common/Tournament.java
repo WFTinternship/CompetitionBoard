@@ -15,11 +15,11 @@ public class Tournament {
     public Tournament() {
     }
 
-    public Tournament getTournamentById(int id) {
-        Tournament tournament = new Tournament();
-        tournament.setTournamentId(id);
-        return tournament;
-    }
+//    public Tournament getTournamentById(int id) {
+//        Tournament tournament = new Tournament();
+//        tournament.setTournamentId(id);
+//        return tournament;
+//    }
 
     public int getTournamentFormatId() {
         return tournamentFormatId;

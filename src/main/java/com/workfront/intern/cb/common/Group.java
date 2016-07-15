@@ -5,17 +5,9 @@ public class Group {
     private int participantsCount;
     private int round;
     private int nextRoundParticipnats;
-    private Tournament tournament;
+    private int tournamentId;
 
     public Group() {
-    }
-
-    public Group(int groupId, int participantsCount, Tournament tournament, int round, int nextRoundParticipnats) {
-        this.groupId = groupId;
-        this.participantsCount = participantsCount;
-        this.tournament = tournament;
-        this.round = round;
-        this.nextRoundParticipnats = nextRoundParticipnats;
     }
 
     public int getGroupId() {
@@ -34,14 +26,6 @@ public class Group {
         this.participantsCount = participantsCount;
     }
 
-    public Tournament getTournament() {
-        return tournament;
-    }
-
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
-    }
-
     public int getRound() {
         return round;
     }
@@ -58,16 +42,24 @@ public class Group {
         this.nextRoundParticipnats = nextRoundParticipnats;
     }
 
+    public int getTournamentId() {
+        return tournamentId;
+    }
+
+    public void setTournamentId(int tournamentId) {
+        this.tournamentId = tournamentId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("groupId: ").append(groupId).append("\n");
         sb.append("participantsId: ").append(participantsCount).append("\n");
-        sb.append("tournamentId: ").append(tournament.getTournamentId()).append("\n");
+        sb.append("tournamentId: ").append(getTournamentId()).append("\n");
         sb.append("round: ").append(round).append("\n");
         sb.append("nextRoundParticipants: ").append(nextRoundParticipnats).append("\n");
-        sb.append("tournamentId: ").append(tournament.getTournamentId()).append("\n");
+        sb.append("tournamentId: ").append(getTournamentId()).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 

@@ -81,7 +81,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             group.setParticipantsCount(rs.getInt("participants_count"));
             group.setRound(rs.getInt("round"));
             group.setNextRoundParticipnats(rs.getInt("next_round_participants"));
-            group.setTournament(new Tournament().getTournamentById(rs.getInt("tournament_id")));
+            group.setTournamentId(rs.getInt("tournament_id"));
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
