@@ -223,4 +223,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
         return manager;
     }
+
+
 }

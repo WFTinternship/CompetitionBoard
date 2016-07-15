@@ -84,6 +84,6 @@ abstract class GenericDao {
                 closeResources(conn, ps);
             }
         }
-        return rows == 1;
+        return rows > 0;
     }
 }

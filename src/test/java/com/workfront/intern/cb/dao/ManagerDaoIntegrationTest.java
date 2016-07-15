@@ -163,7 +163,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         boolean deleteAll = managerDao.deleteAll();
         assertTrue(deleteAll);
 
-        List<Manager> managerList = new ManagerDaoImpl().getManagerList();
+        List<Manager> managerList = managerDao.getManagerList();
         assertEquals(0, managerList.size());
     }
     // endregion
