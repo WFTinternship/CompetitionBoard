@@ -11,12 +11,12 @@ public interface GroupDao {
     // READ
     Group getGroupById(int id);
 
-    List<Group> getTournamentGroups(int tournamentId);
+    List<Group> getGroupByTournamentList(int tournamentId);
 
     List<Group> getAllGroups();
 
     // UPDATE
-    boolean updateGroup(Group group);
+    boolean updateGroup(int idd, Group group);
 
     // DELETE
     boolean deleteGroup(int id);

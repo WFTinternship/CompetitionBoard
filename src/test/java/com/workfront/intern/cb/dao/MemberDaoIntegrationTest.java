@@ -10,49 +10,59 @@ import org.junit.Test;
 import javax.sql.DataSource;
 
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class MemberDaoIntegrationTest extends BaseTest {
 
     // DAO instances
+    private ParticipantDao participantDao;
     private MemberDao memberDao;
 
     // Test helper objects
-    private Participant testParticipant = new Member();
+    private Participant testParticipant;
     private Member testMember;
 
     DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() {
+        participantDao = new ParticipantDaoImpl(dataSource);
         memberDao = new MemberDaoImpl(dataSource);
 
         // Delete all remaining objects
         memberDao.deleteAll();
+        participantDao.deleteAll();
 
         // Initialize random member instance
-        testParticipant.setAvatar("participant_avatar");
-        testParticipant.setParticipantInfo("participant_bla");
+        testParticipant = createRandomMemberParticipant();
 
+        // Save to database
+        participantDao.addParticipant(testParticipant);
+
+        // Initialize random member instance
         testMember = createRandomMember();
         testMember.setMemberId(testParticipant.getId());
-        testMember.setAvatar(testParticipant.getAvatar());
-        testMember.setParticipantInfo(testParticipant.getParticipantInfo());
-
-        assertEquals(0, testMember.getId());
 
         // Save to database
         memberDao.addMember(testMember);
+
+        // Validate ID
         assertTrue(testMember.getId() > 0);
+
     }
 
     @After
     public void afterTest() {
+
     }
 
     @Test
     public void getMemberId_notFound() {
+        // Testing method
+        Member member = memberDao.getMemberById(NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, member);
     }
 
     @Test

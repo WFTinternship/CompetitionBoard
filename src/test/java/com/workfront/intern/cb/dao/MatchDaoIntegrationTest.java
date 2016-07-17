@@ -88,7 +88,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
         // Deleting 'match' of manager type field after passed test
         if (testMatch != null) {
-            managerDao.deleteManagerById(testMatch.getMatchId());
+            matchDao.deleteMatch(testMatch.getMatchId());
         } else {
             System.out.println(WARNING_MESSAGE);
         }
@@ -125,8 +125,6 @@ public class MatchDaoIntegrationTest extends BaseTest {
     @Test
     public void getMatchId_notFound() {
 
-
-
     }
 
     @Test
@@ -148,9 +146,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMatchByGroupId_notFound() {
-        boolean deleted = matchDao.deleteMatch(NON_EXISTING_ID);
 
-        assertFalse(deleted);
     }
 
     @Test
@@ -174,7 +170,15 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteMatch_deleted() {
+    public void deleteMatch_notFound() {
+//        boolean deleted = matchDao.deleteMatch(NON_EXISTING_ID);
+//
+//        assertFalse(deleted);
+    }
+
+    @Test
+    public void deleteMatch_found() {
+
 
     }
 

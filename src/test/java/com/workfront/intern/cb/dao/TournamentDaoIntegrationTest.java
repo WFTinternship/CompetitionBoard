@@ -55,18 +55,20 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @After
     public void afterTest() {
+        final String WARNING_MESSAGE = "WARNING: testTournament was null after test execution";
+
         // Deleting 'tournament' of manager type field after passed test
         if (testTournament != null) {
             tournamentDao.deleteTournamentById(testTournament.getTournamentId());
         } else {
-            System.out.println("WARNING: testTournament was null after test execution");
+            System.out.println(WARNING_MESSAGE);
         }
 
         // Deleting 'manager' of manager type field after passed test
         if (testManager != null) {
             managerDao.deleteManagerById(testManager.getId());
         } else {
-            System.out.println("WARNING: testManager was null after test execution");
+            System.out.println(WARNING_MESSAGE);
         }
     }
 
@@ -199,13 +201,12 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
 
         tournament.setTournamentId(tournamentId);
-        tournament.setTournamentId(testTournament.getTournamentId());
         tournament.setTournamentName(nameUpdate);
         tournament.setStartDate(startDateUpdate);
         tournament.setEndDate(endDateUpdated);
         tournament.setLocation(locationUpdated);
         tournament.setTournamentDescription(descriptionUpdated);
-        testTournament.setTournamentFormatId(TournamentFormat.ROUND_ROBBIN.getFormatId());
+        tournament.setTournamentFormatId(TournamentFormat.ROUND_ROBBIN.getFormatId());
         tournament.setManagerId(targetId);
 
         // Updates specific tournament in db

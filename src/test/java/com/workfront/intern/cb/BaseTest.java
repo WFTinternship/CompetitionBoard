@@ -59,6 +59,19 @@ public class BaseTest {
         return testTournament;
     }
 
+
+    /**
+     * Creates participant
+     */
+    protected static Participant createRandomMemberParticipant() {
+        Participant participant = new Member();
+        participant.setAvatar("avatar");
+        participant.setParticipantInfo("bla bla bla");
+
+        return participant;
+    }
+
+
     /**
      * Creates member
      */

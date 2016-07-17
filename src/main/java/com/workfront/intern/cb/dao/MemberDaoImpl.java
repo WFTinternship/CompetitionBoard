@@ -114,7 +114,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             rs.close();
 
             // prepare member insert query
-            ps = conn.prepareStatement(sql_member, Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement(sql_member);
             ps.setInt(1, memberId);
             ps.setString(2, member.getName());
             ps.setString(3, member.getSurName());
@@ -122,7 +122,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             ps.setString(5, member.getEmail());
 
             // insert member data
-//            ps.executeUpdate();
+            ps.executeUpdate();
 //            rs = ps.getGeneratedKeys();
 //            if (rs.next()) {
 //                member.setMemberId(rs.getInt(1));

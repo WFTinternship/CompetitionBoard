@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDaoImpl extends GenericDao implements GroupDao {
@@ -67,7 +68,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         ResultSet rs = null;
         Group group = null;
 
-        String sql = "SELECT * FROM `group` WHERE tournament_id=?";
+        String sql = "SELECT * FROM `group` WHERE group_id=?";
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -89,32 +90,137 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         return group;
     }
 
+    /**
+     * Gets group list by specific tournament id
+     */
     @Override
-    public List<Group> getTournamentGroups(int tournamentId) {
-        return null;
+    public List<Group> getGroupByTournamentList(int tournamentId) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Group> groupList = new ArrayList<>();
+        Group group;
+
+        String sql = "SELECT * FROM `group` WHERE tournament_id=?";
+        try {
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                group = extractGroupFromResultSet(rs);
+                groupList.add(group);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return groupList;
     }
 
+    /**
+     * Get all group
+     */
     @Override
     public List<Group> getAllGroups() {
-        return null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Group> groupList = new ArrayList<>();
+        Group group;
+
+        String sql = "SELECT * FROM `group`";
+        try {
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                group = extractGroupFromResultSet(rs);
+                groupList.add(group);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return groupList;
     }
 
+    /**
+     * Updates group
+     */
     @Override
-    public boolean updateGroup(Group group) {
-        return false;
+    public boolean updateGroup(int id, Group group) {
+        boolean updated = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE `group` SET participants_count=?, round=?, next_round_participants=?, tournament_id=? WHERE group_id=?";
+        try {
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, group.getParticipantsCount());
+            ps.setInt(2, group.getRound());
+            ps.setInt(3, group.getNextRoundParticipnats());
+            ps.setInt(4, group.getTournamentId());
+            ps.setInt(5, id);
+
+            // Execute statement
+            ps.executeUpdate();
+            updated = true;
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+        return updated;
     }
 
+
+    /**
+     * Deletes group by id
+     */
     @Override
     public boolean deleteGroup(int id) {
-        return false;
+        boolean deleted;
+
+        String sql = "DELETE FROM `group` WHERE group_id=?";
+
+        deleted = deleteEntries(sql, id);
+
+        return deleted;
     }
 
+    /**
+     * Deletes all group
+     */
     @Override
     public boolean deleteAll() {
-        return false;
+        boolean deleted;
+
+        String sql = "DELETE FROM `group`";
+
+        deleted = deleteEntries(sql);
+
+        return deleted;
     }
 
-    //Extracting specific data of Group from ResultSet
+    /**
+     * Extracting specific data of Group from ResultSet
+     */
     private static Group extractGroupFromResultSet(ResultSet rs) {
         Group group = new Group();
         try {
