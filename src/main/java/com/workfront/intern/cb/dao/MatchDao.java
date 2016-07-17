@@ -10,12 +10,14 @@ public interface MatchDao {
     boolean addMatch(Match match);
 
     // READ
-    List<Match> getMatchList();
+    Match getMatch(int id);
 
     Match getMatchByGroupId(int id);
 
+    List<Match> getMatchListByGroup(int id);
+
     // UPDATE
-    boolean updateMatch(Match match);
+    boolean updateMatch(int id, Match match);
 
     // DELETE
     boolean deleteMatch(int id);

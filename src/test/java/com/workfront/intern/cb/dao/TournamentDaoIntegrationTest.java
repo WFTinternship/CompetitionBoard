@@ -26,7 +26,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     DataSource dataSource = DBManager.getDataSource();
 
-
     @Before
     public void beforeTest() {
         managerDao = new ManagerDaoImpl(dataSource);

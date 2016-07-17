@@ -22,6 +22,7 @@
         <c3p0.version>0.9.5.1</c3p0.version>
         <junit.version>4.4</junit.version>
         <log4j.version>1.2.17</log4j.version>
+        <mockito.version>1.10.19</mockito.version>
     </properties>
 
     <dependencies>
@@ -42,10 +43,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+
     </dependencies>
 
     <build>

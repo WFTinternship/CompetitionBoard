@@ -117,7 +117,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     /**
      * Updates existing manager in db
      */
-    //TODO
     @Override
     public boolean updateManager(int id, Manager manager) {
         Connection conn = null;
@@ -150,9 +149,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        int rows = 0;
 
         String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
-        int rows = 0;
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();

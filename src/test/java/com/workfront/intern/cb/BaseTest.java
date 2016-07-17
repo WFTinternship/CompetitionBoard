@@ -98,4 +98,38 @@ public class BaseTest {
 
         return media;
     }
+
+    /**
+     * Creates match
+     */
+    protected static Match createRandomMatch() {
+        int participantOneId = 1;
+        int participantTwoId = 2;
+        int scoreParticipantOne = 10;
+        int scoreParticipantTwo = 20;
+
+        Match match = new Match();
+        match.setParticipantOneId(participantOneId);
+        match.setParticipantTwoId(participantTwoId);
+        match.setScoreParticipantOne(scoreParticipantOne);
+        match.setScoreParticipantOne(scoreParticipantTwo);
+
+        return match;
+    }
+
+    /**
+     * Creates group
+     */
+    protected static Group createRandomGroup() {
+        int participantsCount = 30;
+        int round = 5;
+        int nextRoundParticipants = 30;
+
+        Group group = new Group();
+        group.setParticipantsCount(participantsCount);
+        group.setRound(round);
+        group.setNextRoundParticipnats(nextRoundParticipants);
+
+        return group;
+    }
 }
