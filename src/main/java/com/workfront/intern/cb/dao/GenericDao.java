@@ -49,11 +49,11 @@ abstract class GenericDao {
     }
 
     /**
-     * Deletes specific entity by sql an id
+     * Deletes entry(es) according to specified SQL and ID param.
      */
-    boolean deleteEntity(String sql, int id) {
+    boolean deleteEntries(String sql, int id) {
         int rows = 0;
-        if (sql != null && id > 0) {
+        if (sql != null) {
             Connection conn = null;
             PreparedStatement ps = null;
             try {
@@ -62,7 +62,9 @@ abstract class GenericDao {
 
                 // Initialize statement
                 ps = conn.prepareStatement(sql);
-                ps.setInt(1, id);
+                if (id > 0) {
+                    ps.setInt(1, id);
+                }
 
                 // Execute statement
                 rows = ps.executeUpdate();
@@ -73,5 +75,12 @@ abstract class GenericDao {
             }
         }
         return rows > 0;
+    }
+
+    /**
+     * Deletes entries according to specified SQL statement.
+     */
+    boolean deleteEntries(String sql) {
+        return deleteEntries(sql, 0);
     }
 }

@@ -11,17 +11,18 @@ public interface MediaDao {
     boolean addVideo(Media media);
 
     // READ
-    List<Media> getMediaByManager(int id);
+    List<Media> getMediaListByManager(int id);
 
-    List<Media> getMediaByTournament(int id);
+    List<Media> getMediaListByTournament(int id);
 
     // UPDATE
-    boolean updatePhoto(Media media);
+    boolean updatePhoto(int id, Media media);
 
-    boolean updateVideo(Media media);
+    boolean updateVideo(int id, Media media);
 
     // DELETE
     boolean deleteMedia(int id);
+
     boolean deleteAll();
 
 

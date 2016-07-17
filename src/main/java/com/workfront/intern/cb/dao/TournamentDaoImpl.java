@@ -3,12 +3,19 @@ package com.workfront.intern.cb.dao;
 import com.workfront.intern.cb.common.Tournament;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     private static final Logger LOG = Logger.getLogger(TournamentDaoImpl.class);
+
+    private DataSource dataSource;
+
+    public TournamentDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Gets tournament by tournament id
@@ -19,8 +26,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Tournament tournament = null;
-        String sql = "SELECT * FROM tournament WHERE tournament_id=?";
 
+        String sql = "SELECT * FROM tournament WHERE tournament_id=?";
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -52,8 +59,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         ResultSet rs = null;
         List<Tournament> tournamentList = new ArrayList<>();
         Tournament tournament;
-        String sql = "SELECT * FROM tournament";
 
+        String sql = "SELECT * FROM tournament";
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -86,8 +93,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         ResultSet rs = null;
         Tournament tournament;
         List<Tournament> tournamentListByManager = new ArrayList<>();
-        String sql = "SELECT * FROM tournament WHERE manager_id=?";
 
+        String sql = "SELECT * FROM tournament WHERE manager_id=?";
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -183,7 +190,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
             // Execute statement
             ps.executeUpdate();
-
             updated = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -202,7 +208,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
         String sql = "DELETE FROM tournament WHERE tournament_id=?";
 
-        deleted = deleteEntity(sql, id);
+        deleted = deleteEntries(sql, id);
         return deleted;
     }
 
@@ -248,12 +254,4 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournament;
     }
 
-
-    public static void main(String[] args) {
-        boolean del = new TournamentDaoImpl().deleteAll();
-    }
-
 }
-
-
-

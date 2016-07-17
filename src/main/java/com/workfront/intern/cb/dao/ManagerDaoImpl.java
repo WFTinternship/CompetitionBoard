@@ -4,12 +4,19 @@ import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     private static final Logger LOG = Logger.getLogger(ManagerDaoImpl.class);
+
+    private DataSource dataSource;
+
+    public ManagerDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Returns manager by id
@@ -141,9 +148,10 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     @Override
     public boolean addManager(Manager manager) {
         Connection conn = null;
-        String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
-
         PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
         int rows = 0;
         try {
             // Acquire connection
@@ -157,14 +165,14 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             // insert base participant info
             rows = ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
+            rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 manager.setId(rs.getInt(1));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps);
+            closeResources(conn, ps, rs);
         }
         return rows == 1;
     }
@@ -178,7 +186,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
         String sql = "DELETE FROM manager WHERE manager_id=?";
 
-        deleted = deleteEntity(sql, id);
+        deleted = deleteEntries(sql, id);
+
         return deleted;
     }
 
@@ -187,26 +196,13 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      */
     @Override
     public boolean deleteAll() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        int rows = 0;
+        boolean deleted;
 
-        try {
-            String sql = "DELETE FROM manager";
-            // Acquire connection
-            conn = DBManager.getPooledConnection();
+        String sql = "DELETE FROM manager";
 
-            // Initialize statement
-            ps = conn.prepareStatement(sql);
+        deleted = deleteEntries(sql);
 
-            // Execute statement
-            rows = ps.executeUpdate();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps);
-        }
-        return rows > 0;
+        return deleted;
     }
 
     /**
@@ -221,9 +217,4 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
         return manager;
     }
-
-    public static void main(String[] args) {
-        boolean del = new ManagerDaoImpl().deleteAll();
-    }
-
 }

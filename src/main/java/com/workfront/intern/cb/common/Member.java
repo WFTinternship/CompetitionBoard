@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.common;
 
 public class Member extends Participant {
+    private int memberId;
     private String name;
     private String surName;
     private String position;
@@ -9,6 +10,15 @@ public class Member extends Participant {
     public Member() {
         isTeam = false;
     }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
 
     public String getName() {
         return name;

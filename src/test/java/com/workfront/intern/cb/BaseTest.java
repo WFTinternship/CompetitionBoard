@@ -1,8 +1,6 @@
 package com.workfront.intern.cb;
 
-import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.TournamentFormat;
+import com.workfront.intern.cb.common.*;
 
 import java.sql.Timestamp;
 import java.util.Random;
@@ -25,7 +23,7 @@ public class BaseTest {
      * Creates manager
      */
     protected static Manager createRandomManager() {
-        String managerLoginRandom = "user_test" + Math.random();
+        String managerLoginRandom = "user_" + System.currentTimeMillis();
         String managerPassword = "123456";
 
         Manager testManager = new Manager();
@@ -59,5 +57,45 @@ public class BaseTest {
         testTournament.setTournamentFormatId(tournamentFormat.getFormatId());
 
         return testTournament;
+    }
+
+    /**
+     * Creates member
+     */
+    protected static Member createRandomMember() {
+        Member testMember = new Member();
+        testMember.setName("name_");
+        testMember.setSurName("surname_");
+        testMember.setPosition("developer");
+        testMember.setEmail(System.currentTimeMillis() + "@gmail.com");
+
+        return testMember;
+    }
+
+
+    /**
+     * Creates team
+     */
+    //todo
+
+
+    /**
+     * Creates photo media
+     */
+    protected static Media createRandomPhotoMedia() {
+        Media media = new Media();
+        media.setPhoto("photo_");
+
+        return media;
+    }
+
+    /**
+     * Creates photo media
+     */
+    protected static Media createRandomVideoMedia() {
+        Media media = new Media();
+        media.setVideo("video_");
+
+        return media;
     }
 }

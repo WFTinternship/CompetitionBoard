@@ -1,14 +1,25 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Member;
+import com.workfront.intern.cb.common.Participant;
+import javafx.scene.input.DataFormat;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDaoImpl extends GenericDao implements MemberDao {
     private static final Logger LOG = Logger.getLogger(MemberDaoImpl.class);
+
+    private DataSource dataSource;
+
+    public MemberDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     //Gets member by memberId
     @Override
@@ -77,7 +88,6 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
         String sql_participant = "INSERT INTO participant(is_team, avatar, participant_info) VALUES (?,?,?)";
         String sql_member = "INSERT INTO member(member_id, name, surname, position, email) VALUES (?,?,?,?,?)";
-
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -104,7 +114,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             rs.close();
 
             // prepare member insert query
-            ps = conn.prepareStatement(sql_member);
+            ps = conn.prepareStatement(sql_member, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, memberId);
             ps.setString(2, member.getName());
             ps.setString(3, member.getSurName());
@@ -112,7 +122,11 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             ps.setString(5, member.getEmail());
 
             // insert member data
-            ps.executeUpdate();
+//            ps.executeUpdate();
+//            rs = ps.getGeneratedKeys();
+//            if (rs.next()) {
+//                member.setMemberId(rs.getInt(1));
+//            }
             ps.close();
             rs.close();
 
@@ -195,14 +209,18 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
     public boolean deleteMember(int id) {
         boolean deleted;
         String sql = "DELETE FROM member WHERE member_id=?";
-        deleted = deleteEntity(sql, id);
+        deleted = deleteEntries(sql, id);
 
         return deleted;
     }
 
     @Override
     public boolean deleteAll() {
-        return false;
+        boolean deleted;
+        String sql = "DELETE FROM member";
+        deleted = deleteEntries(sql);
+
+        return deleted;
     }
 
     //Extracting specific data of Member from ResultSet

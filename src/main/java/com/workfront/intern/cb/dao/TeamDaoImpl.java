@@ -189,7 +189,7 @@ public class TeamDaoImpl extends GenericDao implements TeamDao {
     public boolean deleteMember(int id) {
         boolean deleted;
         String sql = "DELETE FROM team WHERE team_id=?";
-        deleted = deleteEntity(sql, id);
+        deleted = deleteEntries(sql, id);
 
         return deleted;
     }

@@ -7,17 +7,25 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class ManagerDaoIntegrationTest extends BaseTest {
 
-    private ManagerDao managerDao = new ManagerDaoImpl();
+    // DAO instances
+    private ManagerDao managerDao;
+
+    // Test helper objects
     private Manager testManager;
+
+    DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() {
+        managerDao = new ManagerDaoImpl(dataSource);
+
         // Delete all remaining objects
         managerDao.deleteAll();
 
@@ -132,12 +140,12 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         int targetId = testManager.getId();
         testManager.setPassword(passwordUpdate);
 
-        boolean update = new ManagerDaoImpl().updateManager(targetId, testManager);
+        boolean update = managerDao.updateManager(targetId, testManager);
 
         assertTrue(update);
 
         // Initialize random manager instance
-        Manager manager = new ManagerDaoImpl().getManagerById(targetId);
+        Manager manager = managerDao.getManagerById(targetId);
 
         assertEquals(testManager.getId(), manager.getId());
         assertEquals(testManager.getLogin(), manager.getLogin());

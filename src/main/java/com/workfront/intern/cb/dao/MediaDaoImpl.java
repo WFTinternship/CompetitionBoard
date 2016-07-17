@@ -3,25 +3,30 @@ package com.workfront.intern.cb.dao;
 import com.workfront.intern.cb.common.Media;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MediaDaoImpl extends GenericDao implements MediaDao {
     private static final Logger LOG = Logger.getLogger(MediaDaoImpl.class);
 
+    private DataSource dataSource;
+
+    public MediaDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     /**
      * Gets all media by specific manager
      */
     @Override
-    public List<Media> getMediaByManager(int id) {
+    public List<Media> getMediaListByManager(int id) {
         List<Media> mediaByManagerList;
         String sql = "SELECT * FROM media WHERE manager_id=?";
 
-        mediaByManagerList = new MediaDaoImpl().getSpecificMediaList(sql, id);
+        mediaByManagerList = getSpecificMediaList(sql, id);
         return mediaByManagerList;
     }
 
@@ -29,32 +34,24 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets all media by specific tournament
      */
     @Override
-    public List<Media> getMediaByTournament(int id) {
+    public List<Media> getMediaListByTournament(int id) {
         List<Media> mediaByTournamentList;
         String sql = "SELECT * FROM media WHERE tournament_id=?";
 
-        mediaByTournamentList = new MediaDaoImpl().getSpecificMediaList(sql, id);
+        mediaByTournamentList = getSpecificMediaList(sql, id);
         return mediaByTournamentList;
     }
 
+    /**
+     * Updates photo
+     */
     @Override
-    public boolean updatePhoto(Media media) {
-        return false;
-    }
-
-    @Override
-    public boolean updateVideo(Media media) {
-        return false;
-    }
-
-    // Adding photo to db by specific manager and tournament
-    @Override
-    public boolean addPhoto(Media media) {
-        boolean inserted = false;
+    public boolean updatePhoto(int id, Media media) {
+        boolean updated = false;
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "INSERT INTO media(photo, tournament_id, manager_id) VALUES(?, ?, ?)";
 
+        String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -62,17 +59,90 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, media.getPhoto());
+            ps.setString(2, media.getVideo());
+            ps.setInt(3, media.getTournamentId());
+            ps.setInt(4, media.getManagerId());
+            ps.setInt(5, id);
+
+            // Execute statement
+            ps.executeUpdate();
+            updated = true;
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+
+        return updated;
+    }
+
+    /**
+     * Updates video
+     */
+    @Override
+    public boolean updateVideo(int id, Media media) {
+        boolean updated = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
+        try {
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, media.getPhoto());
+            ps.setString(2, media.getVideo());
+            ps.setInt(3, media.getTournamentId());
+            ps.setInt(4, media.getManagerId());
+            ps.setInt(5, id);
+
+            // Execute statement
+            ps.executeUpdate();
+            updated = true;
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+        return updated;
+    }
+
+
+    /**
+     * Adding photo to db by specific manager and tournament
+     */
+    @Override
+    public boolean addPhoto(Media media) {
+        boolean inserted = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "INSERT INTO media(photo, tournament_id, manager_id) VALUES(?, ?, ?)";
+        try {
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, media.getPhoto());
             ps.setInt(2, media.getTournamentId());
             ps.setInt(3, media.getManagerId());
 
             // Execute statement
             ps.executeUpdate();
 
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                media.setMediaId(rs.getInt(1));
+            }
             inserted = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps);
+            closeResources(conn, ps, rs);
         }
         return inserted;
     }
@@ -85,6 +155,8 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         boolean inserted = false;
         Connection conn = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
+
         String sql = "INSERT INTO media(video, tournament_id, manager_id) VALUES(?, ?, ?)";
         try {
             // Acquire connection
@@ -98,11 +170,15 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
 
             // Execute statement
             ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                media.setMediaId(rs.getInt(1));
+            }
             inserted = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps);
+            closeResources(conn, ps, rs);
         }
         return inserted;
     }
@@ -115,13 +191,17 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         boolean deleted;
         String sql = "DELETE FROM media WHERE media_id=?";
 
-        deleted = deleteEntity(sql, id);
+        deleted = deleteEntries(sql, id);
         return deleted;
     }
 
     @Override
     public boolean deleteAll() {
-        return false;
+        boolean deleted;
+        String sql = "DELETE FROM media";
+
+        deleted = deleteEntries(sql);
+        return deleted;
     }
 
     /**

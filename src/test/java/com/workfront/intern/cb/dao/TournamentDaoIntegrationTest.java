@@ -8,37 +8,49 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class TournamentDaoIntegrationTest extends BaseTest {
-    private ManagerDao managerDao = new ManagerDaoImpl();
-    private TournamentDao tournamentDao = new TournamentDaoImpl();
 
-    private Tournament testTournament;
+    // DAO instances
+    private ManagerDao managerDao;
+    private TournamentDao tournamentDao;
+
+    // Test helper objects
     private Manager testManager;
+    private Tournament testTournament;
+
+    DataSource dataSource = DBManager.getDataSource();
+
 
     @Before
     public void beforeTest() {
+        managerDao = new ManagerDaoImpl(dataSource);
+        tournamentDao = new TournamentDaoImpl(dataSource);
+
+        // Delete all remaining objects
+        tournamentDao.deleteAll();
+        managerDao.deleteAll();
+
         // Initialize random manager instance
         testManager = createRandomManager();
-
         assertEquals(0, testManager.getId());
 
+        // Save to DB
         managerDao.addManager(testManager);
-
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
         testTournament = createRandomTournament();
         testTournament.setManagerId(testManager.getId());
-
         assertEquals(0, testTournament.getTournamentId());
 
+        // Save to DB
         tournamentDao.addTournament(testTournament);
-
         assertTrue(testTournament.getTournamentId() > 0);
     }
 
@@ -153,25 +165,23 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(testTournament.getManagerId(), tournament.getManagerId());
     }
 
-    //TODO
     @Test
     public void addTournament_created() {
-//        // Initialize random tournament instance
-//        int targetId = testManager.getId();
-//
-//        // Testing method
-//        Tournament tournament = createRandomTournament();
-//        tournament.setManagerId(targetId);
-//        assertEquals(0, tournament.getTournamentId());
-//
-//        // Testing method
-//        boolean added = tournamentDao.addTournament(tournament);
-//
-//        assertTrue(added);
-//        assertTrue(tournament.getTournamentId() > 0);
+        // Initialize random tournament instance
+        int targetId = testManager.getId();
 
+        // Testing method
+        Tournament tournament = createRandomTournament();
+        tournament.setManagerId(targetId);
+        assertEquals(0, tournament.getTournamentId());
 
+        // Testing method
+        boolean added = tournamentDao.addTournament(tournament);
 
+        assertTrue(added);
+        assertTrue(tournament.getTournamentId() > 0);
+
+        tournamentDao.deleteTournamentById(tournament.getTournamentId());
     }
 
     @Test
@@ -200,8 +210,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         tournament.setManagerId(targetId);
 
         // Updates specific tournament in db
-        boolean updated = new TournamentDaoImpl().updateTournament(tournamentId, tournament);
-        testTournament = new TournamentDaoImpl().getTournamentById(tournamentId);
+        boolean updated = tournamentDao.updateTournament(tournamentId, tournament);
+        testTournament = tournamentDao.getTournamentById(tournamentId);
 
         assertTrue(updated);
         assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
