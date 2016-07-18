@@ -125,7 +125,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, group);
     }
 
-
     @Test
     public void getGroupById_found() {
         int groupId = testGroup.getGroupId();

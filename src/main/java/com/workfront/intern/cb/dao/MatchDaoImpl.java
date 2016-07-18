@@ -21,29 +21,10 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Gets match by id
      */
     @Override
-    public Match getMatch(int id) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Match match = null;
+    public Match getMatchById(int id) {
         String sql = "SELECT * FROM `match` WHERE match_id=?";
+        return returnMatchFromSpecQuery(sql, id);
 
-        try {
-            // Acquire connection
-            conn = DBManager.getPooledConnection();
-
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                match = extractMatchFromResultSet(rs);
-            }
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return match;
     }
 
     /**
@@ -51,28 +32,8 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      */
     @Override
     public Match getMatchByGroupId(int id) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Match match = null;
         String sql = "SELECT * FROM `match` WHERE group_id=?";
-
-        try {
-            // Acquire connection
-            conn = DBManager.getPooledConnection();
-
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                match = extractMatchFromResultSet(rs);
-            }
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return match;
+        return returnMatchFromSpecQuery(sql, id);
     }
 
     /**
@@ -209,6 +170,33 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         match.setScoreParticipantOne(rs.getInt("score_participant_1"));
         match.setScoreParticipantTwo(rs.getInt("score_participant_2"));
 
+        return match;
+    }
+
+    private Match returnMatchFromSpecQuery(String sql, int id ){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Match match = null;
+
+        try {
+            // Acquire connection
+            conn = DBManager.getPooledConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                match = extractMatchFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
         return match;
     }
 }

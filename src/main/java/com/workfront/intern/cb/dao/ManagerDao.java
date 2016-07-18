@@ -11,9 +11,7 @@ public interface ManagerDao {
 
     // READ
     Manager getManagerById(int id);
-
     Manager getManagerByLogin(String login);
-
     List<Manager> getManagerList();
 
     // UPDATE

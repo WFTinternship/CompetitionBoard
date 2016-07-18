@@ -10,7 +10,7 @@ public interface MatchDao {
     boolean addMatch(Match match);
 
     // READ
-    Match getMatch(int id);
+    Match getMatchById(int id);
 
     Match getMatchByGroupId(int id);
 

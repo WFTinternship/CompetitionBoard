@@ -31,7 +31,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "SELECT * FROM manager WHERE manager_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -59,11 +59,11 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Manager manager = null;
-        String sql = "SELECT * FROM manager WHERE login=?";
 
+        String sql = "SELECT * FROM manager WHERE login=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -91,12 +91,12 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Manager> managerList = new ArrayList<>();
-        String sql = "SELECT * FROM manager";
         Manager manager;
 
+        String sql = "SELECT * FROM manager";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -126,7 +126,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "UPDATE manager SET password=? WHERE manager_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, manager.getPassword());
             ps.setInt(2, id);
@@ -154,7 +154,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // prepare base participant insert query
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -168,6 +168,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             if (rs.next()) {
                 manager.setId(rs.getInt(1));
             }
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {

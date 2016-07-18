@@ -30,7 +30,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         String sql = "SELECT * FROM tournament WHERE tournament_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         String sql = "SELECT * FROM tournament";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -82,7 +82,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournamentList;
     }
 
-
     /**
      * Gets all tournament by manager id
      */
@@ -97,7 +96,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         String sql = "SELECT * FROM tournament WHERE manager_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -130,10 +129,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         String sql = "INSERT INTO " +
                 "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id) " +
                 "VALUES (?,?,?,?,?,?,?)";
-
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -170,12 +168,12 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         boolean updated = false;
         Connection conn = null;
         PreparedStatement ps = null;
+
         String sql = "UPDATE tournament SET tournament_name=?, start_date=?, end_date=?, location=?, " +
                 "tournament_description=?, tournament_format_id=?, manager_id=? WHERE tournament_id=?";
-
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -224,7 +222,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         try {
             String sql = "DELETE FROM tournament";
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -253,5 +251,4 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
         return tournament;
     }
-
 }

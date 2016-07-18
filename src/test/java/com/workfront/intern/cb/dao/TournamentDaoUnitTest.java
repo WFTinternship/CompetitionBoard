@@ -28,6 +28,7 @@ public class TournamentDaoUnitTest {
         dataSource = Mockito.mock(DataSource.class);
         Connection conn = Mockito.mock(Connection.class);
         when(dataSource.getConnection()).thenReturn(conn);
+        when(conn.prepareStatement(any(String.class))).thenThrow(SQLException.class);
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
         managerDao = new ManagerDaoImpl(dataSource);

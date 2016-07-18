@@ -48,16 +48,6 @@ abstract class GenericDao {
         }
     }
 
-    //sxal method!
-    boolean deleteEntity(String sql) {
-        int rows = 0;
-        boolean delete;
-        delete = deleteEntity(sql);
-
-        return delete;
-    }
-
-
     /**
      * Deletes entry(es) according to specified SQL and ID param.
      */
@@ -92,5 +82,17 @@ abstract class GenericDao {
      */
     boolean deleteEntries(String sql) {
         return deleteEntries(sql, 0);
+    }
+
+    int acquireGeneratedKey(PreparedStatement ps) throws SQLException {
+        ResultSet rs = ps.executeQuery();
+        Integer id = null;
+        if (rs.next()) {
+            id = (rs.getInt(1));
+        }
+        rs.close();
+        if (id == null)
+            throw new RuntimeException("Generated ID was NULL");
+        return id;
     }
 }
