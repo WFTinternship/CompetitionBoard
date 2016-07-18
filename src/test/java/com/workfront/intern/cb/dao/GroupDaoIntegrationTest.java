@@ -4,15 +4,11 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.TournamentFormat;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.sql.DataSource;
-
-import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -145,8 +141,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
     }
 
-    //TODO debug
-    @Ignore
     @Test
     public void getGroupByTournamentList_emptyList() {
         int groupId = testGroup.getGroupId();
@@ -162,8 +156,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(0, groupList.size());
     }
 
-    //TODO debug
-    @Ignore
     @Test
     public void getGroupByTournamentList_found() {
         // Testing method
@@ -197,9 +189,20 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getAllGroups_found() {
+        // Testing method
+        List<Group> groupList = groupDao.getAllGroups();
+
+        assertNotNull(groupList);
+        assertEquals(1, groupList.size());
+
+        Group group = groupList.get(0);
+
+        assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testGroup.getRound(), group.getRound());
+        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
     }
-
-
 
     @Test
     public void updateGroup() {

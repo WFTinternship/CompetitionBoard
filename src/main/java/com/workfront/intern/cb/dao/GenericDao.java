@@ -48,6 +48,16 @@ abstract class GenericDao {
         }
     }
 
+    //sxal method!
+    boolean deleteEntity(String sql) {
+        int rows = 0;
+        boolean delete;
+        delete = deleteEntity(sql);
+
+        return delete;
+    }
+
+
     /**
      * Deletes entry(es) according to specified SQL and ID param.
      */

@@ -44,12 +44,12 @@ public class MemberDaoIntegrationTest extends BaseTest {
         testMember = createRandomMember();
         testMember.setMemberId(testParticipant.getId());
 
+
         // Save to database
         memberDao.addMember(testMember);
 
         // Validate ID
         assertTrue(testMember.getId() > 0);
-
     }
 
     @After

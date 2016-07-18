@@ -108,6 +108,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
+            ps.setInt(1, tournamentId);
 
             // Execute statement
             rs = ps.executeQuery();
