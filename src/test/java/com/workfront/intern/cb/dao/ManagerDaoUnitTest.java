@@ -35,7 +35,7 @@ public class ManagerDaoUnitTest {
     public void afterTest() {
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void add_dbError() {
         managerDao.addManager(new Manager());
     }

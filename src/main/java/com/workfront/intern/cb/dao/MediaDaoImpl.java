@@ -160,7 +160,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         String sql = "INSERT INTO media(video, tournament_id, manager_id) VALUES(?, ?, ?)";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);

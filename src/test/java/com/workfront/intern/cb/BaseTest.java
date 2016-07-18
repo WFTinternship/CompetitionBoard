@@ -59,38 +59,27 @@ public class BaseTest {
         return testTournament;
     }
 
-
-    /**
-     * Creates participant
-     */
-    protected static Participant createRandomMemberParticipant() {
-        Participant participant = new Member();
-        participant.setAvatar("avatar");
-        participant.setParticipantInfo("bla bla bla");
-
-        return participant;
-    }
-
-
     /**
      * Creates member
      */
     protected static Member createRandomMember() {
-        Member testMember = new Member();
-        testMember.setName("name_");
-        testMember.setSurName("surname_");
-        testMember.setPosition("developer");
-        testMember.setEmail(System.currentTimeMillis() + "@gmail.com");
+        Participant participant = new Member();
+        participant.setAvatar("avatar");
+        participant.setParticipantInfo("bla bla bla");
 
-        return testMember;
+//        Member testMember = new Member();
+//        testMember.setName("name_");
+//        testMember.setSurName("surname_");
+//        testMember.setPosition("developer");
+//        testMember.setEmail(System.currentTimeMillis() + "@gmail.com");
+
+        return null;
     }
-
 
     /**
      * Creates team
      */
-    //todo
-
+    //TODO
 
     /**
      * Creates photo media

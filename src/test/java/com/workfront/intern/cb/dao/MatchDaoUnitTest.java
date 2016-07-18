@@ -1,7 +1,7 @@
 package com.workfront.intern.cb.dao;
 
 import com.mysql.jdbc.Connection;
-import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.Match;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,9 +15,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
-public class TournamentDaoUnitTest {
+public class MatchDaoUnitTest {
     DataSource dataSource;
-    TournamentDao tournamentDao;
+    MatchDao matchDao;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -28,7 +28,7 @@ public class TournamentDaoUnitTest {
         when(conn.prepareStatement(any(String.class))).thenThrow(SQLException.class);
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
-        tournamentDao = new TournamentDaoImpl(dataSource);
+        matchDao = new MatchDaoImpl(dataSource);
     }
 
     @After
@@ -37,6 +37,6 @@ public class TournamentDaoUnitTest {
 
     @Test
     public void add_dbError() {
-        tournamentDao.addTournament(new Tournament());
+        matchDao.addMatch(new Match());
     }
 }

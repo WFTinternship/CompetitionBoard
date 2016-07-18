@@ -19,8 +19,6 @@ import static org.mockito.Mockito.when;
 
 public class MediaDaoUnitTest {
     DataSource dataSource;
-    ManagerDao managerDao;
-    TournamentDao tournamentDao;
     MediaDao mediaDao;
 
     @SuppressWarnings("unchecked")
@@ -31,8 +29,6 @@ public class MediaDaoUnitTest {
         when(dataSource.getConnection()).thenReturn(conn);
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
-        managerDao = new ManagerDaoImpl(dataSource);
-        tournamentDao = new TournamentDaoImpl(dataSource);
         mediaDao = new MediaDaoImpl(dataSource);
     }
 
@@ -42,9 +38,6 @@ public class MediaDaoUnitTest {
 
     @Test(expected = RuntimeException.class)
     public void add_dbError() {
-        managerDao.addManager(new Manager());
-        tournamentDao.addTournament(new Tournament());
-        mediaDao.addPhoto(new Media());
         mediaDao.addVideo(new Media());
     }
 }

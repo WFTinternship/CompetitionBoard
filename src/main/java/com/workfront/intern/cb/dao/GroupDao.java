@@ -10,16 +10,13 @@ public interface GroupDao {
 
     // READ
     Group getGroupById(int id);
-
     List<Group> getGroupByTournamentList(int tournamentId);
-
     List<Group> getAllGroups();
 
     // UPDATE
-    boolean updateGroup(int idd, Group group);
+    boolean updateGroup(int id, Group group);
 
     // DELETE
     boolean deleteGroup(int id);
-
     boolean deleteAll();
 }

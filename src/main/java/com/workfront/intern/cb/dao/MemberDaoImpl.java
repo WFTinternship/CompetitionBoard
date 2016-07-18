@@ -51,7 +51,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return member;
     }
 
-    //Get all members
+    /**
+     * Get all members
+     */
     @Override
     public List<Member> getMemberList() {
         Connection conn = null;
@@ -80,7 +82,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return memberList;
     }
 
-    //Adding member to db
+    /**
+     * Adding member to db
+     */
     @Override
     public boolean addMember(Member member) {
         boolean inserted = false;
@@ -114,7 +118,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             rs.close();
 
             // prepare member insert query
-            ps = conn.prepareStatement(sql_member);
+            ps = conn.prepareStatement(sql_member, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, memberId);
             ps.setString(2, member.getName());
             ps.setString(3, member.getSurName());
@@ -123,10 +127,10 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
             // insert member data
             ps.executeUpdate();
-//            rs = ps.getGeneratedKeys();
-//            if (rs.next()) {
-//                member.setMemberId(rs.getInt(1));
-//            }
+           rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                member.setId(rs.getInt(1));
+            }
             ps.close();
             rs.close();
 
@@ -146,7 +150,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return inserted;
     }
 
-    //Updating specific data of member
+    /**
+     * Updating specific data of member
+     */
     @Override
     public boolean updateMember(Member member) {
         boolean updated = false;
@@ -204,7 +210,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return updated;
     }
 
-    //Deleting member by id
+    /**
+     * Deletes member by id
+     */
     @Override
     public boolean deleteMember(int id) {
         boolean deleted;
@@ -214,6 +222,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return deleted;
     }
 
+    /**
+     * Deletes all members
+     */
     @Override
     public boolean deleteAll() {
         boolean deleted;
@@ -223,7 +234,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         return deleted;
     }
 
-    //Extracting specific data of Member from ResultSet
+    /**
+     * Extracting specific data of Member from ResultSet
+     */
     private static Member extractMemberFromResultSet(ResultSet rs) {
         Member member = new Member();
         try {

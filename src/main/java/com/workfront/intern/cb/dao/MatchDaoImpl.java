@@ -50,7 +50,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         String sql = "SELECT * FROM `match` WHERE group_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -80,7 +80,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         int rows = 0;
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // prepare base participant insert query
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -118,7 +118,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
                 "WHERE match_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
