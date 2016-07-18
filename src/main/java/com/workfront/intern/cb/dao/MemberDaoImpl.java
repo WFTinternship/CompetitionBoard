@@ -94,7 +94,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         String sql_member = "INSERT INTO member(member_id, name, surname, position, email) VALUES (?,?,?,?,?)";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // start transaction
             conn.setAutoCommit(false);
