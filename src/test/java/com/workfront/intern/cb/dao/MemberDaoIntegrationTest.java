@@ -102,6 +102,7 @@ public class MemberDaoIntegrationTest extends BaseTest {
         assertEquals(testMember.getMemberId(), member.getMemberId());
         assertEquals(testMember.getName(), member.getName());
         assertEquals(testMember.getSurName(), member.getSurName());
+
         assertEquals(testMember.getPosition(), member.getPosition());
     }
 
