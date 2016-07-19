@@ -63,17 +63,15 @@ public class BaseTest {
      * Creates member
      */
     protected static Member createRandomMember() {
-        Participant participant = new Member();
-        participant.setAvatar("avatar");
-        participant.setParticipantInfo("bla bla bla");
+        Member testMember = new Member();
+        testMember.setAvatar("avatar");
+        testMember.setParticipantInfo("bla bla bla");
+        testMember.setName("name");
+        testMember.setSurName("surname");
+        testMember.setEmail("email");
+        testMember.setPosition("developer");
 
-//        Member testMember = new Member();
-//        testMember.setName("name_");
-//        testMember.setSurName("surname_");
-//        testMember.setPosition("developer");
-//        testMember.setEmail(System.currentTimeMillis() + "@gmail.com");
-
-        return null;
+        return testMember;
     }
 
     /**

@@ -155,7 +155,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // start transaction
             conn.setAutoCommit(false);
@@ -208,11 +208,52 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
      */
     @Override
     public boolean deleteMember(int id) {
-        boolean deleted;
-        String sql = "DELETE FROM member WHERE member_id=?";
-        deleted = deleteEntries(sql, id);
+        boolean inserted = false;
+        Connection conn = null;
 
-        return deleted;
+        String sql_member = "DELETE FROM member WHERE member_id=?";
+        String sql_participant = "DELETE FROM participant WHERE participant_id=?";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // start transaction
+            conn.setAutoCommit(false);
+
+            // prepare base participant insert query
+            PreparedStatement ps = conn.prepareStatement(sql_member);
+            ps.setInt(1, id);
+
+            // insert base participant info
+            ps.executeUpdate();
+
+            // acquire assigned ID
+            ps.close();
+
+            // prepare member insert query
+            ps = conn.prepareStatement(sql_participant);
+            ps.setInt(1, id);
+
+            // insert member data
+            ps.executeUpdate();
+            ps.close();
+
+            // commit transaction
+            conn.commit();
+            inserted = true;
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                LOG.error(e.getMessage(), e1);
+            }
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn);
+        }
+        return inserted;
     }
 
     /**
@@ -220,11 +261,52 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
      */
     @Override
     public boolean deleteAll() {
-        boolean deleted;
-        String sql = "DELETE FROM member";
-        deleted = deleteEntries(sql);
+        boolean inserted = false;
+        Connection conn = null;
 
-        return deleted;
+        String sql_member = "DELETE FROM member";
+
+        // Deletes only participants of member
+        String sql_participant = "DELETE FROM participant WHERE is_team=0";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // start transaction
+            conn.setAutoCommit(false);
+
+            // prepare base participant insert query
+            PreparedStatement ps = conn.prepareStatement(sql_member);
+
+            // insert base participant info
+            ps.executeUpdate();
+
+            // acquire assigned ID
+            ps.close();
+
+            // prepare member insert query
+            ps = conn.prepareStatement(sql_participant);
+
+            // insert member data
+            ps.executeUpdate();
+            ps.close();
+
+            // commit transaction
+            conn.commit();
+            inserted = true;
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                LOG.error(e.getMessage(), e1);
+            }
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn);
+        }
+        return inserted;
     }
 
     /**

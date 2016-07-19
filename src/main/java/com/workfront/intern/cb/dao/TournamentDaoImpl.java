@@ -147,8 +147,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             // Execute statement
             row = ps.executeUpdate();
 
-            int id = acquireGeneratedKey(ps);
-            tournament.setTournamentId(id);
+            int tournamentId = acquireGeneratedKey(ps);
+            tournament.setTournamentId(tournamentId);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
