@@ -147,11 +147,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             // Execute statement
             row = ps.executeUpdate();
 
-            // insert base participant info
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                tournament.setTournamentId(rs.getInt(1));
-            }
+            int id = acquireGeneratedKey(ps);
+            tournament.setTournamentId(id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -237,7 +234,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return rows > 0;
     }
 
-    //Extracting specific data of Tournament from ResultSet
+    /**
+     * Extracting specific data of Tournament from ResultSet
+     */
     private static Tournament extractTournamentFromResultSet(ResultSet rs) throws SQLException {
         Tournament tournament = new Tournament();
         tournament.setTournamentId(rs.getInt("tournament_id"));

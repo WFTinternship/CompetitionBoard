@@ -25,31 +25,31 @@ public class MemberDaoIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() {
-//        memberDao = new MemberDaoImpl(dataSource);
-//
-//        // Delete all remaining objects
-//        memberDao.deleteAll();
-//
-//        // Initialize random member instance
-////        testMember = createRandomMember();
-//        Participant participant = new Member();
-//        testMember = new Member();
-//
-//        testMember.setId(participant.getId());
-//        testMember.setAvatar("avatar");
-//        testMember.setParticipantInfo("bla bla bla");
-//        testMember.setName("name");
-//        testMember.setSurName("surname");
-//        testMember.setEmail("email");
-//        testMember.setPosition("developer");
-//
-//        // Validate ID
-//        assertEquals(0, testMember.getId());
-//
-//        // Save to database
-//        memberDao.addMember(testMember);
-//        // Validate ID
-//        assertTrue(testMember.getId() > 0);
+        memberDao = new MemberDaoImpl(dataSource);
+
+        // Delete all remaining objects
+        memberDao.deleteAll();
+
+        // Initialize random member instance
+//        testMember = createRandomMember();
+        Participant participant = new Member();
+        testMember = new Member();
+
+        testMember.setId(participant.getId());
+        testMember.setAvatar("avatar");
+        testMember.setParticipantInfo("bla bla bla");
+        testMember.setName("name");
+        testMember.setSurName("surname");
+        testMember.setEmail("email");
+        testMember.setPosition("developer");
+
+        // Validate ID
+        assertEquals(0, testMember.getId());
+
+        // Save to database
+        memberDao.addMember(testMember);
+        // Validate ID
+        assertTrue(testMember.getId() > 0);
     }
 
     @After

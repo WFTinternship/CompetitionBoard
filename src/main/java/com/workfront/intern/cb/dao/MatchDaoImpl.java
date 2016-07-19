@@ -23,7 +23,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
     @Override
     public Match getMatchById(int id) {
         String sql = "SELECT * FROM `match` WHERE match_id=?";
-        return returnMatchFromSpecQuery(sql, id);
+        return getMatchFromSpecQuery(sql, id);
 
     }
 
@@ -33,7 +33,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
     @Override
     public Match getMatchByGroupId(int id) {
         String sql = "SELECT * FROM `match` WHERE group_id=?";
-        return returnMatchFromSpecQuery(sql, id);
+        return getMatchFromSpecQuery(sql, id);
     }
 
     /**
@@ -93,10 +93,8 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             // insert base participant info
             rows = ps.executeUpdate();
 
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                match.setMatchId(rs.getInt(1));
-            }
+            int id = acquireGeneratedKey(ps);
+            match.setMatchId(id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -140,6 +138,9 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         return updated;
     }
 
+    /**
+     * Deletes match by id
+     */
     @Override
     public boolean deleteMatch(int id) {
         boolean deleted;
@@ -149,6 +150,9 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         return deleted;
     }
 
+    /**
+     * Deletes all match
+     */
     @Override
     public boolean deleteAll() {
         boolean deleted;
@@ -173,7 +177,10 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         return match;
     }
 
-    private Match returnMatchFromSpecQuery(String sql, int id ){
+    /**
+     * Returns match by specific sql query
+     */
+    private Match getMatchFromSpecQuery(String sql, int id) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

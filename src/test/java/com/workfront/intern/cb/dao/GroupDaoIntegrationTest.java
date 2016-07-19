@@ -254,7 +254,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
         List<Group> groupList = groupDao.getAllGroups();
         assertEquals(0, groupList.size());
-
     }
 
     // endregion

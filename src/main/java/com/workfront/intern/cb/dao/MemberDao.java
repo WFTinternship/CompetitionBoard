@@ -10,7 +10,6 @@ public interface MemberDao {
 
     // READ
     Member getMemberById(int id);
-
     List<Member> getMemberList();
 
     // UPDATE
@@ -18,6 +17,5 @@ public interface MemberDao {
 
     // DELETE
     boolean deleteMember(int id);
-
     boolean deleteAll();
 }

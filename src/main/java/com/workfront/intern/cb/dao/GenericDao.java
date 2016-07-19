@@ -85,7 +85,7 @@ abstract class GenericDao {
     }
 
     int acquireGeneratedKey(PreparedStatement ps) throws SQLException {
-        ResultSet rs = ps.executeQuery();
+        ResultSet rs = ps.getGeneratedKeys();
         Integer id = null;
         if (rs.next()) {
             id = (rs.getInt(1));

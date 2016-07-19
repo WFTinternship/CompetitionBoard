@@ -1,8 +1,6 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Group;
-import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.util.StringHelper;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -45,10 +43,8 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             // insert base participant info
             rows = ps.executeUpdate();
 
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                group.setGroupId(rs.getInt(1));
-            }
+            int id = acquireGeneratedKey(ps);
+            group.setGroupId(id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {

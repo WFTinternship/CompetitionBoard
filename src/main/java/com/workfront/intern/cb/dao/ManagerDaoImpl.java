@@ -164,11 +164,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             // insert base participant info
             rows = ps.executeUpdate();
 
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                manager.setId(rs.getInt(1));
-            }
-
+            // return generated key
+            int id = acquireGeneratedKey(ps);
+            manager.setId(id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {

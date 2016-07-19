@@ -21,7 +21,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
         this.dataSource = dataSource;
     }
 
-    //Gets member by memberId
+    /**
+     * Gets member by member id
+     */
     @Override
     public Member getMemberById(int id) {
         Connection conn = null;
@@ -109,13 +111,9 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
             ps.executeUpdate();
 
             // acquire assigned ID
-            ResultSet rs = ps.getGeneratedKeys();
-            int memberId = 0;
-            if (rs.next()) {
-                memberId = rs.getInt(1);
-            }
+            int memberId = acquireGeneratedKey(ps);
+            member.setMemberId(memberId);
             ps.close();
-            rs.close();
 
             // prepare member insert query
             ps = conn.prepareStatement(sql_member, Statement.RETURN_GENERATED_KEYS);
@@ -127,12 +125,7 @@ public class MemberDaoImpl extends GenericDao implements MemberDao {
 
             // insert member data
             ps.executeUpdate();
-           rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                member.setId(rs.getInt(1));
-            }
             ps.close();
-            rs.close();
 
             // commit transaction
             conn.commit();

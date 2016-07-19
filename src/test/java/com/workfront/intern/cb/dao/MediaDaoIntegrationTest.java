@@ -9,10 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.sql.DataSource;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -23,7 +19,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
     private ManagerDao managerDao;
     private TournamentDao tournamentDao;
     private MediaDao mediaDao;
-
 
     // Test helper objects
     private Manager testManager;
@@ -42,7 +37,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
         tournamentDao.deleteAll();
         managerDao.deleteAll();
 
-
         // Initialize random manager instance
         testManager = createRandomManager();
         assertEquals(0, testManager.getId());
@@ -50,7 +44,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
         // Save to DB
         managerDao.addManager(testManager);
         assertTrue(testManager.getId() > 0);
-
 
         // Initialize random tournament instance
         testTournament = createRandomTournament();
@@ -60,7 +53,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
         // Save to DB
         tournamentDao.addTournament(testTournament);
         assertTrue(testTournament.getTournamentId() > 0);
-
 
         // Initialize random media instance
         testMedia = createRandomPhotoMedia();
