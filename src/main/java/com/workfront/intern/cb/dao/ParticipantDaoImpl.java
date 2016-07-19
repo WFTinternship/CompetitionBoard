@@ -113,9 +113,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // insert base participant info
             ps.executeUpdate();
 
-            // acquire assigned ID
+            // acquire/apply assigned ID
             int memberId = acquireGeneratedKey(ps);
-            member.setMemberId(memberId);
+            member.setId(memberId);
             ps.close();
 
             // prepare member insert query
@@ -299,7 +299,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
         String sql_participant = "INSERT INTO participant (is_team, avatar, participant_info) VALUES (?,?,?)";
         String sql_team = "INSERT INTO team (team_id, team_name) VALUES (?,?)";
-
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -316,13 +315,10 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // insert base participant info
             ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
-            int teamId = 0;
-            if (rs.next()) {
-                teamId = rs.getInt(1);
-            }
+            // acquire/apply assigned ID
+            int teamId = acquireGeneratedKey(ps);
+            team.setId(teamId);
             ps.close();
-            rs.close();
 
             // prepare team insert query
             ps = conn.prepareStatement(sql_team);
@@ -331,7 +327,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // insert team data
             ps.executeUpdate();
-            rs.close();
             ps.close();
 
             // commit transaction

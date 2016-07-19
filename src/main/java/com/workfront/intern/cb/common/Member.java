@@ -1,7 +1,6 @@
 package com.workfront.intern.cb.common;
 
 public class Member extends Participant {
-    private int memberId;
     private String name;
     private String surName;
     private String position;
@@ -9,14 +8,6 @@ public class Member extends Participant {
 
     public Member() {
         isTeam = false;
-    }
-
-    public int getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
     }
 
     public String getName() {
@@ -62,7 +53,6 @@ public class Member extends Participant {
         sb.append("participant_id: ").append(id).append("\n");
         sb.append("avatar: ").append(avatar).append("\n");
         sb.append("participant_info: ").append(participantInfo).append("\n");
-        sb.append("member_id: ").append(memberId).append("\n");
         sb.append("name: ").append(name).append("\n");
         sb.append("surname: ").append(surName).append("\n");
         sb.append("position: ").append(position).append("\n");

@@ -77,7 +77,14 @@ public class BaseTest {
     /**
      * Creates team
      */
-    //TODO
+    protected static Team createRandomTeam() {
+        Team testTeam = new Team();
+        testTeam.setAvatar("avatar");
+        testTeam.setParticipantInfo("bla bla bla");
+        testTeam.setTeamName("team name");
+
+        return testTeam;
+    }
 
     /**
      * Creates photo media
