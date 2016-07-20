@@ -133,11 +133,10 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTournamentListByManager_emptyList() {
+        // Testing method
         boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-
         assertTrue(deleted);
 
-        // Testing method
         int targetId = testManager.getId();
         List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
 

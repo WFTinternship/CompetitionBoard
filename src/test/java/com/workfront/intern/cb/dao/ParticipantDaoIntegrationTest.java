@@ -2,12 +2,15 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;
+import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.Team;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -47,31 +50,108 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMemberId_notFound() {
+        // Testing method
+        Participant member = participantDao.getOne(Member.class, NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, member);
     }
 
     @Test
     public void getMemberById_found() {
+        int targetId = testMember.getId();
+
+        // Testing method
+        Participant member = participantDao.getOne(Member.class, targetId);
+
+        assertNotNull(member);
+        assertEquals(testMember.getId(), member.getId());
+        assertEquals(testMember.getAvatar(), member.getAvatar());
+        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
+        //TODO
+//        assertEquals(testMember.getSurName(), member.getSurName());
+//        assertEquals(testMember.getPosition(), member.getPosition());
+//        assertEquals(testMember.getEmail(), member.getEmail());
     }
 
     @Test
     public void getMemberList_emptyList() {
+        int targetId = testMember.getId();
+        boolean deleted = participantDao.delete(Member.class, targetId);
+        assertTrue(deleted);
+
+        // Testing method
+        List<Member> memberList = (List<Member>) participantDao.getAll(Member.class);
+
+        assertNotNull(memberList);
+        assertEquals(0, memberList.size());
     }
 
     @Test
     public void getMemberList_found() {
+        // Testing method
+        List<Member> memberList = (List<Member>) participantDao.getAll(Member.class);
+
+        assertNotNull(memberList);
+        assertEquals(1, memberList.size());
+
+        Member member = memberList.get(0);
+        assertEquals(testMember.getId(), testMember.getId());
+        assertEquals(testMember.getAvatar(), member.getAvatar());
+        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
     }
 
     @Test
     public void addMember_created() {
+        // Initialize random manager instance
+        Member member = createRandomMember();
+        assertEquals(0, member.getId());
+
+        // Testing method
+        boolean added = participantDao.addParticipant(member);
+
+        assertTrue(added);
+        assertTrue(member.getId() > 0);
     }
 
     @Test
     public void updateMember() {
+        // Testing method
+        int targetId = testMember.getId();
+        boolean update = participantDao.update(testMember);
+
+        assertTrue(update);
+
+        // Initialize random manager instance
+        Participant member = participantDao.getOne(Member.class, targetId);
+
+        assertEquals(testMember.getId(), member.getId());
+        assertEquals(testMember.getAvatar(), member.getAvatar());
+        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
+    }
+
+    @Test
+    public void deleteMember_notFound() {
+        // Testing method
+        boolean deleted = participantDao.delete(Member.class, NON_EXISTING_ID);
+
+        assertFalse(deleted);
     }
 
     @Test
     public void deleteMember_found() {
+        // Testing method
+        int targetId = testMember.getId();
+        boolean deleted = participantDao.delete(Member.class, targetId);
 
+        assertTrue(deleted);
+    }
+
+    @Test
+    public void deleteAllMembers() {
+        // Testing method
+        boolean deleted = participantDao.deleteAll(Member.class);
+
+        assertTrue(deleted);
     }
 
     // endregion
@@ -81,32 +161,105 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTeamId_notFound() {
+        // Testing method
+        Participant team = participantDao.getOne(Team.class, NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, team);
     }
 
     @Test
     public void getTeamId_found() {
+        int targetId = testTeam.getId();
+
+        // Testing method
+        Participant team = participantDao.getOne(Team.class, targetId);
+
+        assertNotNull(team);
+        assertEquals(testTeam.getId(), team.getId());
+        assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
+        assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
     }
 
     @Test
     public void getTeamList_emptyList() {
+        int targetId = testTeam.getId();
+        boolean deleted = participantDao.delete(Team.class, targetId);
+        assertTrue(deleted);
+
+        // Testing method
+        List<Team> teamList = (List<Team>) participantDao.getAll(Team.class);
+
+        assertNotNull(teamList);
+        assertEquals(0, teamList.size());
     }
 
     @Test
     public void getTeamList_found() {
+        // Testing method
+        List<Team> teamList = (List<Team>) participantDao.getAll(Team.class);
+
+        assertNotNull(teamList);
+        assertEquals(1, teamList.size());
+
+        Team team = teamList.get(0);
+        assertEquals(testTeam.getId(), team.getId());
+        assertEquals(testTeam.getAvatar(), team.getAvatar());
+        assertEquals(testTeam.getParticipantInfo(), team.getParticipantInfo());
     }
 
     @Test
     public void addTeam_created() {
+        // Initialize random manager instance
+        Team team = createRandomTeam();
+        assertEquals(0, team.getId());
+
+        // Testing method
+        boolean added = participantDao.addParticipant(team);
+
+        assertTrue(added);
+        assertTrue(team.getId() > 0);
     }
 
     @Test
     public void updateTeam() {
+        // Testing method
+        int targetId = testTeam.getId();
+        boolean update = participantDao.update(testTeam);
+
+        assertTrue(update);
+
+        // Initialize random manager instance
+        Participant team = participantDao.getOne(Team.class, targetId);
+
+        assertEquals(testTeam.getId(), team.getId());
+        assertEquals(testTeam.getAvatar(), team.getAvatar());
+        assertEquals(testTeam.getParticipantInfo(), team.getParticipantInfo());
+
+    }
+
+    @Test
+    public void deleteTeam_notFound() {
+        // Testing method
+        boolean deleted = participantDao.delete(Member.class, NON_EXISTING_ID);
+
+        assertFalse(deleted);
     }
 
     @Test
     public void deleteTeam_found() {
+        // Testing method
+        int targetId = testTeam.getId();
+        boolean deleted = participantDao.delete(Team.class, targetId);
 
+        assertTrue(deleted);
     }
 
+    @Test
+    public void deleteAllTeams() {
+        // Testing method
+        boolean deleted = participantDao.deleteAll(Member.class);
+
+        assertTrue(deleted);
+    }
     // endregion
 }

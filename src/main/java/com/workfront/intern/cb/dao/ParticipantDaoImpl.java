@@ -19,6 +19,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Adds specific participant: member or team
+     */
     @Override
     public boolean addParticipant(Participant participant) {
         if (participant instanceof Member) {
@@ -30,6 +33,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
     }
 
+    /**
+     * Gets specific participant - member or team, by id:
+     */
     @Override
     public Participant getOne(Class<? extends Participant> cls, int id) {
         if (cls.equals(Member.class)) {
@@ -41,6 +47,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
     }
 
+    /**
+     * Gets specific participant list - memberList or teamList
+     */
     @Override
     public List<? extends Participant> getAll(Class<? extends Participant> cls) {
         if (cls.equals(Member.class)) {
@@ -52,6 +61,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
     }
 
+    /**
+     * Updates specific participant - member or team
+     */
     @Override
     public boolean update(Participant participant) {
         if (participant instanceof Member) {
@@ -63,6 +75,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
     }
 
+    /**
+     * Deletes specific participant - member or team, by id:
+     */
     @Override
     public boolean delete(Class<? extends Participant> cls, int id) {
         if (cls.equals(Member.class)) {
@@ -74,16 +89,18 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
     }
 
+    /**
+     * Deletes all specific participant - member or team, by id:
+     */
     @Override
     public boolean deleteAll(Class<? extends Participant> cls) {
         if (cls.equals(Member.class)) {
-            deleteAllMembers();
+           return deleteAllMembers();
         } else if (cls.equals(Team.class)) {
-            deleteAllTeams();
+            return deleteAllTeams();
         } else {
             throw new RuntimeException("Unknown participant type");
         }
-        return false;
     }
 
     // region <MEMBER>
@@ -193,6 +210,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             conn = DBManager.getPooledConnection();
 
             ps = conn.prepareStatement(sql);
+
+            // update member data
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -270,20 +289,18 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes member by id
      */
     boolean deleteMember(int id) {
-        String sql_member = "DELETE FROM member WHERE member_id=?";
-        String sql_participant = "DELETE FROM participant WHERE participant_id=?";
+        String sql = "DELETE FROM participant WHERE participant_id=?";
 
-        return executeDeleteQueriesInTransactionById(id, sql_member, sql_participant);
+        return deleteEntries(sql, id);
     }
 
     /**
      * Deletes all members
      */
     boolean deleteAllMembers() {
-        String sql_member = "DELETE FROM member";
-        String sql_participant = "DELETE FROM participant WHERE is_team=0";
+        String sql = "DELETE FROM participant WHERE is_team=0";
 
-        return executeDeleteQueriesInTransaction(sql_member, sql_participant);
+        return deleteEntries(sql);
     }
 
     // endregion
@@ -469,118 +486,20 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes team by id
      */
     boolean deleteTeam(int id) {
-        String sql_member = "DELETE FROM team WHERE team_id_id=?";
-        String sql_participant = "DELETE FROM participant WHERE participant_id=?";
-
-        return executeDeleteQueriesInTransactionById(id, sql_member, sql_participant);
+        String sql = "DELETE FROM participant WHERE participant_id=?";
+        return deleteEntries(sql, id);
     }
 
     /**
      * Deletes all teams
      */
     boolean deleteAllTeams() {
-        String sql_member = "DELETE FROM team";
-        String sql_participant = "DELETE FROM participant WHERE is_team=1";
+        String sql = "DELETE FROM participant WHERE is_team=1";
 
-        return executeDeleteQueriesInTransaction(sql_member, sql_participant);
+        return deleteEntries(sql);
     }
 
     // endregion
-
-    /**
-     * Execute specific deleting queries in transaction by id
-     * */
-    private boolean executeDeleteQueriesInTransactionById(int id, String... queries) {
-        boolean inserted = false;
-        Connection conn = null;
-
-        try {
-            // Acquire connection
-            conn = dataSource.getConnection();
-
-            // start transaction
-            conn.setAutoCommit(false);
-
-            for (String deleteQuery : queries) {
-                // prepare base participant insert query
-                PreparedStatement ps = conn.prepareStatement(deleteQuery);
-                ps.setInt(1, id);
-
-                // insert base participant info
-                ps.executeUpdate();
-
-                // acquire assigned ID
-                ps.close();
-
-                // prepare member insert query
-                ps = conn.prepareStatement(deleteQuery);
-                ps.setInt(1, id);
-
-                // insert member data
-                ps.executeUpdate();
-                ps.close();
-            }
-
-            // commit transaction
-            conn.commit();
-            inserted = true;
-        } catch (SQLException e) {
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException e1) {
-                LOG.error(e.getMessage(), e1);
-            }
-            LOG.error(e.getMessage(), e);
-        } finally {
-            closeResources(conn);
-        }
-        return inserted;
-    }
-
-    /**
-     * Execute specific deleting queries in transaction
-     * */
-    private boolean executeDeleteQueriesInTransaction(String... queries) {
-        boolean inserted = false;
-        Connection conn = null;
-
-        try {
-            // Acquire connection
-            conn = dataSource.getConnection();
-
-            // start transaction
-            conn.setAutoCommit(false);
-
-            for (String deleteQuery : queries) {
-                // prepare base participant insert query
-                PreparedStatement ps = conn.prepareStatement(deleteQuery);
-
-                // insert base participant info
-                ps.executeUpdate();
-
-                // acquire assigned ID
-                ps.close();
-            }
-
-            // commit transaction
-            conn.commit();
-            inserted = true;
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException e1) {
-                LOG.error(e.getMessage(), e1);
-            }
-        } finally {
-            closeResources(conn);
-        }
-        return inserted;
-    }
 
     /**
      * Extracting specific data of Member from ResultSet
