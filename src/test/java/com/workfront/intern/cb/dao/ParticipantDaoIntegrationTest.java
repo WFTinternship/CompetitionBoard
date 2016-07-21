@@ -160,7 +160,6 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     // endregion
 
-
     // region <TEAM>
 
     @Test
@@ -267,5 +266,6 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
         assertTrue(deleted);
     }
+
     // endregion
 }
