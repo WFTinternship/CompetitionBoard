@@ -6,7 +6,6 @@ import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.Team;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.sql.DataSource;
@@ -61,16 +60,15 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testMember.getId();
 
         // Testing method
-        Participant member = participantDao.getOne(Member.class, targetId);
+        Member member = (Member) participantDao.getOne(Member.class, targetId);
 
         assertNotNull(member);
         assertEquals(testMember.getId(), member.getId());
         assertEquals(testMember.getAvatar(), member.getAvatar());
         assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
-        //TODO
-//        assertEquals(testMember.getSurName(), member.getSurName());
-//        assertEquals(testMember.getPosition(), member.getPosition());
-//        assertEquals(testMember.getEmail(), member.getEmail());
+        assertEquals(testMember.getSurName(), member.getSurName());
+        assertEquals(testMember.getPosition(), member.getPosition());
+        assertEquals(testMember.getEmail(), member.getEmail());
     }
 
     @Test
@@ -95,9 +93,12 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertEquals(1, memberList.size());
 
         Member member = memberList.get(0);
-        assertEquals(testMember.getId(), testMember.getId());
+        assertEquals(testMember.getId(), member.getId());
         assertEquals(testMember.getAvatar(), member.getAvatar());
         assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
+        assertEquals(testMember.getSurName(), member.getSurName());
+        assertEquals(testMember.getPosition(), member.getPosition());
+        assertEquals(testMember.getEmail(), member.getEmail());
     }
 
     @Test
@@ -122,11 +123,14 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertTrue(update);
 
         // Initialize random manager instance
-        Participant member = participantDao.getOne(Member.class, targetId);
+        Member member = (Member) participantDao.getOne(Member.class, targetId);
 
         assertEquals(testMember.getId(), member.getId());
         assertEquals(testMember.getAvatar(), member.getAvatar());
         assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
+        assertEquals(testMember.getSurName(), member.getSurName());
+        assertEquals(testMember.getPosition(), member.getPosition());
+        assertEquals(testMember.getEmail(), member.getEmail());
     }
 
     @Test
@@ -172,12 +176,13 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testTeam.getId();
 
         // Testing method
-        Participant team = participantDao.getOne(Team.class, targetId);
+        Team team = (Team) participantDao.getOne(Team.class, targetId);
 
         assertNotNull(team);
         assertEquals(testTeam.getId(), team.getId());
         assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
         assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
+        assertEquals(testTeam.getTeamName(), team.getTeamName());
     }
 
     @Test
@@ -203,8 +208,9 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
         Team team = teamList.get(0);
         assertEquals(testTeam.getId(), team.getId());
-        assertEquals(testTeam.getAvatar(), team.getAvatar());
-        assertEquals(testTeam.getParticipantInfo(), team.getParticipantInfo());
+        assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
+        assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
+        assertEquals(testTeam.getTeamName(), team.getTeamName());
     }
 
     @Test
@@ -229,12 +235,12 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertTrue(update);
 
         // Initialize random manager instance
-        Participant team = participantDao.getOne(Team.class, targetId);
+        Team team = (Team) participantDao.getOne(Team.class, targetId);
 
         assertEquals(testTeam.getId(), team.getId());
-        assertEquals(testTeam.getAvatar(), team.getAvatar());
-        assertEquals(testTeam.getParticipantInfo(), team.getParticipantInfo());
-
+        assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
+        assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
+        assertEquals(testTeam.getTeamName(), team.getTeamName());
     }
 
     @Test
