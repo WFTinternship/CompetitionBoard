@@ -5,6 +5,7 @@ import com.workfront.intern.cb.common.Participant;
 import java.util.List;
 
 public interface ParticipantDao {
+
     // CREATE
     boolean addParticipant(Participant participant);
 
@@ -18,5 +19,4 @@ public interface ParticipantDao {
     // DELETE
     boolean delete(Class<? extends Participant> cls, int id);
     boolean deleteAll(Class<? extends Participant> cls);
-
 }

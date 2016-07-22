@@ -11,6 +11,7 @@ import org.junit.Test;
 import javax.sql.DataSource;
 import java.util.List;
 
+import static com.sun.prism.impl.Disposer.cleanUp;
 import static org.junit.Assert.*;
 
 public class ParticipantDaoIntegrationTest extends BaseTest {
@@ -26,6 +27,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() {
+        cleanUp();
+
         participantDao = new ParticipantDaoImpl(dataSource);
 
         testMember = createRandomMember();
@@ -51,7 +54,6 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     public void getMemberId_notFound() {
         // Testing method
         Participant member = participantDao.getOne(Member.class, NON_EXISTING_ID);
-
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, member);
     }
 
@@ -74,6 +76,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     @Test
     public void getMemberList_emptyList() {
         int targetId = testMember.getId();
+
+        // Testing method
         boolean deleted = participantDao.delete(Member.class, targetId);
         assertTrue(deleted);
 
@@ -116,10 +120,10 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @Test
     public void updateMember() {
-        // Testing method
         int targetId = testMember.getId();
-        boolean update = participantDao.update(testMember);
 
+        // Testing method
+        boolean update = participantDao.update(testMember);
         assertTrue(update);
 
         // Initialize random manager instance
@@ -137,16 +141,15 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     public void deleteMember_notFound() {
         // Testing method
         boolean deleted = participantDao.delete(Member.class, NON_EXISTING_ID);
-
         assertFalse(deleted);
     }
 
     @Test
     public void deleteMember_found() {
-        // Testing method
         int targetId = testMember.getId();
-        boolean deleted = participantDao.delete(Member.class, targetId);
 
+        // Testing method
+        boolean deleted = participantDao.delete(Member.class, targetId);
         assertTrue(deleted);
     }
 
@@ -154,7 +157,6 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     public void deleteAllMembers() {
         // Testing method
         boolean deleted = participantDao.deleteAll(Member.class);
-
         assertTrue(deleted);
     }
 
@@ -187,6 +189,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     @Test
     public void getTeamList_emptyList() {
         int targetId = testTeam.getId();
+
+        // Testing method
         boolean deleted = participantDao.delete(Team.class, targetId);
         assertTrue(deleted);
 
@@ -227,10 +231,10 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @Test
     public void updateTeam() {
-        // Testing method
         int targetId = testTeam.getId();
-        boolean update = participantDao.update(testTeam);
 
+        // Testing method
+        boolean update = participantDao.update(testTeam);
         assertTrue(update);
 
         // Initialize random manager instance
@@ -246,16 +250,15 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     public void deleteTeam_notFound() {
         // Testing method
         boolean deleted = participantDao.delete(Member.class, NON_EXISTING_ID);
-
         assertFalse(deleted);
     }
 
     @Test
     public void deleteTeam_found() {
-        // Testing method
         int targetId = testTeam.getId();
-        boolean deleted = participantDao.delete(Team.class, targetId);
 
+        // Testing method
+        boolean deleted = participantDao.delete(Team.class, targetId);
         assertTrue(deleted);
     }
 
@@ -263,7 +266,6 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     public void deleteAllTeams() {
         // Testing method
         boolean deleted = participantDao.deleteAll(Member.class);
-
         assertTrue(deleted);
     }
 

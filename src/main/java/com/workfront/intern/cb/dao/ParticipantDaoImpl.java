@@ -95,7 +95,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     @Override
     public boolean deleteAll(Class<? extends Participant> cls) {
         if (cls.equals(Member.class)) {
-           return deleteAllMembers();
+            return deleteAllMembers();
         } else if (cls.equals(Team.class)) {
             return deleteAllTeams();
         } else {
@@ -152,7 +152,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             inserted = true;
         } catch (SQLException e) {
             try {
-                conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (SQLException e1) {
                 LOG.error(e.getMessage(), e1);
             }
@@ -268,7 +270,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             updated = true;
         } catch (SQLException e) {
             try {
-                conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
@@ -298,7 +302,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes all members
      */
     boolean deleteAllMembers() {
-        String sql = "DELETE FROM participant WHERE is_team=0";
+        int isTeam = 0;
+        String sql = "DELETE FROM participant WHERE is_team=" + isTeam;
 
         return deleteEntries(sql);
     }
@@ -487,6 +492,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      */
     boolean deleteTeam(int id) {
         String sql = "DELETE FROM participant WHERE participant_id=?";
+
         return deleteEntries(sql, id);
     }
 
@@ -494,7 +500,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes all teams
      */
     boolean deleteAllTeams() {
-        String sql = "DELETE FROM participant WHERE is_team=1";
+        int isTeam = 1;
+        String sql = "DELETE FROM participant WHERE is_team=" + isTeam;
 
         return deleteEntries(sql);
     }
