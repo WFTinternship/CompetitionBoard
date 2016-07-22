@@ -21,7 +21,6 @@ public class ManagerDaoUnitTest extends BaseTest {
     ManagerDao managerDao;
     Manager testManager;
 
-
     @SuppressWarnings("unchecked")
     @Before
     public void beforeTest() throws Exception {
@@ -42,7 +41,7 @@ public class ManagerDaoUnitTest extends BaseTest {
 
     @Test
     public void addManager_dbError() {
-        managerDao.addManager(new Manager());
+        managerDao.addManager(testManager);
     }
 
     @Test
