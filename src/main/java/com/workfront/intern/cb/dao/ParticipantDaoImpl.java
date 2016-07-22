@@ -323,7 +323,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         String sql_team = "INSERT INTO team (team_id, team_name) VALUES (?,?)";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // start transaction
             conn.setAutoCommit(false);
