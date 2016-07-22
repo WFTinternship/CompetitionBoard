@@ -69,7 +69,6 @@ public class ManagerDaoUnitTest extends BaseTest {
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }
 
-
     @Test
     public void deleteAll_dbError() {
         managerDao.deleteAll();
