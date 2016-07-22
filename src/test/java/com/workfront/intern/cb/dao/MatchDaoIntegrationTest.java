@@ -7,10 +7,10 @@ import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.Tournament;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.sql.DataSource;
-
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,7 +22,6 @@ public class MatchDaoIntegrationTest extends BaseTest {
     private TournamentDao tournamentDao;
     private GroupDao groupDao;
     private MatchDao matchDao;
-
 
     // Test helper objects
     private Manager testManager;
@@ -116,9 +115,18 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
     // region <TEST CASES>
 
+    @Ignore
     @Test
     public void addMatch_created() {
+        // Initialize random manager instance
+        Match match = createRandomMatch();
+        assertEquals(0, match.getMatchId());
 
+        // Testing method
+        boolean added = matchDao.addMatch(match);
+
+        assertTrue(added);
+        assertTrue(match.getMatchId() > 0);
     }
 
     @Test
@@ -143,7 +151,6 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
-
     }
 
     @Test
@@ -168,15 +175,15 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
-
     }
 
     @Test
     public void getMatchList_emptyList() {
         int matchId = testMatch.getMatchId();
         int groupId = testGroup.getGroupId();
-        boolean deleted = matchDao.deleteMatch(matchId);
 
+        // Testing method
+        boolean deleted = matchDao.deleteMatch(matchId);
         assertTrue(deleted);
 
         // Testing method
@@ -188,9 +195,11 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMatchList_found() {
-        // Testing method
         int groupId = testGroup.getGroupId();
-        List<Match> matchList =matchDao.getMatchListByGroup(groupId);
+
+        // Testing method
+        List<Match> matchList = matchDao.getMatchListByGroup(groupId);
+
         assertNotNull(matchList);
         assertEquals(1, matchList.size());
 
@@ -203,13 +212,31 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
+    @Ignore
     @Test
     public void updateMatch() {
+        int matchId = testMatch.getMatchId();
+        int groupId = testGroup.getGroupId();
 
+        // Testing method
+        Match match = createRandomMatch();
+        match.setGroupId(groupId);
+
+        // Testing method
+        boolean update = matchDao.updateMatch(matchId, match);
+        assertTrue(update);
+
+        assertEquals(testMatch.getMatchId(), match.getMatchId());
+        assertEquals(testMatch.getGroupId(), match.getGroupId());
+        assertEquals(testMatch.getParticipantOneId(), match.getParticipantOneId());
+        assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
+        assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
+        assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
     @Test
     public void deleteMatch_notFound() {
+        // Testing method
         boolean deleted = matchDao.deleteMatch(NON_EXISTING_ID);
 
         assertFalse(deleted);
@@ -218,6 +245,8 @@ public class MatchDaoIntegrationTest extends BaseTest {
     @Test
     public void deleteMatch_found() {
         int matchId = testMatch.getMatchId();
+
+        // Testing method
         boolean deleted = matchDao.deleteMatch(matchId);
 
         assertTrue(deleted);
@@ -226,14 +255,14 @@ public class MatchDaoIntegrationTest extends BaseTest {
     @Test
     public void deleteAll() {
         int groupId = testGroup.getGroupId();
-        boolean deleteAll = matchDao.deleteAll();
 
+        // Testing method
+        boolean deleteAll = matchDao.deleteAll();
         assertTrue(deleteAll);
 
         List<Match> matchList = matchDao.getMatchListByGroup(groupId);
         assertEquals(0, matchList.size());
     }
-
 
     // endregion
 }

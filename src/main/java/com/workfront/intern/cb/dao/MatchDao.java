@@ -11,9 +11,7 @@ public interface MatchDao {
 
     // READ
     Match getMatchById(int id);
-
     Match getMatchByGroupId(int id);
-
     List<Match> getMatchListByGroup(int id);
 
     // UPDATE
@@ -21,6 +19,5 @@ public interface MatchDao {
 
     // DELETE
     boolean deleteMatch(int id);
-
     boolean deleteAll();
 }

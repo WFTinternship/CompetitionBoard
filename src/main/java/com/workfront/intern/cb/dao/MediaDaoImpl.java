@@ -1,5 +1,6 @@
 package com.workfront.intern.cb.dao;
 
+import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
 import org.apache.log4j.Logger;
 
@@ -19,14 +20,46 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
     }
 
     /**
+     * Gets specific media(photo or video) by id
+     */
+    @Override
+    public Media getMediaById(int id) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Media media = null;
+
+        String sql = "SELECT * FROM media WHERE media_id=?";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                media = extractMediaFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return media;
+    }
+
+    /**
      * Gets all media by specific manager
      */
     @Override
     public List<Media> getMediaListByManager(int id) {
         List<Media> mediaByManagerList;
         String sql = "SELECT * FROM media WHERE manager_id=?";
-
         mediaByManagerList = getSpecificMediaList(sql, id);
+
         return mediaByManagerList;
     }
 
@@ -37,8 +70,8 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
     public List<Media> getMediaListByTournament(int id) {
         List<Media> mediaByTournamentList;
         String sql = "SELECT * FROM media WHERE tournament_id=?";
-
         mediaByTournamentList = getSpecificMediaList(sql, id);
+
         return mediaByTournamentList;
     }
 
@@ -52,7 +85,6 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return updateSpecificMedia(id, sql, media);
     }
 
-
     /**
      * Updates video
      */
@@ -62,7 +94,6 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
 
         return updateSpecificMedia(id, sql, media);
     }
-
 
     /**
      * Adding photo to db by specific manager and tournament
@@ -74,16 +105,17 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "INSERT INTO media(photo, tournament_id, manager_id) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO media(photo, video, tournament_id, manager_id) VALUES(?,?,?,?)";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, media.getPhoto());
-            ps.setInt(2, media.getTournamentId());
-            ps.setInt(3, media.getManagerId());
+            ps.setString(2, media.getPhoto());
+            ps.setInt(3, media.getTournamentId());
+            ps.setInt(4, media.getManagerId());
 
             // Execute statement
             ps.executeUpdate();
@@ -137,11 +169,13 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return inserted;
     }
 
+
+
     /**
      * Deletes media by id
      */
     @Override
-    public boolean deleteMedia(int id) {
+    public boolean deleteMediaById(int id) {
         boolean deleted;
         String sql = "DELETE FROM media WHERE media_id=?";
 
@@ -149,6 +183,9 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         return deleted;
     }
 
+    /**
+     * Deletes all media
+     */
     @Override
     public boolean deleteAll() {
         boolean deleted;
@@ -159,7 +196,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
     }
 
     /**
-     * Gets specific data list of deleteMedia from sql query
+     * Gets specific data list of deleteMediaById from sql query
      */
     private List<Media> getSpecificMediaList(String sql, int id) {
         Connection conn = null;
@@ -167,9 +204,10 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         ResultSet rs = null;
         Media media;
         List<Media> mediaList = new ArrayList<>();
+
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -190,7 +228,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
     }
 
     /**
-     * Extracting specific data of deleteMedia from ResultSet
+     * Extracting specific data of deleteMediaById from ResultSet
      */
     private static Media extractMediaFromResultSet(ResultSet rs) {
         Media media = new Media();
@@ -215,7 +253,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         boolean updated = false;
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);

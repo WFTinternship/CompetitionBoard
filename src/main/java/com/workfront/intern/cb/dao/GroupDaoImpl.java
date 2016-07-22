@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Group;
+import com.workfront.intern.cb.common.Participant;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -151,6 +152,11 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             closeResources(conn, ps, rs);
         }
         return groupList;
+    }
+
+    @Override
+    public List<Participant> getGroupParticipants(int groupId) {
+        return null;
     }
 
     /**

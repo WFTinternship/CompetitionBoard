@@ -188,7 +188,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
 
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);

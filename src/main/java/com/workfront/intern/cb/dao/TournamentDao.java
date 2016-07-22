@@ -11,17 +11,13 @@ public interface TournamentDao {
 
     // READ
     Tournament getTournamentById(int id);
-
     List<Tournament> getTournamentListByManager(int id);
-
     List<Tournament> getTournamentList();
 
     // UPDATE
     boolean updateTournament(int id, Tournament tournament);
 
-
     // DELETE
     boolean deleteTournamentById(int id);
-
     boolean deleteAll();
 }

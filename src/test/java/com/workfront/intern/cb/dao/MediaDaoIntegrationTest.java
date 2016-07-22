@@ -4,6 +4,7 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,7 +70,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     public void afterTest() {
         // Deleting 'media' of manager type field after passed test
         if (testMedia != null) {
-            mediaDao.deleteMedia(testMedia.getMediaId());
+            mediaDao.deleteMediaById(testMedia.getMediaId());
         } else {
             System.out.println("WARNING: testMedia was null after test execution");
         }
@@ -92,6 +93,29 @@ public class MediaDaoIntegrationTest extends BaseTest {
     // region <TEST CASES>
 
     @Test
+    public void getMediaById_notFound() {
+        // Testing method
+        Media media = mediaDao.getMediaById(NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, media);
+    }
+
+    @Test
+    public void getMediaById_found() {
+        int targetId = testMedia.getMediaId();
+
+        // Testing method
+        Media media = mediaDao.getMediaById(targetId);
+
+        assertNotNull(media);
+        assertEquals(testMedia.getMediaId(), media.getMediaId());
+        assertEquals(testMedia.getPhoto(), media.getPhoto());
+        assertEquals(testMedia.getTournamentId(), media.getTournamentId());
+        assertEquals(testMedia.getManagerId(), media.getManagerId());
+    }
+
+
+    @Test
     public void addPhoto_created() {
         // Initialize random tournament instance
         int managerId = testManager.getId();
@@ -109,7 +133,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertTrue(added);
         assertTrue(media.getMediaId() > 0);
 
-        mediaDao.deleteMedia(media.getMediaId());
+        mediaDao.deleteMediaById(media.getMediaId());
     }
 
     @Test
@@ -130,12 +154,12 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertTrue(added);
         assertTrue(media.getMediaId() > 0);
 
-        mediaDao.deleteMedia(media.getMediaId());
+        mediaDao.deleteMediaById(media.getMediaId());
     }
 
     @Test
     public void getMediaByManagerList_emptyList() {
-        boolean deleted = mediaDao.deleteMedia(testMedia.getMediaId());
+        boolean deleted = mediaDao.deleteMediaById(testMedia.getMediaId());
 
         assertTrue(deleted);
 
@@ -145,7 +169,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
         assertNotNull(mediaList);
         assertEquals(0, mediaList.size());
-
     }
 
     @Test
@@ -167,7 +190,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMediaByTournamentList_emptyList() {
-        boolean deleted = mediaDao.deleteMedia(testMedia.getMediaId());
+        boolean deleted = mediaDao.deleteMediaById(testMedia.getMediaId());
 
         assertTrue(deleted);
 
@@ -246,14 +269,14 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     @Test
     public void deleteMediaById_notFound() {
-        boolean deleted = mediaDao.deleteMedia(NON_EXISTING_ID);
+        boolean deleted = mediaDao.deleteMediaById(NON_EXISTING_ID);
 
         assertFalse(deleted);
     }
 
     @Test
     public void deleteMedia_deleted() {
-        boolean deleted = mediaDao.deleteMedia(testMedia.getMediaId());
+        boolean deleted = mediaDao.deleteMediaById(testMedia.getMediaId());
 
         assertTrue(deleted);
     }

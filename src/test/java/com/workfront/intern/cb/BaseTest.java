@@ -87,21 +87,23 @@ public class BaseTest {
     }
 
     /**
-     * Creates photo media
+     * Creates media photo
      */
     protected static Media createRandomPhotoMedia() {
         Media media = new Media();
         media.setPhoto("photo_");
+        media.setVideo(null);
 
         return media;
     }
 
     /**
-     * Creates photo media
+     * Creates media video
      */
     protected static Media createRandomVideoMedia() {
         Media media = new Media();
         media.setVideo("video_");
+        media.setPhoto(null);
 
         return media;
     }
