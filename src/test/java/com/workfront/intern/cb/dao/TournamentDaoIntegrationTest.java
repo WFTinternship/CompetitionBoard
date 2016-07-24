@@ -76,7 +76,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     public void getTournamentById_notFound() {
         // Testing method
         Tournament tournament = tournamentDao.getTournamentById(NON_EXISTING_ID);
-
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, tournament);
     }
 
@@ -146,8 +145,9 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTournamentListByManager_found() {
-        // Testing method
         int targetId = testManager.getId();
+
+        // Testing method
         List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
 
         assertNotNull(tournamentList);

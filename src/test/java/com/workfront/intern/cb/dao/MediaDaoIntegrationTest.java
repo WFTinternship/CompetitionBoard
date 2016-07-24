@@ -159,12 +159,12 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMediaByManagerList_emptyList() {
-        boolean deleted = mediaDao.deleteMediaById(testMedia.getMediaId());
+        int managerId = testManager.getId();
 
+        boolean deleted = mediaDao.deleteMediaById(testMedia.getMediaId());
         assertTrue(deleted);
 
         // Testing method
-        int managerId = testManager.getId();
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
 
         assertNotNull(mediaList);
@@ -174,6 +174,8 @@ public class MediaDaoIntegrationTest extends BaseTest {
     @Test
     public void getMediaByManagerList_found() {
         int managerId = testManager.getId();
+
+        // Testing method
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
 
         assertNotNull(mediaList);
@@ -185,7 +187,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertEquals(testMedia.getPhoto(), media.getPhoto());
         assertEquals(testMedia.getVideo(), media.getVideo());
         assertEquals(testMedia.getTournamentId(), media.getTournamentId());
-        assertEquals(testMedia.getMediaId(), media.getMediaId());
     }
 
     @Test

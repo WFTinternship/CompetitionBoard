@@ -113,7 +113,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             // Initialize statement
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, media.getPhoto());
-            ps.setString(2, media.getPhoto());
+            ps.setString(2, media.getVideo());
             ps.setInt(3, media.getTournamentId());
             ps.setInt(4, media.getManagerId());
 
@@ -143,19 +143,21 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "INSERT INTO media(video, tournament_id, manager_id) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO media(photo, video, tournament_id, manager_id) VALUES(?, ?, ?, ?)";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
-            ps.setString(1, media.getVideo());
-            ps.setInt(2, media.getTournamentId());
-            ps.setInt(3, media.getManagerId());
+            ps.setString(1, media.getPhoto());
+            ps.setString(2, media.getVideo());
+            ps.setInt(3, media.getTournamentId());
+            ps.setInt(4, media.getManagerId());
 
             // Execute statement
             ps.executeUpdate();
+
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 media.setMediaId(rs.getInt(1));

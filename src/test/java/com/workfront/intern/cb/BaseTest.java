@@ -102,8 +102,8 @@ public class BaseTest {
      */
     protected static Media createRandomVideoMedia() {
         Media media = new Media();
-        media.setVideo("video_");
         media.setPhoto(null);
+        media.setVideo("video_");
 
         return media;
     }
