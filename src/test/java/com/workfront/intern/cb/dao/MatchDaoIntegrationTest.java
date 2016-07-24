@@ -115,11 +115,14 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
     // region <TEST CASES>
 
-    @Ignore
     @Test
     public void addMatch_created() {
-        // Initialize random manager instance
+        int groupId = testGroup.getGroupId();
+
+        // Initialize random match instance
         Match match = createRandomMatch();
+        match.setGroupId(groupId);
+
         assertEquals(0, match.getMatchId());
 
         // Testing method
@@ -127,6 +130,8 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
         assertTrue(added);
         assertTrue(match.getMatchId() > 0);
+
+        matchDao.deleteMatch(match.getMatchId());
     }
 
     @Test
@@ -212,20 +217,29 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
-    @Ignore
     @Test
     public void updateMatch() {
         int matchId = testMatch.getMatchId();
         int groupId = testGroup.getGroupId();
+        int participantOneId = 10;
+        int participantTwoId = 15;
+        int scoreParticipantOne = 20;
+        int scoreParticipantTwo = 30;
 
         // Testing method
         Match match = createRandomMatch();
+        match.setMatchId(matchId);
         match.setGroupId(groupId);
+        match.setParticipantOneId(participantOneId);
+        match.setParticipantTwoId(participantTwoId);
+        match.setScoreParticipantOne(scoreParticipantOne);
+        match.setScoreParticipantTwo(scoreParticipantTwo);
 
         // Testing method
         boolean update = matchDao.updateMatch(matchId, match);
-        assertTrue(update);
+        testMatch = matchDao.getMatchById(matchId);
 
+        assertTrue(update);
         assertEquals(testMatch.getMatchId(), match.getMatchId());
         assertEquals(testMatch.getGroupId(), match.getGroupId());
         assertEquals(testMatch.getParticipantOneId(), match.getParticipantOneId());

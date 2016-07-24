@@ -75,9 +75,9 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
-        String sql = "INSERT INTO `match`(group_id, participant_1_id, participant_2_id, score_participant_1, score_participant_2) VALUE(?,?,?,?,?)";
         int rows = 0;
+
+        String sql = "INSERT INTO `match` (group_id, participant_1_id, participant_2_id, score_participant_1, score_participant_2) VALUE(?,?,?,?,?);";
         try {
             // Acquire connection
             conn = dataSource.getConnection();

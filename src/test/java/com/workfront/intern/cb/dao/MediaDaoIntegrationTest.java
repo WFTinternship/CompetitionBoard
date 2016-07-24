@@ -114,7 +114,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertEquals(testMedia.getManagerId(), media.getManagerId());
     }
 
-
     @Test
     public void addPhoto_created() {
         // Initialize random tournament instance
