@@ -19,14 +19,12 @@ import static org.mockito.Mockito.when;
 public class GroupDaoUnitTest extends BaseTest {
     DataSource dataSource;
     GroupDao groupDao;
-    Group testGroup;
 
     @SuppressWarnings("unchecked")
     @Before
     public void beforeTest() throws Exception {
         dataSource = Mockito.mock(DataSource.class);
         Connection conn = Mockito.mock(Connection.class);
-
         when(dataSource.getConnection()).thenReturn(conn);
         when(conn.prepareStatement(any(String.class))).thenThrow(SQLException.class);
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
@@ -43,7 +41,29 @@ public class GroupDaoUnitTest extends BaseTest {
         groupDao.addGroup(new Group());
     }
 
+    @Test
+    public void getGroupByTournamentList_dbError() {
+        groupDao.getGroupByTournamentList(NON_EXISTING_ID);
+    }
 
+    @Test
+    public void getAllGroups_dbError() {
+        groupDao.getGroupByTournamentList(NON_EXISTING_ID);
+    }
 
+    @Test
+    public void updateGroup_dbError() {
+        Group testGroup = createRandomGroup();
+        groupDao.updateGroup(NON_EXISTING_ID, testGroup);
+    }
 
+    @Test
+    public void deleteGroup_dbError() {
+        groupDao.deleteGroup(NON_EXISTING_ID);
+    }
+
+    @Test
+    public void deleteAll_dbError() {
+        groupDao.deleteAll();
+    }
 }

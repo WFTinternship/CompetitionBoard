@@ -19,7 +19,6 @@ import static org.mockito.Mockito.when;
 public class TournamentDaoUnitTest extends BaseTest {
     DataSource dataSource;
     TournamentDao tournamentDao;
-    Tournament testTournament;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -32,7 +31,6 @@ public class TournamentDaoUnitTest extends BaseTest {
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
         tournamentDao = new TournamentDaoImpl(dataSource);
-        testTournament = createRandomTournament();
     }
 
     @After
@@ -62,6 +60,7 @@ public class TournamentDaoUnitTest extends BaseTest {
 
     @Test
     public void updateTournament_dbError() {
+        Tournament testTournament = createRandomTournament();
         tournamentDao.updateTournament(NON_EXISTING_ID, testTournament);
     }
 

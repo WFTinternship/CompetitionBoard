@@ -32,7 +32,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
                 "VALUES(?,?,?,?) ";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // prepare base participant insert query
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -68,7 +68,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         String sql = "SELECT * FROM `group` WHERE group_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -101,7 +101,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         String sql = "SELECT * FROM `group` WHERE tournament_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -135,7 +135,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         String sql = "SELECT * FROM `group`";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
@@ -154,6 +154,10 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         return groupList;
     }
 
+    //TODO
+    /**
+     *
+     */
     @Override
     public List<Participant> getGroupParticipants(int groupId) {
         return null;
@@ -171,7 +175,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         String sql = "UPDATE `group` SET participants_count=?, round=?, next_round_participants=?, tournament_id=? WHERE group_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);

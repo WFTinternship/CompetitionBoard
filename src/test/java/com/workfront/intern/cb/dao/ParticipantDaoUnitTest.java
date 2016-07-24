@@ -20,8 +20,6 @@ import static org.mockito.Mockito.when;
 public class ParticipantDaoUnitTest extends BaseTest {
     DataSource dataSource;
     ParticipantDao participantDao;
-    Member testMember;
-    Team testTeam;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -33,8 +31,6 @@ public class ParticipantDaoUnitTest extends BaseTest {
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
         participantDao = new ParticipantDaoImpl(dataSource);
-        testMember = createRandomMember();
-        testTeam = createRandomTeam();
     }
 
     @After
@@ -61,6 +57,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     @Test
     public void updateMember_dbError() {
+        Member testMember = createRandomMember();
         participantDao.update(testMember);
     }
 
@@ -96,7 +93,8 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     @Test
     public void updateTeam_dbError() {
-        participantDao.update(testMember);
+        Team testTeam = createRandomTeam();
+        participantDao.update(testTeam);
     }
 
     @Test
