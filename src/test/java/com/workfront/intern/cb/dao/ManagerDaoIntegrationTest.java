@@ -131,6 +131,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         assertTrue(manager.getId() > 0);
     }
 
+    //TODO
     @Test
     public void updateManager() throws FailedOperationException, ObjectNotFoundException {
         // Testing method
@@ -148,6 +149,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         assertEquals(testManager.getPassword(), manager.getPassword());
     }
 
+    //TODO
     @Test
     public void deleteManagerById_notFound() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteManagerById(NON_EXISTING_ID);
@@ -155,6 +157,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 //        assertFalse(deleted);
     }
 
+    //TODO
     @Test
     public void deleteManagerById_deleted() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteManagerById(testManager.getId());

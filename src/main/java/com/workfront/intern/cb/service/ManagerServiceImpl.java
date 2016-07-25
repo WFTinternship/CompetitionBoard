@@ -3,7 +3,6 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.ManagerDao;
 import com.workfront.intern.cb.dao.ManagerDaoImpl;
 
