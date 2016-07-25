@@ -55,7 +55,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         return manager;
     }
 
-    //TODO
     /**
      * Returns manager by login
      */
@@ -127,10 +126,9 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Updates existing manager in db
      */
     @Override
-    public boolean updateManager(int id, Manager manager) {
+    public void updateManager(int id, Manager manager) {
         Connection conn = null;
         PreparedStatement ps = null;
-        int rows = 0;
 
         String sql = "UPDATE manager SET password=? WHERE manager_id=?";
         try {
@@ -141,13 +139,12 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps.setInt(2, id);
 
             // Execute statement
-            rows = ps.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
-        return rows == 1;
     }
 
     /**
@@ -157,7 +154,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     public void addManager(Manager manager) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
 
         String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
         try {
@@ -178,7 +174,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps, rs);
+            closeResources(conn, ps);
         }
     }
 
@@ -186,28 +182,20 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Deletes manager by id
      */
     @Override
-    public boolean deleteManagerById(int id) {
-        boolean deleted;
-
+    public void deleteManagerById(int id) {
         String sql = "DELETE FROM manager WHERE manager_id=?";
 
-        deleted = deleteEntries(sql, id);
-
-        return deleted;
+        deleteEntries(sql, id);
     }
 
     /**
      * Removes all managers
      */
     @Override
-    public boolean deleteAll() {
-        boolean deleted;
-
+    public void deleteAll() {
         String sql = "DELETE FROM manager";
 
-        deleted = deleteEntries(sql);
-
-        return deleted;
+        deleteEntries(sql);
     }
 
     /**

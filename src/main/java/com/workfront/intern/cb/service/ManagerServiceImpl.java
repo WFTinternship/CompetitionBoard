@@ -13,15 +13,23 @@ import java.util.List;
 public class ManagerServiceImpl implements ManagerService {
     DataSource dataSource;
 
-    public ManagerServiceImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     private ManagerDao managerDao = new ManagerDaoImpl(dataSource);
 
+    /**
+     * Adds new manager in db
+     */
     @Override
-    public void addManager(Manager manager) {}
+    public void addManager(Manager manager) {
+        try {
+            managerDao.addManager(manager);
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
+    /**
+     * Returns manager by id
+     */
     @Override
     public Manager getManagerById(int id) {
         try {
@@ -33,34 +41,73 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
+    /**
+     * Returns manager by login
+     */
     @Override
     public Manager getManagerByLogin(String login) {
-        return null;
+        try {
+            return managerDao.getManagerByLogin(login);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Great apologies! We could not find a Manager with id=%s", login));
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
+    /**
+     * Returns all managers in db
+     */
     @Override
     public List<Manager> getManagerList() {
-        return getManagerList();
+        try {
+            return managerDao.getManagerList();
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException("Great apologies! We could not find a Manager list");
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
+    /**
+     * Updates existing manager in db
+     */
     @Override
-    public boolean updateManager(int id, Manager manager) {
-        return false;
+    public void updateManager(int id, Manager manager) {
+        try {
+            managerDao.updateManager(id, manager);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Great apologies! We could not find a Manager with id=%s", id));
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
+    /**
+     * Deletes manager by id
+     */
     @Override
-    public boolean deleteManagerById(int id) {
-        return false;
+    public void deleteManagerById(int id) {
+        try {
+            managerDao.deleteManagerById(id);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Great apologies! We could not find a Manager with id=%s", id));
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
+    /**
+     * Removes all managers
+     */
     @Override
-    public boolean deleteAll() {
-        return false;
-    }
-
-    public static void main(String[] args) {
-        DataSource dataSource = DBManager.getDataSource();
-        Manager managerNew = new ManagerServiceImpl(dataSource).getManagerById(10);
-        System.out.println(managerNew);
+    public void deleteAll() {
+        try {
+            managerDao.deleteAll();
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException("Great apologies! We could not find a Manager with id=%s");
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

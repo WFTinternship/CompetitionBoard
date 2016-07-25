@@ -5,17 +5,19 @@ import com.workfront.intern.cb.common.Manager;
 import java.util.List;
 
 public interface ManagerService {
+
+    // CREATE
     void addManager(Manager manager);
 
+    // READ
     Manager getManagerById(int id);
-
     Manager getManagerByLogin(String login);
-
     List<Manager> getManagerList() ;
 
-    boolean updateManager(int id, Manager manager);
+    // UPDATE
+    void updateManager(int id, Manager manager);
 
-    boolean deleteManagerById(int id);
-
-    boolean deleteAll();
+    // DELETE
+    void deleteManagerById(int id);
+    void deleteAll();
 }

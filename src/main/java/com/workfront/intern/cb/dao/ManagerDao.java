@@ -9,18 +9,17 @@ import java.util.List;
 public interface ManagerDao {
 
     // CREATE
-    void addManager(Manager manager);
+    void addManager(Manager manager) throws FailedOperationException;
 
     // READ
     Manager getManagerById(int id) throws ObjectNotFoundException, FailedOperationException;
-    Manager getManagerByLogin(String login) ObjectNotFoundException, FailedOperationException;
-
-    List<Manager> getManagerList();
+    Manager getManagerByLogin(String login) throws ObjectNotFoundException, FailedOperationException;
+    List<Manager> getManagerList() throws ObjectNotFoundException, FailedOperationException;
 
     // UPDATE
-    boolean updateManager(int id, Manager manager);
+    void updateManager(int id, Manager manager) throws ObjectNotFoundException, FailedOperationException;
 
     // DELETE
-    boolean deleteManagerById(int id);
-    boolean deleteAll();
+    void deleteManagerById(int id) throws ObjectNotFoundException, FailedOperationException;
+    void deleteAll() throws ObjectNotFoundException, FailedOperationException;
 }

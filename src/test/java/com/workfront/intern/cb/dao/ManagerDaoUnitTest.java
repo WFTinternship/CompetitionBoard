@@ -42,38 +42,37 @@ public class ManagerDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void addManager_dbError() {
+    public void addManager_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.addManager(testManager);
     }
 
-
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void getManagerById_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.getManagerById(NON_EXISTING_ID);
     }
 
-    @Test
-    public void getManagerByLogin_dbError() {
+    @Test(expected = FailedOperationException.class)
+    public void getManagerByLogin_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
     }
 
     @Test
-    public void getManagerList_dbError() {
+    public void getManagerList_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.getManagerList();
     }
 
     @Test
-    public void updateManager_dbError() {
+    public void updateManager_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.updateManager(NON_EXISTING_ID, testManager);
     }
 
     @Test
-    public void deleteManagerById_dbError() {
+    public void deleteManagerById_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll_dbError() {
+    public void deleteAll_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteAll();
     }
 }

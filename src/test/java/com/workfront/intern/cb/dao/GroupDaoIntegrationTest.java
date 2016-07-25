@@ -4,6 +4,8 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +30,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     DataSource dataSource = DBManager.getDataSource();
 
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws FailedOperationException, ObjectNotFoundException {
         managerDao = new ManagerDaoImpl(dataSource);
         tournamentDao = new TournamentDaoImpl(dataSource);
         groupDao = new GroupDaoImpl(dataSource);
@@ -70,7 +72,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @After
-    public void afterTest() {
+    public void afterTest() throws FailedOperationException, ObjectNotFoundException {
         final String WARNING_MESSAGE = "WARNING: testTournament was null after test execution";
 
         // Deleting 'group' of manager type field after passed test
