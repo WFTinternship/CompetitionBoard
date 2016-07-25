@@ -3,6 +3,8 @@ package com.workfront.intern.cb.dao;
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +46,9 @@ public class ManagerDaoUnitTest extends BaseTest {
         managerDao.addManager(testManager);
     }
 
+
     @Test
-    public void getManagerById_dbError() {
+    public void getManagerById_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.getManagerById(NON_EXISTING_ID);
     }
 

@@ -5,13 +5,13 @@ import com.workfront.intern.cb.common.Manager;
 import java.util.List;
 
 public interface ManagerService {
-    boolean addManager(Manager manager);
+    void addManager(Manager manager);
 
     Manager getManagerById(int id);
 
     Manager getManagerByLogin(String login);
 
-    List<Manager> getManagerList();
+    List<Manager> getManagerList() ;
 
     boolean updateManager(int id, Manager manager);
 

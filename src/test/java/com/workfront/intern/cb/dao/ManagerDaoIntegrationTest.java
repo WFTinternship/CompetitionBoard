@@ -2,6 +2,8 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
@@ -52,16 +54,15 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     // region <TEST CASES>
 
-    @Test
-    public void getManagerById_notFound() {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getManagerById_notFound() throws Exception {
         // Testing method
         Manager manager = managerDao.getManagerById(NON_EXISTING_ID);
-
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, manager);
     }
 
     @Test
-    public void getManagerById_found() {
+    public void getManagerById_found() throws FailedOperationException, ObjectNotFoundException {
         int targetId = testManager.getId();
 
         // Testing method
@@ -127,14 +128,12 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         assertEquals(0, manager.getId());
 
         // Testing method
-        boolean added = managerDao.addManager(manager);
-
-        assertTrue(added);
+        managerDao.addManager(manager);
         assertTrue(manager.getId() > 0);
     }
 
     @Test
-    public void updateManager() {
+    public void updateManager() throws FailedOperationException, ObjectNotFoundException {
         // Testing method
         String passwordUpdate = StringHelper.passToEncrypt("updatedPassword");
         int targetId = testManager.getId();

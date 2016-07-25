@@ -1,6 +1,8 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.apache.log4j.Logger;
 
@@ -22,7 +24,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Returns manager by id
      */
     @Override
-    public Manager getManagerById(int id) {
+    public Manager getManagerById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -41,20 +43,24 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 manager = extractManagerFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Manager with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
         return manager;
     }
 
+    //TODO
     /**
      * Returns manager by login
      */
     @Override
-    public Manager getManagerByLogin(String login) {
+    public Manager getManagerByLogin(String login) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -73,9 +79,12 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 manager = extractManagerFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Manager with login[%s] not found", login));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -145,11 +154,10 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Adds new manager in db
      */
     @Override
-    public boolean addManager(Manager manager) {
+    public void addManager(Manager manager) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        int rows = 0;
 
         String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
         try {
@@ -162,7 +170,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps.setString(2, StringHelper.passToEncrypt(manager.getPassword()));
 
             // insert base participant info
-            rows = ps.executeUpdate();
+            ps.executeUpdate();
 
             // return generated key
             int id = acquireGeneratedKey(ps);
@@ -172,7 +180,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } finally {
             closeResources(conn, ps, rs);
         }
-        return rows == 1;
     }
 
     /**
@@ -208,7 +215,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      */
     private Manager extractManagerFromResultSet(ResultSet rs) throws SQLException {
         Manager manager = new Manager();
-
         manager.setId(rs.getInt("manager_id"));
         manager.setLogin(rs.getString("login"));
         manager.setPassword(rs.getString("password"));

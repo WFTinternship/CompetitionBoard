@@ -1,17 +1,20 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
 public interface ManagerDao {
 
     // CREATE
-    boolean addManager(Manager manager);
+    void addManager(Manager manager);
 
     // READ
-    Manager getManagerById(int id);
-    Manager getManagerByLogin(String login);
+    Manager getManagerById(int id) throws ObjectNotFoundException, FailedOperationException;
+    Manager getManagerByLogin(String login) ObjectNotFoundException, FailedOperationException;
+
     List<Manager> getManagerList();
 
     // UPDATE
@@ -19,6 +22,5 @@ public interface ManagerDao {
 
     // DELETE
     boolean deleteManagerById(int id);
-
     boolean deleteAll();
 }
