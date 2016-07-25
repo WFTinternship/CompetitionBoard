@@ -11,7 +11,6 @@ import org.junit.Test;
 import javax.sql.DataSource;
 import java.util.List;
 
-import static com.sun.prism.impl.Disposer.cleanUp;
 import static org.junit.Assert.*;
 
 public class ParticipantDaoIntegrationTest extends BaseTest {
@@ -27,9 +26,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() {
-        cleanUp();
-
         participantDao = new ParticipantDaoImpl(dataSource);
+        cleanUp();
 
         testMember = createRandomMember();
         assertEquals(0, testMember.getId());
@@ -44,6 +42,10 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @After
     public void afterTest() {
+        cleanUp();
+    }
+
+    private void cleanUp(){
         participantDao.deleteAll(Member.class);
         participantDao.deleteAll(Team.class);
     }
