@@ -3,6 +3,8 @@ package com.workfront.intern.cb.dao;
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,39 +40,39 @@ public class TournamentDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void add_dbError() {
+    public void add_dbError() throws FailedOperationException {
         // Test method
         tournamentDao.addTournament(new Tournament());
     }
 
     @Test
-    public void getTournamentById_dbError() {
+    public void getTournamentById_dbError() throws FailedOperationException, ObjectNotFoundException {
         tournamentDao.getTournamentById(NON_EXISTING_ID);
     }
 
     @Test
-    public void getTournamentListByManager_dbError() {
+    public void getTournamentListByManager_dbError() throws FailedOperationException {
         tournamentDao.getTournamentListByManager(NON_EXISTING_ID);
     }
 
     @Test
-    public void getTournamentList_dbError() {
+    public void getTournamentList_dbError() throws FailedOperationException {
         tournamentDao.getTournamentList();
     }
 
     @Test
-    public void updateTournament_dbError() {
+    public void updateTournament_dbError() throws FailedOperationException {
         Tournament testTournament = createRandomTournament();
         tournamentDao.updateTournament(NON_EXISTING_ID, testTournament);
     }
 
     @Test
-    public void deleteTournamentById_dbError() {
+    public void deleteTournamentById_dbError() throws ObjectNotFoundException {
         tournamentDao.deleteTournamentById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll_dbError() {
+    public void deleteAll_dbError() throws FailedOperationException {
         tournamentDao.deleteAll();
     }
 }

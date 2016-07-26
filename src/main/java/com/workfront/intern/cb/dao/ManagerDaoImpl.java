@@ -94,7 +94,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Returns all managers in db
      */
     @Override
-    public List<Manager> getManagerList() {
+    public List<Manager> getManagerList() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -116,6 +116,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -126,7 +127,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Updates existing manager in db
      */
     @Override
-    public void updateManager(int id, Manager manager) {
+    public Manager updateManager(int id, Manager manager) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -142,16 +143,18 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
+        return manager;
     }
 
     /**
      * Adds new manager in db
      */
     @Override
-    public void addManager(Manager manager) {
+    public Manager addManager(Manager manager) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -173,29 +176,37 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             manager.setId(id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
+        return manager;
     }
 
     /**
      * Deletes manager by id
      */
     @Override
-    public void deleteManagerById(int id) {
-        String sql = "DELETE FROM manager WHERE manager_id=?";
-
-        deleteEntries(sql, id);
+    public void deleteManagerById(int id) throws ObjectNotFoundException {
+        try {
+            String sql = "DELETE FROM manager WHERE manager_id=?";
+            deleteEntries(sql, id);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**
      * Removes all managers
      */
     @Override
-    public void deleteAll() {
-        String sql = "DELETE FROM manager";
-
-        deleteEntries(sql);
+    public void deleteAll() throws ObjectNotFoundException {
+        try {
+            String sql = "DELETE FROM manager";
+            deleteEntries(sql);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**

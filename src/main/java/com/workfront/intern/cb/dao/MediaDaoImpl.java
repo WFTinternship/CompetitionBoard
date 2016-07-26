@@ -1,11 +1,11 @@
 package com.workfront.intern.cb.dao;
 
-import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets specific media(photo or video) by id
      */
     @Override
-    public Media getMediaById(int id) {
+    public Media getMediaById(int id) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -42,9 +42,14 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 media = extractMediaFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Media with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -55,7 +60,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets all media by specific manager
      */
     @Override
-    public List<Media> getMediaListByManager(int id) {
+    public List<Media> getMediaListByManager(int id) throws FailedOperationException {
         List<Media> mediaByManagerList;
         String sql = "SELECT * FROM media WHERE manager_id=?";
         mediaByManagerList = getSpecificMediaList(sql, id);
@@ -67,7 +72,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets all media by specific tournament
      */
     @Override
-    public List<Media> getMediaListByTournament(int id) {
+    public List<Media> getMediaListByTournament(int id) throws FailedOperationException {
         List<Media> mediaByTournamentList;
         String sql = "SELECT * FROM media WHERE tournament_id=?";
         mediaByTournamentList = getSpecificMediaList(sql, id);
@@ -79,7 +84,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Updates photo
      */
     @Override
-    public boolean updatePhoto(int id, Media media) {
+    public Media updatePhoto(int id, Media media) throws FailedOperationException {
         String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
 
         return updateSpecificMedia(id, sql, media);
@@ -89,7 +94,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Updates video
      */
     @Override
-    public boolean updateVideo(int id, Media media) {
+    public Media updateVideo(int id, Media media) throws FailedOperationException {
         String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
 
         return updateSpecificMedia(id, sql, media);
@@ -99,8 +104,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Adding photo to db by specific manager and tournament
      */
     @Override
-    public boolean addPhoto(Media media) {
-        boolean inserted = false;
+    public Media addPhoto(Media media) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -124,21 +128,20 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             if (rs.next()) {
                 media.setMediaId(rs.getInt(1));
             }
-            inserted = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
-        return inserted;
+        return media;
     }
 
     /**
      * Adds video to db by specific manager and tournament
      */
     @Override
-    public boolean addVideo(Media media) {
-        boolean inserted = false;
+    public Media addVideo(Media media) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -162,45 +165,40 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             if (rs.next()) {
                 media.setMediaId(rs.getInt(1));
             }
-            inserted = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
-        return inserted;
+        return media;
     }
-
 
 
     /**
      * Deletes media by id
      */
     @Override
-    public boolean deleteMediaById(int id) {
-        boolean deleted;
+    public void deleteMediaById(int id) throws ObjectNotFoundException {
         String sql = "DELETE FROM media WHERE media_id=?";
 
-        deleted = deleteEntries(sql, id);
-        return deleted;
+        deleteEntries(sql, id);
     }
 
     /**
      * Deletes all media
      */
     @Override
-    public boolean deleteAll() {
-        boolean deleted;
+    public void deleteAll() throws ObjectNotFoundException {
         String sql = "DELETE FROM media";
 
-        deleted = deleteEntries(sql);
-        return deleted;
+        deleteEntries(sql);
     }
 
     /**
      * Gets specific data list of deleteMediaById from sql query
      */
-    private List<Media> getSpecificMediaList(String sql, int id) {
+    private List<Media> getSpecificMediaList(String sql, int id) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -223,6 +221,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -232,7 +231,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
     /**
      * Extracting specific data of deleteMediaById from ResultSet
      */
-    private static Media extractMediaFromResultSet(ResultSet rs) {
+    private static Media extractMediaFromResultSet(ResultSet rs) throws FailedOperationException {
         Media media = new Media();
         try {
             media.setMediaId(rs.getInt("media_id"));
@@ -242,6 +241,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             media.setManagerId(rs.getInt("manager_id"));
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         }
         return media;
     }
@@ -249,10 +249,9 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
     /**
      * Updates media(photo or video) use specific sql query
      */
-    private boolean updateSpecificMedia(int id, String sql, Media media) {
+    private Media updateSpecificMedia(int id, String sql, Media media) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
-        boolean updated = false;
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -267,12 +266,13 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
 
             // Execute statement
             ps.executeUpdate();
-            updated = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
-        return updated;
+
+        return media;
     }
 }

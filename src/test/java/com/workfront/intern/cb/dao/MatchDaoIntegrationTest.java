@@ -9,7 +9,6 @@ import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.sql.DataSource;
@@ -118,7 +117,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     // region <TEST CASES>
 
     @Test
-    public void addMatch_created() {
+    public void addMatch_created() throws ObjectNotFoundException {
         int groupId = testGroup.getGroupId();
 
         // Initialize random match instance
@@ -128,9 +127,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(0, match.getMatchId());
 
         // Testing method
-        boolean added = matchDao.addMatch(match);
-
-        assertTrue(added);
+        matchDao.addMatch(match);
         assertTrue(match.getMatchId() > 0);
 
         matchDao.deleteMatch(match.getMatchId());
@@ -185,13 +182,12 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMatchList_emptyList() {
+    public void getMatchList_emptyList() throws ObjectNotFoundException {
         int matchId = testMatch.getMatchId();
         int groupId = testGroup.getGroupId();
 
         // Testing method
-        boolean deleted = matchDao.deleteMatch(matchId);
-        assertTrue(deleted);
+        matchDao.deleteMatch(matchId);
 
         // Testing method
         List<Match> matchList = matchDao.getMatchListByGroup(groupId);
@@ -238,10 +234,9 @@ public class MatchDaoIntegrationTest extends BaseTest {
         match.setScoreParticipantTwo(scoreParticipantTwo);
 
         // Testing method
-        boolean update = matchDao.updateMatch(matchId, match);
+        matchDao.updateMatch(matchId, match);
         testMatch = matchDao.getMatchById(matchId);
 
-        assertTrue(update);
         assertEquals(testMatch.getMatchId(), match.getMatchId());
         assertEquals(testMatch.getGroupId(), match.getGroupId());
         assertEquals(testMatch.getParticipantOneId(), match.getParticipantOneId());
@@ -250,31 +245,26 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
-    @Test
-    public void deleteMatch_notFound() {
+    @Test(expected = ObjectNotFoundException.class)
+    public void deleteMatch_notFound() throws ObjectNotFoundException {
         // Testing method
-        boolean deleted = matchDao.deleteMatch(NON_EXISTING_ID);
-
-        assertFalse(deleted);
+        matchDao.deleteMatch(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteMatch_found() {
+    public void deleteMatch_found() throws ObjectNotFoundException {
         int matchId = testMatch.getMatchId();
 
         // Testing method
-        boolean deleted = matchDao.deleteMatch(matchId);
-
-        assertTrue(deleted);
+        matchDao.deleteMatch(matchId);
     }
 
     @Test
-    public void deleteAll() {
+    public void deleteAll() throws ObjectNotFoundException {
         int groupId = testGroup.getGroupId();
 
         // Testing method
-        boolean deleteAll = matchDao.deleteAll();
-        assertTrue(deleteAll);
+        matchDao.deleteAll();
 
         List<Match> matchList = matchDao.getMatchListByGroup(groupId);
         assertEquals(0, matchList.size());

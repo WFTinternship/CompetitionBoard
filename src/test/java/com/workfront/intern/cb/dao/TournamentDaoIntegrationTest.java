@@ -74,15 +74,15 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         }
     }
 
-    @Test
-    public void getTournamentById_notFound() {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getTournamentById_notFound() throws FailedOperationException, ObjectNotFoundException {
         // Testing method
         Tournament tournament = tournamentDao.getTournamentById(NON_EXISTING_ID);
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, tournament);
     }
 
     @Test
-    public void getTournamentById_found() {
+    public void getTournamentById_found() throws FailedOperationException, ObjectNotFoundException {
         int targetId = testTournament.getTournamentId();
 
         // Testing method
@@ -100,10 +100,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentList_emptyList() {
-        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-
-        assertTrue(deleted);
+    public void getTournamentList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
 
         // Testing method
         List<Tournament> tournamentList = tournamentDao.getTournamentList();
@@ -113,7 +111,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentList_found() {
+    public void getTournamentList_found() throws FailedOperationException {
         // Testing method
         List<Tournament> tournamentList = tournamentDao.getTournamentList();
 
@@ -133,10 +131,10 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentListByManager_emptyList() {
+    public void getTournamentListByManager_emptyList() throws ObjectNotFoundException, FailedOperationException {
         // Testing method
-        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-        assertTrue(deleted);
+        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
+
 
         int targetId = testManager.getId();
         List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
@@ -146,7 +144,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentListByManager_found() {
+    public void getTournamentListByManager_found() throws FailedOperationException {
         int targetId = testManager.getId();
 
         // Testing method
@@ -168,7 +166,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void addTournament_created() {
+    public void addTournament_created() throws FailedOperationException, ObjectNotFoundException {
         // Initialize random tournament instance
         int targetId = testManager.getId();
 
@@ -178,16 +176,14 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(0, tournament.getTournamentId());
 
         // Testing method
-        boolean added = tournamentDao.addTournament(tournament);
-
-        assertTrue(added);
+        tournamentDao.addTournament(tournament);
         assertTrue(tournament.getTournamentId() > 0);
 
         tournamentDao.deleteTournamentById(tournament.getTournamentId());
     }
 
     @Test
-    public void updateTournament() {
+    public void updateTournament() throws FailedOperationException, ObjectNotFoundException {
         // Testing method
         Tournament tournament = createRandomTournament();
 
@@ -211,10 +207,9 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         tournament.setManagerId(targetId);
 
         // Updates specific tournament in db
-        boolean updated = tournamentDao.updateTournament(tournamentId, tournament);
+        tournamentDao.updateTournament(tournamentId, tournament);
         testTournament = tournamentDao.getTournamentById(tournamentId);
 
-        assertTrue(updated);
         assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
         assertEquals(testTournament.getTournamentName(), tournament.getTournamentName());
         assertEquals(testTournament.getStartDate(), tournament.getStartDate());
@@ -226,23 +221,18 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteTournamentById_notFound() {
-        boolean deleted = tournamentDao.deleteTournamentById(NON_EXISTING_ID);
-
-        assertFalse(deleted);
+    public void deleteTournamentById_notFound() throws ObjectNotFoundException {
+        tournamentDao.deleteTournamentById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteTournamentById_found() {
-        boolean deleted = tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-
-        assertTrue(deleted);
+    public void deleteTournamentById_found() throws ObjectNotFoundException {
+        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
     }
 
     @Test
-    public void deleteAll() {
-        boolean deleteAll = tournamentDao.deleteAll();
-        assertTrue(deleteAll);
+    public void deleteAll() throws FailedOperationException {
+        tournamentDao.deleteAll();
 
         List<Tournament> tournamentList = tournamentDao.getTournamentList();
         assertEquals(0, tournamentList.size());

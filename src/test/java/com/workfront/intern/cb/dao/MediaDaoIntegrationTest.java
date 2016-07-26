@@ -94,7 +94,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     // region <TEST CASES>
 
     @Test
-    public void getMediaById_notFound() {
+    public void getMediaById_notFound() throws FailedOperationException {
         // Testing method
         Media media = mediaDao.getMediaById(NON_EXISTING_ID);
 
@@ -102,7 +102,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaById_found() {
+    public void getMediaById_found() throws FailedOperationException {
         int targetId = testMedia.getMediaId();
 
         // Testing method
@@ -116,7 +116,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void addPhoto_created() {
+    public void addPhoto_created() throws FailedOperationException, ObjectNotFoundException {
         // Initialize random tournament instance
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
@@ -128,16 +128,14 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertEquals(0, media.getMediaId());
 
         // Testing method
-        boolean added = mediaDao.addPhoto(media);
-
-        assertTrue(added);
+        mediaDao.addPhoto(media);
         assertTrue(media.getMediaId() > 0);
 
         mediaDao.deleteMediaById(media.getMediaId());
     }
 
     @Test
-    public void addVideo_created() {
+    public void addVideo_created() throws FailedOperationException, ObjectNotFoundException {
         // Initialize random tournament instance
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
@@ -149,20 +147,17 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertEquals(0, media.getMediaId());
 
         // Testing method
-        boolean added = mediaDao.addVideo(media);
-
-        assertTrue(added);
+        mediaDao.addVideo(media);
         assertTrue(media.getMediaId() > 0);
 
         mediaDao.deleteMediaById(media.getMediaId());
     }
 
     @Test
-    public void getMediaByManagerList_emptyList() {
+    public void getMediaByManagerList_emptyList() throws ObjectNotFoundException, FailedOperationException {
         int managerId = testManager.getId();
 
-        boolean deleted = mediaDao.deleteMediaById(testMedia.getMediaId());
-        assertTrue(deleted);
+        mediaDao.deleteMediaById(testMedia.getMediaId());
 
         // Testing method
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
@@ -172,7 +167,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaByManagerList_found() {
+    public void getMediaByManagerList_found() throws FailedOperationException {
         int managerId = testManager.getId();
 
         // Testing method
@@ -190,10 +185,8 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaByTournamentList_emptyList() {
-        boolean deleted = mediaDao.deleteMediaById(testMedia.getMediaId());
-
-        assertTrue(deleted);
+    public void getMediaByTournamentList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+        mediaDao.deleteMediaById(testMedia.getMediaId());
 
         // Testing method
         int tournamentId = testTournament.getTournamentId();
@@ -204,7 +197,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaByTournamentList_found() {
+    public void getMediaByTournamentList_found() throws FailedOperationException {
         int tournamentId = testTournament.getTournamentId();
         List<Media> mediaList = mediaDao.getMediaListByTournament(tournamentId);
 
@@ -222,7 +215,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     //TODO
     @Test
-    public void updatePhoto() {
+    public void updatePhoto() throws FailedOperationException {
         // Testing method
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
@@ -234,7 +227,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         media.setManagerId(managerId);
 
         // Updates specific tournament in db
-        boolean updated = mediaDao.updatePhoto(mediaId, media);
+        mediaDao.updatePhoto(mediaId, media);
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
         testMedia = mediaList.get(0);
 
@@ -247,7 +240,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     //TODO
     @Test
-    public void updateVideo() {
+    public void updateVideo() throws FailedOperationException {
         // Testing method
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
@@ -259,11 +252,10 @@ public class MediaDaoIntegrationTest extends BaseTest {
         media.setManagerId(managerId);
 
         // Updates specific tournament in db
-        boolean updated = mediaDao.updateVideo(mediaId, media);
+        mediaDao.updateVideo(mediaId, media);
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
         testMedia = mediaList.get(0);
 
-        assertTrue(updated);
         assertEquals(testMedia.getPhoto(), media.getPhoto());
         assertEquals(testMedia.getVideo(), media.getVideo());
         assertEquals(testMedia.getTournamentId(), media.getTournamentId());
@@ -272,21 +264,21 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     //TODO
     @Test
-    public void deleteMediaById_notFound() {
+    public void deleteMediaById_notFound() throws ObjectNotFoundException {
         mediaDao.deleteMediaById(NON_EXISTING_ID);
 
     }
 
     //TODO
     @Test
-    public void deleteMedia_deleted() {
+    public void deleteMedia_deleted() throws ObjectNotFoundException {
         mediaDao.deleteMediaById(testMedia.getMediaId());
 
     }
 
     //TODO
     @Test
-    public void deleteAll() {
+    public void deleteAll() throws ObjectNotFoundException, FailedOperationException {
         mediaDao.deleteAll();
 
         int managerId = testManager.getId();

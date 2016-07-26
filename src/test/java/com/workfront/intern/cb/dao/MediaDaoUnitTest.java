@@ -5,6 +5,8 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,47 +42,47 @@ public class MediaDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void addPhoto_dbError() {
+    public void addPhoto_dbError() throws FailedOperationException {
         mediaDao.addPhoto(new Media());
     }
 
     @Test
-    public void addVideo_dbError() {
+    public void addVideo_dbError() throws FailedOperationException {
         mediaDao.addVideo(new Media());
     }
 
     @Test
-    public void getMedia_dbError() {
+    public void getMedia_dbError() throws FailedOperationException {
         mediaDao.getMediaById(NON_EXISTING_ID);
     }
 
     @Test
-    public void getMediaListByManager_dbError() {
+    public void getMediaListByManager_dbError() throws FailedOperationException {
         mediaDao.getMediaListByManager(NON_EXISTING_ID);
     }
 
     @Test
-    public void getMediaListByTournament_dbError() {
+    public void getMediaListByTournament_dbError() throws FailedOperationException {
         mediaDao.getMediaListByTournament(NON_EXISTING_ID);
     }
 
     @Test
-    public void updatePhoto_dbError() {
+    public void updatePhoto_dbError() throws FailedOperationException {
         mediaDao.updatePhoto(NON_EXISTING_ID, new Media());
     }
 
     @Test
-    public void updateVideo_dbError() {
+    public void updateVideo_dbError() throws FailedOperationException {
         mediaDao.updateVideo(NON_EXISTING_ID, new Media());
     }
 
     @Test
-    public void deleteMedia() {
+    public void deleteMedia() throws ObjectNotFoundException {
         mediaDao.deleteMediaById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll_dbError() {
+    public void deleteAll_dbError() throws ObjectNotFoundException {
         mediaDao.deleteAll();
     }
 }

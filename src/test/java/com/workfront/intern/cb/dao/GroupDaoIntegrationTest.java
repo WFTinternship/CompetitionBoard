@@ -101,7 +101,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     // region <TEST CASES>
 
     @Test
-    public void addGroup_created() {
+    public void addGroup_created() throws ObjectNotFoundException, FailedOperationException {
         // Initialize random tournament instance
         int tournamentId = testTournament.getTournamentId();
 
@@ -111,16 +111,14 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(0, group.getGroupId());
 
         // Testing method
-        boolean added = groupDao.addGroup(group);
-
-        assertTrue(added);
+        groupDao.addGroup(group);
         assertTrue(group.getTournamentId() > 0);
 
         groupDao.deleteGroup(group.getGroupId());
     }
 
-    @Test
-    public void getGroupById_notFound() {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getGroupById_notFound() throws FailedOperationException {
         // Testing method
         Group group = groupDao.getGroupById(NON_EXISTING_ID);
 
@@ -128,7 +126,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getGroupById_found() {
+    public void getGroupById_found() throws FailedOperationException {
         int groupId = testGroup.getGroupId();
 
         // Testing method
@@ -143,13 +141,11 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getGroupByTournamentList_emptyList() {
+    public void getGroupByTournamentList_emptyList() throws ObjectNotFoundException, FailedOperationException {
         int groupId = testGroup.getGroupId();
         int tournamentId = testTournament.getTournamentId();
 
-        boolean deleted = groupDao.deleteGroup(groupId);
-
-        assertTrue(deleted);
+        groupDao.deleteGroup(groupId);
 
         // Testing method
         List<Group> groupList = groupDao.getGroupByTournamentList(tournamentId);
@@ -158,7 +154,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getGroupByTournamentList_found() {
+    public void getGroupByTournamentList_found() throws FailedOperationException {
         // Testing method
         int tournamentId = testTournament.getTournamentId();
         List<Group> groupList = groupDao.getGroupByTournamentList(tournamentId);
@@ -176,11 +172,9 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getAllGroups_emptyList() {
+    public void getAllGroups_emptyList() throws ObjectNotFoundException, FailedOperationException {
         int groupId = testGroup.getGroupId();
-        boolean deleted = groupDao.deleteGroup(groupId);
-
-        assertTrue(deleted);
+        groupDao.deleteGroup(groupId);
 
         // Testing method
         List<Group> groupList = groupDao.getAllGroups();
@@ -189,7 +183,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getAllGroups_found() {
+    public void getAllGroups_found() throws FailedOperationException {
         // Testing method
         List<Group> groupList = groupDao.getAllGroups();
 
@@ -206,7 +200,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateGroup() {
+    public void updateGroup() throws FailedOperationException {
         int groupId = testGroup.getGroupId();
         int tournamentId = testTournament.getTournamentId();
 
@@ -224,10 +218,9 @@ public class GroupDaoIntegrationTest extends BaseTest {
         group.setNextRoundParticipnats(nextRoundParticipants);
 
         // Updates specific tournament in db
-        boolean updated = groupDao.updateGroup(groupId, group);
+        groupDao.updateGroup(groupId, group);
         testGroup = groupDao.getGroupById(groupId);
 
-        assertTrue(updated);
         assertEquals(testGroup.getGroupId(), group.getGroupId());
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
@@ -236,23 +229,18 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteGroup_notFound() {
-        boolean deleted = groupDao.deleteGroup(NON_EXISTING_ID);
-
-        assertFalse(deleted);
+    public void deleteGroup_notFound() throws ObjectNotFoundException {
+        groupDao.deleteGroup(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteGroup_found() {
-        boolean deleted = groupDao.deleteGroup(testGroup.getGroupId());
-
-        assertTrue(deleted);
+    public void deleteGroup_found() throws ObjectNotFoundException {
+        groupDao.deleteGroup(testGroup.getGroupId());
     }
 
     @Test
-    public void deleteAll() {
-        boolean deleteAll = groupDao.deleteAll();
-        assertTrue(deleteAll);
+    public void deleteAll() throws ObjectNotFoundException, FailedOperationException {
+        groupDao.deleteAll();
 
         List<Group> groupList = groupDao.getAllGroups();
         assertEquals(0, groupList.size());

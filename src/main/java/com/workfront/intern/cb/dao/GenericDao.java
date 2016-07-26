@@ -1,5 +1,6 @@
 package com.workfront.intern.cb.dao;
 
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -51,8 +52,7 @@ abstract class GenericDao {
     /**
      * Deletes entry(es) according to specified SQL and ID param.
      */
-    boolean deleteEntries(String sql, int id) {
-        int rows = 0;
+    void deleteEntries(String sql, int id) throws ObjectNotFoundException {
         if (sql != null) {
             Connection conn = null;
             PreparedStatement ps = null;
@@ -67,21 +67,20 @@ abstract class GenericDao {
                 }
 
                 // Execute statement
-                rows = ps.executeUpdate();
+                ps.executeUpdate();
             } catch (SQLException e) {
                 LOG.error(e.getMessage(), e);
             } finally {
                 closeResources(conn, ps);
             }
         }
-        return rows > 0;
     }
 
     /**
      * Deletes entries according to specified SQL statement.
      */
-    boolean deleteEntries(String sql) {
-        return deleteEntries(sql, 0);
+    void deleteEntries(String sql) throws ObjectNotFoundException {
+        deleteEntries(sql, 0);
     }
 
     int acquireGeneratedKey(PreparedStatement ps) throws SQLException {

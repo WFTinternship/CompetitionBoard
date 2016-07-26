@@ -1,23 +1,25 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
 public interface TournamentDao {
 
     // CREATE
-    boolean addTournament(Tournament tournament);
+    Tournament addTournament(Tournament tournament) throws FailedOperationException;
 
     // READ
-    Tournament getTournamentById(int id);
-    List<Tournament> getTournamentListByManager(int id);
-    List<Tournament> getTournamentList();
+    Tournament getTournamentById(int id) throws ObjectNotFoundException, FailedOperationException;
+    List<Tournament> getTournamentListByManager(int id) throws FailedOperationException;
+    List<Tournament> getTournamentList() throws FailedOperationException;
 
     // UPDATE
-    boolean updateTournament(int id, Tournament tournament);
+    Tournament updateTournament(int id, Tournament tournament) throws FailedOperationException;
 
     // DELETE
-    boolean deleteTournamentById(int id);
-    boolean deleteAll();
+    void deleteTournamentById(int id) throws ObjectNotFoundException;
+    void deleteAll() throws FailedOperationException;
 }

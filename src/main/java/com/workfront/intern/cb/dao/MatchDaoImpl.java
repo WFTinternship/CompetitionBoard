@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -71,11 +72,10 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Adds match in to db
      */
     @Override
-    public boolean addMatch(Match match) {
+    public Match addMatch(Match match) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        int rows = 0;
 
         String sql = "INSERT INTO `match` (group_id, participant_1_id, participant_2_id, score_participant_1, score_participant_2) VALUE(?,?,?,?,?);";
         try {
@@ -91,7 +91,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             ps.setInt(5, match.getScoreParticipantTwo());
 
             // insert base participant info
-            rows = ps.executeUpdate();
+            ps.executeUpdate();
 
             int id = acquireGeneratedKey(ps);
             match.setMatchId(id);
@@ -100,14 +100,14 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         } finally {
             closeResources(conn, ps, rs);
         }
-        return rows == 1;
+        return match;
     }
 
     /**
      * Updates match by id
      */
     @Override
-    public boolean updateMatch(int id, Match match) {
+    public Match updateMatch(int id, Match match) {
         boolean updated = false;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -135,31 +135,27 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         } finally {
             closeResources(conn, ps);
         }
-        return updated;
+        return match;
     }
 
     /**
      * Deletes match by id
      */
     @Override
-    public boolean deleteMatch(int id) {
-        boolean deleted;
+    public void deleteMatch(int id) throws ObjectNotFoundException {
         String sql = "DELETE FROM `match` WHERE match_id=?";
 
-        deleted = deleteEntries(sql, id);
-        return deleted;
+        deleteEntries(sql, id);
     }
 
     /**
      * Deletes all match
      */
     @Override
-    public boolean deleteAll() {
-        boolean deleted;
+    public void deleteAll() throws ObjectNotFoundException {
         String sql = "DELETE FROM `match`";
 
-        deleted = deleteEntries(sql);
-        return deleted;
+        deleteEntries(sql);
     }
 
     /**

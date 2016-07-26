@@ -2,25 +2,27 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Participant;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
 public interface GroupDao {
 
     // CREATE
-    boolean addGroup(Group group);
+    Group addGroup(Group group) throws FailedOperationException;
 
     // READ
-    Group getGroupById(int id);
-    List<Group> getGroupByTournamentList(int tournamentId);
-    List<Group> getAllGroups();
+    Group getGroupById(int id) throws FailedOperationException;
+    List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException;
+    List<Group> getAllGroups() throws FailedOperationException;
     List<Participant> getGroupParticipants(int groupId);
 
     // UPDATE
-    boolean updateGroup(int id, Group group);
+    Group updateGroup(int id, Group group) throws FailedOperationException;
 
     // DELETE
-    boolean deleteGroup(int id);
-    boolean deleteAll();
+    void deleteGroup(int id) throws ObjectNotFoundException;
+    void deleteAll() throws ObjectNotFoundException;
 
 }

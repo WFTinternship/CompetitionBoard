@@ -1,6 +1,8 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -21,7 +23,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets tournament by tournament id
      */
     @Override
-    public Tournament getTournamentById(int id) {
+    public Tournament getTournamentById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -40,9 +42,12 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 tournament = extractTournamentFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Tournament with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -53,7 +58,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets all tournament
      */
     @Override
-    public List<Tournament> getTournamentList() {
+    public List<Tournament> getTournamentList() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -76,6 +81,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -86,7 +92,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets all tournament by manager id
      */
     @Override
-    public List<Tournament> getTournamentListByManager(int id) {
+    public List<Tournament> getTournamentListByManager(int id) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -110,6 +116,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -120,11 +127,10 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Adds tournament to db
      */
     @Override
-    public boolean addTournament(Tournament tournament) {
+    public Tournament addTournament(Tournament tournament) throws FailedOperationException{
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        int row = 0;
 
         String sql = "INSERT INTO " +
                 "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id) " +
@@ -145,24 +151,24 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setInt(7, tournament.getManagerId());
 
             // Execute statement
-            row = ps.executeUpdate();
+            ps.executeUpdate();
 
             int tournamentId = acquireGeneratedKey(ps);
             tournament.setTournamentId(tournamentId);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
-        return row == 1;
+        return tournament;
     }
 
     /**
      * Updates specific data tournament
      */
     @Override
-    public boolean updateTournament(int id, Tournament tournament) {
-        boolean updated = false;
+    public Tournament updateTournament(int id, Tournament tournament) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -185,36 +191,32 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
             // Execute statement
             ps.executeUpdate();
-            updated = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
-        return updated;
+        return tournament;
     }
 
     /**
      * Deletes tournament by id
      */
     @Override
-    public boolean deleteTournamentById(int id) {
-        boolean deleted;
-
+    public void deleteTournamentById(int id) throws ObjectNotFoundException {
         String sql = "DELETE FROM tournament WHERE tournament_id=?";
 
-        deleted = deleteEntries(sql, id);
-        return deleted;
+        deleteEntries(sql, id);
     }
 
     /**
      * Removes all tournaments
      */
     @Override
-    public boolean deleteAll() {
+    public void deleteAll() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
-        int rows = 0;
 
         try {
             String sql = "DELETE FROM tournament";
@@ -225,13 +227,12 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps = conn.prepareStatement(sql);
 
             // Execute statement
-            rows = ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
-        return rows > 0;
     }
 
     /**

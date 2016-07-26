@@ -3,6 +3,7 @@ package com.workfront.intern.cb.dao;
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,12 +63,12 @@ public class MatchDaoUnitTest extends BaseTest{
     }
 
     @Test
-    public void deleteMatch() {
+    public void deleteMatch() throws ObjectNotFoundException {
         matchDao.deleteMatch(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll() {
+    public void deleteAll() throws ObjectNotFoundException {
         matchDao.deleteAll();
     }
 }

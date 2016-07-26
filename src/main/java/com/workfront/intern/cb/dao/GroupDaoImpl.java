@@ -2,6 +2,8 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Participant;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -22,11 +24,9 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Adds group to db
      */
     @Override
-    public boolean addGroup(Group group) {
+    public Group addGroup(Group group) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        int rows = 0;
 
         String sql = "INSERT INTO `group`(participants_count, round, next_round_participants, tournament_id)" +
                 "VALUES(?,?,?,?) ";
@@ -42,24 +42,25 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             ps.setInt(4, group.getTournamentId());
 
             // insert base participant info
-            rows = ps.executeUpdate();
+            ps.executeUpdate();
 
             int id = acquireGeneratedKey(ps);
             group.setGroupId(id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps, rs);
+            closeResources(conn, ps);
         }
 
-        return rows == 1;
+        return group;
     }
 
     /**
      * Gets group list in specific tournament
      */
     @Override
-    public Group getGroupById(int id) {
+    public Group getGroupById(int id) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -76,11 +77,16 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
             // update member data
             rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 group = extractGroupFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Group with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -91,7 +97,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Gets group list by specific tournament id
      */
     @Override
-    public List<Group> getGroupByTournamentList(int tournamentId) {
+    public List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -115,6 +121,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -125,7 +132,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Get all group
      */
     @Override
-    public List<Group> getAllGroups() {
+    public List<Group> getAllGroups() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -148,6 +155,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -155,9 +163,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
     }
 
     //TODO
-    /**
-     *
-     */
     @Override
     public List<Participant> getGroupParticipants(int groupId) {
         return null;
@@ -167,8 +172,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Updates group
      */
     @Override
-    public boolean updateGroup(int id, Group group) {
-        boolean updated = false;
+    public Group updateGroup(int id, Group group) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -187,42 +191,34 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
             // Execute statement
             ps.executeUpdate();
-            updated = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
-        return updated;
-    }
 
+        return group;
+    }
 
     /**
      * Deletes group by id
      */
     @Override
-    public boolean deleteGroup(int id) {
-        boolean deleted;
-
+    public void deleteGroup(int id) throws ObjectNotFoundException {
         String sql = "DELETE FROM `group` WHERE group_id=?";
 
-        deleted = deleteEntries(sql, id);
-
-        return deleted;
+        deleteEntries(sql, id);
     }
 
     /**
      * Deletes all group
      */
     @Override
-    public boolean deleteAll() {
-        boolean deleted;
-
+    public void deleteAll() throws ObjectNotFoundException {
         String sql = "DELETE FROM `group`";
 
-        deleted = deleteEntries(sql);
-
-        return deleted;
+        deleteEntries(sql);
     }
 
     /**

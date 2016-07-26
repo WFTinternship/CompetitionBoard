@@ -1,13 +1,14 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
 public interface MatchDao {
 
     // CREATE
-    boolean addMatch(Match match);
+    Match addMatch(Match match);
 
     // READ
     Match getMatchById(int id);
@@ -15,9 +16,9 @@ public interface MatchDao {
     List<Match> getMatchListByGroup(int id);
 
     // UPDATE
-    boolean updateMatch(int id, Match match);
+    Match updateMatch(int id, Match match);
 
     // DELETE
-    boolean deleteMatch(int id);
-    boolean deleteAll();
+    void deleteMatch(int id) throws ObjectNotFoundException;
+    void deleteAll() throws ObjectNotFoundException;
 }

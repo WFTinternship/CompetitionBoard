@@ -4,6 +4,8 @@ import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Team;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,12 +48,12 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void getOneMember_dbError() {
+    public void getOneMember_dbError() throws ObjectNotFoundException, FailedOperationException {
         participantDao.getOne(Member.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void getAllMember_dbError() {
+    public void getAllMember_dbError() throws FailedOperationException {
         participantDao.getAll(Member.class);
     }
 
@@ -62,12 +64,12 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void deleteMember_dbError() {
+    public void deleteMember_dbError() throws ObjectNotFoundException {
         participantDao.delete(Member.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAllMember() {
+    public void deleteAllMember() throws ObjectNotFoundException {
         participantDao.deleteAll(Member.class);
     }
 
@@ -82,12 +84,12 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void getOneTeam_dbError() {
+    public void getOneTeam_dbError() throws ObjectNotFoundException, FailedOperationException {
         participantDao.getOne(Team.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void getAllTeam_dbError() {
+    public void getAllTeam_dbError() throws FailedOperationException {
         participantDao.getAll(Team.class);
     }
 
@@ -98,12 +100,12 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void deleteTeam_dbError() {
+    public void deleteTeam_dbError() throws ObjectNotFoundException {
         participantDao.delete(Team.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAllTeam() {
+    public void deleteAllTeam() throws ObjectNotFoundException {
         participantDao.deleteAll(Team.class);
     }
 

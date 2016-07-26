@@ -3,6 +3,8 @@ package com.workfront.intern.cb.dao;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.Team;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -23,11 +25,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Adds specific participant: member or team
      */
     @Override
-    public boolean addParticipant(Participant participant) {
+    public Participant addParticipant(Participant participant) {
         if (participant instanceof Member) {
-            return addMember((Member) participant);
+            return (Member) participant;
         } else if (participant instanceof Team) {
-            return addTeam((Team) participant);
+            return (Team) participant;
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -37,7 +39,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Gets specific participant - member or team, by id:
      */
     @Override
-    public Participant getOne(Class<? extends Participant> cls, int id) {
+    public Participant getOne(Class<? extends Participant> cls, int id) throws FailedOperationException, ObjectNotFoundException {
         if (cls.equals(Member.class)) {
             return getMemberById(id);
         } else if (cls.equals(Team.class)) {
@@ -51,7 +53,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Gets specific participant list - memberList or teamList
      */
     @Override
-    public List<? extends Participant> getAll(Class<? extends Participant> cls) {
+    public List<? extends Participant> getAll(Class<? extends Participant> cls) throws FailedOperationException {
         if (cls.equals(Member.class)) {
             return getMemberList();
         } else if (cls.equals(Team.class)) {
@@ -65,11 +67,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Updates specific participant - member or team
      */
     @Override
-    public boolean update(Participant participant) {
+    public Participant update(Participant participant) {
         if (participant instanceof Member) {
-            return updateMember((Member) participant);
+            return (Member) participant;
         } else if (participant instanceof Team) {
-            return updateTeam((Team) participant);
+            return (Team) participant;
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -79,11 +81,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes specific participant - member or team, by id:
      */
     @Override
-    public boolean delete(Class<? extends Participant> cls, int id) {
+    public void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException {
         if (cls.equals(Member.class)) {
-            return deleteMember(id);
+            deleteMember(id);
         } else if (cls.equals(Team.class)) {
-            return deleteTeam(id);
+            deleteTeam(id);
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -93,11 +95,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes all specific participant - member or team, by id:
      */
     @Override
-    public boolean deleteAll(Class<? extends Participant> cls) {
+    public void deleteAll(Class<? extends Participant> cls) throws ObjectNotFoundException {
         if (cls.equals(Member.class)) {
-            return deleteAllMembers();
+            deleteAllMembers();
         } else if (cls.equals(Team.class)) {
-            return deleteAllTeams();
+            deleteAllTeams();
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -108,7 +110,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Adding member to db
      */
-    boolean addMember(Member member) {
+    Member addMember(Member member) throws FailedOperationException {
         boolean inserted = false;
         Connection conn = null;
 
@@ -149,7 +151,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // commit transaction
             conn.commit();
-            inserted = true;
         } catch (SQLException e) {
             try {
                 if (conn != null) {
@@ -157,25 +158,26 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 }
             } catch (SQLException e1) {
                 LOG.error(e.getMessage(), e1);
+                throw new FailedOperationException(e.getMessage(), e);
             }
             LOG.error(e.getMessage(), e);
         } finally {
             closeResources(conn);
         }
-        return inserted;
+        return member;
     }
 
     /**
      * Gets member by member id
      */
-    Member getMemberById(int id) {
+    Member getMemberById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Member member = null;
+
         String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id " +
                 "WHERE m.member_id=?;";
-
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -187,9 +189,12 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 member = extractMemberFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Member with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -199,7 +204,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Get member list
      */
-    List<Member> getMemberList() {
+    List<Member> getMemberList() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -222,6 +227,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -231,8 +237,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Updating specific data of member
      */
-    boolean updateMember(Member member) {
-        boolean updated = false;
+    Member updateMember(Member member) throws FailedOperationException {
         Connection conn = null;
         String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
         String sql_member = "UPDATE member SET name=?, surname=?, position=?, email=? WHERE member_id=?";
@@ -267,7 +272,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // commit transaction
             conn.commit();
-            updated = true;
         } catch (SQLException e) {
             try {
                 if (conn != null) {
@@ -277,6 +281,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 LOG.error(e1.getMessage(), e1);
             }
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             try {
                 if (conn != null) {
@@ -286,26 +291,26 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 e.printStackTrace();
             }
         }
-        return updated;
+        return member;
     }
 
     /**
      * Deletes member by id
      */
-    boolean deleteMember(int id) {
+    void deleteMember(int id) throws ObjectNotFoundException {
         String sql = "DELETE FROM participant WHERE participant_id=?";
 
-        return deleteEntries(sql, id);
+        deleteEntries(sql, id);
     }
 
     /**
      * Deletes all members
      */
-    boolean deleteAllMembers() {
+    void deleteAllMembers() throws ObjectNotFoundException {
         int isTeam = 0;
         String sql = "DELETE FROM participant WHERE is_team=" + isTeam;
 
-        return deleteEntries(sql);
+        deleteEntries(sql);
     }
 
     // endregion
@@ -315,8 +320,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Adding new team in db
      */
-    boolean addTeam(Team team) {
-        boolean inserted = false;
+    Team addTeam(Team team) throws FailedOperationException {
         Connection conn = null;
 
         String sql_participant = "INSERT INTO participant (is_team, avatar, participant_info) VALUES (?,?,?)";
@@ -353,7 +357,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // commit transaction
             conn.commit();
-            inserted = true;
         } catch (SQLException e) {
             try {
                 conn.rollback();
@@ -361,6 +364,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 LOG.error(e.getMessage(), e1);
             }
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             try {
                 if (conn != null) {
@@ -370,20 +374,19 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 LOG.error(e.getMessage(), e);
             }
         }
-        return inserted;
+        return team;
     }
 
     /**
      * Gets team by id
      */
-    Team getTeamById(int id) {
+    Team getTeamById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Team team = null;
+
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id WHERE team_id=?";
-
-
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -393,9 +396,12 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 team = extractTeamFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Team with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -405,14 +411,14 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Gets team list
      */
-    List<Team> getTeamList() {
+    List<Team> getTeamList() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Team team;
         List<Team> teamList = new ArrayList<>();
-        String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id";
 
+        String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id";
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -425,6 +431,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -434,13 +441,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Updates specific data of team
      */
-    boolean updateTeam(Team team) {
-        boolean updated = false;
+    Team updateTeam(Team team) throws FailedOperationException {
         Connection conn = null;
+
         String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
         String sql_team = "UPDATE team SET team_name=? WHERE team_id=?";
-
-        // acquire polled connection
         try {
             // Acquire connection
             conn = DBManager.getPooledConnection();
@@ -467,7 +472,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // commit transaction
             conn.commit();
-            updated = true;
         } catch (SQLException e) {
             try {
                 conn.rollback();
@@ -475,6 +479,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 LOG.error(e1.getMessage(), e1);
             }
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             try {
                 if (conn != null) {
@@ -484,26 +489,26 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 e.printStackTrace();
             }
         }
-        return updated;
+        return team;
     }
 
     /**
      * Deletes team by id
      */
-    boolean deleteTeam(int id) {
+    void deleteTeam(int id) throws ObjectNotFoundException {
         String sql = "DELETE FROM participant WHERE participant_id=?";
 
-        return deleteEntries(sql, id);
+        deleteEntries(sql, id);
     }
 
     /**
      * Deletes all teams
      */
-    boolean deleteAllTeams() {
+    void deleteAllTeams() throws ObjectNotFoundException {
         int isTeam = 1;
         String sql = "DELETE FROM participant WHERE is_team=" + isTeam;
 
-        return deleteEntries(sql);
+        deleteEntries(sql);
     }
 
     // endregion
@@ -531,7 +536,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Extracting specific data of Team from ResultSet
      */
-    private static Team extractTeamFromResultSet(ResultSet rs) {
+    private static Team extractTeamFromResultSet(ResultSet rs) throws FailedOperationException {
         Team team = new Team();
         try {
             team.setId(rs.getInt("participant_id"));
@@ -540,6 +545,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             team.setTeamName(rs.getString("team_name"));
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         }
         return team;
     }
