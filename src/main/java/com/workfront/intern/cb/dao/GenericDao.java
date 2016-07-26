@@ -96,7 +96,7 @@ abstract class GenericDao {
             PreparedStatement ps = null;
             try {
                 // Acquire connection
-                conn = DBManager.getPooledConnection();
+                conn = dataSource.getConnection();
 
                 // Initialize statement
                 ps = conn.prepareStatement(sql);
@@ -112,6 +112,9 @@ abstract class GenericDao {
         }
     }
 
+    /**
+     * Generated key from PreparedStatement
+     */
     int acquireGeneratedKey(PreparedStatement ps) throws SQLException {
         ResultSet rs = ps.getGeneratedKeys();
         Integer id = null;
@@ -123,5 +126,4 @@ abstract class GenericDao {
             throw new RuntimeException("Generated ID was NULL");
         return id;
     }
-
 }

@@ -1,7 +1,6 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public interface ManagerService {
     // READ
     Manager getManagerById(int id);
     Manager getManagerByLogin(String login);
-    List<Manager> getManagerList() ;
+    List<Manager> getManagerList();
 
     // UPDATE
     void updateManager(int id, Manager manager);

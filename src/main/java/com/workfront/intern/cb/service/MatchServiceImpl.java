@@ -1,7 +1,9 @@
 package com.workfront.intern.cb.service;
 
-/**
- * Created by artbabayan on 7/26/16.
- */
-public interface MatchServiceImpl {
+
+import org.apache.log4j.Logger;
+
+public class MatchServiceImpl implements MatchService {
+    private static final Logger LOG = Logger.getLogger(MatchServiceImpl.class);
+
 }

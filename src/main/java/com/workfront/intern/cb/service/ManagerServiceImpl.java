@@ -36,7 +36,7 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             return managerDao.getManagerById(id);
         } catch (ObjectNotFoundException e) {
-            throw new RuntimeException(String.format("Great apologies! We could not find a Manager with id=%s", id));
+            throw new RuntimeException(String.format("Manager instance with id=%s not found", id));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -50,7 +50,7 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             return managerDao.getManagerByLogin(login);
         } catch (ObjectNotFoundException e) {
-            throw new RuntimeException(String.format("Great apologies! We could not find a Manager with id=%s", login));
+            throw new RuntimeException(String.format("Manager instance with login=%s not found", login));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -64,7 +64,7 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             return managerDao.getManagerList();
         } catch (ObjectNotFoundException e) {
-            throw new RuntimeException("Great apologies! We could not find a Manager list");
+            throw new RuntimeException("Could not find a Manager list");
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -78,7 +78,7 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             managerDao.updateManager(id, manager);
         } catch (ObjectNotFoundException e) {
-            throw new RuntimeException(String.format("Great apologies! We could not find a Manager with id=%s", id));
+            throw new RuntimeException(String.format("Manager instance with id=%s not updated", id));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
