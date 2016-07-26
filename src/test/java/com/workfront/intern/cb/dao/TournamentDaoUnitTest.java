@@ -66,13 +66,13 @@ public class TournamentDaoUnitTest extends BaseTest {
         tournamentDao.updateTournament(NON_EXISTING_ID, testTournament);
     }
 
-    @Test
-    public void deleteTournamentById_dbError() throws ObjectNotFoundException {
+    @Test(expected = ObjectNotFoundException.class)
+    public void deleteTournamentById_dbError() throws ObjectNotFoundException, FailedOperationException {
         tournamentDao.deleteTournamentById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll_dbError() throws FailedOperationException {
+    public void deleteAll_dbError() throws FailedOperationException, ObjectNotFoundException {
         tournamentDao.deleteAll();
     }
 }

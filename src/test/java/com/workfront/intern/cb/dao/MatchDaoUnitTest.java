@@ -3,6 +3,7 @@ package com.workfront.intern.cb.dao;
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
@@ -38,17 +39,17 @@ public class MatchDaoUnitTest extends BaseTest{
     }
 
     @Test
-    public void add_dbError() {
+    public void add_dbError() throws FailedOperationException {
         matchDao.addMatch(new Match());
     }
 
     @Test
-    public void getMatchById_dbError() {
+    public void getMatchById_dbError() throws ObjectNotFoundException, FailedOperationException {
         matchDao.getMatchById(NON_EXISTING_ID);
     }
 
     @Test
-    public void getMatchByGroupId_dbError() {
+    public void getMatchByGroupId_dbError() throws ObjectNotFoundException, FailedOperationException {
         matchDao.getMatchByGroupId(NON_EXISTING_ID);
     }
 
@@ -57,18 +58,18 @@ public class MatchDaoUnitTest extends BaseTest{
     }
 
     @Test
-    public void updateMatch_dbError() {
+    public void updateMatch_dbError() throws FailedOperationException {
         Match testMatch = createRandomMatch();
         matchDao.updateMatch(NON_EXISTING_ID, testMatch);
     }
 
     @Test
-    public void deleteMatch() throws ObjectNotFoundException {
+    public void deleteMatch() throws Exception {
         matchDao.deleteMatch(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll() throws ObjectNotFoundException {
+    public void deleteAll() throws Exception {
         matchDao.deleteAll();
     }
 }

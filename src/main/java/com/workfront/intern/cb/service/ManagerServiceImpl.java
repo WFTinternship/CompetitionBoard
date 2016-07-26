@@ -3,16 +3,17 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.ManagerDao;
 import com.workfront.intern.cb.dao.ManagerDaoImpl;
+import org.apache.log4j.Logger;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 public class ManagerServiceImpl implements ManagerService {
-    DataSource dataSource;
+    private static final Logger LOG = Logger.getLogger(ManagerServiceImpl.class);
 
-    private ManagerDao managerDao = new ManagerDaoImpl(dataSource);
+    private ManagerDao managerDao = new ManagerDaoImpl(DBManager.getDataSource());
 
     /**
      * Adds new manager in db
@@ -22,6 +23,7 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             managerDao.addManager(manager);
         } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -90,7 +92,7 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             managerDao.deleteManagerById(id);
         } catch (ObjectNotFoundException e) {
-            throw new RuntimeException(String.format("Great apologies! We could not find a Manager with id=%s", id));
+            throw new RuntimeException(String.format("Manager instance with id=%s not found", id));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -103,8 +105,6 @@ public class ManagerServiceImpl implements ManagerService {
     public void deleteAll() {
         try {
             managerDao.deleteAll();
-        } catch (ObjectNotFoundException e) {
-            throw new RuntimeException("Great apologies! We could not find a Manager with id=%s");
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

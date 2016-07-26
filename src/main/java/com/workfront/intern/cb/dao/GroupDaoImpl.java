@@ -58,7 +58,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Gets group list in specific tournament
      */
     @Override
-    public Group getGroupById(int id) throws FailedOperationException {
+    public Group getGroupById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -83,8 +83,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
-        } catch (ObjectNotFoundException e) {
-            e.printStackTrace();
         } finally {
             closeResources(conn, ps, rs);
         }

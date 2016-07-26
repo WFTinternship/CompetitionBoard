@@ -43,7 +43,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
     // region <MEMBER>
 
     @Test
-    public void addMember_dbError() {
+    public void addMember_dbError() throws Exception {
         participantDao.addParticipant(new Member());
     }
 
@@ -58,18 +58,18 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void updateMember_dbError() {
+    public void updateMember_dbError() throws Exception {
         Member testMember = createRandomMember();
         participantDao.update(testMember);
     }
 
     @Test
-    public void deleteMember_dbError() throws ObjectNotFoundException {
+    public void deleteMember_dbError() throws ObjectNotFoundException, FailedOperationException {
         participantDao.delete(Member.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAllMember() throws ObjectNotFoundException {
+    public void deleteAllMember() throws ObjectNotFoundException, FailedOperationException {
         participantDao.deleteAll(Member.class);
     }
 
@@ -79,7 +79,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
     // region <TEAM>
 
     @Test
-    public void addTeam_dbError() {
+    public void addTeam_dbError() throws Exception {
         participantDao.addParticipant(new Team());
     }
 
@@ -94,18 +94,18 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void updateTeam_dbError() {
+    public void updateTeam_dbError() throws Exception {
         Team testTeam = createRandomTeam();
         participantDao.update(testTeam);
     }
 
     @Test
-    public void deleteTeam_dbError() throws ObjectNotFoundException {
+    public void deleteTeam_dbError() throws ObjectNotFoundException, FailedOperationException {
         participantDao.delete(Team.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAllTeam() throws ObjectNotFoundException {
+    public void deleteAllTeam() throws ObjectNotFoundException, FailedOperationException {
         participantDao.deleteAll(Team.class);
     }
 

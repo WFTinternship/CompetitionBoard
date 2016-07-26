@@ -117,7 +117,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     // region <TEST CASES>
 
     @Test
-    public void addMatch_created() throws ObjectNotFoundException {
+    public void addMatch_created() throws Exception {
         int groupId = testGroup.getGroupId();
 
         // Initialize random match instance
@@ -134,7 +134,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMatchId_notFound() {
+    public void getMatchId_notFound() throws ObjectNotFoundException, FailedOperationException {
         // Testing method
         Match match = matchDao.getMatchById(NON_EXISTING_ID);
 
@@ -142,7 +142,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMatchById_found() {
+    public void getMatchById_found() throws ObjectNotFoundException, FailedOperationException {
         int matchId = testMatch.getMatchId();
 
         // Testing method
@@ -157,8 +157,8 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
-    @Test
-    public void getMatchByGroupId_notFound() {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getMatchByGroupId_notFound() throws Exception {
         // Testing method
         Match match = matchDao.getMatchByGroupId(NON_EXISTING_ID);
 
@@ -166,7 +166,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMatchByGroupId_found() {
+    public void getMatchByGroupId_found() throws Exception {
         int groupId = testGroup.getGroupId();
 
         // Testing method
@@ -182,7 +182,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMatchList_emptyList() throws ObjectNotFoundException {
+    public void getMatchList_emptyList() throws Exception {
         int matchId = testMatch.getMatchId();
         int groupId = testGroup.getGroupId();
 
@@ -197,7 +197,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMatchList_found() {
+    public void getMatchList_found() throws Exception {
         int groupId = testGroup.getGroupId();
 
         // Testing method
@@ -216,7 +216,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateMatch() {
+    public void updateMatch() throws Exception {
         int matchId = testMatch.getMatchId();
         int groupId = testGroup.getGroupId();
         int participantOneId = 10;
@@ -246,13 +246,13 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteMatch_notFound() throws ObjectNotFoundException {
+    public void deleteMatch_notFound() throws Exception {
         // Testing method
         matchDao.deleteMatch(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteMatch_found() throws ObjectNotFoundException {
+    public void deleteMatch_found() throws Exception {
         int matchId = testMatch.getMatchId();
 
         // Testing method
@@ -260,7 +260,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteAll() throws ObjectNotFoundException {
+    public void deleteAll() throws Exception {
         int groupId = testGroup.getGroupId();
 
         // Testing method

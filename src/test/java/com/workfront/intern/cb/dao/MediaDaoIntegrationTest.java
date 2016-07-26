@@ -264,14 +264,14 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     //TODO
     @Test
-    public void deleteMediaById_notFound() throws ObjectNotFoundException {
+    public void deleteMediaById_notFound() throws Exception {
         mediaDao.deleteMediaById(NON_EXISTING_ID);
 
     }
 
     //TODO
     @Test
-    public void deleteMedia_deleted() throws ObjectNotFoundException {
+    public void deleteMedia_deleted() throws Exception {
         mediaDao.deleteMediaById(testMedia.getMediaId());
 
     }

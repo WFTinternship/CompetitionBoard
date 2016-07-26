@@ -20,8 +20,8 @@ import static org.mockito.Mockito.when;
 
 public class ManagerDaoUnitTest extends BaseTest {
     DataSource dataSource;
-    ManagerDao managerDao;
-    Manager testManager;
+    private ManagerDao managerDao;
+    private Manager testManager;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -41,7 +41,7 @@ public class ManagerDaoUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void addManager_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.addManager(testManager);
     }
@@ -56,17 +56,17 @@ public class ManagerDaoUnitTest extends BaseTest {
         managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void getManagerList_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.getManagerList();
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void updateManager_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.updateManager(NON_EXISTING_ID, testManager);
     }
 
-    @Test
+    @Test(expected = ObjectNotFoundException.class)
     public void deleteManagerById_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }

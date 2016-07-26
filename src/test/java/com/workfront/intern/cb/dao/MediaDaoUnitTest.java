@@ -77,12 +77,12 @@ public class MediaDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void deleteMedia() throws ObjectNotFoundException {
+    public void deleteMedia() throws Exception {
         mediaDao.deleteMediaById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll_dbError() throws ObjectNotFoundException {
+    public void deleteAll_dbError() throws Exception {
         mediaDao.deleteAll();
     }
 }

@@ -27,7 +27,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     DataSource dataSource = DBManager.getDataSource();
 
     @Before
-    public void beforeTest() throws ObjectNotFoundException {
+    public void beforeTest() throws ObjectNotFoundException, FailedOperationException {
         participantDao = new ParticipantDaoImpl(dataSource);
         cleanUp();
 
@@ -43,11 +43,11 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @After
-    public void afterTest() throws ObjectNotFoundException {
+    public void afterTest() throws ObjectNotFoundException, FailedOperationException {
         cleanUp();
     }
 
-    private void cleanUp() throws ObjectNotFoundException {
+    private void cleanUp() throws ObjectNotFoundException, FailedOperationException {
         participantDao.deleteAll(Member.class);
         participantDao.deleteAll(Team.class);
     }
@@ -110,7 +110,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
-    public void addMember_created() {
+    public void addMember_created() throws Exception {
         // Initialize random manager instance
         Member member = createRandomMember();
         assertEquals(0, member.getId());
@@ -139,13 +139,13 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteMember_notFound() throws ObjectNotFoundException {
+    public void deleteMember_notFound() throws ObjectNotFoundException, FailedOperationException {
         // Testing method
         participantDao.delete(Member.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteMember_found() throws ObjectNotFoundException {
+    public void deleteMember_found() throws ObjectNotFoundException, FailedOperationException {
         int targetId = testMember.getId();
 
         // Testing method
@@ -153,7 +153,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteAllMembers() throws ObjectNotFoundException {
+    public void deleteAllMembers() throws ObjectNotFoundException, FailedOperationException {
         // Testing method
         participantDao.deleteAll(Member.class);
     }
@@ -214,7 +214,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void addTeam_created() {
+    public void addTeam_created() throws Exception {
         // Initialize random manager instance
         Team team = createRandomTeam();
         assertEquals(0, team.getId());
@@ -241,13 +241,13 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteTeam_notFound() throws ObjectNotFoundException {
+    public void deleteTeam_notFound() throws ObjectNotFoundException, FailedOperationException {
         // Testing method
         participantDao.delete(Member.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteTeam_found() throws ObjectNotFoundException {
+    public void deleteTeam_found() throws ObjectNotFoundException, FailedOperationException {
         int targetId = testTeam.getId();
 
         // Testing method
@@ -255,7 +255,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteAllTeams() throws ObjectNotFoundException {
+    public void deleteAllTeams() throws ObjectNotFoundException, FailedOperationException {
         // Testing method
         participantDao.deleteAll(Member.class);
     }

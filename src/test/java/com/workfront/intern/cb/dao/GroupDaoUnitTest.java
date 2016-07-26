@@ -59,13 +59,13 @@ public class GroupDaoUnitTest extends BaseTest {
         groupDao.updateGroup(NON_EXISTING_ID, testGroup);
     }
 
-    @Test
-    public void deleteGroup_dbError() throws ObjectNotFoundException {
+    @Test(expected = ObjectNotFoundException.class)
+    public void deleteGroup_dbError() throws ObjectNotFoundException, FailedOperationException {
         groupDao.deleteGroup(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteAll_dbError() throws ObjectNotFoundException {
+    public void deleteAll_dbError() throws ObjectNotFoundException, FailedOperationException {
         groupDao.deleteAll();
     }
 }

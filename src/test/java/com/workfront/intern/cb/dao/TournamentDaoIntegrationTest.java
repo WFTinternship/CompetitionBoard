@@ -221,17 +221,17 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteTournamentById_notFound() throws ObjectNotFoundException {
+    public void deleteTournamentById_notFound() throws Exception {
         tournamentDao.deleteTournamentById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteTournamentById_found() throws ObjectNotFoundException {
+    public void deleteTournamentById_found() throws Exception {
         tournamentDao.deleteTournamentById(testTournament.getTournamentId());
     }
 
     @Test
-    public void deleteAll() throws FailedOperationException {
+    public void deleteAll() throws FailedOperationException, ObjectNotFoundException {
         tournamentDao.deleteAll();
 
         List<Tournament> tournamentList = tournamentDao.getTournamentList();

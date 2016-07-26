@@ -101,7 +101,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     // region <TEST CASES>
 
     @Test
-    public void addGroup_created() throws ObjectNotFoundException, FailedOperationException {
+    public void addGroup_created() throws Exception {
         // Initialize random tournament instance
         int tournamentId = testTournament.getTournamentId();
 
@@ -118,7 +118,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void getGroupById_notFound() throws FailedOperationException {
+    public void getGroupById_notFound() throws Exception {
         // Testing method
         Group group = groupDao.getGroupById(NON_EXISTING_ID);
 
@@ -126,7 +126,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getGroupById_found() throws FailedOperationException {
+    public void getGroupById_found() throws Exception {
         int groupId = testGroup.getGroupId();
 
         // Testing method
@@ -141,7 +141,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getGroupByTournamentList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getGroupByTournamentList_emptyList() throws Exception {
         int groupId = testGroup.getGroupId();
         int tournamentId = testTournament.getTournamentId();
 
@@ -154,7 +154,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getGroupByTournamentList_found() throws FailedOperationException {
+    public void getGroupByTournamentList_found() throws Exception {
         // Testing method
         int tournamentId = testTournament.getTournamentId();
         List<Group> groupList = groupDao.getGroupByTournamentList(tournamentId);
@@ -172,7 +172,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getAllGroups_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getAllGroups_emptyList() throws Exception {
         int groupId = testGroup.getGroupId();
         groupDao.deleteGroup(groupId);
 
@@ -183,7 +183,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getAllGroups_found() throws FailedOperationException {
+    public void getAllGroups_found() throws Exception {
         // Testing method
         List<Group> groupList = groupDao.getAllGroups();
 
@@ -200,7 +200,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateGroup() throws FailedOperationException {
+    public void updateGroup() throws Exception {
         int groupId = testGroup.getGroupId();
         int tournamentId = testTournament.getTournamentId();
 
@@ -228,18 +228,18 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
     }
 
-    @Test
-    public void deleteGroup_notFound() throws ObjectNotFoundException {
+    @Test(expected = ObjectNotFoundException.class)
+    public void deleteGroup_notFound() throws Exception {
         groupDao.deleteGroup(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteGroup_found() throws ObjectNotFoundException {
+    public void deleteGroup_found() throws Exception {
         groupDao.deleteGroup(testGroup.getGroupId());
     }
 
     @Test
-    public void deleteAll() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteAll() throws Exception {
         groupDao.deleteAll();
 
         List<Group> groupList = groupDao.getAllGroups();

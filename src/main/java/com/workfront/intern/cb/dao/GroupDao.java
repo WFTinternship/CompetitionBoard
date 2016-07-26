@@ -13,7 +13,7 @@ public interface GroupDao {
     Group addGroup(Group group) throws FailedOperationException;
 
     // READ
-    Group getGroupById(int id) throws FailedOperationException;
+    Group getGroupById(int id) throws ObjectNotFoundException, FailedOperationException;
     List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException;
     List<Group> getAllGroups() throws FailedOperationException;
     List<Participant> getGroupParticipants(int groupId) throws FailedOperationException;
