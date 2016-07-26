@@ -15,7 +15,7 @@ public class DBManager {
     private static final String DB_NAME = "competition_board";
     private static final String DB_CONNECTION_PROPERTIES = "?useUnicode=true&characterEncoding=utf-8";
 
-    private static ComboPooledDataSource poolConn;
+    private static ComboPooledDataSource poolDataSource;
 
     static {
         init();
@@ -23,16 +23,16 @@ public class DBManager {
 
     private static void init() {
         try {
-            poolConn = new ComboPooledDataSource();
-            poolConn.setDriverClass(DB_DRIVER);
-            poolConn.setJdbcUrl(DB_URL + DB_NAME + DB_CONNECTION_PROPERTIES);
-            poolConn.setUser(DB_LOGIN);
-            poolConn.setPassword(DB_PASS);
-            poolConn.setInitialPoolSize(50);
-            poolConn.setMinPoolSize(10);
-            poolConn.setAcquireIncrement(50);
-            poolConn.setMaxPoolSize(100);
-            poolConn.setMaxStatements(100);
+            poolDataSource = new ComboPooledDataSource();
+            poolDataSource.setDriverClass(DB_DRIVER);
+            poolDataSource.setJdbcUrl(DB_URL + DB_NAME + DB_CONNECTION_PROPERTIES);
+            poolDataSource.setUser(DB_LOGIN);
+            poolDataSource.setPassword(DB_PASS);
+            poolDataSource.setInitialPoolSize(50);
+            poolDataSource.setMinPoolSize(10);
+            poolDataSource.setAcquireIncrement(50);
+            poolDataSource.setMaxPoolSize(100);
+            poolDataSource.setMaxStatements(100);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -42,7 +42,7 @@ public class DBManager {
      * Create and return DataSource with DB, use connection pool method
      */
     public static DataSource getDataSource() {
-        return poolConn;
+        return poolDataSource;
     }
 
     /**
@@ -51,7 +51,7 @@ public class DBManager {
     public static Connection getPooledConnection() {
         Connection dbConnection;
         try {
-            dbConnection = getDataSource().getConnection();
+            dbConnection = poolDataSource.getConnection();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -61,7 +61,7 @@ public class DBManager {
     /**
      * Create and return connection with DB, non pools
      */
-    public static Connection getDBConnection() {
+    public static Connection getDirectConnection() {
         Connection dbConnection = null;
         try {
             Class.forName(DB_DRIVER);
