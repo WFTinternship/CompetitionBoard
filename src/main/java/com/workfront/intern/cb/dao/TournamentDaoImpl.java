@@ -127,7 +127,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Adds tournament to db
      */
     @Override
-    public Tournament addTournament(Tournament tournament) throws FailedOperationException{
+    public Tournament addTournament(Tournament tournament) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -205,9 +205,12 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      */
     @Override
     public void deleteTournamentById(int id) throws ObjectNotFoundException {
-        String sql = "DELETE FROM tournament WHERE tournament_id=?";
-
-        deleteEntries(sql, id);
+        try {
+            String sql = "DELETE FROM tournament WHERE tournament_id=?";
+            deleteEntries(sql, id);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
@@ -22,17 +23,16 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Gets match by id
      */
     @Override
-    public Match getMatchById(int id) {
+    public Match getMatchById(int id) throws FailedOperationException, ObjectNotFoundException {
         String sql = "SELECT * FROM `match` WHERE match_id=?";
         return getMatchFromSpecQuery(sql, id);
-
     }
 
     /**
      * Gets match by specific group id
      */
     @Override
-    public Match getMatchByGroupId(int id) {
+    public Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException {
         String sql = "SELECT * FROM `match` WHERE group_id=?";
         return getMatchFromSpecQuery(sql, id);
     }
@@ -41,7 +41,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Returns all match list in db by group
      */
     @Override
-    public List<Match> getMatchListByGroup(int id) {
+    public List<Match> getMatchListByGroup(int id) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -62,6 +62,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -72,7 +73,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Adds match in to db
      */
     @Override
-    public Match addMatch(Match match) {
+    public Match addMatch(Match match) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -97,6 +98,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             match.setMatchId(id);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }
@@ -107,8 +109,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Updates match by id
      */
     @Override
-    public Match updateMatch(int id, Match match) {
-        boolean updated = false;
+    public Match updateMatch(int id, Match match) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -129,9 +130,9 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
 
             // Execute statement
             ps.executeUpdate();
-            updated = true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
@@ -143,9 +144,12 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      */
     @Override
     public void deleteMatch(int id) throws ObjectNotFoundException {
-        String sql = "DELETE FROM `match` WHERE match_id=?";
-
-        deleteEntries(sql, id);
+        try {
+            String sql = "DELETE FROM `match` WHERE match_id=?";
+            deleteEntries(sql, id);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**
@@ -153,9 +157,12 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      */
     @Override
     public void deleteAll() throws ObjectNotFoundException {
-        String sql = "DELETE FROM `match`";
-
-        deleteEntries(sql);
+        try {
+            String sql = "DELETE FROM `match`";
+            deleteEntries(sql);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**
@@ -176,7 +183,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
     /**
      * Returns match by specific sql query
      */
-    private Match getMatchFromSpecQuery(String sql, int id) {
+    private Match getMatchFromSpecQuery(String sql, int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -194,9 +201,12 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 match = extractMatchFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Manager with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps, rs);
         }

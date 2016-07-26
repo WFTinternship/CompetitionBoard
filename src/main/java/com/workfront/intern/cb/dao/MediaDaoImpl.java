@@ -180,9 +180,12 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      */
     @Override
     public void deleteMediaById(int id) throws ObjectNotFoundException {
-        String sql = "DELETE FROM media WHERE media_id=?";
-
-        deleteEntries(sql, id);
+        try {
+            String sql = "DELETE FROM media WHERE media_id=?";
+            deleteEntries(sql, id);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**
@@ -190,9 +193,12 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      */
     @Override
     public void deleteAll() throws ObjectNotFoundException {
-        String sql = "DELETE FROM media";
-
-        deleteEntries(sql);
+        try {
+            String sql = "DELETE FROM media";
+            deleteEntries(sql);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**

@@ -206,9 +206,12 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      */
     @Override
     public void deleteGroup(int id) throws ObjectNotFoundException {
-        String sql = "DELETE FROM `group` WHERE group_id=?";
-
-        deleteEntries(sql, id);
+        try {
+            String sql = "DELETE FROM `group` WHERE group_id=?";
+            deleteEntries(sql, id);
+        } catch (Exception e) {
+            throw new ObjectNotFoundException(e.getMessage(), e);
+        }
     }
 
     /**
