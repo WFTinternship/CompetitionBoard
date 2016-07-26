@@ -17,9 +17,9 @@ public interface ManagerDao {
     List<Manager> getManagerList() throws ObjectNotFoundException, FailedOperationException;
 
     // UPDATE
-    Manager updateManager(int id, Manager manager) throws ObjectNotFoundException, FailedOperationException;
+    void updateManager(int id, Manager manager) throws ObjectNotFoundException, FailedOperationException;
 
     // DELETE
     void deleteManagerById(int id) throws ObjectNotFoundException, FailedOperationException;
-    void deleteAll() throws ObjectNotFoundException, FailedOperationException;
+    void deleteAll() throws FailedOperationException;
 }

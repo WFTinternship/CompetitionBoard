@@ -9,16 +9,16 @@ import java.util.List;
 public interface ParticipantDao {
 
     // CREATE
-    Participant addParticipant(Participant participant);
+    Participant addParticipant(Participant participant) throws FailedOperationException;
 
     // READ
     Participant getOne(Class<? extends Participant> cls, int id) throws FailedOperationException, ObjectNotFoundException;
     List<? extends Participant> getAll(Class<? extends Participant> cls) throws FailedOperationException;
 
     // UPDATE
-    Participant update(Participant participant);
+    void update(Participant participant) throws FailedOperationException;
 
     // DELETE
-    void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException;
-    void deleteAll(Class<? extends Participant> cls) throws ObjectNotFoundException;
+    void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException, FailedOperationException;
+    void deleteAll(Class<? extends Participant> cls) throws FailedOperationException;
 }

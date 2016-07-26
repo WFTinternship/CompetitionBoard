@@ -14,8 +14,6 @@ import java.util.List;
 public class GroupDaoImpl extends GenericDao implements GroupDao {
     private static final Logger LOG = Logger.getLogger(GroupDaoImpl.class);
 
-    private DataSource dataSource;
-
     public GroupDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -164,7 +162,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
     //TODO
     @Override
-    public List<Participant> getGroupParticipants(int groupId) {
+    public List<Participant> getGroupParticipants(int groupId) throws FailedOperationException {
         return null;
     }
 
@@ -172,7 +170,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Updates group
      */
     @Override
-    public Group updateGroup(int id, Group group) throws FailedOperationException {
+    public void updateGroup(int id, Group group) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -197,31 +195,24 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         } finally {
             closeResources(conn, ps);
         }
-
-        return group;
     }
 
     /**
      * Deletes group by id
      */
     @Override
-    public void deleteGroup(int id) throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM `group` WHERE group_id=?";
-            deleteEntries(sql, id);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteGroup(int id) throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM `group` WHERE group_id=?";
+        deleteEntry(sql, id);
     }
 
     /**
      * Deletes all group
      */
     @Override
-    public void deleteAll() throws ObjectNotFoundException {
+    public void deleteAll() throws FailedOperationException {
         String sql = "DELETE FROM `group`";
-
-        deleteEntries(sql);
+        deleteAllEntries(sql);
     }
 
     /**

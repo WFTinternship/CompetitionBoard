@@ -14,8 +14,6 @@ import java.util.List;
 public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     private static final Logger LOG = Logger.getLogger(ManagerDaoImpl.class);
 
-    private DataSource dataSource;
-
     public ManagerDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -127,7 +125,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Updates existing manager in db
      */
     @Override
-    public Manager updateManager(int id, Manager manager) throws FailedOperationException {
+    public void updateManager(int id, Manager manager) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -147,7 +145,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         } finally {
             closeResources(conn, ps);
         }
-        return manager;
     }
 
     /**
@@ -187,26 +184,18 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Deletes manager by id
      */
     @Override
-    public void deleteManagerById(int id) throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM manager WHERE manager_id=?";
-            deleteEntries(sql, id);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteManagerById(int id) throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM manager WHERE manager_id=?";
+        deleteEntry(sql, id);
     }
 
     /**
      * Removes all managers
      */
     @Override
-    public void deleteAll() throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM manager";
-            deleteEntries(sql);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteAll() throws FailedOperationException {
+        String sql = "DELETE FROM manager";
+        deleteAllEntries(sql);
     }
 
     /**

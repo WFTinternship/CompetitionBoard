@@ -13,8 +13,6 @@ import java.util.List;
 public class MediaDaoImpl extends GenericDao implements MediaDao {
     private static final Logger LOG = Logger.getLogger(MediaDaoImpl.class);
 
-    private DataSource dataSource;
-
     public MediaDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -84,20 +82,18 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Updates photo
      */
     @Override
-    public Media updatePhoto(int id, Media media) throws FailedOperationException {
+    public void updatePhoto(int id, Media media) throws FailedOperationException {
         String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
-
-        return updateSpecificMedia(id, sql, media);
+        updateSpecificMedia(id, sql, media);
     }
 
     /**
      * Updates video
      */
     @Override
-    public Media updateVideo(int id, Media media) throws FailedOperationException {
+    public void updateVideo(int id, Media media) throws FailedOperationException {
         String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
-
-        return updateSpecificMedia(id, sql, media);
+        updateSpecificMedia(id, sql, media);
     }
 
     /**
@@ -179,26 +175,18 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Deletes media by id
      */
     @Override
-    public void deleteMediaById(int id) throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM media WHERE media_id=?";
-            deleteEntries(sql, id);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteMediaById(int id) throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM media WHERE media_id=?";
+        deleteEntry(sql, id);
     }
 
     /**
      * Deletes all media
      */
     @Override
-    public void deleteAll() throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM media";
-            deleteEntries(sql);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteAll() throws FailedOperationException {
+        String sql = "DELETE FROM media";
+        deleteAllEntries(sql);
     }
 
     /**

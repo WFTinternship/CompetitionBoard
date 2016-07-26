@@ -13,8 +13,6 @@ import java.util.List;
 public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     private static final Logger LOG = Logger.getLogger(TournamentDaoImpl.class);
 
-    private DataSource dataSource;
-
     public TournamentDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -130,7 +128,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     public Tournament addTournament(Tournament tournament) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
 
         String sql = "INSERT INTO " +
                 "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id) " +
@@ -159,7 +156,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps, rs);
+            closeResources(conn, ps);
         }
         return tournament;
     }
@@ -168,7 +165,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Updates specific data tournament
      */
     @Override
-    public Tournament updateTournament(int id, Tournament tournament) throws FailedOperationException {
+    public void updateTournament(int id, Tournament tournament) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -197,20 +194,15 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         } finally {
             closeResources(conn, ps);
         }
-        return tournament;
     }
 
     /**
      * Deletes tournament by id
      */
     @Override
-    public void deleteTournamentById(int id) throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM tournament WHERE tournament_id=?";
-            deleteEntries(sql, id);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteTournamentById(int id) throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM tournament WHERE tournament_id=?";
+        deleteEntry(sql, id);
     }
 
     /**
@@ -218,24 +210,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      */
     @Override
     public void deleteAll() throws FailedOperationException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            String sql = "DELETE FROM tournament";
-            // Acquire connection
-            conn = dataSource.getConnection();
-
-            // Initialize statement
-            ps = conn.prepareStatement(sql);
-
-            // Execute statement
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            throw new FailedOperationException(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps);
-        }
+        String sql = "DELETE FROM tournament";
+        deleteAllEntries(sql);
     }
 
     /**

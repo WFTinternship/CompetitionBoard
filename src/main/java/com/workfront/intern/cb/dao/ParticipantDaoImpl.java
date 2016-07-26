@@ -15,8 +15,6 @@ import java.util.List;
 public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     private static final Logger LOG = Logger.getLogger(ParticipantDaoImpl.class);
 
-    private DataSource dataSource;
-
     public ParticipantDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -25,11 +23,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Adds specific participant: member or team
      */
     @Override
-    public Participant addParticipant(Participant participant) {
+    public Participant addParticipant(Participant participant) throws FailedOperationException {
         if (participant instanceof Member) {
-            return (Member) participant;
+            return addMember((Member) participant);
         } else if (participant instanceof Team) {
-            return (Team) participant;
+            return addTeam((Team) participant);
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -67,11 +65,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Updates specific participant - member or team
      */
     @Override
-    public Participant update(Participant participant) {
+    public void update(Participant participant) throws FailedOperationException {
         if (participant instanceof Member) {
-            return (Member) participant;
+            updateMember((Member) participant);
         } else if (participant instanceof Team) {
-            return (Team) participant;
+            updateTeam((Team) participant);
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -81,7 +79,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes specific participant - member or team, by id:
      */
     @Override
-    public void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException {
+    public void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException, FailedOperationException {
         if (cls.equals(Member.class)) {
             deleteMember(id);
         } else if (cls.equals(Team.class)) {
@@ -95,7 +93,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes all specific participant - member or team, by id:
      */
     @Override
-    public void deleteAll(Class<? extends Participant> cls) throws ObjectNotFoundException {
+    public void deleteAll(Class<? extends Participant> cls) throws FailedOperationException {
         if (cls.equals(Member.class)) {
             deleteAllMembers();
         } else if (cls.equals(Team.class)) {
@@ -110,8 +108,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Adding member to db
      */
-    Member addMember(Member member) throws FailedOperationException {
-        boolean inserted = false;
+    private Member addMember(Member member) throws FailedOperationException {
         Connection conn = null;
 
         String sql_participant = "INSERT INTO participant(is_team, avatar, participant_info) VALUES (?,?,?)";
@@ -170,7 +167,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Gets member by member id
      */
-    Member getMemberById(int id) throws ObjectNotFoundException, FailedOperationException {
+    private Member getMemberById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -204,7 +201,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Get member list
      */
-    List<Member> getMemberList() throws FailedOperationException {
+    private List<Member> getMemberList() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -237,7 +234,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Updating specific data of member
      */
-    Member updateMember(Member member) throws FailedOperationException {
+    private Member updateMember(Member member) throws FailedOperationException {
         Connection conn = null;
         String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
         String sql_member = "UPDATE member SET name=?, surname=?, position=?, email=? WHERE member_id=?";
@@ -297,20 +294,18 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Deletes member by id
      */
-    void deleteMember(int id) throws ObjectNotFoundException {
+    private void deleteMember(int id) throws ObjectNotFoundException, FailedOperationException {
         String sql = "DELETE FROM participant WHERE participant_id=?";
-
-        deleteEntries(sql, id);
+        deleteEntry(sql, id);
     }
 
     /**
      * Deletes all members
      */
-    void deleteAllMembers() throws ObjectNotFoundException {
+    private void deleteAllMembers() throws FailedOperationException {
         int isTeam = 0;
         String sql = "DELETE FROM participant WHERE is_team=" + isTeam;
-
-        deleteEntries(sql);
+        deleteAllEntries(sql);
     }
 
     // endregion
@@ -320,7 +315,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Adding new team in db
      */
-    Team addTeam(Team team) throws FailedOperationException {
+    private Team addTeam(Team team) throws FailedOperationException {
         Connection conn = null;
 
         String sql_participant = "INSERT INTO participant (is_team, avatar, participant_info) VALUES (?,?,?)";
@@ -359,7 +354,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             conn.commit();
         } catch (SQLException e) {
             try {
-                conn.rollback();
+                if (conn != null)
+                    conn.rollback();
             } catch (SQLException e1) {
                 LOG.error(e.getMessage(), e1);
             }
@@ -380,7 +376,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Gets team by id
      */
-    Team getTeamById(int id) throws ObjectNotFoundException, FailedOperationException {
+    private Team getTeamById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -411,7 +407,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Gets team list
      */
-    List<Team> getTeamList() throws FailedOperationException {
+    private List<Team> getTeamList() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -441,7 +437,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Updates specific data of team
      */
-    Team updateTeam(Team team) throws FailedOperationException {
+    private Team updateTeam(Team team) throws FailedOperationException {
         Connection conn = null;
 
         String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
@@ -495,20 +491,18 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Deletes team by id
      */
-    void deleteTeam(int id) throws ObjectNotFoundException {
+    private void deleteTeam(int id) throws ObjectNotFoundException, FailedOperationException {
         String sql = "DELETE FROM participant WHERE participant_id=?";
-
-        deleteEntries(sql, id);
+        deleteEntry(sql, id);
     }
 
     /**
      * Deletes all teams
      */
-    void deleteAllTeams() throws ObjectNotFoundException {
+    private void deleteAllTeams() throws FailedOperationException {
         int isTeam = 1;
         String sql = "DELETE FROM participant WHERE is_team=" + isTeam;
-
-        deleteEntries(sql);
+        deleteAllEntries(sql);
     }
 
     // endregion

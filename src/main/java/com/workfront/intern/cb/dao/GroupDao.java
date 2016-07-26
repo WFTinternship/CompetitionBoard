@@ -16,13 +16,13 @@ public interface GroupDao {
     Group getGroupById(int id) throws FailedOperationException;
     List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException;
     List<Group> getAllGroups() throws FailedOperationException;
-    List<Participant> getGroupParticipants(int groupId);
+    List<Participant> getGroupParticipants(int groupId) throws FailedOperationException;
 
     // UPDATE
-    Group updateGroup(int id, Group group) throws FailedOperationException;
+    void updateGroup(int id, Group group) throws FailedOperationException;
 
     // DELETE
-    void deleteGroup(int id) throws ObjectNotFoundException;
-    void deleteAll() throws ObjectNotFoundException;
+    void deleteGroup(int id) throws ObjectNotFoundException, FailedOperationException;
+    void deleteAll() throws FailedOperationException;
 
 }

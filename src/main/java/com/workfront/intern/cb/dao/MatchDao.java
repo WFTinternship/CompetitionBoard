@@ -17,9 +17,10 @@ public interface MatchDao {
     List<Match> getMatchListByGroup(int id) throws FailedOperationException;
 
     // UPDATE
-    Match updateMatch(int id, Match match) throws FailedOperationException;
+    void updateMatch(int id, Match match) throws FailedOperationException;
 
     // DELETE
-    void deleteMatch(int id) throws ObjectNotFoundException;
-    void deleteAll() throws ObjectNotFoundException;
+    void deleteMatch(int id) throws ObjectNotFoundException, FailedOperationException;
+    void deleteAll() throws FailedOperationException;
+
 }

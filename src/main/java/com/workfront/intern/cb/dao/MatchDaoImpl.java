@@ -13,8 +13,6 @@ import java.util.List;
 public class MatchDaoImpl extends GenericDao implements MatchDao {
     private static final Logger LOG = Logger.getLogger(MatchDaoImpl.class);
 
-    private DataSource dataSource;
-
     public MatchDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -76,7 +74,6 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
     public Match addMatch(Match match) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
 
         String sql = "INSERT INTO `match` (group_id, participant_1_id, participant_2_id, score_participant_1, score_participant_2) VALUE(?,?,?,?,?);";
         try {
@@ -100,7 +97,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps, rs);
+            closeResources(conn, ps);
         }
         return match;
     }
@@ -109,7 +106,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Updates match by id
      */
     @Override
-    public Match updateMatch(int id, Match match) throws FailedOperationException {
+    public void updateMatch(int id, Match match) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -136,33 +133,24 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         } finally {
             closeResources(conn, ps);
         }
-        return match;
     }
 
     /**
      * Deletes match by id
      */
     @Override
-    public void deleteMatch(int id) throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM `match` WHERE match_id=?";
-            deleteEntries(sql, id);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteMatch(int id) throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM `match` WHERE match_id=?";
+        deleteEntry(sql, id);
     }
 
     /**
      * Deletes all match
      */
     @Override
-    public void deleteAll() throws ObjectNotFoundException {
-        try {
-            String sql = "DELETE FROM `match`";
-            deleteEntries(sql);
-        } catch (Exception e) {
-            throw new ObjectNotFoundException(e.getMessage(), e);
-        }
+    public void deleteAll() throws FailedOperationException {
+        String sql = "DELETE FROM `match`";
+        deleteAllEntries(sql);
     }
 
     /**

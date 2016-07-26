@@ -18,10 +18,10 @@ public interface MediaDao {
     List<Media> getMediaListByTournament(int id) throws FailedOperationException;
 
     // UPDATE
-    Media updatePhoto(int id, Media media) throws FailedOperationException;
-    Media updateVideo(int id, Media media) throws FailedOperationException;
+    void updatePhoto(int id, Media media) throws FailedOperationException;
+    void updateVideo(int id, Media media) throws FailedOperationException;
 
     // DELETE
-    void deleteMediaById(int id) throws ObjectNotFoundException;
-    void deleteAll() throws ObjectNotFoundException;
+    void deleteMediaById(int id) throws ObjectNotFoundException, FailedOperationException;
+    void deleteAll() throws FailedOperationException;
 }
