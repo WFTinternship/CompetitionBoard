@@ -1,12 +1,16 @@
 package com.workfront.intern.cb.dao;
 
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
 abstract class GenericDao {
     private static final Logger LOG = Logger.getLogger(GenericDao.class);
+
+    protected DataSource dataSource;
 
     /**
      * Closed DB resources, when Statement and ResultSet of null
@@ -52,7 +56,41 @@ abstract class GenericDao {
     /**
      * Deletes entry(es) according to specified SQL and ID param.
      */
-    void deleteEntries(String sql, int id) throws ObjectNotFoundException {
+    void deleteEntry(String sql, int id) throws ObjectNotFoundException, FailedOperationException {
+        if (sql != null) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+
+            if (id <= 0) {
+                throw new FailedOperationException(String.format("Invalid ID provided: %d", id));
+            }
+
+            try {
+                // Acquire connection
+                conn = dataSource.getConnection();
+
+                // Initialize statement
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, id);
+
+                // Execute statement
+                int result = ps.executeUpdate();
+                if (result == 0) {
+                    throw new ObjectNotFoundException(String.format("Entity with ID=%s not found", id));
+                }
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+                throw new FailedOperationException(e.getMessage(), e);
+            } finally {
+                closeResources(conn, ps);
+            }
+        }
+    }
+
+    /**
+     * Deletes all entries according to specified SQL.
+     */
+    void deleteAllEntries(String sql) throws FailedOperationException {
         if (sql != null) {
             Connection conn = null;
             PreparedStatement ps = null;
@@ -62,25 +100,16 @@ abstract class GenericDao {
 
                 // Initialize statement
                 ps = conn.prepareStatement(sql);
-                if (id > 0) {
-                    ps.setInt(1, id);
-                }
 
                 // Execute statement
                 ps.executeUpdate();
             } catch (SQLException e) {
                 LOG.error(e.getMessage(), e);
+                throw new FailedOperationException(e.getMessage(), e);
             } finally {
                 closeResources(conn, ps);
             }
         }
-    }
-
-    /**
-     * Deletes entries according to specified SQL statement.
-     */
-    void deleteEntries(String sql) throws ObjectNotFoundException {
-        deleteEntries(sql, 0);
     }
 
     int acquireGeneratedKey(PreparedStatement ps) throws SQLException {
@@ -94,4 +123,5 @@ abstract class GenericDao {
             throw new RuntimeException("Generated ID was NULL");
         return id;
     }
+
 }
