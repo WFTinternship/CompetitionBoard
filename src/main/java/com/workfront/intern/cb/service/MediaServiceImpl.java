@@ -1,42 +1,63 @@
 package com.workfront.intern.cb.service;
 
-import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.dao.*;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 
-public class MediaServiceImpl implements MatchService{
+public class MediaServiceImpl implements MediaService {
     private static final Logger LOG = Logger.getLogger(MediaServiceImpl.class);
 
+    private MediaDao mediaDao = new MediaDaoImpl(DBManager.getDataSource());
+
+    /**
+     * Adds new photo media in db
+     */
     @Override
-    public Match addMatch(Match match) throws FailedOperationException {
+    public Media addPhoto(Media media) throws FailedOperationException {
+        try {
+            return mediaDao.addPhoto(media);
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Media addVideo(Media media) throws FailedOperationException {
         return null;
     }
 
     @Override
-    public Match getMatchById(int id) throws FailedOperationException, ObjectNotFoundException {
+    public Media getMediaById(int id) throws FailedOperationException, ObjectNotFoundException {
         return null;
     }
 
     @Override
-    public Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException {
+    public List<Media> getMediaListByManager(int id) throws FailedOperationException {
         return null;
     }
 
     @Override
-    public List<Match> getMatchListByGroup(int id) throws FailedOperationException {
+    public List<Media> getMediaListByTournament(int id) throws FailedOperationException {
         return null;
     }
 
     @Override
-    public void updateMatch(int id, Match match) throws FailedOperationException {
+    public void updatePhoto(int id, Media media) throws FailedOperationException {
 
     }
 
     @Override
-    public void deleteMatch(int id) throws ObjectNotFoundException, FailedOperationException {
+    public void updateVideo(int id, Media media) throws FailedOperationException {
+
+    }
+
+    @Override
+    public void deleteMediaById(int id) throws ObjectNotFoundException, FailedOperationException {
 
     }
 

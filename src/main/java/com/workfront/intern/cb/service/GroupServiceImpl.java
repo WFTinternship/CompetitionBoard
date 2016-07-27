@@ -22,12 +22,11 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group addGroup(Group group) throws FailedOperationException {
         try {
-            groupDao.addGroup(group);
+          return groupDao.addGroup(group);
         } catch (FailedOperationException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage());
         }
-        return group;
     }
 
     /**
