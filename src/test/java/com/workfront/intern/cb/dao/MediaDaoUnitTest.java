@@ -2,11 +2,8 @@ package com.workfront.intern.cb.dao;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
-import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
-import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,47 +38,47 @@ public class MediaDaoUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void addPhoto_dbError() throws Exception {
         mediaDao.addPhoto(new Media());
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void addVideo_dbError() throws Exception {
         mediaDao.addVideo(new Media());
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void getMedia_dbError() throws Exception {
         mediaDao.getMediaById(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void getMediaListByManager_dbError() throws Exception {
         mediaDao.getMediaListByManager(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void getMediaListByTournament_dbError() throws Exception {
         mediaDao.getMediaListByTournament(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void updatePhoto_dbError() throws Exception {
         mediaDao.updatePhoto(NON_EXISTING_ID, new Media());
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void updateVideo_dbError() throws Exception {
         mediaDao.updateVideo(NON_EXISTING_ID, new Media());
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void deleteMedia() throws Exception {
         mediaDao.deleteMediaById(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void deleteAll_dbError() throws Exception {
         mediaDao.deleteAll();
     }

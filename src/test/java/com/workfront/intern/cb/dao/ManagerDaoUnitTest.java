@@ -42,37 +42,37 @@ public class ManagerDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
-    public void addManager_dbError() throws FailedOperationException {
+    public void addManager_dbError() throws Exception {
         managerDao.addManager(testManager);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getManagerById_dbError() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerById_dbError() throws Exception {
         managerDao.getManagerById(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getManagerByLogin_dbError() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerByLogin_dbError() throws Exception {
         managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getManagerList_dbError() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerList_dbError() throws Exception {
         managerDao.getManagerList();
     }
 
     @Test(expected = FailedOperationException.class)
-    public void updateManager_dbError() throws FailedOperationException, ObjectNotFoundException {
+    public void updateManager_dbError() throws Exception {
         managerDao.updateManager(NON_EXISTING_ID, testManager);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteManagerById_dbError() throws FailedOperationException, ObjectNotFoundException {
+    public void deleteManagerById_dbError() throws Exception {
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteAll_dbError() throws FailedOperationException, ObjectNotFoundException {
+    public void deleteAll_dbError() throws Exception {
         managerDao.deleteAll();
     }
 }
