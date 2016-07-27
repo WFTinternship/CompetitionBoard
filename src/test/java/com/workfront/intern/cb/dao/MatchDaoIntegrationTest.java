@@ -33,17 +33,15 @@ public class MatchDaoIntegrationTest extends BaseTest {
     DataSource dataSource = DBManager.getDataSource();
 
     @Before
-    public void beforeTest() throws FailedOperationException, ObjectNotFoundException {
+    public void beforeTest() throws Exception {
         managerDao = new ManagerDaoImpl(dataSource);
         tournamentDao = new TournamentDaoImpl(dataSource);
         groupDao = new GroupDaoImpl(dataSource);
         matchDao = new MatchDaoImpl(dataSource);
 
         // Delete all remaining objects
-        matchDao.deleteAll();
-        groupDao.deleteAll();
-        tournamentDao.deleteAll();
-        managerDao.deleteAll();
+        cleanUp();
+
 
         // Initialize random manager instance
         testManager = createRandomManager();
@@ -82,36 +80,15 @@ public class MatchDaoIntegrationTest extends BaseTest {
     }
 
     @After
-    public void afterTest() throws FailedOperationException, ObjectNotFoundException {
-        final String WARNING_MESSAGE = "WARNING: testTournament was null after test execution";
+    public void afterTest() throws Exception {
+        cleanUp();
+    }
 
-        // Deleting 'match' of manager type field after passed test
-        if (testMatch != null) {
-            matchDao.deleteMatch(testMatch.getMatchId());
-        } else {
-            System.out.println(WARNING_MESSAGE);
-        }
-
-        // Deleting 'group' of manager type field after passed test
-        if (testGroup != null) {
-            groupDao.deleteGroup(testGroup.getGroupId());
-        } else {
-            System.out.println(WARNING_MESSAGE);
-        }
-
-        // Deleting 'tournament' of manager type field after passed test
-        if (testTournament != null) {
-            tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-        } else {
-            System.out.println(WARNING_MESSAGE);
-        }
-
-        // Deleting 'manager' of manager type field after passed test
-        if (testManager != null) {
-            managerDao.deleteManagerById(testManager.getId());
-        } else {
-            System.out.println(WARNING_MESSAGE);
-        }
+    private void cleanUp() throws Exception {
+        matchDao.deleteAll();
+        groupDao.deleteAll();
+        tournamentDao.deleteAll();
+        managerDao.deleteAll();
     }
 
     // region <TEST CASES>
@@ -133,8 +110,8 @@ public class MatchDaoIntegrationTest extends BaseTest {
         matchDao.deleteMatch(match.getMatchId());
     }
 
-    @Test
-    public void getMatchId_notFound() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getMatchId_notFound() throws Exception{
         // Testing method
         Match match = matchDao.getMatchById(NON_EXISTING_ID);
 
