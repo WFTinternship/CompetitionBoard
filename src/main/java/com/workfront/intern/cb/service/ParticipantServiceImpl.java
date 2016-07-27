@@ -28,76 +28,123 @@ public class ParticipantServiceImpl implements ParticipantService {
             return addTeam((Team) participant);
         } else {
             throw new RuntimeException("Unknown participant type");
-        }    }
+        }
+    }
 
+    /**
+     * Gets specific participant - member or team, by id:
+     */
     @Override
     public Participant getOne(Class<? extends Participant> cls, int id) throws FailedOperationException, ObjectNotFoundException {
-        return null;
+        if (cls.equals(Member.class)) {
+            return getMemberById(id);
+        } else if (cls.equals(Team.class)) {
+            return getTeamById(id);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
     }
 
+    /**
+     * Gets specific participant list - memberList or teamList
+     */
     @Override
     public List<? extends Participant> getAll(Class<? extends Participant> cls) throws FailedOperationException {
-        return null;
+        if (cls.equals(Member.class)) {
+            return getMemberList();
+        } else if (cls.equals(Team.class)) {
+            return getTeamList();
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
     }
 
+    /**
+     * Updates specific participant - member or team
+     */
     @Override
     public void update(Participant participant) throws FailedOperationException {
-
+        if (participant instanceof Member) {
+            updateMember((Member) participant);
+        } else if (participant instanceof Team) {
+            updateTeam((Team) participant);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
     }
 
+    /**
+     * Deletes specific participant - member or team, by id:
+     */
     @Override
     public void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException, FailedOperationException {
-
+        if (cls.equals(Member.class)) {
+            deleteMember(id);
+        } else if (cls.equals(Team.class)) {
+            deleteTeam(id);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
     }
 
+    /**
+     * Deletes all specific participant - member or team, by id:
+     */
     @Override
     public void deleteAll(Class<? extends Participant> cls) throws FailedOperationException {
-
+        if (cls.equals(Member.class)) {
+            deleteAllMembers();
+        } else if (cls.equals(Team.class)) {
+            deleteAllTeams();
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
     }
 
-    // region <MEMBER>
 
+    // region <MEMBER>
 
     /**
      * Adds member to db
      */
-    private Member addMember(Member member){
-        return member;
+    private Member addMember(Member member) throws FailedOperationException {
+        return (Member) participantDao.addParticipant(member);
     }
 
     /**
      * Gets member list by id
      */
-    private Member getMemberById(int id){
-        return null;
+    private Member getMemberById(int id) throws ObjectNotFoundException, FailedOperationException {
+        return (Member) participantDao.getOne(Member.class, id);
     }
 
     /**
      * Gets member list
      */
-    private List<Member> getMemberList(){
-        return null;
+    private List<Member> getMemberList() throws FailedOperationException {
+        return (List<Member>) participantDao.getAll(Member.class);
     }
 
     /**
      * Updating specific data of member
      */
-    private Member updateMember(Member member){
-        return null;
+    private Member updateMember(Member member) throws FailedOperationException {
+        participantDao.update(member);
+        return member;
     }
 
     /**
      * Deletes member by id
      */
     private void deleteMember(int id) throws ObjectNotFoundException, FailedOperationException {
-
+        participantDao.delete(Member.class, id);
     }
 
     /**
      * Deletes all members
      */
     private void deleteAllMembers() throws FailedOperationException {
-
+        participantDao.deleteAll(Member.class);
     }
 
     // endregion
@@ -105,45 +152,47 @@ public class ParticipantServiceImpl implements ParticipantService {
     // region <TEAM>
 
     /**
-     * Adds member to db
+     * Adds team to db
      */
-    private Team addTeam(Team team){
+    private Team addTeam(Team team) throws FailedOperationException {
+        return (Team) participantDao.addParticipant(team);
+    }
+
+    /**
+     * Gets team list by id
+     */
+    private Team getTeamById(int id) throws ObjectNotFoundException, FailedOperationException {
+        return (Team) participantDao.getOne(Team.class, id);
+    }
+
+    /**
+     * Gets team list
+     */
+    private List<Team> getTeamList() throws FailedOperationException {
+        return (List<Team>) participantDao.getAll(Team.class);
+    }
+
+    /**
+     * Updating specific data of team
+     */
+    private Team updateTeam(Team team) throws FailedOperationException {
+        participantDao.update(team);
         return team;
     }
 
     /**
-     * Gets member list by id
-     */
-    private Team getTeamById(int id){
-        return null;
-    }
-
-    /**
-     * Gets member list
-     */
-    private List<Team> getTeamList(){
-        return null;
-    }
-
-    /**
-     * Updating specific data of member
-     */
-    private Member updateTeam(Team team){
-        return null;
-    }
-
-    /**
-     * Deletes member by id
+     * Deletes team by id
      */
     private void deleteTeam(int id) throws ObjectNotFoundException, FailedOperationException {
+        participantDao.delete(Team.class, id);
 
     }
 
     /**
-     * Deletes all members
+     * Deletes all teams
      */
-    private void deleteAllTeam() throws FailedOperationException {
-
+    private void deleteAllTeams() throws FailedOperationException {
+        participantDao.deleteAll(Team.class);
     }
 
     // endregion
