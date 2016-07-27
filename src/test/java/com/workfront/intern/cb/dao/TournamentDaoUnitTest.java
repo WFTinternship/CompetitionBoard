@@ -4,7 +4,6 @@ import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,40 +38,40 @@ public class TournamentDaoUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @Test
-    public void add_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void add_dbError() throws Exception {
         // Test method
         tournamentDao.addTournament(new Tournament());
     }
 
-    @Test
-    public void getTournamentById_dbError() throws FailedOperationException, ObjectNotFoundException {
+    @Test(expected = FailedOperationException.class)
+    public void getTournamentById_dbError() throws Exception {
         tournamentDao.getTournamentById(NON_EXISTING_ID);
     }
 
-    @Test
-    public void getTournamentListByManager_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getTournamentListByManager_dbError() throws Exception {
         tournamentDao.getTournamentListByManager(NON_EXISTING_ID);
     }
 
-    @Test
-    public void getTournamentList_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getTournamentList_dbError() throws Exception {
         tournamentDao.getTournamentList();
     }
 
-    @Test
-    public void updateTournament_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void updateTournament_dbError() throws Exception {
         Tournament testTournament = createRandomTournament();
         tournamentDao.updateTournament(NON_EXISTING_ID, testTournament);
     }
 
-    @Test(expected = ObjectNotFoundException.class)
-    public void deleteTournamentById_dbError() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void deleteTournamentById_dbError() throws Exception {
         tournamentDao.deleteTournamentById(NON_EXISTING_ID);
     }
 
-    @Test
-    public void deleteAll_dbError() throws FailedOperationException, ObjectNotFoundException {
+    @Test(expected = FailedOperationException.class)
+    public void deleteAll_dbError() throws Exception {
         tournamentDao.deleteAll();
     }
 }

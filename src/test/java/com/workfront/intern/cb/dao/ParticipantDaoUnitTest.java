@@ -5,7 +5,6 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,34 +41,34 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     // region <MEMBER>
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void addMember_dbError() throws Exception {
         participantDao.addParticipant(new Member());
     }
 
-    @Test
-    public void getOneMember_dbError() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getOneMember_dbError() throws Exception {
         participantDao.getOne(Member.class, NON_EXISTING_ID);
     }
 
-    @Test
-    public void getAllMember_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getAllMember_dbError() throws Exception {
         participantDao.getAll(Member.class);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void updateMember_dbError() throws Exception {
         Member testMember = createRandomMember();
         participantDao.update(testMember);
     }
 
-    @Test
-    public void deleteMember_dbError() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void deleteMember_dbError() throws Exception {
         participantDao.delete(Member.class, NON_EXISTING_ID);
     }
 
-    @Test
-    public void deleteAllMember() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void deleteAllMember() throws Exception {
         participantDao.deleteAll(Member.class);
     }
 
@@ -78,34 +77,34 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     // region <TEAM>
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void addTeam_dbError() throws Exception {
         participantDao.addParticipant(new Team());
     }
 
-    @Test
-    public void getOneTeam_dbError() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getOneTeam_dbError() throws Exception {
         participantDao.getOne(Team.class, NON_EXISTING_ID);
     }
 
-    @Test
-    public void getAllTeam_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getAllTeam_dbError() throws Exception {
         participantDao.getAll(Team.class);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void updateTeam_dbError() throws Exception {
         Team testTeam = createRandomTeam();
         participantDao.update(testTeam);
     }
 
-    @Test
-    public void deleteTeam_dbError() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void deleteTeam_dbError() throws Exception {
         participantDao.delete(Team.class, NON_EXISTING_ID);
     }
 
-    @Test
-    public void deleteAllTeam() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void deleteAllTeam() throws Exception {
         participantDao.deleteAll(Team.class);
     }
 
