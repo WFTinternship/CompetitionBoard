@@ -24,8 +24,9 @@ public class ManagerServiceUnitTest extends BaseTest {
 
     @Before
     public void beforeTest() throws Exception {
-        dataSource = Mockito.mock(DataSource.class);
+//        dataSource = Mockito.mock(DataSource.class);
         managerDao = Mockito.mock(ManagerDaoImpl.class);
+
         managerService = new ManagerServiceImpl();
         Whitebox.setInternalState(managerService, "managerDao", managerDao);
 
@@ -40,7 +41,6 @@ public class ManagerServiceUnitTest extends BaseTest {
     @Test(expected = RuntimeException.class)
     public void addManager_DAOError() throws Exception {
         when(managerDao.addManager(testManager)).thenThrow(FailedOperationException.class);
-//        managerDao.addManager(testManager);
         managerService.addManager(testManager);
     }
 
