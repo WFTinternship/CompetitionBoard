@@ -56,7 +56,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets all tournament
      */
     @Override
-    public List<Tournament> getTournamentList() throws FailedOperationException {
+    public List<Tournament> getTournamentList() throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -90,7 +90,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets all tournament by manager id
      */
     @Override
-    public List<Tournament> getTournamentListByManager(int id) throws FailedOperationException {
+    public List<Tournament> getTournamentListByManager(int id) throws FailedOperationException, ObjectNotFoundException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

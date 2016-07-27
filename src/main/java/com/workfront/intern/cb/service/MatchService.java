@@ -1,7 +1,25 @@
 package com.workfront.intern.cb.service;
 
-/**
- * Created by artbabayan on 7/26/16.
- */
+import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+
+import java.util.List;
+
 public interface MatchService {
+
+    // CREATE
+    Match addMatch(Match match) throws FailedOperationException;
+
+    // READ
+    Match getMatchById(int id) throws FailedOperationException, ObjectNotFoundException;
+    Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException;
+    List<Match> getMatchListByGroup(int id) throws FailedOperationException;
+
+    // UPDATE
+    void updateMatch(int id, Match match) throws FailedOperationException;
+
+    // DELETE
+    void deleteMatch(int id) throws ObjectNotFoundException, FailedOperationException;
+    void deleteAll() throws FailedOperationException;
 }

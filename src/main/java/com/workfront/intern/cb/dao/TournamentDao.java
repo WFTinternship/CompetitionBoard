@@ -13,7 +13,7 @@ public interface TournamentDao {
 
     // READ
     Tournament getTournamentById(int id) throws ObjectNotFoundException, FailedOperationException;
-    List<Tournament> getTournamentListByManager(int id) throws FailedOperationException;
+    List<Tournament> getTournamentListByManager(int id) throws ObjectNotFoundException, FailedOperationException;
     List<Tournament> getTournamentList() throws FailedOperationException;
 
     // UPDATE

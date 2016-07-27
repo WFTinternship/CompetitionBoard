@@ -65,14 +65,14 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void getTournamentById_notFound() throws FailedOperationException, ObjectNotFoundException {
+    public void getTournamentById_notFound() throws Exception {
         // Testing method
         Tournament tournament = tournamentDao.getTournamentById(NON_EXISTING_ID);
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, tournament);
     }
 
     @Test
-    public void getTournamentById_found() throws FailedOperationException, ObjectNotFoundException {
+    public void getTournamentById_found() throws Exception {
         int targetId = testTournament.getTournamentId();
 
         // Testing method
@@ -90,7 +90,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getTournamentList_emptyList() throws Exception {
         tournamentDao.deleteTournamentById(testTournament.getTournamentId());
 
         // Testing method
@@ -101,7 +101,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentList_found() throws FailedOperationException {
+    public void getTournamentList_found() throws Exception {
         // Testing method
         List<Tournament> tournamentList = tournamentDao.getTournamentList();
 
@@ -121,7 +121,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentListByManager_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getTournamentListByManager_emptyList() throws Exception {
         // Testing method
         tournamentDao.deleteTournamentById(testTournament.getTournamentId());
 
@@ -134,7 +134,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentListByManager_found() throws FailedOperationException {
+    public void getTournamentListByManager_found() throws Exception {
         int targetId = testManager.getId();
 
         // Testing method
@@ -156,7 +156,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void addTournament_created() throws FailedOperationException, ObjectNotFoundException {
+    public void addTournament_created() throws Exception {
         // Initialize random tournament instance
         int targetId = testManager.getId();
 
@@ -173,7 +173,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateTournament() throws FailedOperationException, ObjectNotFoundException {
+    public void updateTournament() throws Exception {
         // Testing method
         Tournament tournament = createRandomTournament();
 
@@ -221,7 +221,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteAll() throws FailedOperationException, ObjectNotFoundException {
+    public void deleteAll() throws Exception {
         tournamentDao.deleteAll();
 
         List<Tournament> tournamentList = tournamentDao.getTournamentList();
