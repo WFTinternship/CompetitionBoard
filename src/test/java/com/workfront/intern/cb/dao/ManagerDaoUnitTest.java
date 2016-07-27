@@ -66,12 +66,12 @@ public class ManagerDaoUnitTest extends BaseTest {
         managerDao.updateManager(NON_EXISTING_ID, testManager);
     }
 
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = FailedOperationException.class)
     public void deleteManagerById_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void deleteAll_dbError() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteAll();
     }

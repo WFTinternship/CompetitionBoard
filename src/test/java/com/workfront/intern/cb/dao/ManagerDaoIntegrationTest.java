@@ -42,11 +42,12 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         assertTrue(testManager.getId() > 0);
     }
 
-    @After
+    @After()
     public void afterTest() throws FailedOperationException, ObjectNotFoundException {
         // Deleting 'manager' of manager type field after passed test
         if (testManager != null) {
-            managerDao.deleteManagerById(testManager.getId());
+//            managerDao.deleteManagerById(testManager.getId());
+            testManager = null;
         } else {
             System.out.println("WARNING: testManager was null after test execution");
         }
@@ -157,6 +158,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     public void deleteManagerById_deleted() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteManagerById(testManager.getId());
     }
+
 
     @Test
     public void deleteAll() throws FailedOperationException, ObjectNotFoundException {
