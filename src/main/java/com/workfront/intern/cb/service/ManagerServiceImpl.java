@@ -19,13 +19,14 @@ public class ManagerServiceImpl implements ManagerService {
      * Adds new manager in db
      */
     @Override
-    public void addManager(Manager manager) {
+    public Manager addManager(Manager manager) {
         try {
             managerDao.addManager(manager);
         } catch (FailedOperationException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage());
         }
+        return manager;
     }
 
     /**

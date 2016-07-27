@@ -7,7 +7,7 @@ import java.util.List;
 public interface ManagerService {
 
     // CREATE
-    void addManager(Manager manager);
+    Manager addManager(Manager manager);
 
     // READ
     Manager getManagerById(int id);
