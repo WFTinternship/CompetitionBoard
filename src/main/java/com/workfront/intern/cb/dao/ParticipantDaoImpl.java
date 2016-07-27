@@ -177,7 +177,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 "WHERE m.member_id=?;";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -211,7 +211,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             ps = conn.prepareStatement(sql);
 
@@ -385,7 +385,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id WHERE team_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -417,7 +417,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -444,7 +444,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         String sql_team = "UPDATE team SET team_name=? WHERE team_id=?";
         try {
             // Acquire connection
-            conn = DBManager.getPooledConnection();
+            conn = dataSource.getConnection();
 
             // start transaction
             conn.setAutoCommit(false);

@@ -4,7 +4,6 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.Team;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
@@ -27,15 +26,19 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     DataSource dataSource = DBManager.getDataSource();
 
     @Before
-    public void beforeTest() throws ObjectNotFoundException, FailedOperationException {
+    public void beforeTest() throws Exception {
         participantDao = new ParticipantDaoImpl(dataSource);
+
+        // Delete all remaining objects
         cleanUp();
 
+        // Initialize random member instance
         testMember = createRandomMember();
         assertEquals(0, testMember.getId());
         participantDao.addParticipant(testMember);
         assertTrue(testMember.getId() > 0);
 
+        // Initialize random team instance
         testTeam = createRandomTeam();
         assertEquals(0, testTeam.getId());
         participantDao.addParticipant(testTeam);
@@ -43,26 +46,26 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @After
-    public void afterTest() throws ObjectNotFoundException, FailedOperationException {
+    public void afterTest() throws Exception {
         cleanUp();
     }
 
-    private void cleanUp() throws ObjectNotFoundException, FailedOperationException {
+    private void cleanUp() throws Exception {
         participantDao.deleteAll(Member.class);
         participantDao.deleteAll(Team.class);
     }
 
     // region <MEMBER>
 
-    @Test
-    public void getMemberId_notFound() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getMemberId_notFound() throws Exception {
         // Testing method
         Participant member = participantDao.getOne(Member.class, NON_EXISTING_ID);
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, member);
     }
 
     @Test
-    public void getMemberById_found() throws ObjectNotFoundException, FailedOperationException {
+    public void getMemberById_found() throws Exception {
         int targetId = testMember.getId();
 
         // Testing method
@@ -78,12 +81,11 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMemberList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getMemberList_emptyList() throws Exception {
         int targetId = testMember.getId();
 
         // Testing method
         participantDao.delete(Member.class, targetId);
-
 
         // Testing method
         List<Member> memberList = (List<Member>) participantDao.getAll(Member.class);
@@ -93,7 +95,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMemberList_found() throws FailedOperationException {
+    public void getMemberList_found() throws Exception {
         // Testing method
         List<Member> memberList = (List<Member>) participantDao.getAll(Member.class);
 
@@ -109,7 +111,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertEquals(testMember.getEmail(), member.getEmail());
     }
 
-    @Test(expected = FailedOperationException.class)
+    @Test
     public void addMember_created() throws Exception {
         // Initialize random manager instance
         Member member = createRandomMember();
@@ -120,8 +122,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertTrue(member.getId() > 0);
     }
 
-    @Test(expected = ObjectNotFoundException.class)
-    public void updateMember() throws ObjectNotFoundException, FailedOperationException {
+    @Test
+    public void updateMember() throws Exception {
         int targetId = testMember.getId();
 
         // Testing method
@@ -139,21 +141,21 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteMember_notFound() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteMember_notFound() throws Exception {
         // Testing method
         participantDao.delete(Member.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteMember_found() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteMember_found() throws Exception {
         int targetId = testMember.getId();
 
         // Testing method
         participantDao.delete(Member.class, targetId);
     }
 
-    @Test(expected = ObjectNotFoundException.class)
-    public void deleteAllMembers() throws ObjectNotFoundException, FailedOperationException {
+    @Test
+    public void deleteAllMembers() throws Exception {
         // Testing method
         participantDao.deleteAll(Member.class);
     }
@@ -162,8 +164,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     // region <TEAM>
 
-    @Test
-    public void getTeamId_notFound() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getTeamId_notFound() throws Exception {
         // Testing method
         Participant team = participantDao.getOne(Team.class, NON_EXISTING_ID);
 
@@ -171,7 +173,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTeamId_found() throws ObjectNotFoundException, FailedOperationException {
+    public void getTeamId_found() throws Exception {
         int targetId = testTeam.getId();
 
         // Testing method
@@ -185,7 +187,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTeamList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getTeamList_emptyList() throws Exception {
         int targetId = testTeam.getId();
 
         // Testing method
@@ -199,7 +201,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTeamList_found() throws FailedOperationException {
+    public void getTeamList_found() throws Exception {
         // Testing method
         List<Team> teamList = (List<Team>) participantDao.getAll(Team.class);
 
@@ -225,7 +227,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateTeam() throws ObjectNotFoundException, FailedOperationException {
+    public void updateTeam() throws Exception {
         int targetId = testTeam.getId();
 
         // Testing method
@@ -241,13 +243,13 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteTeam_notFound() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteTeam_notFound() throws Exception {
         // Testing method
         participantDao.delete(Member.class, NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteTeam_found() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteTeam_found() throws Exception {
         int targetId = testTeam.getId();
 
         // Testing method
@@ -255,7 +257,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void deleteAllTeams() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteAllTeams() throws Exception {
         // Testing method
         participantDao.deleteAll(Member.class);
     }

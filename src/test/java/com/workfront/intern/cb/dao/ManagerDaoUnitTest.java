@@ -42,7 +42,7 @@ public class ManagerDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
-    public void addManager_dbError() throws FailedOperationException, ObjectNotFoundException {
+    public void addManager_dbError() throws FailedOperationException {
         managerDao.addManager(testManager);
     }
 

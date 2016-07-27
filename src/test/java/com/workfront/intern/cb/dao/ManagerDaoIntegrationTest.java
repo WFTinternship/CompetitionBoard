@@ -29,7 +29,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         managerDao = new ManagerDaoImpl(dataSource);
 
         // Delete all remaining objects
-        managerDao.deleteAll();
+        cleanUp();
 
         // Initialize random manager instance
         testManager = createRandomManager();
@@ -43,13 +43,12 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @After()
-    public void afterTest() throws FailedOperationException, ObjectNotFoundException {
-        // Deleting 'manager' of manager type field after passed test
-        if (testManager != null) {
-            managerDao.deleteManagerById(testManager.getId());
-        } else {
-            System.out.println("WARNING: testManager was null after test execution");
-        }
+    public void afterTest() throws Exception {
+        cleanUp();
+    }
+
+    private void cleanUp() throws FailedOperationException {
+        managerDao.deleteAll();
     }
 
     // region <TEST CASES>
@@ -62,7 +61,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getManagerById_found() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerById_found() throws Exception {
         int targetId = testManager.getId();
 
         // Testing method
@@ -75,7 +74,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void getManagerByLogin_notFound() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerByLogin_notFound() throws Exception {
         // Testing method
         Manager manager = managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
 
@@ -83,7 +82,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getManagerByLogin_found() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerByLogin_found() throws Exception {
         String targetLogin = testManager.getLogin();
 
         // Testing method
@@ -96,7 +95,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getManagerList_emptyList() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerList_emptyList() throws Exception {
         int targetId = testManager.getId();
         managerDao.deleteManagerById(targetId);
 
@@ -105,11 +104,10 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
         assertNotNull(managerList);
         assertEquals(0, managerList.size());
-        testManager = null;
     }
 
     @Test
-    public void getManagerList_found() throws FailedOperationException, ObjectNotFoundException {
+    public void getManagerList_found() throws Exception {
         // Testing method
         List<Manager> managerList = managerDao.getManagerList();
 
@@ -123,7 +121,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void addManager_created() throws FailedOperationException, ObjectNotFoundException {
+    public void addManager_created() throws Exception {
         // Initialize random manager instance
         Manager manager = createRandomManager();
         assertEquals(0, manager.getId());
@@ -134,7 +132,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateManager() throws FailedOperationException, ObjectNotFoundException {
+    public void updateManager() throws Exception {
         String passwordUpdate = StringHelper.passToEncrypt("updatedPassword");
         int targetId = testManager.getId();
         testManager.setPassword(passwordUpdate);
@@ -151,21 +149,19 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     }
 
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteManagerById_notFound() throws FailedOperationException, ObjectNotFoundException {
+    public void deleteManagerById_notFound() throws Exception {
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }
 
     @Test
-    public void deleteManagerById_deleted() throws FailedOperationException, ObjectNotFoundException {
+    public void deleteManagerById_deleted() throws Exception {
         int targetId = testManager.getId();
         managerDao.deleteManagerById(targetId);
-        testManager = null;
     }
 
     @Test
-    public void deleteAll() throws FailedOperationException, ObjectNotFoundException {
+    public void deleteAll() throws Exception {
         managerDao.deleteAll();
-        testManager = null;
 
         List<Manager> managerList = managerDao.getManagerList();
         assertEquals(0, managerList.size());

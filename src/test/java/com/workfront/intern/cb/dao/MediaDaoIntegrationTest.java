@@ -30,14 +30,13 @@ public class MediaDaoIntegrationTest extends BaseTest {
     DataSource dataSource = DBManager.getDataSource();
 
     @Before
-    public void beforeTest() throws FailedOperationException, ObjectNotFoundException {
+    public void beforeTest() throws Exception {
         managerDao = new ManagerDaoImpl(dataSource);
         tournamentDao = new TournamentDaoImpl(dataSource);
         mediaDao = new MediaDaoImpl(dataSource);
 
-        mediaDao.deleteAll();
-        tournamentDao.deleteAll();
-        managerDao.deleteAll();
+        // Delete all remaining objects
+        cleanUp();
 
         // Initialize random manager instance
         testManager = createRandomManager();
@@ -68,36 +67,22 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @After
-    public void afterTest() throws FailedOperationException, ObjectNotFoundException {
-        // Deleting 'media' of manager type field after passed test
-        if (testMedia != null) {
-            mediaDao.deleteMediaById(testMedia.getMediaId());
-        } else {
-            System.out.println("WARNING: testMedia was null after test execution");
-        }
+    public void afterTest() throws Exception {
+        cleanUp();
+    }
 
-        // Deleting 'tournament' of manager type field after passed test
-        if (testTournament != null) {
-            tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-        } else {
-            System.out.println("WARNING: testTournament was null after test execution");
-        }
-
-        // Deleting 'manager' of manager type field after passed test
-        if (testManager != null) {
-            managerDao.deleteManagerById(testManager.getId());
-        } else {
-            System.out.println("WARNING: testManager was null after test execution");
-        }
+    private void cleanUp() throws Exception {
+        mediaDao.deleteAll();
+        tournamentDao.deleteAll();
+        managerDao.deleteAll();
     }
 
     // region <TEST CASES>
 
-    @Test
-    public void getMediaById_notFound() throws FailedOperationException {
+    @Test(expected = ObjectNotFoundException.class)
+    public void getMediaById_notFound() throws Exception {
         // Testing method
         Media media = mediaDao.getMediaById(NON_EXISTING_ID);
-
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, media);
     }
 
@@ -116,7 +101,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void addPhoto_created() throws FailedOperationException, ObjectNotFoundException {
+    public void addPhoto_created() throws Exception {
         // Initialize random tournament instance
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
@@ -135,7 +120,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void addVideo_created() throws FailedOperationException, ObjectNotFoundException {
+    public void addVideo_created() throws Exception {
         // Initialize random tournament instance
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
@@ -154,7 +139,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaByManagerList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getMediaByManagerList_emptyList() throws Exception {
         int managerId = testManager.getId();
 
         mediaDao.deleteMediaById(testMedia.getMediaId());
@@ -167,7 +152,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaByManagerList_found() throws FailedOperationException {
+    public void getMediaByManagerList_found() throws Exception {
         int managerId = testManager.getId();
 
         // Testing method
@@ -185,7 +170,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaByTournamentList_emptyList() throws ObjectNotFoundException, FailedOperationException {
+    public void getMediaByTournamentList_emptyList() throws Exception {
         mediaDao.deleteMediaById(testMedia.getMediaId());
 
         // Testing method
@@ -197,7 +182,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaByTournamentList_found() throws FailedOperationException {
+    public void getMediaByTournamentList_found() throws Exception {
         int tournamentId = testTournament.getTournamentId();
         List<Media> mediaList = mediaDao.getMediaListByTournament(tournamentId);
 
@@ -213,9 +198,8 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertEquals(testMedia.getMediaId(), media.getMediaId());
     }
 
-    //TODO
     @Test
-    public void updatePhoto() throws FailedOperationException {
+    public void updatePhoto() throws Exception {
         // Testing method
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
@@ -238,7 +222,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertEquals(testMedia.getManagerId(), media.getManagerId());
     }
 
-    //TODO
     @Test
     public void updateVideo() throws FailedOperationException {
         // Testing method
@@ -262,23 +245,18 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertEquals(testMedia.getManagerId(), media.getManagerId());
     }
 
-    //TODO
-    @Test
+    @Test(expected = ObjectNotFoundException.class)
     public void deleteMediaById_notFound() throws Exception {
         mediaDao.deleteMediaById(NON_EXISTING_ID);
-
     }
 
-    //TODO
     @Test
     public void deleteMedia_deleted() throws Exception {
         mediaDao.deleteMediaById(testMedia.getMediaId());
-
     }
 
-    //TODO
     @Test
-    public void deleteAll() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteAll() throws Exception {
         mediaDao.deleteAll();
 
         int managerId = testManager.getId();
