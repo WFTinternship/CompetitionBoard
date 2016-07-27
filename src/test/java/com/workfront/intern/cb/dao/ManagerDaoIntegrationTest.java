@@ -46,8 +46,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     public void afterTest() throws FailedOperationException, ObjectNotFoundException {
         // Deleting 'manager' of manager type field after passed test
         if (testManager != null) {
-//            managerDao.deleteManagerById(testManager.getId());
-            testManager = null;
+            managerDao.deleteManagerById(testManager.getId());
         } else {
             System.out.println("WARNING: testManager was null after test execution");
         }
@@ -98,13 +97,15 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getManagerList_emptyList() throws FailedOperationException, ObjectNotFoundException {
-        managerDao.deleteManagerById(testManager.getId());
+        int targetId = testManager.getId();
+        managerDao.deleteManagerById(targetId);
 
         // Testing method
         List<Manager> managerList = managerDao.getManagerList();
 
         assertNotNull(managerList);
         assertEquals(0, managerList.size());
+        testManager = null;
     }
 
     @Test
@@ -134,11 +135,11 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void updateManager() throws FailedOperationException, ObjectNotFoundException {
-        // Testing method
         String passwordUpdate = StringHelper.passToEncrypt("updatedPassword");
         int targetId = testManager.getId();
         testManager.setPassword(passwordUpdate);
 
+        // Testing method
         managerDao.updateManager(targetId, testManager);
 
         // Initialize random manager instance
@@ -156,13 +157,15 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
     @Test
     public void deleteManagerById_deleted() throws FailedOperationException, ObjectNotFoundException {
-        managerDao.deleteManagerById(testManager.getId());
+        int targetId = testManager.getId();
+        managerDao.deleteManagerById(targetId);
+        testManager = null;
     }
-
 
     @Test
     public void deleteAll() throws FailedOperationException, ObjectNotFoundException {
         managerDao.deleteAll();
+        testManager = null;
 
         List<Manager> managerList = managerDao.getManagerList();
         assertEquals(0, managerList.size());
