@@ -2,7 +2,6 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
@@ -77,7 +76,6 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     public void getManagerByLogin_notFound() throws Exception {
         // Testing method
         Manager manager = managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
-
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, manager);
     }
 

@@ -4,7 +4,6 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
@@ -87,7 +86,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMediaById_found() throws FailedOperationException {
+    public void getMediaById_found() throws Exception {
         int targetId = testMedia.getMediaId();
 
         // Testing method
@@ -215,7 +214,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
         testMedia = mediaList.get(0);
 
-//        assertTrue(updated);
         assertEquals(testMedia.getPhoto(), media.getPhoto());
         assertEquals(testMedia.getVideo(), media.getVideo());
         assertEquals(testMedia.getTournamentId(), media.getTournamentId());
@@ -223,7 +221,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void updateVideo() throws FailedOperationException {
+    public void updateVideo() throws Exception {
         // Testing method
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();

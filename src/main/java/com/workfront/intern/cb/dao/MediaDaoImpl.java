@@ -21,7 +21,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets specific media(photo or video) by id
      */
     @Override
-    public Media getMediaById(int id) throws FailedOperationException {
+    public Media getMediaById(int id) throws FailedOperationException, ObjectNotFoundException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -46,8 +46,6 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
-        } catch (ObjectNotFoundException e) {
-            e.printStackTrace();
         } finally {
             closeResources(conn, ps, rs);
         }

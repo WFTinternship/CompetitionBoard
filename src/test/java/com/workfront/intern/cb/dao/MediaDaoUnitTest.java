@@ -42,37 +42,37 @@ public class MediaDaoUnitTest extends BaseTest {
     }
 
     @Test
-    public void addPhoto_dbError() throws FailedOperationException {
+    public void addPhoto_dbError() throws Exception {
         mediaDao.addPhoto(new Media());
     }
 
     @Test
-    public void addVideo_dbError() throws FailedOperationException {
+    public void addVideo_dbError() throws Exception {
         mediaDao.addVideo(new Media());
     }
 
     @Test
-    public void getMedia_dbError() throws FailedOperationException {
+    public void getMedia_dbError() throws Exception {
         mediaDao.getMediaById(NON_EXISTING_ID);
     }
 
     @Test
-    public void getMediaListByManager_dbError() throws FailedOperationException {
+    public void getMediaListByManager_dbError() throws Exception {
         mediaDao.getMediaListByManager(NON_EXISTING_ID);
     }
 
     @Test
-    public void getMediaListByTournament_dbError() throws FailedOperationException {
+    public void getMediaListByTournament_dbError() throws Exception {
         mediaDao.getMediaListByTournament(NON_EXISTING_ID);
     }
 
     @Test
-    public void updatePhoto_dbError() throws FailedOperationException {
+    public void updatePhoto_dbError() throws Exception {
         mediaDao.updatePhoto(NON_EXISTING_ID, new Media());
     }
 
     @Test
-    public void updateVideo_dbError() throws FailedOperationException {
+    public void updateVideo_dbError() throws Exception {
         mediaDao.updateVideo(NON_EXISTING_ID, new Media());
     }
 
