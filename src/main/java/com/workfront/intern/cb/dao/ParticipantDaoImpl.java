@@ -106,7 +106,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     // region <MEMBER>
 
     /**
-     * Adding member to db
+     * Adds member to db
      */
     private Member addMember(Member member) throws FailedOperationException {
         Connection conn = null;
@@ -204,7 +204,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
-     * Get member list
+     * Gets member list
      */
     private List<Member> getMemberList() throws FailedOperationException {
         Connection conn = null;
