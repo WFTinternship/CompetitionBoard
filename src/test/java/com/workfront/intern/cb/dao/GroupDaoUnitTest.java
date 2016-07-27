@@ -38,33 +38,33 @@ public class GroupDaoUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void add_dbError() throws FailedOperationException {
         groupDao.addGroup(new Group());
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void getGroupByTournamentList_dbError() throws FailedOperationException {
         groupDao.getGroupByTournamentList(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void getAllGroups_dbError() throws FailedOperationException {
         groupDao.getGroupByTournamentList(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void updateGroup_dbError() throws FailedOperationException {
         Group testGroup = createRandomGroup();
         groupDao.updateGroup(NON_EXISTING_ID, testGroup);
     }
 
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = FailedOperationException.class)
     public void deleteGroup_dbError() throws ObjectNotFoundException, FailedOperationException {
         groupDao.deleteGroup(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void deleteAll_dbError() throws ObjectNotFoundException, FailedOperationException {
         groupDao.deleteAll();
     }
