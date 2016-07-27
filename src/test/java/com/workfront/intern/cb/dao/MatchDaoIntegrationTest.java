@@ -25,8 +25,8 @@ public class MatchDaoIntegrationTest extends BaseTest {
     private MatchDao matchDao;
 
     // Test helper objects
-    private Manager testManager;
-    private Tournament testTournament;
+    protected Manager testManager;
+    protected Tournament testTournament;
     private Group testGroup;
     private Match testMatch;
 
