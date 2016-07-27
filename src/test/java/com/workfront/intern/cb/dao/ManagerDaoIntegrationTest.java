@@ -25,7 +25,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     DataSource dataSource = DBManager.getDataSource();
 
     @Before
-    public void beforeTest() throws FailedOperationException, ObjectNotFoundException {
+    public void beforeTest() throws Exception {
         managerDao = new ManagerDaoImpl(dataSource);
 
         // Delete all remaining objects
@@ -47,7 +47,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         cleanUp();
     }
 
-    private void cleanUp() throws FailedOperationException {
+    private void cleanUp() throws Exception {
         managerDao.deleteAll();
     }
 

@@ -24,7 +24,6 @@ public class ManagerServiceUnitTest extends BaseTest {
 
     @Before
     public void beforeTest() throws Exception {
-//        dataSource = Mockito.mock(DataSource.class);
         managerDao = Mockito.mock(ManagerDaoImpl.class);
 
         managerService = new ManagerServiceImpl();
@@ -41,42 +40,51 @@ public class ManagerServiceUnitTest extends BaseTest {
     @Test(expected = RuntimeException.class)
     public void addManager_DAOError() throws Exception {
         when(managerDao.addManager(testManager)).thenThrow(FailedOperationException.class);
+
         managerService.addManager(testManager);
     }
 
-    @Ignore
+    @SuppressWarnings("unchecked")
     @Test(expected = FailedOperationException.class)
-    public void getManagerById_dbError() throws Exception {
+    public void getManagerById_DAOError() throws Exception {
+        when(managerDao.getManagerById(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         managerDao.getManagerById(NON_EXISTING_ID);
     }
 
-    @Ignore
+    @SuppressWarnings("unchecked")
     @Test(expected = FailedOperationException.class)
-    public void getManagerByLogin_dbError() throws Exception {
+    public void getManagerByLogin_DAOError() throws Exception {
+        when(managerDao.getManagerByLogin(NON_EXISTING_LOGIN)).thenThrow(FailedOperationException.class);
         managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
     }
 
-    @Ignore
+    @SuppressWarnings("unchecked")
     @Test(expected = FailedOperationException.class)
-    public void getManagerList_dbError() throws Exception {
+    public void getManagerList_DAOError() throws Exception {
+        when(managerDao.getManagerList()).thenThrow(FailedOperationException.class);
         managerDao.getManagerList();
     }
 
     @Ignore
+    @SuppressWarnings("unchecked")
     @Test(expected = FailedOperationException.class)
-    public void updateManager_dbError() throws Exception {
+    public void updateManager_DAOError() throws Exception {
+//        when(managerDao.updateManager(NON_EXISTING_ID, testManager)).thenThrow(FailedOperationException.class);
         managerDao.updateManager(NON_EXISTING_ID, testManager);
     }
 
     @Ignore
+    @SuppressWarnings("unchecked")
     @Test(expected = FailedOperationException.class)
-    public void deleteManagerById_dbError() throws Exception {
+    public void deleteManagerById_DAOError() throws Exception {
+//        when(managerDao.deleteManagerById(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }
 
     @Ignore
     @Test(expected = FailedOperationException.class)
-    public void deleteAll_dbError() throws Exception {
+    public void deleteAll_DAOError() throws Exception {
+//        when(managerDao.deleteAll()).thenThrow(FailedOperationException.class);
         managerDao.deleteAll();
     }
 }
