@@ -38,18 +38,18 @@ public class MatchDaoUnitTest extends BaseTest{
     public void afterTest() {
     }
 
-    @Test
-    public void add_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void add_dbError() throws Exception {
         matchDao.addMatch(new Match());
     }
 
-    @Test
-    public void getMatchById_dbError() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getMatchById_dbError() throws Exception {
         matchDao.getMatchById(NON_EXISTING_ID);
     }
 
-    @Test
-    public void getMatchByGroupId_dbError() throws ObjectNotFoundException, FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void getMatchByGroupId_dbError() throws Exception {
         matchDao.getMatchByGroupId(NON_EXISTING_ID);
     }
 
@@ -57,18 +57,18 @@ public class MatchDaoUnitTest extends BaseTest{
     public void getMatchListByGroup_dbError() {
     }
 
-    @Test
-    public void updateMatch_dbError() throws FailedOperationException {
+    @Test(expected = FailedOperationException.class)
+    public void updateMatch_dbError() throws Exception {
         Match testMatch = createRandomMatch();
         matchDao.updateMatch(NON_EXISTING_ID, testMatch);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void deleteMatch() throws Exception {
         matchDao.deleteMatch(NON_EXISTING_ID);
     }
 
-    @Test
+    @Test(expected = FailedOperationException.class)
     public void deleteAll() throws Exception {
         matchDao.deleteAll();
     }

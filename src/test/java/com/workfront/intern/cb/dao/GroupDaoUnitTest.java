@@ -4,7 +4,6 @@ import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,33 +38,33 @@ public class GroupDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
-    public void add_dbError() throws FailedOperationException {
+    public void add_dbError() throws Exception {
         groupDao.addGroup(new Group());
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getGroupByTournamentList_dbError() throws FailedOperationException {
+    public void getGroupByTournamentList_dbError() throws Exception {
         groupDao.getGroupByTournamentList(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getAllGroups_dbError() throws FailedOperationException {
+    public void getAllGroups_dbError() throws Exception {
         groupDao.getGroupByTournamentList(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void updateGroup_dbError() throws FailedOperationException {
+    public void updateGroup_dbError() throws Exception {
         Group testGroup = createRandomGroup();
         groupDao.updateGroup(NON_EXISTING_ID, testGroup);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteGroup_dbError() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteGroup_dbError() throws Exception {
         groupDao.deleteGroup(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteAll_dbError() throws ObjectNotFoundException, FailedOperationException {
+    public void deleteAll_dbError() throws Exception {
         groupDao.deleteAll();
     }
 }
