@@ -148,18 +148,23 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // commit transaction
             conn.commit();
-        } catch (SQLException e) {
+        }  catch (SQLException e) {
             try {
-                if (conn != null) {
+                if (conn != null)
                     conn.rollback();
-                }
             } catch (SQLException e1) {
                 LOG.error(e.getMessage(), e1);
-                throw new FailedOperationException(e.getMessage(), e);
             }
             LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
         } finally {
-            closeResources(conn);
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            }
         }
         return member;
     }
@@ -460,6 +465,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             PreparedStatement ps_team = conn.prepareStatement(sql_team);
             ps_team.setString(1, team.getTeamName());
             ps_team.setInt(2, team.getId());
+
             // update member data
             ps_team.executeUpdate();
 
@@ -470,7 +476,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             conn.commit();
         } catch (SQLException e) {
             try {
-                conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (SQLException e1) {
                 LOG.error(e1.getMessage(), e1);
             }
