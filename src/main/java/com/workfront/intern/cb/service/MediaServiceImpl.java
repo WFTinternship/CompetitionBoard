@@ -17,7 +17,7 @@ public class MediaServiceImpl implements MediaService {
      * Adds new photo media in db
      */
     @Override
-    public Media addPhoto(Media media) throws FailedOperationException {
+    public Media addPhoto(Media media) {
         try {
             return mediaDao.addPhoto(media);
         } catch (FailedOperationException e) {
@@ -30,7 +30,7 @@ public class MediaServiceImpl implements MediaService {
      * Adds new video media in db
      */
     @Override
-    public Media addVideo(Media media) throws FailedOperationException {
+    public Media addVideo(Media media) {
         try {
             return mediaDao.addVideo(media);
         } catch (FailedOperationException e) {
@@ -43,7 +43,7 @@ public class MediaServiceImpl implements MediaService {
      * Gets media by id
      */
     @Override
-    public Media getMediaById(int id) throws FailedOperationException, ObjectNotFoundException {
+    public Media getMediaById(int id) {
         try {
             return mediaDao.getMediaById(id);
         } catch (ObjectNotFoundException e) {
@@ -57,7 +57,7 @@ public class MediaServiceImpl implements MediaService {
      * Returns all media by manager id
      */
     @Override
-    public List<Media> getMediaListByManager(int id) throws FailedOperationException {
+    public List<Media> getMediaListByManager(int id) {
         try {
             return mediaDao.getMediaListByManager(id);
         } catch (FailedOperationException e) {
@@ -69,7 +69,7 @@ public class MediaServiceImpl implements MediaService {
      * Returns all media by tournament id
      */
     @Override
-    public List<Media> getMediaListByTournament(int id) throws FailedOperationException {
+    public List<Media> getMediaListByTournament(int id) {
         try {
             return mediaDao.getMediaListByTournament(id);
         } catch (FailedOperationException e) {
@@ -81,7 +81,7 @@ public class MediaServiceImpl implements MediaService {
      * Updates existing photo in db
      */
     @Override
-    public void updatePhoto(int id, Media media) throws FailedOperationException {
+    public void updatePhoto(int id, Media media) {
         try {
             mediaDao.updatePhoto(id, media);
         } catch (FailedOperationException e) {
@@ -93,7 +93,7 @@ public class MediaServiceImpl implements MediaService {
      * Updates existing video in db
      */
     @Override
-    public void updateVideo(int id, Media media) throws FailedOperationException {
+    public void updateVideo(int id, Media media) {
         try {
             mediaDao.updateVideo(id, media);
         } catch (FailedOperationException e) {
@@ -105,7 +105,7 @@ public class MediaServiceImpl implements MediaService {
      * Deletes manager by id
      */
     @Override
-    public void deleteMediaById(int id) throws ObjectNotFoundException, FailedOperationException {
+    public void deleteMediaById(int id) {
         try {
             mediaDao.deleteMediaById(id);
         } catch (ObjectNotFoundException e) {
@@ -119,7 +119,7 @@ public class MediaServiceImpl implements MediaService {
      * Removes all managers
      */
     @Override
-    public void deleteAll() throws FailedOperationException {
+    public void deleteAll() {
         try {
             mediaDao.deleteAll();
         } catch (FailedOperationException e) {
