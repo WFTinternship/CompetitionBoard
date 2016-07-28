@@ -47,9 +47,9 @@ public class GroupServiceImpl implements GroupService {
      * Returns all groups by tournament id
      */
     @Override
-    public List<Group> getGroupByTournamentList(int tournamentId) {
+    public List<Group> getTournamentGroups(int tournamentId) {
         try {
-            return groupDao.getGroupByTournamentList(tournamentId);
+            return groupDao.getTournamentGroups(tournamentId);
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

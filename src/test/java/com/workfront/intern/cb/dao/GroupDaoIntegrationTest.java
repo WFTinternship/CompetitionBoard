@@ -32,7 +32,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
         tournamentDao = new TournamentDaoImpl(dataSource);
         groupDao = new GroupDaoImpl(dataSource);
 
-
         // Delete all remaining objects
         cleanUp();
 
@@ -126,7 +125,8 @@ public class GroupDaoIntegrationTest extends BaseTest {
         groupDao.deleteGroup(groupId);
 
         // Testing method
-        List<Group> groupList = groupDao.getGroupByTournamentList(tournamentId);
+        List<Group> groupList = groupDao.getTournamentGroups(tournamentId);
+
         assertNotNull(groupList);
         assertEquals(0, groupList.size());
     }
@@ -135,7 +135,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     public void getGroupByTournamentList_found() throws Exception {
         // Testing method
         int tournamentId = testTournament.getTournamentId();
-        List<Group> groupList = groupDao.getGroupByTournamentList(tournamentId);
+        List<Group> groupList = groupDao.getTournamentGroups(tournamentId);
 
         assertNotNull(groupList);
         assertEquals(1, groupList.size());
@@ -156,6 +156,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
         // Testing method
         List<Group> groupList = groupDao.getAllGroups();
+
         assertNotNull(groupList);
         assertEquals(0, groupList.size());
     }
@@ -221,6 +222,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         groupDao.deleteAll();
 
         List<Group> groupList = groupDao.getAllGroups();
+
         assertEquals(0, groupList.size());
     }
 

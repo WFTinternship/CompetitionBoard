@@ -68,6 +68,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     public void getTournamentById_notFound() throws Exception {
         // Testing method
         Tournament tournament = tournamentDao.getTournamentById(NON_EXISTING_ID);
+
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, tournament);
     }
 
@@ -124,7 +125,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     public void getTournamentListByManager_emptyList() throws Exception {
         // Testing method
         tournamentDao.deleteTournamentById(testTournament.getTournamentId());
-
 
         int targetId = testManager.getId();
         List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
@@ -225,6 +225,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         tournamentDao.deleteAll();
 
         List<Tournament> tournamentList = tournamentDao.getTournamentList();
+
         assertEquals(0, tournamentList.size());
     }
 }

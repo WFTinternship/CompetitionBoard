@@ -50,8 +50,8 @@ public class GroupServiceUnitTest extends BaseTest {
 
     @Test(expected = RuntimeException.class)
     public void getGroupByTournamentList_DAOError() throws Exception {
-        when(groupDao.getGroupByTournamentList(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
-        groupService.getGroupByTournamentList(NON_EXISTING_ID);
+        when(groupDao.getTournamentGroups(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
+        groupService.getTournamentGroups(NON_EXISTING_ID);
     }
 
     @Test(expected = RuntimeException.class)

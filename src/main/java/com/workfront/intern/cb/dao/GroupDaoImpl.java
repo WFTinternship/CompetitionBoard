@@ -93,7 +93,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Gets group list by specific tournament id
      */
     @Override
-    public List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException {
+    public List<Group> getTournamentGroups(int tournamentId) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

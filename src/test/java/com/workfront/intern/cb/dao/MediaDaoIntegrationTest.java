@@ -222,7 +222,6 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     @Test
     public void updateVideo() throws Exception {
-        // Testing method
         int managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
         int mediaId = testMedia.getMediaId();
@@ -234,6 +233,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
         // Updates specific tournament in db
         mediaDao.updateVideo(mediaId, media);
+
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
         testMedia = mediaList.get(0);
 
@@ -259,6 +259,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
         int managerId = testManager.getId();
         List<Media> mediaList = mediaDao.getMediaListByManager(managerId);
+
         assertEquals(0, mediaList.size());
     }
 

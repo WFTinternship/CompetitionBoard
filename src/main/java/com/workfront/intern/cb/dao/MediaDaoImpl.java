@@ -21,7 +21,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets specific media(photo or video) by id
      */
     @Override
-    public Media getMediaById(int id) throws FailedOperationException, ObjectNotFoundException {
+    public Media getMediaById(int id) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -56,10 +56,10 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets all media by specific manager
      */
     @Override
-    public List<Media> getMediaListByManager(int id) throws FailedOperationException {
+    public List<Media> getMediaListByManager(int managerId) throws FailedOperationException {
         List<Media> mediaByManagerList;
         String sql = "SELECT * FROM media WHERE manager_id=?";
-        mediaByManagerList = getSpecificMediaList(sql, id);
+        mediaByManagerList = getSpecificMediaList(sql, managerId);
 
         return mediaByManagerList;
     }
@@ -68,10 +68,10 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Gets all media by specific tournament
      */
     @Override
-    public List<Media> getMediaListByTournament(int id) throws FailedOperationException {
+    public List<Media> getMediaListByTournament(int tournamentId) throws FailedOperationException {
         List<Media> mediaByTournamentList;
         String sql = "SELECT * FROM media WHERE tournament_id=?";
-        mediaByTournamentList = getSpecificMediaList(sql, id);
+        mediaByTournamentList = getSpecificMediaList(sql, tournamentId);
 
         return mediaByTournamentList;
     }

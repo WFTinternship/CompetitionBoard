@@ -57,9 +57,9 @@ public class MediaServiceImpl implements MediaService {
      * Returns all media by manager id
      */
     @Override
-    public List<Media> getMediaListByManager(int id) {
+    public List<Media> getMediaListByManager(int managerId) {
         try {
-            return mediaDao.getMediaListByManager(id);
+            return mediaDao.getMediaListByManager(managerId);
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -69,9 +69,9 @@ public class MediaServiceImpl implements MediaService {
      * Returns all media by tournament id
      */
     @Override
-    public List<Media> getMediaListByTournament(int id) {
+    public List<Media> getMediaListByTournament(int tournamentId) {
         try {
-            return mediaDao.getMediaListByTournament(id);
+            return mediaDao.getMediaListByTournament(tournamentId);
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

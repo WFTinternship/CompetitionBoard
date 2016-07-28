@@ -46,9 +46,9 @@ public class TournamentServiceImpl implements TournamentService {
      * Returns all tournament by manager id
      */
     @Override
-    public List<Tournament> getTournamentListByManager(int id) {
+    public List<Tournament> getTournamentListByManager(int managerId) {
         try {
-            return tournamentDao.getTournamentListByManager(id);
+            return tournamentDao.getTournamentListByManager(managerId);
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

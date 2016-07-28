@@ -12,8 +12,8 @@ public interface MediaService {
 
     // READ
     Media getMediaById(int id);
-    List<Media> getMediaListByManager(int id);
-    List<Media> getMediaListByTournament(int id);
+    List<Media> getMediaListByManager(int managerId);
+    List<Media> getMediaListByTournament(int tournamentId);
 
     // UPDATE
     void updatePhoto(int id, Media media);

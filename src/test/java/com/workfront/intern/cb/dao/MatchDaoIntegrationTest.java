@@ -24,9 +24,6 @@ public class MatchDaoIntegrationTest extends BaseTest {
     private GroupDao groupDao;
     private MatchDao matchDao;
 
-    // Test helper objects
-    protected Manager testManager;
-    protected Tournament testTournament;
     private Group testGroup;
     private Match testMatch;
 
@@ -42,9 +39,8 @@ public class MatchDaoIntegrationTest extends BaseTest {
         // Delete all remaining objects
         cleanUp();
 
-
         // Initialize random manager instance
-        testManager = createRandomManager();
+        Manager testManager = createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
@@ -52,7 +48,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
-        testTournament = createRandomTournament();
+        Tournament testTournament = createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
 
@@ -244,6 +240,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         matchDao.deleteAll();
 
         List<Match> matchList = matchDao.getMatchListByGroup(groupId);
+
         assertEquals(0, matchList.size());
     }
 

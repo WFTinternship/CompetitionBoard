@@ -223,6 +223,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
         // Testing method
         participantDao.addParticipant(team);
+
         assertTrue(team.getId() > 0);
     }
 

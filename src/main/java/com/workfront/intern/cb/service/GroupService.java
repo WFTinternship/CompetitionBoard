@@ -12,7 +12,7 @@ public interface GroupService {
 
     // READ
     Group getGroupById(int id);
-    List<Group> getGroupByTournamentList(int tournamentId);
+    List<Group> getTournamentGroups(int tournamentId);
     List<Group> getAllGroups();
 
     //TODO implements

@@ -17,143 +17,119 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     private ParticipantDao participantDao = new ParticipantDaoImpl(DBManager.getDataSource());
 
+    /**
+     * Adds specific participant: member or team
+     */
     @Override
     public Participant addParticipant(Participant participant) {
-        if (participant instanceof Member) {
-            try {
+        try {
+            if (participant instanceof Member) {
                 return participantDao.addParticipant(participant);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(e.getMessage());
-            }
-        } else if (participant instanceof Team) {
-            try {
+            } else if (participant instanceof Team) {
                 return participantDao.addParticipant(participant);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(e.getMessage());
-            }
-        } else {
-            throw new RuntimeException("Unknown participant type");
+            } else
+                throw new RuntimeException("Unknown participant type");
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
+    /**
+     * Gets specific participant - member or team, by id:
+     */
     @Override
     public Participant getOne(Class<? extends Participant> cls, int id) {
-        if (cls.equals(Member.class)) {
-            try {
+        try {
+            if (cls.equals(Member.class)) {
                 return participantDao.getOne(Member.class, id);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(e.getMessage());
-            } catch (ObjectNotFoundException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(String.format("Member instance with id=%s not found", id));
-            }
-        } else {
-            if (cls.equals(Team.class)) {
-                try {
-                    return participantDao.getOne(Team.class, id);
-                } catch (FailedOperationException e) {
-                    LOG.error(e.getMessage(), e);
-                    throw new RuntimeException(e.getMessage());
-                } catch (ObjectNotFoundException e) {
-                    LOG.error(e.getMessage(), e);
-                    throw new RuntimeException(String.format("Team instance with id=%s not found", id));
-                }
+            } else if (cls.equals(Team.class)) {
+                return participantDao.getOne(Team.class, id);
             } else {
                 throw new RuntimeException("Unknown participant type");
             }
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
+        } catch (ObjectNotFoundException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(String.format("Participant instance with id=%s not found", id));
         }
     }
 
+    /**
+     * Gets specific participant list - memberList or teamList
+     */
     @Override
     public List<? extends Participant> getAll(Class<? extends Participant> cls) {
-        if (cls.equals(Member.class)) {
-            try {
+        try {
+            if (cls.equals(Member.class)) {
                 return participantDao.getAll(Member.class);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(e.getMessage());
-            }
-        } else if (cls.equals(Team.class)) {
-            try {
+            } else if (cls.equals(Team.class)) {
                 return participantDao.getAll(Team.class);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(e.getMessage());
+            } else {
+                throw new RuntimeException("Unknown participant type");
             }
-        } else {
-            throw new RuntimeException("Unknown participant type");
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
+    /**
+     * Updates specific participant - member or team
+     */
     @Override
     public void update(int id, Participant participant) {
-        if (participant instanceof Member) {
-            try {
+        try {
+            if (participant instanceof Member) {
                 participantDao.update(id, participant);
-            } catch (FailedOperationException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            } catch (ObjectNotFoundException e) {
-                throw new RuntimeException("Member instance with id=%s not updated");
-            }
-        } else if (participant instanceof Team) {
-            try {
+            } else {
                 participantDao.update(id, participant);
-            } catch (FailedOperationException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            } catch (ObjectNotFoundException e) {
-                throw new RuntimeException("Team instance with id=%s not updated");
             }
-        } else {
-            throw new RuntimeException("Unknown participant type");
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage(), e);
+        } catch (ObjectNotFoundException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException("Participant instance with id=%s not updated");
         }
     }
 
+    /**
+     * Deletes specific participant - member or team, by id:
+     */
     @Override
     public void delete(Class<? extends Participant> cls, int id) {
-        if (cls.equals(Member.class)) {
-            try {
+        try {
+            if (cls.equals(Member.class)) {
                 participantDao.delete(Member.class, id);
-            } catch (ObjectNotFoundException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(String.format("Member instance with id=%s not found", id));
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-            }
-        } else if (cls.equals(Team.class)) {
-            try {
+            } else {
                 participantDao.delete(Team.class, id);
-            } catch (ObjectNotFoundException e) {
-                LOG.error(e.getMessage(), e);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(String.format("Team instance with id=%s not found", id));
             }
-        } else {
-            throw new RuntimeException("Unknown participant type");
+        } catch (ObjectNotFoundException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(String.format("Participant instance with id=%s not found", id));
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
     public void deleteAll(Class<? extends Participant> cls) {
-        if (cls.equals(Member.class)) {
-            try {
+
+        try {
+            if (cls.equals(Member.class)) {
                 participantDao.deleteAll(Member.class);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(e.getMessage());
-            }
-        } else if (cls.equals(Team.class)) {
-            try {
+            } else if (cls.equals(Team.class)) {
                 participantDao.deleteAll(Team.class);
-            } catch (FailedOperationException e) {
-                LOG.error(e.getMessage(), e);
-                throw new RuntimeException(e.getMessage());
+            } else {
+                throw new RuntimeException("Unknown participant type");
             }
-        } else {
-            throw new RuntimeException("Unknown participant type");
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

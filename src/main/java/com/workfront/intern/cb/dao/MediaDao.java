@@ -13,9 +13,9 @@ public interface MediaDao {
     Media addVideo(Media media) throws FailedOperationException;
 
     // READ
-    Media getMediaById(int id) throws FailedOperationException, ObjectNotFoundException;
-    List<Media> getMediaListByManager(int id) throws FailedOperationException;
-    List<Media> getMediaListByTournament(int id) throws FailedOperationException;
+    Media getMediaById(int id) throws ObjectNotFoundException, FailedOperationException;
+    List<Media> getMediaListByManager(int managerId) throws FailedOperationException;
+    List<Media> getMediaListByTournament(int tournamentId) throws FailedOperationException;
 
     // UPDATE
     void updatePhoto(int id, Media media) throws ObjectNotFoundException, FailedOperationException;

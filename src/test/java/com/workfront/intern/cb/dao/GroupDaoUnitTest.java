@@ -44,12 +44,12 @@ public class GroupDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void getGroupByTournamentList_dbError() throws Exception {
-        groupDao.getGroupByTournamentList(NON_EXISTING_ID);
+        groupDao.getTournamentGroups(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
     public void getAllGroups_dbError() throws Exception {
-        groupDao.getGroupByTournamentList(NON_EXISTING_ID);
+        groupDao.getTournamentGroups(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)

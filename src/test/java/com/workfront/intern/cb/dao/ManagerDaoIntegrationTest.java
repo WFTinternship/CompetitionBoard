@@ -76,6 +76,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     public void getManagerByLogin_notFound() throws Exception {
         // Testing method
         Manager manager = managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
+
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, manager);
     }
 
@@ -122,6 +123,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     public void addManager_created() throws Exception {
         // Initialize random manager instance
         Manager manager = createRandomManager();
+
         assertEquals(0, manager.getId());
 
         // Testing method
@@ -162,6 +164,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         managerDao.deleteAll();
 
         List<Manager> managerList = managerDao.getManagerList();
+
         assertEquals(0, managerList.size());
     }
 

@@ -13,7 +13,7 @@ public interface TournamentService {
 
     // READ
     Tournament getTournamentById(int id);
-    List<Tournament> getTournamentListByManager(int id);
+    List<Tournament> getTournamentListByManager(int managerId);
     List<Tournament> getTournamentList();
 
     // UPDATE
