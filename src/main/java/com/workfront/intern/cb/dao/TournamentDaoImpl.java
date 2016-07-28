@@ -56,7 +56,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets all tournament
      */
     @Override
-    public List<Tournament> getTournamentList() throws ObjectNotFoundException, FailedOperationException {
+    public List<Tournament> getTournamentList() throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

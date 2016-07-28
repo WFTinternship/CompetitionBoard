@@ -21,7 +21,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Manager addManager(Manager manager) {
         try {
-          return managerDao.addManager(manager);
+            return managerDao.addManager(manager);
         } catch (FailedOperationException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage());

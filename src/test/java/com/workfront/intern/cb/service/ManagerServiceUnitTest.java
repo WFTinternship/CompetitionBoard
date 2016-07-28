@@ -7,13 +7,13 @@ import com.workfront.intern.cb.dao.ManagerDao;
 import com.workfront.intern.cb.dao.ManagerDaoImpl;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
 
 import javax.sql.DataSource;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 public class ManagerServiceUnitTest extends BaseTest {
@@ -65,26 +65,23 @@ public class ManagerServiceUnitTest extends BaseTest {
         managerDao.getManagerList();
     }
 
-    @Ignore
     @SuppressWarnings("unchecked")
     @Test(expected = FailedOperationException.class)
     public void updateManager_DAOError() throws Exception {
-//        when(managerDao.updateManager(NON_EXISTING_ID, testManager)).thenThrow(FailedOperationException.class);
+        doThrow(FailedOperationException.class).when(managerDao).updateManager(NON_EXISTING_ID, testManager);
         managerDao.updateManager(NON_EXISTING_ID, testManager);
     }
 
-    @Ignore
     @SuppressWarnings("unchecked")
     @Test(expected = FailedOperationException.class)
     public void deleteManagerById_DAOError() throws Exception {
-//        when(managerDao.deleteManagerById(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
+        doThrow(FailedOperationException.class).when(managerDao).deleteManagerById(NON_EXISTING_ID);
         managerDao.deleteManagerById(NON_EXISTING_ID);
     }
 
-    @Ignore
     @Test(expected = FailedOperationException.class)
     public void deleteAll_DAOError() throws Exception {
-//        when(managerDao.deleteAll()).thenThrow(FailedOperationException.class);
+        doThrow(FailedOperationException.class).when(managerDao).deleteAll();
         managerDao.deleteAll();
     }
 }
