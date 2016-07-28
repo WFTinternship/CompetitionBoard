@@ -45,7 +45,13 @@ public class MatchServiceImpl implements MatchService {
      */
     @Override
     public Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException {
-        return null;
+        try {
+            return matchDao.getMatchByGroupId(id);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Match instance with id=%s not found", id));
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     /**
@@ -53,7 +59,11 @@ public class MatchServiceImpl implements MatchService {
      */
     @Override
     public List<Match> getMatchListByGroup(int id) throws FailedOperationException {
-        return null;
+        try {
+            return matchDao.getMatchListByGroup(id);
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     /**
