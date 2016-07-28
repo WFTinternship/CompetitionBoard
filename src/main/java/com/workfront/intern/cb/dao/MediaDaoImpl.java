@@ -80,7 +80,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Updates photo
      */
     @Override
-    public void updatePhoto(int id, Media media) throws FailedOperationException {
+    public void updatePhoto(int id, Media media) throws ObjectNotFoundException, FailedOperationException {
         String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
         updateSpecificMedia(id, sql, media);
     }
@@ -89,7 +89,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
      * Updates video
      */
     @Override
-    public void updateVideo(int id, Media media) throws FailedOperationException {
+    public void updateVideo(int id, Media media) throws ObjectNotFoundException, FailedOperationException {
         String sql = "UPDATE media SET photo=?, video=?, tournament_id=?, manager_id=? WHERE media_id=?";
         updateSpecificMedia(id, sql, media);
     }
@@ -241,7 +241,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
     /**
      * Updates media(photo or video) use specific sql query
      */
-    private Media updateSpecificMedia(int id, String sql, Media media) throws FailedOperationException {
+    private Media updateSpecificMedia(int id, String sql, Media media) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -257,7 +257,10 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             ps.setInt(5, id);
 
             // Execute statement
-            ps.executeUpdate();
+            int rows = ps.executeUpdate();
+            if (rows == 0) {
+                throw new ObjectNotFoundException(String.format("Media with id[%d] not found", id));
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);

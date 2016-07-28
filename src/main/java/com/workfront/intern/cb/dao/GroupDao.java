@@ -21,10 +21,9 @@ public interface GroupDao {
     List<Participant> getGroupParticipants(int groupId) throws FailedOperationException;
 
     // UPDATE
-    void updateGroup(int id, Group group) throws FailedOperationException;
+    void updateGroup(int id, Group group) throws ObjectNotFoundException, FailedOperationException;
 
     // DELETE
     void deleteGroup(int id) throws ObjectNotFoundException, FailedOperationException;
     void deleteAll() throws FailedOperationException;
-
 }

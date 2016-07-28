@@ -86,6 +86,8 @@ public class MediaServiceImpl implements MediaService {
             mediaDao.updatePhoto(id, media);
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Photo media with id=%s not found", id));
         }
     }
 
@@ -98,6 +100,8 @@ public class MediaServiceImpl implements MediaService {
             mediaDao.updateVideo(id, media);
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Video media with id=%s not found", id));
         }
     }
 
@@ -108,10 +112,10 @@ public class MediaServiceImpl implements MediaService {
     public void deleteMediaById(int id) {
         try {
             mediaDao.deleteMediaById(id);
-        } catch (ObjectNotFoundException e) {
-            throw new RuntimeException(String.format("Media instance with id=%s not found", id));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Media instance with id=%s not found", id));
         }
     }
 

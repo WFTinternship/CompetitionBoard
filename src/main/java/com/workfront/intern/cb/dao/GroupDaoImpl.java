@@ -168,7 +168,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      * Updates group
      */
     @Override
-    public void updateGroup(int id, Group group) throws FailedOperationException {
+    public void updateGroup(int id, Group group) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -186,7 +186,10 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             ps.setInt(5, id);
 
             // Execute statement
-            ps.executeUpdate();
+            int rows = ps.executeUpdate();
+            if (rows == 0) {
+                throw new ObjectNotFoundException(String.format("Group with id[%d] not found", id));
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);

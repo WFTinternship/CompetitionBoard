@@ -90,7 +90,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets all tournament by manager id
      */
     @Override
-    public List<Tournament> getTournamentListByManager(int id) throws FailedOperationException, ObjectNotFoundException {
+    public List<Tournament> getTournamentListByManager(int id) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

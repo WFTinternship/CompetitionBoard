@@ -9,17 +9,17 @@ import java.util.List;
 public interface MatchService {
 
     // CREATE
-    Match addMatch(Match match) throws FailedOperationException;
+    Match addMatch(Match match);
 
     // READ
-    Match getMatchById(int id) throws FailedOperationException, ObjectNotFoundException;
-    Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException;
-    List<Match> getMatchListByGroup(int id) throws FailedOperationException;
+    Match getMatchById(int id);
+    Match getMatchByGroupId(int id);
+    List<Match> getMatchListByGroup(int id);
 
     // UPDATE
-    void updateMatch(int id, Match match) throws FailedOperationException;
+    void updateMatch(int id, Match match);
 
     // DELETE
-    void deleteMatch(int id) throws ObjectNotFoundException, FailedOperationException;
-    void deleteAll() throws FailedOperationException;
+    void deleteMatch(int id);
+    void deleteAll();
 }

@@ -49,8 +49,6 @@ public class TournamentServiceImpl implements TournamentService {
     public List<Tournament> getTournamentListByManager(int id) {
         try {
             return tournamentDao.getTournamentListByManager(id);
-        } catch (ObjectNotFoundException e) {
-            throw new RuntimeException("Tournament list by manager id not found");
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -75,6 +73,8 @@ public class TournamentServiceImpl implements TournamentService {
     public void updateTournament(int id, Tournament tournament) {
         try {
             tournamentDao.updateTournament(id, tournament);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException("Tournament instance with id=%s not updated");
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

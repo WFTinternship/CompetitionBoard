@@ -17,7 +17,7 @@ public class MatchServiceImpl implements MatchService {
      * Adds new match in db
      */
     @Override
-    public Match addMatch(Match match) throws FailedOperationException {
+    public Match addMatch(Match match) {
         try {
             return matchDao.addMatch(match);
         } catch (FailedOperationException e) {
@@ -30,7 +30,7 @@ public class MatchServiceImpl implements MatchService {
      * Returns match by id
      */
     @Override
-    public Match getMatchById(int id) throws FailedOperationException, ObjectNotFoundException {
+    public Match getMatchById(int id) {
         try {
             return matchDao.getMatchById(id);
         } catch (ObjectNotFoundException e) {
@@ -44,7 +44,7 @@ public class MatchServiceImpl implements MatchService {
      * Gets match group by id
      */
     @Override
-    public Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException {
+    public Match getMatchByGroupId(int id) {
         try {
             return matchDao.getMatchByGroupId(id);
         } catch (ObjectNotFoundException e) {
@@ -58,7 +58,7 @@ public class MatchServiceImpl implements MatchService {
      * Returns all matches by group
      */
     @Override
-    public List<Match> getMatchListByGroup(int id) throws FailedOperationException {
+    public List<Match> getMatchListByGroup(int id) {
         try {
             return matchDao.getMatchListByGroup(id);
         } catch (FailedOperationException e) {
@@ -70,9 +70,11 @@ public class MatchServiceImpl implements MatchService {
      * Updates match in db
      */
     @Override
-    public void updateMatch(int id, Match match) throws FailedOperationException {
+    public void updateMatch(int id, Match match) {
         try {
             matchDao.updateMatch(id, match);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Match instance with id=%s not found", id));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -82,7 +84,7 @@ public class MatchServiceImpl implements MatchService {
      * Deletes match by id
      */
     @Override
-    public void deleteMatch(int id) throws ObjectNotFoundException, FailedOperationException {
+    public void deleteMatch(int id) {
         try {
             matchDao.deleteMatch(id);
         } catch (ObjectNotFoundException e) {
@@ -96,7 +98,7 @@ public class MatchServiceImpl implements MatchService {
      * Removes all matches
      */
     @Override
-    public void deleteAll() throws FailedOperationException {
+    public void deleteAll() {
         try {
             matchDao.deleteAll();
         } catch (FailedOperationException e) {

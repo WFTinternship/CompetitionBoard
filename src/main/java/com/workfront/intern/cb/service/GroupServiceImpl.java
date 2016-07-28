@@ -22,7 +22,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group addGroup(Group group) {
         try {
-          return groupDao.addGroup(group);
+            return groupDao.addGroup(group);
         } catch (FailedOperationException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage());
@@ -33,7 +33,7 @@ public class GroupServiceImpl implements GroupService {
      * Returns group by id
      */
     @Override
-    public Group getGroupById(int id)  {
+    public Group getGroupById(int id) {
         try {
             return groupDao.getGroupById(id);
         } catch (ObjectNotFoundException e) {
@@ -86,6 +86,8 @@ public class GroupServiceImpl implements GroupService {
     public void updateGroup(int id, Group group) {
         try {
             groupDao.updateGroup(id, group);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Group instance with id=%s not found", id));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

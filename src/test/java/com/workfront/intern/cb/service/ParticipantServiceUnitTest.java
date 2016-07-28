@@ -1,7 +1,6 @@
 package com.workfront.intern.cb.service;
 
-/**
- * Created by Inmelet on 7/28/2016.
- */
-public class ParticipantServiceUnitTest {
+import com.workfront.intern.cb.BaseTest;
+
+public class ParticipantServiceUnitTest extends BaseTest{
 }

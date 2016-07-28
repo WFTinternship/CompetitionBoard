@@ -94,12 +94,16 @@ public class ParticipantServiceImpl implements ParticipantService {
             try {
                 participantDao.update(new Member());
             } catch (FailedOperationException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            } catch (ObjectNotFoundException e) {
                 throw new RuntimeException("Member instance with id=%s not updated");
             }
         } else if (participant instanceof Team) {
             try {
                 participantDao.update(new Team());
             } catch (FailedOperationException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            } catch (ObjectNotFoundException e) {
                 throw new RuntimeException("Team instance with id=%s not updated");
             }
         } else {

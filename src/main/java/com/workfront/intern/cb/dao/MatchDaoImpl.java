@@ -30,7 +30,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Gets match by specific group id
      */
     @Override
-    public Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException {
+    public Match getMatchByGroupId(int id) throws ObjectNotFoundException, FailedOperationException {
         String sql = "SELECT * FROM `match` WHERE group_id=?";
         return getMatchFromSpecQuery(sql, id);
     }
@@ -106,7 +106,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
      * Updates match by id
      */
     @Override
-    public void updateMatch(int id, Match match) throws FailedOperationException {
+    public void updateMatch(int id, Match match) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -126,7 +126,10 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             ps.setInt(6, match.getMatchId());
 
             // Execute statement
-            ps.executeUpdate();
+            int rows = ps.executeUpdate();
+            if (rows == 0) {
+                throw new ObjectNotFoundException(String.format("Match with id[%d] not found", id));
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);

@@ -21,8 +21,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
     private TournamentDao tournamentDao;
     private GroupDao groupDao;
 
-    // Test helper objects
-    protected Manager testManager;
     private Tournament testTournament;
     private Group testGroup;
 
@@ -39,7 +37,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         cleanUp();
 
         // Initialize random manager instance
-        testManager = createRandomManager();
+        Manager testManager = createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
