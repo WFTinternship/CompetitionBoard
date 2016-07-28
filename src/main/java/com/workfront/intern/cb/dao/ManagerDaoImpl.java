@@ -125,7 +125,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
      * Updates existing manager in db
      */
     @Override
-    public void updateManager(int id, Manager manager) throws FailedOperationException {
+    public void updateManager(int id, Manager manager) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -138,7 +138,10 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps.setInt(2, id);
 
             // Execute statement
-            ps.executeUpdate();
+            int rows = ps.executeUpdate();
+            if (rows == 0) {
+                throw new ObjectNotFoundException(String.format("Manager instance with id=%d not found", id));
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);

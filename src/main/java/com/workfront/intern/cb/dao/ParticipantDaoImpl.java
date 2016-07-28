@@ -65,11 +65,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Updates specific participant - member or team
      */
     @Override
-    public void update(Participant participant) throws FailedOperationException {
+    public void update(int id, Participant participant) throws ObjectNotFoundException, FailedOperationException {
         if (participant instanceof Member) {
-            updateMember((Member) participant);
+            updateMember(id, (Member) participant);
         } else if (participant instanceof Team) {
-            updateTeam((Team) participant);
+            updateTeam(id, (Team) participant);
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -148,7 +148,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // commit transaction
             conn.commit();
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             try {
                 if (conn != null)
                     conn.rollback();
@@ -239,11 +239,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Updating specific data of member
      */
-    private Member updateMember(Member member) throws FailedOperationException {
+    private Member updateMember(int id, Member member) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
+
         String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
         String sql_member = "UPDATE member SET name=?, surname=?, position=?, email=? WHERE member_id=?";
-
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -254,7 +254,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             PreparedStatement ps_participant = conn.prepareStatement(sql_participant);
             ps_participant.setString(1, member.getAvatar());
             ps_participant.setString(2, member.getParticipantInfo());
-            ps_participant.setInt(3, member.getId());
+            ps_participant.setInt(3, id);
 
             // update base participant info
             ps_participant.executeUpdate();
@@ -267,8 +267,10 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             ps_member.setInt(5, member.getId());
 
             // update member data
-            ps_member.executeUpdate();
-
+            int rows = ps_member.executeUpdate();
+            if (rows == 0) {
+                throw new ObjectNotFoundException(String.format("Participant instance with id=%d not found", id));
+            }
             ps_participant.close();
             ps_member.close();
 
@@ -442,7 +444,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Updates specific data of team
      */
-    private Team updateTeam(Team team) throws FailedOperationException {
+    private Team updateTeam(int id, Team team) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
 
         String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
@@ -467,8 +469,10 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             ps_team.setInt(2, team.getId());
 
             // update member data
-            ps_team.executeUpdate();
-
+            int rows = ps_team.executeUpdate();
+            if (rows == 0) {
+                throw new ObjectNotFoundException(String.format("Participant instance with id=%d not found", id));
+            }
             ps_participant.close();
             ps_team.close();
 

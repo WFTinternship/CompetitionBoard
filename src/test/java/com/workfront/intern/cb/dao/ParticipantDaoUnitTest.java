@@ -59,7 +59,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
     @Test(expected = FailedOperationException.class)
     public void updateMember_dbError() throws Exception {
         Member testMember = createRandomMember();
-        participantDao.update(testMember);
+        participantDao.update(NON_EXISTING_ID, testMember);
     }
 
     @Test(expected = FailedOperationException.class)
@@ -95,7 +95,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
     @Test(expected = FailedOperationException.class)
     public void updateTeam_dbError() throws Exception {
         Team testTeam = createRandomTeam();
-        participantDao.update(testTeam);
+        participantDao.update(NON_EXISTING_ID, testTeam);
     }
 
     @Test(expected = FailedOperationException.class)

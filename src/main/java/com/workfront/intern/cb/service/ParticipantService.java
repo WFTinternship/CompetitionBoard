@@ -14,7 +14,7 @@ public interface ParticipantService {
     List<? extends Participant> getAll(Class<? extends Participant> cls);
 
     // UPDATE
-    void update(Participant participant);
+    void update(int id, Participant participant);
 
     // DELETE
     void delete(Class<? extends Participant> cls, int id);

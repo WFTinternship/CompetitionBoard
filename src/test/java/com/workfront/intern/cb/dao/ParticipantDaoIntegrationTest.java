@@ -127,7 +127,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testMember.getId();
 
         // Testing method
-        participantDao.update(testMember);
+        participantDao.update(targetId, testMember);
 
         // Initialize random manager instance
         Member member = (Member) participantDao.getOne(Member.class, targetId);
@@ -231,7 +231,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testTeam.getId();
 
         // Testing method
-        participantDao.update(testTeam);
+        participantDao.update(targetId, testTeam);
 
         // Initialize random manager instance
         Team team = (Team) participantDao.getOne(Team.class, targetId);

@@ -89,10 +89,10 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public void update(Participant participant) {
+    public void update(int id, Participant participant) {
         if (participant instanceof Member) {
             try {
-                participantDao.update(new Member());
+                participantDao.update(id, (Member) participant);
             } catch (FailedOperationException e) {
                 throw new RuntimeException(e.getMessage(), e);
             } catch (ObjectNotFoundException e) {
@@ -100,7 +100,7 @@ public class ParticipantServiceImpl implements ParticipantService {
             }
         } else if (participant instanceof Team) {
             try {
-                participantDao.update(new Team());
+                participantDao.update(id, (Team) participant);
             } catch (FailedOperationException e) {
                 throw new RuntimeException(e.getMessage(), e);
             } catch (ObjectNotFoundException e) {
