@@ -2,26 +2,26 @@ package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Participant;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
 public interface GroupService {
 
     // CREATE
-    Group addGroup(Group group) throws FailedOperationException;
+    Group addGroup(Group group);
 
     // READ
-    Group getGroupById(int id) throws ObjectNotFoundException, FailedOperationException;
-    List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException;
-    List<Group> getAllGroups() throws FailedOperationException;
-    List<Participant> getGroupParticipants(int groupId) throws FailedOperationException;
+    Group getGroupById(int id);
+    List<Group> getGroupByTournamentList(int tournamentId);
+    List<Group> getAllGroups();
+
+    //TODO implements
+    List<Participant> getGroupParticipants(int groupId);
 
     // UPDATE
-    void updateGroup(int id, Group group) throws FailedOperationException;
+    void updateGroup(int id, Group group);
 
     // DELETE
-    void deleteGroup(int id) throws ObjectNotFoundException, FailedOperationException;
-    void deleteAll() throws FailedOperationException;
+    void deleteGroup(int id);
+    void deleteAll();
 }

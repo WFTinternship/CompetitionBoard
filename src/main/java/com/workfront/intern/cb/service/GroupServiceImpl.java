@@ -20,7 +20,7 @@ public class GroupServiceImpl implements GroupService {
      * Adds new group in db
      */
     @Override
-    public Group addGroup(Group group) throws FailedOperationException {
+    public Group addGroup(Group group) {
         try {
           return groupDao.addGroup(group);
         } catch (FailedOperationException e) {
@@ -33,7 +33,7 @@ public class GroupServiceImpl implements GroupService {
      * Returns group by id
      */
     @Override
-    public Group getGroupById(int id) throws ObjectNotFoundException, FailedOperationException {
+    public Group getGroupById(int id)  {
         try {
             return groupDao.getGroupById(id);
         } catch (ObjectNotFoundException e) {
@@ -47,7 +47,7 @@ public class GroupServiceImpl implements GroupService {
      * Returns all groups by tournament id
      */
     @Override
-    public List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException {
+    public List<Group> getGroupByTournamentList(int tournamentId) {
         try {
             return groupDao.getGroupByTournamentList(tournamentId);
         } catch (FailedOperationException e) {
@@ -59,7 +59,7 @@ public class GroupServiceImpl implements GroupService {
      * Returns all groups
      */
     @Override
-    public List<Group> getAllGroups() throws FailedOperationException {
+    public List<Group> getAllGroups() {
         try {
             return groupDao.getAllGroups();
         } catch (FailedOperationException e) {
@@ -71,7 +71,7 @@ public class GroupServiceImpl implements GroupService {
      * Returns all participants groups
      */
     @Override
-    public List<Participant> getGroupParticipants(int groupId) throws FailedOperationException {
+    public List<Participant> getGroupParticipants(int groupId) {
         try {
             return groupDao.getGroupParticipants(groupId);
         } catch (FailedOperationException e) {
@@ -83,7 +83,7 @@ public class GroupServiceImpl implements GroupService {
      * Updates existing group in db
      */
     @Override
-    public void updateGroup(int id, Group group) throws FailedOperationException {
+    public void updateGroup(int id, Group group) {
         try {
             groupDao.updateGroup(id, group);
         } catch (FailedOperationException e) {
@@ -95,7 +95,7 @@ public class GroupServiceImpl implements GroupService {
      * Deletes manager by id
      */
     @Override
-    public void deleteGroup(int id) throws ObjectNotFoundException, FailedOperationException {
+    public void deleteGroup(int id) {
         try {
             groupDao.deleteGroup(id);
         } catch (ObjectNotFoundException e) {
@@ -109,7 +109,7 @@ public class GroupServiceImpl implements GroupService {
      * Removes all managers
      */
     @Override
-    public void deleteAll() throws FailedOperationException {
+    public void deleteAll() {
         try {
             groupDao.deleteAll();
         } catch (FailedOperationException e) {
