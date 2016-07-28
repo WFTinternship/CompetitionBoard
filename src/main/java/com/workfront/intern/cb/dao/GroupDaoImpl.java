@@ -158,9 +158,9 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         return groupList;
     }
 
-    //TODO
     @Override
     public List<Participant> getGroupParticipants(int groupId) throws FailedOperationException {
+        //TODO implement
         return null;
     }
 

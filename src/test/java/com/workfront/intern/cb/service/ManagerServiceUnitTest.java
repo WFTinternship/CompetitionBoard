@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unchecked")
 public class ManagerServiceUnitTest extends BaseTest {
     protected DataSource dataSource;
     private ManagerDao managerDao;
@@ -35,42 +36,36 @@ public class ManagerServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void addManager_DAOError() throws Exception {
         when(managerDao.addManager(testManager)).thenThrow(FailedOperationException.class);
         managerService.addManager(testManager);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getManagerById_DAOError() throws Exception {
         when(managerDao.getManagerById(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         managerService.getManagerById(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getManagerByLogin_DAOError() throws Exception {
         when(managerDao.getManagerByLogin(NON_EXISTING_LOGIN)).thenThrow(FailedOperationException.class);
         managerService.getManagerByLogin(NON_EXISTING_LOGIN);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getManagerList_DAOError() throws Exception {
         when(managerDao.getManagerList()).thenThrow(FailedOperationException.class);
         managerService.getManagerList();
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void updateManager_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(managerDao).updateManager(NON_EXISTING_ID, testManager);
         managerService.updateManager(NON_EXISTING_ID, testManager);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void deleteManagerById_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(managerDao).deleteManagerById(NON_EXISTING_ID);

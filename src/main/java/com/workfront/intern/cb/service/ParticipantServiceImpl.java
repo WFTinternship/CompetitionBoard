@@ -21,14 +21,14 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Participant addParticipant(Participant participant) {
         if (participant instanceof Member) {
             try {
-                return participantDao.addParticipant(new Member());
+                return participantDao.addParticipant(participant);
             } catch (FailedOperationException e) {
                 LOG.error(e.getMessage(), e);
                 throw new RuntimeException(e.getMessage());
             }
         } else if (participant instanceof Team) {
             try {
-                return participantDao.addParticipant(new Team());
+                return participantDao.addParticipant(participant);
             } catch (FailedOperationException e) {
                 LOG.error(e.getMessage(), e);
                 throw new RuntimeException(e.getMessage());
@@ -92,7 +92,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     public void update(int id, Participant participant) {
         if (participant instanceof Member) {
             try {
-                participantDao.update(id, (Member) participant);
+                participantDao.update(id, participant);
             } catch (FailedOperationException e) {
                 throw new RuntimeException(e.getMessage(), e);
             } catch (ObjectNotFoundException e) {
@@ -100,7 +100,7 @@ public class ParticipantServiceImpl implements ParticipantService {
             }
         } else if (participant instanceof Team) {
             try {
-                participantDao.update(id, (Team) participant);
+                participantDao.update(id, participant);
             } catch (FailedOperationException e) {
                 throw new RuntimeException(e.getMessage(), e);
             } catch (ObjectNotFoundException e) {

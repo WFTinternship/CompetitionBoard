@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unchecked")
 public class TournamentServiceUnitTest extends BaseTest {
     protected DataSource dataSource;
     private TournamentDao tournamentDao;
@@ -35,28 +36,24 @@ public class TournamentServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void addTournament_DAOError() throws Exception {
         when(tournamentDao.addTournament(testTournament)).thenThrow(FailedOperationException.class);
         tournamentService.addTournament(testTournament);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getTournamentById_DAOError() throws Exception {
         when(tournamentDao.getTournamentById(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         tournamentService.getTournamentById(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getTournamentListByManager_DAOError() throws Exception {
         when(tournamentDao.getTournamentListByManager(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         tournamentService.getTournamentListByManager(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getTournamentList_DAOError() throws Exception {
         when(tournamentDao.getTournamentList()).thenThrow(FailedOperationException.class);
@@ -70,14 +67,12 @@ public class TournamentServiceUnitTest extends BaseTest {
         tournamentService.updateTournament(NON_EXISTING_ID, testTournament);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void deleteTournamentById_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(tournamentDao).deleteTournamentById(NON_EXISTING_ID);
         tournamentService.deleteTournamentById(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void deleteAll_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(tournamentDao).deleteAll();

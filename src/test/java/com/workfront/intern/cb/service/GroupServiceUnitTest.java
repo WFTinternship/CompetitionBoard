@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unchecked")
 public class GroupServiceUnitTest extends BaseTest {
     protected DataSource dataSource;
     private GroupDao groupDao;
@@ -35,42 +36,36 @@ public class GroupServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void addGroup_DAOError() throws Exception {
         when(groupDao.addGroup(testGroup)).thenThrow(FailedOperationException.class);
         groupService.addGroup(testGroup);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getGroupById_DAOError() throws Exception {
         when(groupDao.getGroupById(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         groupService.getGroupById(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getGroupByTournamentList_DAOError() throws Exception {
         when(groupDao.getGroupByTournamentList(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         groupService.getGroupByTournamentList(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getAllGroups_DAOError() throws Exception {
         when(groupDao.getAllGroups()).thenThrow(FailedOperationException.class);
         groupService.getAllGroups();
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void updateGroup_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(groupDao).updateGroup(NON_EXISTING_ID, testGroup);
         groupService.updateGroup(NON_EXISTING_ID, testGroup);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void deleteGroupById_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(groupDao).deleteGroup(NON_EXISTING_ID);

@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 public class ParticipantDaoUnitTest extends BaseTest {
     DataSource dataSource;
-    ParticipantDao participantDao;
+    private ParticipantDao participantDao;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -37,7 +37,6 @@ public class ParticipantDaoUnitTest extends BaseTest {
     @After
     public void afterTest() {
     }
-
 
     // region <MEMBER>
 
@@ -74,7 +73,6 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     // endregion
 
-
     // region <TEAM>
 
     @Test(expected = FailedOperationException.class)
@@ -107,7 +105,6 @@ public class ParticipantDaoUnitTest extends BaseTest {
     public void deleteAllTeam() throws Exception {
         participantDao.deleteAll(Team.class);
     }
-
 
     // endregion
 }

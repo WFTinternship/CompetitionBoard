@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unchecked")
 public class MatchServiceUnitTest extends BaseTest {
     protected DataSource dataSource;
     private MatchDao matchDao;
@@ -35,42 +36,36 @@ public class MatchServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void addMatch_DAOError() throws Exception {
         when(matchDao.addMatch(testMatch)).thenThrow(FailedOperationException.class);
         matchService.addMatch(testMatch);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getMatchById_DAOError() throws Exception {
         when(matchDao.getMatchById(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         matchService.getMatchById(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getMatchByGroupId_DAOError() throws Exception {
         when(matchDao.getMatchByGroupId(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         matchService.getMatchByGroupId(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void getMatchListByGroup_DAOError() throws Exception {
         when(matchDao.getMatchListByGroup(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         matchService.getMatchListByGroup(NON_EXISTING_ID);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void updateMatch_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(matchDao).updateMatch(NON_EXISTING_ID, testMatch);
         matchService.updateMatch(NON_EXISTING_ID, testMatch);
     }
 
-    @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void deleteMatchById_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(matchDao).deleteMatch(NON_EXISTING_ID);
