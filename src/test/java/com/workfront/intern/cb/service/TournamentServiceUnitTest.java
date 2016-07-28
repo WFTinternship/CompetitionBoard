@@ -3,7 +3,6 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.dao.ManagerDaoImpl;
 import com.workfront.intern.cb.dao.TournamentDao;
 import com.workfront.intern.cb.dao.TournamentDaoImpl;
 import org.junit.After;
@@ -67,19 +66,21 @@ public class TournamentServiceUnitTest extends BaseTest {
     @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void updateTournament_DAOError() throws Exception {
-//        doThrow(FailedOperationException.class).when(tournamentDao.updateTournament(NON_EXISTING_ID, testTournament));
-//        tournamentService.updateTournament(NON_EXISTING_ID, testTournament);
-
-
+        doThrow(FailedOperationException.class).when(tournamentDao).updateTournament(NON_EXISTING_ID, testTournament);
+        tournamentService.updateTournament(NON_EXISTING_ID, testTournament);
     }
 
     @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void deleteTournamentById_DAOError() throws Exception {
+        doThrow(FailedOperationException.class).when(tournamentDao).deleteTournamentById(NON_EXISTING_ID);
+        tournamentService.deleteTournamentById(NON_EXISTING_ID);
     }
 
     @SuppressWarnings("unchecked")
     @Test(expected = RuntimeException.class)
     public void deleteAll_DAOError() throws Exception {
+        doThrow(FailedOperationException.class).when(tournamentDao).deleteAll();
+        tournamentService.deleteAll();
     }
 }
