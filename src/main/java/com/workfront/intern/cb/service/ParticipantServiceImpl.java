@@ -59,7 +59,7 @@ public class ParticipantServiceImpl implements ParticipantService {
                     throw new RuntimeException(e.getMessage());
                 } catch (ObjectNotFoundException e) {
                     LOG.error(e.getMessage(), e);
-                    throw new RuntimeException(String.format("Member instance with id=%s not found", id));
+                    throw new RuntimeException(String.format("Team instance with id=%s not found", id));
                 }
             } else {
                 throw new RuntimeException("Unknown participant type");
