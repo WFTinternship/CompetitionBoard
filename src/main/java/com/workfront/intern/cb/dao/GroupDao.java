@@ -16,6 +16,8 @@ public interface GroupDao {
     Group getGroupById(int id) throws ObjectNotFoundException, FailedOperationException;
     List<Group> getGroupByTournamentList(int tournamentId) throws FailedOperationException;
     List<Group> getAllGroups() throws FailedOperationException;
+
+    //TODO implement
     List<Participant> getGroupParticipants(int groupId) throws FailedOperationException;
 
     // UPDATE

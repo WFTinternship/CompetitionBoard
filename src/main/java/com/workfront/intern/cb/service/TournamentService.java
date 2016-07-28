@@ -9,17 +9,17 @@ import java.util.List;
 public interface TournamentService {
 
     // CREATE
-    Tournament addTournament(Tournament tournament) throws FailedOperationException;
+    Tournament addTournament(Tournament tournament);
 
     // READ
-    Tournament getTournamentById(int id) throws ObjectNotFoundException, FailedOperationException;
-    List<Tournament> getTournamentListByManager(int id) throws FailedOperationException;
-    List<Tournament> getTournamentList() throws FailedOperationException;
+    Tournament getTournamentById(int id);
+    List<Tournament> getTournamentListByManager(int id);
+    List<Tournament> getTournamentList();
 
     // UPDATE
-    void updateTournament(int id, Tournament tournament) throws FailedOperationException;
+    void updateTournament(int id, Tournament tournament);
 
     // DELETE
-    void deleteTournamentById(int id) throws ObjectNotFoundException, FailedOperationException;
-    void deleteAll() throws FailedOperationException;
+    void deleteTournamentById(int id);
+    void deleteAll();
 }

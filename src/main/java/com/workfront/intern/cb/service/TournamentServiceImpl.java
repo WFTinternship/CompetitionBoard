@@ -19,7 +19,7 @@ public class TournamentServiceImpl implements TournamentService {
      * Adds new tournament in db
      */
     @Override
-    public Tournament addTournament(Tournament tournament) throws FailedOperationException {
+    public Tournament addTournament(Tournament tournament) {
         try {
             return tournamentDao.addTournament(tournament);
         } catch (FailedOperationException e) {
@@ -60,7 +60,7 @@ public class TournamentServiceImpl implements TournamentService {
      * Returns all tournament
      */
     @Override
-    public List<Tournament> getTournamentList() throws FailedOperationException {
+    public List<Tournament> getTournamentList() {
         try {
             return tournamentDao.getTournamentList();
         } catch (FailedOperationException e) {
@@ -72,7 +72,7 @@ public class TournamentServiceImpl implements TournamentService {
      * Updates existing tournament in db
      */
     @Override
-    public void updateTournament(int id, Tournament tournament) throws FailedOperationException {
+    public void updateTournament(int id, Tournament tournament) {
         try {
             tournamentDao.updateTournament(id, tournament);
         } catch (FailedOperationException e) {
@@ -84,7 +84,7 @@ public class TournamentServiceImpl implements TournamentService {
      * Deletes tournament by id
      */
     @Override
-    public void deleteTournamentById(int id) throws ObjectNotFoundException, FailedOperationException {
+    public void deleteTournamentById(int id) {
         try {
             tournamentDao.deleteTournamentById(id);
         } catch (ObjectNotFoundException e) {
@@ -98,7 +98,7 @@ public class TournamentServiceImpl implements TournamentService {
      * Removes all tournamentS
      */
     @Override
-    public void deleteAll() throws FailedOperationException {
+    public void deleteAll() {
         try {
             tournamentDao.deleteAll();
         } catch (FailedOperationException e) {

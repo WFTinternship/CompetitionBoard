@@ -1,24 +1,22 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Participant;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
 public interface ParticipantService {
 
     // CREATE
-    Participant addParticipant(Participant participant) throws FailedOperationException;
+    Participant addParticipant(Participant participant);
 
     // READ
-    Participant getOne(Class<? extends Participant> cls, int id) throws FailedOperationException, ObjectNotFoundException;
-    List<? extends Participant> getAll(Class<? extends Participant> cls) throws FailedOperationException;
+    Participant getOne(Class<? extends Participant> cls, int id);
+    List<? extends Participant> getAll(Class<? extends Participant> cls);
 
     // UPDATE
-    void update(Participant participant) throws FailedOperationException;
+    void update(Participant participant);
 
     // DELETE
-    void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException, FailedOperationException;
-    void deleteAll(Class<? extends Participant> cls) throws FailedOperationException;
+    void delete(Class<? extends Participant> cls, int id);
+    void deleteAll(Class<? extends Participant> cls);
 }

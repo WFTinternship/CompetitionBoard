@@ -17,37 +17,30 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     private ParticipantDao participantDao = new ParticipantDaoImpl(DBManager.getDataSource());
 
-    /**
-     * Adds specific participant: member or team
-     */
+    // region <MEMBER>
+
     @Override
     public Participant addParticipant(Participant participant) throws FailedOperationException {
         if (participant instanceof Member) {
-            return addMember((Member) participant);
+            return participantDao.addParticipant(new Member());
         } else if (participant instanceof Team) {
-            return addTeam((Team) participant);
+            return participantDao.addParticipant(new Team());
         } else {
             throw new RuntimeException("Unknown participant type");
         }
     }
 
-    /**
-     * Gets specific participant - member or team, by id:
-     */
     @Override
     public Participant getOne(Class<? extends Participant> cls, int id) throws FailedOperationException, ObjectNotFoundException {
         if (cls.equals(Member.class)) {
-            return getMemberById(id);
+            return participantDao.getOne(Member.class, id);
         } else if (cls.equals(Team.class)) {
-            return getTeamById(id);
+            return participantDao.getOne(Team.class, id);
         } else {
             throw new RuntimeException("Unknown participant type");
         }
     }
 
-    /**
-     * Gets specific participant list - memberList or teamList
-     */
     @Override
     public List<? extends Participant> getAll(Class<? extends Participant> cls) throws FailedOperationException {
         if (cls.equals(Member.class)) {
@@ -56,12 +49,8 @@ public class ParticipantServiceImpl implements ParticipantService {
             return getTeamList();
         } else {
             throw new RuntimeException("Unknown participant type");
-        }
-    }
+        }    }
 
-    /**
-     * Updates specific participant - member or team
-     */
     @Override
     public void update(Participant participant) throws FailedOperationException {
         if (participant instanceof Member) {
@@ -73,9 +62,6 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
     }
 
-    /**
-     * Deletes specific participant - member or team, by id:
-     */
     @Override
     public void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException, FailedOperationException {
         if (cls.equals(Member.class)) {
@@ -87,9 +73,6 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
     }
 
-    /**
-     * Deletes all specific participant - member or team, by id:
-     */
     @Override
     public void deleteAll(Class<? extends Participant> cls) throws FailedOperationException {
         if (cls.equals(Member.class)) {
@@ -101,8 +84,6 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
     }
 
-
-    // region <MEMBER>
 
     /**
      * Adds member to db
@@ -194,6 +175,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private void deleteAllTeams() throws FailedOperationException {
         participantDao.deleteAll(Team.class);
     }
+
 
     // endregion
 }
