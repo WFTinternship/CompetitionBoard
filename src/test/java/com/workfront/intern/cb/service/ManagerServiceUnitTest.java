@@ -36,6 +36,8 @@ public class ManagerServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
+    // region <TEST CASES>
+
     @Test(expected = RuntimeException.class)
     public void addManager_DAOError() throws Exception {
         when(managerDao.addManager(testManager)).thenThrow(FailedOperationException.class);
@@ -77,4 +79,6 @@ public class ManagerServiceUnitTest extends BaseTest {
         doThrow(FailedOperationException.class).when(managerDao).deleteAll();
         managerService.deleteAll();
     }
+
+    // endregion
 }
