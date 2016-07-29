@@ -11,8 +11,6 @@ public class BaseTest {
 
     protected final String NON_EXISTING_LOGIN = "r";
 
-    protected final String GENERIC_PASSWORD = "123456";
-
     protected final String MESSAGE_TEST_COMPLETED_OK = "Test completed successfully!";
 
     protected final String MESSAGE_TEST_COMPLETED_ERROR = "Test completed with errors :(";
@@ -20,11 +18,11 @@ public class BaseTest {
     protected static Random random = new Random();
 
     /**
-     * Creates manager
+     * Creates random manager
      */
     protected static Manager createRandomManager() {
-        String managerLoginRandom = randomStringGenerate();
-        String managerPassword = randomStringGenerate(10);
+        String managerLoginRandom = generateRandomString();
+        String managerPassword = generateRandomString(10);
 
         Manager testManager = new Manager();
         testManager.setLogin(managerLoginRandom);
@@ -34,7 +32,7 @@ public class BaseTest {
     }
 
     /**
-     * Creates tournament
+     * Creates random tournament
      */
     protected static Tournament createRandomTournament() {
         Tournament testTournament = new Tournament();
@@ -60,62 +58,62 @@ public class BaseTest {
     }
 
     /**
-     * Creates member
+     * Creates random member
      */
     protected static Member createRandomMember() {
         Member testMember = new Member();
-        testMember.setAvatar(randomStringGenerate(10));
-        testMember.setParticipantInfo(randomStringGenerate(10));
-        testMember.setName(randomStringGenerate(10));
-        testMember.setSurName(randomStringGenerate(5));
-        testMember.setEmail(randomStringGenerate(10) + "@gmail.com");
-        testMember.setPosition(randomStringGenerate(5));
+        testMember.setAvatar(generateRandomString(10));
+        testMember.setParticipantInfo(generateRandomString(10));
+        testMember.setName(generateRandomString(10));
+        testMember.setSurName(generateRandomString(5));
+        testMember.setEmail(generateRandomString(10) + "@gmail.com");
+        testMember.setPosition(generateRandomString(5));
 
         return testMember;
     }
 
     /**
-     * Creates team
+     * Creates random team
      */
     protected static Team createRandomTeam() {
         Team testTeam = new Team();
-        testTeam.setAvatar(randomStringGenerate(10));
-        testTeam.setParticipantInfo(randomStringGenerate(50));
-        testTeam.setTeamName(randomStringGenerate(10));
+        testTeam.setAvatar(generateRandomString(10));
+        testTeam.setParticipantInfo(generateRandomString(50));
+        testTeam.setTeamName(generateRandomString(10));
 
         return testTeam;
     }
 
     /**
-     * Creates media photo
+     * Creates random photo media
      */
     protected static Media createRandomPhotoMedia() {
         Media media = new Media();
-        media.setPhoto("photo_");
+        media.setPhoto("https://drive.google.com/drive/my-drive/photo" + generateRandomString() + ".jpg");
         media.setVideo(null);
 
         return media;
     }
 
     /**
-     * Creates media video
+     * Creates random video media
      */
     protected static Media createRandomVideoMedia() {
         Media media = new Media();
         media.setPhoto(null);
-        media.setVideo("video_");
+        media.setVideo("https://drive.google.com/drive/my-drive/video" + generateRandomString() + ".mp4");
 
         return media;
     }
 
     /**
-     * Creates match
+     * Creates random match
      */
     protected static Match createRandomMatch() {
-        int participantOneId = 1;
-        int participantTwoId = 2;
-        int scoreParticipantOne = 10;
-        int scoreParticipantTwo = 20;
+        int participantOneId = randomIntGenerate();
+        int participantTwoId = randomIntGenerate();
+        int scoreParticipantOne = randomIntGenerate();
+        int scoreParticipantTwo = randomIntGenerate();
 
         Match match = new Match();
         match.setParticipantOneId(participantOneId);
@@ -127,12 +125,12 @@ public class BaseTest {
     }
 
     /**
-     * Creates group
+     * Creates random group
      */
     protected static Group createRandomGroup() {
-        int participantsCount = 30;
-        int round = 5;
-        int nextRoundParticipants = 30;
+        int participantsCount = randomIntGenerate();
+        int round = randomIntGenerate();
+        int nextRoundParticipants = randomIntGenerate();
 
         Group group = new Group();
         group.setParticipantsCount(participantsCount);
@@ -145,7 +143,7 @@ public class BaseTest {
     /**
      * Generates random string of different length
      */
-    private static String randomStringGenerate(int length) {
+    private static String generateRandomString(int length) {
         int smallCaseLeft = 97; // letter 'a'
         int smallCaseRight = 122; // letter 'z'
 
@@ -160,7 +158,14 @@ public class BaseTest {
     /**
      * Generates random string of concrete length(5 symbols)
      */
-    private static String randomStringGenerate(){
-        return randomStringGenerate(5);
+    private static String generateRandomString() {
+        return generateRandomString(5);
+    }
+
+    /**
+     * Generates random int
+     */
+    private static int randomIntGenerate() {
+        return (int) (1 + Math.random() * 30);
     }
 }
