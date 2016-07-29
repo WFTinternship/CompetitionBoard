@@ -23,8 +23,8 @@ public class BaseTest {
      * Creates manager
      */
     protected static Manager createRandomManager() {
-        String managerLoginRandom = "user_" + System.currentTimeMillis();
-        String managerPassword = "123456";
+        String managerLoginRandom = randomStringGenerate();
+        String managerPassword = randomStringGenerate();
 
         Manager testManager = new Manager();
         testManager.setLogin(managerLoginRandom);
@@ -64,12 +64,12 @@ public class BaseTest {
      */
     protected static Member createRandomMember() {
         Member testMember = new Member();
-        testMember.setAvatar("avatar");
-        testMember.setParticipantInfo("bla bla bla");
-        testMember.setName("name");
-        testMember.setSurName("surname");
-        testMember.setEmail("email");
-        testMember.setPosition("developer");
+        testMember.setAvatar(randomStringGenerate());
+        testMember.setParticipantInfo(randomStringGenerate());
+        testMember.setName(randomStringGenerate());
+        testMember.setSurName(randomStringGenerate());
+        testMember.setEmail(randomStringGenerate());
+        testMember.setPosition(randomStringGenerate());
 
         return testMember;
     }
@@ -140,5 +140,22 @@ public class BaseTest {
         group.setNextRoundParticipnats(nextRoundParticipants);
 
         return group;
+    }
+    private static String randomStringGenerate() {
+        // letter 'a'
+        int smallCaseLeft = 97;
+
+        // letter 'z'
+        int smallCaseRight = 122;
+
+        int generateStringLength = 10;
+
+        StringBuilder sb = new StringBuilder(generateStringLength);
+        for (int i = 0; i < generateStringLength; i++) {
+            int randomLimitedInt = smallCaseLeft + (int) (new Random().nextFloat() * (smallCaseRight - smallCaseLeft));
+            sb.append((char) randomLimitedInt);
+        }
+
+        return sb.toString();
     }
 }
