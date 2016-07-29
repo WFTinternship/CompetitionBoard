@@ -3,7 +3,6 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;

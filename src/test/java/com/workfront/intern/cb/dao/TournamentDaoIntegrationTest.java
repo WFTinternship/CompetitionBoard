@@ -64,6 +64,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         managerDao.deleteAll();
     }
 
+    // region <TEST CASES>
+
     @Test(expected = ObjectNotFoundException.class)
     public void getTournamentById_notFound() throws Exception {
         // Testing method
@@ -228,4 +230,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
         assertEquals(0, tournamentList.size());
     }
+
+    // endregion
 }
