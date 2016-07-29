@@ -3,12 +3,14 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class ManagerServiceIntegrationTest extends BaseTest {
@@ -51,9 +53,13 @@ public class ManagerServiceIntegrationTest extends BaseTest {
     public void getManagerById_notFound() throws Exception {
     }
 
-    @Ignore
     @Test
     public void getManagerById_found() throws Exception {
+        int targetId = testManager.getId();
+
+        // Testing method
+        Manager manager = managerService.getManagerById(targetId);
+        assertNotNull(manager);
     }
 
     @Ignore
