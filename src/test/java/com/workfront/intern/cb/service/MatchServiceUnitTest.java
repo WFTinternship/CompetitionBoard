@@ -14,6 +14,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 import javax.sql.DataSource;
 
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
@@ -36,10 +37,18 @@ public class MatchServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
+    // region <TEST CASES>
+
     @Test(expected = RuntimeException.class)
     public void addMatch_DAOError() throws Exception {
         when(matchDao.addMatch(testMatch)).thenThrow(FailedOperationException.class);
         matchService.addMatch(testMatch);
+    }
+
+    @Test()
+    public void addMatch_DAOSuccess() throws Exception {
+        matchService.addMatch(testMatch);
+        verify(matchDao).addMatch(testMatch);
     }
 
     @Test(expected = RuntimeException.class)
@@ -48,10 +57,22 @@ public class MatchServiceUnitTest extends BaseTest {
         matchService.getMatchById(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void getMatchById_DAOSuccess() throws Exception {
+        matchService.getMatchById(NON_EXISTING_ID);
+        verify(matchDao).getMatchById(NON_EXISTING_ID);
+    }
+
     @Test(expected = RuntimeException.class)
     public void getMatchByGroupId_DAOError() throws Exception {
         when(matchDao.getMatchByGroupId(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         matchService.getMatchByGroupId(NON_EXISTING_ID);
+    }
+
+    @Test()
+    public void getMatchByGroupId_DAOSuccess() throws Exception {
+        matchService.getMatchByGroupId(NON_EXISTING_ID);
+        verify(matchDao).getMatchByGroupId(NON_EXISTING_ID);
     }
 
     @Test(expected = RuntimeException.class)
@@ -60,10 +81,22 @@ public class MatchServiceUnitTest extends BaseTest {
         matchService.getMatchListByGroup(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void getMatchListByGroup_DAOSuccess() throws Exception {
+        matchService.getMatchListByGroup(NON_EXISTING_ID);
+        verify(matchDao).getMatchListByGroup(NON_EXISTING_ID);
+    }
+
     @Test(expected = RuntimeException.class)
     public void updateMatch_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(matchDao).updateMatch(NON_EXISTING_ID, testMatch);
         matchService.updateMatch(NON_EXISTING_ID, testMatch);
+    }
+
+    @Test()
+    public void updateMatch_DAOSuccess() throws Exception {
+        matchService.updateMatch(NON_EXISTING_ID, testMatch);
+        verify(matchDao).updateMatch(NON_EXISTING_ID, testMatch);
     }
 
     @Test(expected = RuntimeException.class)
@@ -72,9 +105,23 @@ public class MatchServiceUnitTest extends BaseTest {
         matchService.deleteMatch(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void deleteMatchById_DAOSuccess() throws Exception {
+        matchService.deleteMatch(NON_EXISTING_ID);
+        verify(matchDao).deleteMatch(NON_EXISTING_ID);
+    }
+
     @Test(expected = RuntimeException.class)
     public void deleteAll_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(matchDao).deleteAll();
         matchService.deleteAll();
     }
+
+    @Test()
+    public void deleteAll_DAOSuccess() throws Exception {
+        matchService.deleteAll();
+        verify(matchDao).deleteAll();
+    }
+
+    // endregion
 }
