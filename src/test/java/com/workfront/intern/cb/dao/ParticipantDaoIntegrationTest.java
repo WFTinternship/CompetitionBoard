@@ -85,7 +85,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testMember.getId();
 
         // Testing method
-        participantDao.delete(Member.class, targetId);
+        participantDao.delete(targetId);
 
         // Testing method
         List<Member> memberList = (List<Member>) participantDao.getAll(Member.class);
@@ -143,7 +143,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     @Test(expected = ObjectNotFoundException.class)
     public void deleteMember_notFound() throws Exception {
         // Testing method
-        participantDao.delete(Member.class, NON_EXISTING_ID);
+        participantDao.delete(NON_EXISTING_ID);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testMember.getId();
 
         // Testing method
-        participantDao.delete(Member.class, targetId);
+        participantDao.delete(targetId);
     }
 
     @Test
@@ -191,7 +191,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testTeam.getId();
 
         // Testing method
-        participantDao.delete(Team.class, targetId);
+        participantDao.delete(targetId);
 
         // Testing method
         List<Team> teamList = (List<Team>) participantDao.getAll(Team.class);
@@ -246,7 +246,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     @Test(expected = ObjectNotFoundException.class)
     public void deleteTeam_notFound() throws Exception {
         // Testing method
-        participantDao.delete(Member.class, NON_EXISTING_ID);
+        participantDao.delete(NON_EXISTING_ID);
     }
 
     @Test
@@ -254,7 +254,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testTeam.getId();
 
         // Testing method
-        participantDao.delete(Team.class, targetId);
+        participantDao.delete(targetId);
     }
 
     @Test

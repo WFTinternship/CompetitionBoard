@@ -100,13 +100,9 @@ public class ParticipantServiceImpl implements ParticipantService {
      * Deletes specific participant - member or team, by id:
      */
     @Override
-    public void delete(Class<? extends Participant> cls, int id) {
+    public void delete(int id) {
         try {
-            if (cls.equals(Member.class)) {
-                participantDao.delete(Member.class, id);
-            } else {
-                participantDao.delete(Team.class, id);
-            }
+            participantDao.delete(id);
         } catch (ObjectNotFoundException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(String.format("Participant instance with id=%s not found", id));
@@ -114,8 +110,12 @@ public class ParticipantServiceImpl implements ParticipantService {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage());
         }
+
     }
 
+    /**
+     * Deletes all specific participants - member or team, by id:
+     */
     @Override
     public void deleteAll(Class<? extends Participant> cls) {
 

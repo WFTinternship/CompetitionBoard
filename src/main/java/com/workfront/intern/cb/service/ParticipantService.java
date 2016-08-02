@@ -17,6 +17,7 @@ public interface ParticipantService {
     void update(int id, Participant participant);
 
     // DELETE
-    void delete(Class<? extends Participant> cls, int id);
+//    void delete(Class<? extends Participant> cls, int id);
+    void delete(int id);
     void deleteAll(Class<? extends Participant> cls);
 }

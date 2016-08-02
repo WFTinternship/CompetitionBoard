@@ -63,7 +63,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void deleteMember_dbError() throws Exception {
-        participantDao.delete(Member.class, NON_EXISTING_ID);
+        participantDao.delete(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
@@ -98,7 +98,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void deleteTeam_dbError() throws Exception {
-        participantDao.delete(Team.class, NON_EXISTING_ID);
+        participantDao.delete(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)

@@ -19,6 +19,6 @@ public interface ParticipantDao {
     void update(int id, Participant participant) throws ObjectNotFoundException, FailedOperationException;
 
     // DELETE
-    void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException, FailedOperationException;
+    void delete(int id) throws ObjectNotFoundException, FailedOperationException;
     void deleteAll(Class<? extends Participant> cls) throws FailedOperationException;
 }

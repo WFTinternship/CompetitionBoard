@@ -79,14 +79,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Deletes specific participant - member or team, by id:
      */
     @Override
-    public void delete(Class<? extends Participant> cls, int id) throws ObjectNotFoundException, FailedOperationException {
-        if (cls.equals(Member.class)) {
-            deleteMember(id);
-        } else if (cls.equals(Team.class)) {
-            deleteTeam(id);
-        } else {
-            throw new RuntimeException("Unknown participant type");
-        }
+    public void delete(int id) throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM participant WHERE participant_id=?";
+        deleteEntry(sql, id);
     }
 
     /**
@@ -299,14 +294,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
-     * Deletes member by id
-     */
-    private void deleteMember(int id) throws ObjectNotFoundException, FailedOperationException {
-        String sql = "DELETE FROM participant WHERE participant_id=?";
-        deleteEntry(sql, id);
-    }
-
-    /**
      * Deletes all members
      */
     private void deleteAllMembers() throws FailedOperationException {
@@ -498,14 +485,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             }
         }
         return team;
-    }
-
-    /**
-     * Deletes team by id
-     */
-    private void deleteTeam(int id) throws ObjectNotFoundException, FailedOperationException {
-        String sql = "DELETE FROM participant WHERE participant_id=?";
-        deleteEntry(sql, id);
     }
 
     /**
