@@ -14,6 +14,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 import javax.sql.DataSource;
 
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
@@ -36,10 +37,18 @@ public class TournamentServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
+    // region <TEST CASES>
+
     @Test(expected = RuntimeException.class)
     public void addTournament_DAOError() throws Exception {
         when(tournamentDao.addTournament(testTournament)).thenThrow(FailedOperationException.class);
         tournamentService.addTournament(testTournament);
+    }
+
+    @Test()
+    public void addTournament_DAOSuccess() throws Exception {
+        tournamentService.addTournament(testTournament);
+        verify(tournamentDao).addTournament(testTournament);
     }
 
     @Test(expected = RuntimeException.class)
@@ -48,16 +57,34 @@ public class TournamentServiceUnitTest extends BaseTest {
         tournamentService.getTournamentById(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void getTournamentById_DAOSuccess() throws Exception {
+        tournamentService.getTournamentById(NON_EXISTING_ID);
+        verify(tournamentDao).getTournamentById(NON_EXISTING_ID);
+    }
+
     @Test(expected = RuntimeException.class)
     public void getTournamentListByManager_DAOError() throws Exception {
         when(tournamentDao.getTournamentListByManager(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         tournamentService.getTournamentListByManager(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void getTournamentListByManager_DAOSuccess() throws Exception {
+        tournamentService.getTournamentListByManager(NON_EXISTING_ID);
+        verify(tournamentDao).getTournamentListByManager(NON_EXISTING_ID);
+    }
+
     @Test(expected = RuntimeException.class)
     public void getTournamentList_DAOError() throws Exception {
         when(tournamentDao.getTournamentList()).thenThrow(FailedOperationException.class);
         tournamentService.getTournamentList();
+    }
+
+    @Test()
+    public void getTournamentList_DAOSuccess() throws Exception {
+        tournamentService.getTournamentList();
+        verify(tournamentDao).getTournamentList();
     }
 
     @SuppressWarnings("unchecked")
@@ -67,10 +94,22 @@ public class TournamentServiceUnitTest extends BaseTest {
         tournamentService.updateTournament(NON_EXISTING_ID, testTournament);
     }
 
+    @Test()
+    public void updateTournament_DAOSuccess() throws Exception {
+        tournamentService.updateTournament(NON_EXISTING_ID, testTournament);
+        verify(tournamentDao).updateTournament(NON_EXISTING_ID, testTournament);
+    }
+
     @Test(expected = RuntimeException.class)
     public void deleteTournamentById_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(tournamentDao).deleteTournamentById(NON_EXISTING_ID);
         tournamentService.deleteTournamentById(NON_EXISTING_ID);
+    }
+
+    @Test()
+    public void deleteTournamentById_DAOSuccess() throws Exception {
+        tournamentService.deleteTournamentById(NON_EXISTING_ID);
+        verify(tournamentDao).deleteTournamentById(NON_EXISTING_ID);
     }
 
     @Test(expected = RuntimeException.class)
@@ -78,4 +117,12 @@ public class TournamentServiceUnitTest extends BaseTest {
         doThrow(FailedOperationException.class).when(tournamentDao).deleteAll();
         tournamentService.deleteAll();
     }
+
+    @Test()
+    public void deleteAll_DAOSuccess() throws Exception {
+        tournamentService.deleteAll();
+        verify(tournamentDao).deleteAll();
+    }
+
+    // endregion
 }
