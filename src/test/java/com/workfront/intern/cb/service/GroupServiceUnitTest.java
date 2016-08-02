@@ -14,6 +14,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 import javax.sql.DataSource;
 
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
@@ -36,10 +37,18 @@ public class GroupServiceUnitTest extends BaseTest {
     public void afterTest() {
     }
 
+    // region <TEST CASES>
+
     @Test(expected = RuntimeException.class)
     public void addGroup_DAOError() throws Exception {
         when(groupDao.addGroup(testGroup)).thenThrow(FailedOperationException.class);
         groupService.addGroup(testGroup);
+    }
+
+    @Test()
+    public void addGroup_DAOSuccess() throws Exception {
+        groupService.addGroup(testGroup);
+        verify(groupDao).addGroup(testGroup);
     }
 
     @Test(expected = RuntimeException.class)
@@ -48,10 +57,22 @@ public class GroupServiceUnitTest extends BaseTest {
         groupService.getGroupById(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void getGroupById_DAOSuccess() throws Exception {
+        groupService.getGroupById(NON_EXISTING_ID);
+        verify(groupDao).getGroupById(NON_EXISTING_ID);
+    }
+
     @Test(expected = RuntimeException.class)
     public void getGroupByTournamentList_DAOError() throws Exception {
         when(groupDao.getTournamentGroups(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         groupService.getTournamentGroups(NON_EXISTING_ID);
+    }
+
+    @Test()
+    public void getGroupByTournamentList_DAOsuccess() throws Exception {
+        groupService.getTournamentGroups(NON_EXISTING_ID);
+        verify(groupDao).getTournamentGroups(NON_EXISTING_ID);
     }
 
     @Test(expected = RuntimeException.class)
@@ -60,10 +81,22 @@ public class GroupServiceUnitTest extends BaseTest {
         groupService.getAllGroups();
     }
 
+    @Test()
+    public void getAllGroups_DAOSuccess() throws Exception {
+        groupService.getAllGroups();
+        verify(groupDao).getAllGroups();
+    }
+
     @Test(expected = RuntimeException.class)
     public void updateGroup_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(groupDao).updateGroup(NON_EXISTING_ID, testGroup);
         groupService.updateGroup(NON_EXISTING_ID, testGroup);
+    }
+
+    @Test()
+    public void updateGroup_DAOSuccess() throws Exception {
+        groupService.updateGroup(NON_EXISTING_ID, testGroup);
+        verify(groupDao).updateGroup(NON_EXISTING_ID, testGroup);
     }
 
     @Test(expected = RuntimeException.class)
@@ -72,9 +105,23 @@ public class GroupServiceUnitTest extends BaseTest {
         groupService.deleteGroup(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void deleteGroupById_DAOSuccess() throws Exception {
+        groupService.deleteGroup(NON_EXISTING_ID);
+        verify(groupDao).deleteGroup(NON_EXISTING_ID);
+    }
+
     @Test(expected = RuntimeException.class)
     public void deleteAll_DAOError() throws Exception {
         doThrow(FailedOperationException.class).when(groupDao).deleteAll();
         groupService.deleteAll();
     }
+
+    @Test()
+    public void deleteAll_DAOSuccess() throws Exception {
+        groupService.deleteAll();
+        verify(groupDao).deleteAll();
+    }
+
+    // endregion
 }
