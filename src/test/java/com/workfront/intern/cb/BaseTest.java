@@ -152,6 +152,7 @@ public class BaseTest {
             int randomLimitedInt = smallCaseLeft + (int) (random.nextFloat() * (smallCaseRight - smallCaseLeft));
             sb.append((char) randomLimitedInt);
         }
+
         return sb.toString();
     }
 
