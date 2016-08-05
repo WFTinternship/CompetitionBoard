@@ -2,7 +2,7 @@ package com.workfront.intern.cb.common;
 
 public abstract class Participant {
     protected int id;
-    boolean isTeam;
+    protected boolean isTeam;
     protected String avatar;
     protected String participantInfo;
 

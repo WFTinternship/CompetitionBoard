@@ -22,5 +22,4 @@ public interface MatchDao {
     // DELETE
     void deleteMatch(int id) throws ObjectNotFoundException, FailedOperationException;
     void deleteAll() throws FailedOperationException;
-
 }

@@ -9,7 +9,7 @@ public class BaseTest {
 
     protected final int NON_EXISTING_ID = 9999;
 
-    protected final String NON_EXISTING_LOGIN = "r";
+    protected final String NON_EXISTING_LOGIN = "adgjOwkJ";
 
     protected final String MESSAGE_TEST_COMPLETED_OK = "Test completed successfully!";
 

@@ -157,20 +157,19 @@ public class ParticipantServiceUnitTest extends BaseTest {
     @Test()
     public void updateTeam_DAOSuccess() throws Exception {
         participantService.update(NON_EXISTING_ID, testTeam);
-        verify(participantDao).update(NON_EXISTING_ID, testTeam);
+        verify(participantDao).update(NON_EXISTING_ID, testTeam);}
+
+    @Test(expected = RuntimeException.class)
+    public void deleteTeamById_DAOError() throws Exception {
+        doThrow(FailedOperationException.class).when(participantDao).delete(NON_EXISTING_ID);
+        participantService.delete(NON_EXISTING_ID);
     }
-//
-//    @Test(expected = RuntimeException.class)
-//    public void deleteTeamById_DAOError() throws Exception {
-//        doThrow(FailedOperationException.class).when(participantDao).delete(Team.class, NON_EXISTING_ID);
-//        participantService.delete(Team.class, NON_EXISTING_ID);
-//    }
-//
-//    @Test()
-//    public void deleteTeamById_DAOSuccess() throws Exception {
-//        participantService.delete(Team.class, NON_EXISTING_ID);
-//        verify(participantDao).delete(Team.class, NON_EXISTING_ID);
-//    }
+
+    @Test()
+    public void deleteTeamById_DAOSuccess() throws Exception {
+        participantService.delete(NON_EXISTING_ID);
+        verify(participantDao).delete(NON_EXISTING_ID);
+    }
 
     @Test(expected = RuntimeException.class)
     public void deleteAllTeams_DAOError() throws Exception {
