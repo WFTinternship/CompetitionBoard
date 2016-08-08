@@ -34,8 +34,8 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="#" class="button">Log In</a></li>
-            <li><a href="#" class="button">Sign Up</a></li>
+            <li><a href="login.jsp" class="button">Log In</a></li>
+            <li><a href="login.jsp" class="button">Sign Up</a></li>
         </ul>
     </nav>
 </header>
@@ -48,7 +48,7 @@
 <!-- Footer -->
 <footer id="footer">
     <ul class="copyright">
-        <li>&copy; All rights reserved.</li>
+        <li>&copy; Artur Babayan, All rights reserved.</li>
     </ul>
 </footer>
 

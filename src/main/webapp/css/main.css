@@ -3015,14 +3015,12 @@
 /* Banner */
 
 	#banner {
-		background-attachment: scroll,							fixed;
 		background-color: #666;
 		background-image: url("images/overlay.png"), url("../../images/banner.jpg");
-		background-position: top left,						center center;
-		background-repeat: repeat,							no-repeat;
-		background-size: auto,							cover;
+		background-repeat: repeat,	no-repeat;
+		background-size: auto, cover;
 		color: #fff;
-		padding: 12em 0 20em 0;
+		padding: 12em 0 30em 0;
 		text-align: center;
 	}
 
@@ -3133,7 +3131,7 @@
 			line-height: 1em;
 			margin: 2em 0 0 0;
 			padding: 0;
-			text-align: center;
+			text-align: left;
 		}
 
 			#footer .copyright a {

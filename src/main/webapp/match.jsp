@@ -48,11 +48,10 @@
         <header>
             <h2>Matches</h2>
         </header>
-        <div class="box">
-            <form method="post" action="#">
-
-
-            </form>
+        <div>
+            <center>
+                <img src="images/notifications/page-under-construction1.jpg">
+                </center>
         </div>
     </section>
 </div>
