@@ -41,10 +41,16 @@
 
 <!-- Banner -->
 <section id="banner">
-    <center>
-        Hello, mr <>
-    </center>
+
+    <form action="/" method="get" class="container">
+        <div class="textarea">
+            <input type="text" name="search" required autocomplete="off"/>
+            <br>
+            <button type="submit" class="button">SEARCH</button>
+        </div>
+    </form>
 </section>
+
 
 <!-- Footer -->
 <footer id="footer">
@@ -60,6 +66,5 @@
 <script src="js/skel.min.js"></script>
 <script src="js/util.js"></script>
 <script src="js/main.js"></script>
-<!--<script src="js/ie/respond.min.js"></script>-->
 </body>
 </html>

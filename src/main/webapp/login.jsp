@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign-Up/Login Form</title>
-    <%--<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>--%>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
 
-    <%--<link rel="stylesheet" href="css/normalize.css">--%>
-    <%--<link rel="stylesheet" href="css/style.css">--%>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -22,37 +22,32 @@
     <div class="tab-content">
         <div id="signup">
             <h1>Sign Up for Free</h1>
+
             <form action="login" method="post">
                 <div class="top-row">
+
+                    <%--First Name--%>
                     <div class="field-wrap">
-                        <label>
-                            First Name<span class="req">*</span>
-                        </label>
+                        <label>First Name<span class="req">*</span></label>
                         <input type="text" required autocomplete="off"/>
                     </div>
 
-                    <%--LastName--%>
+                    <%--Last Name--%>
                     <div class="field-wrap">
-                        <label>
-                            Last Name<span class="req">*</span>
-                        </label>
+                        <label>Last Name<span class="req">*</span></label>
                         <input type="text" required autocomplete="off"/>
                     </div>
                 </div>
 
-                <%--EmailAddress--%>
+                <%--Email Address--%>
                 <div class="field-wrap">
-                    <label>
-                        Email Address<span class="req">*</span>
-                    </label>
+                    <label>Email Address<span class="req">*</span></label>
                     <input type="email" required autocomplete="off"/>
                 </div>
 
-                <%--SetPassword--%>
+                <%--Set Password--%>
                 <div class="field-wrap">
-                    <label>
-                        Set A Password<span class="req">*</span>
-                    </label>
+                    <label>Set A Password<span class="req">*</span></label>
                     <input type="password" required autocomplete="off"/>
                 </div>
 
@@ -64,14 +59,15 @@
         <div id="login">
             <h1>Welcome Back!</h1>
 
-            <%--EmailInsert--%>
             <form action="/" method="post">
+
+                <%--Email For Log In --%>
                 <div class="field-wrap">
                     <label>Email Address<span class="req">*</span></label>
-                    <input type="email" name="email"  required autocomplete="off"/>
+                    <input type="email" name="email" required autocomplete="off"/>
                 </div>
 
-                <%--PasswordInsert--%>
+                <%--Password For Log In --%>
                 <div class="field-wrap">
                     <label> Password<span class="req">*</span></label>
                     <input type="password" name="pass" required autocomplete="off"/>
@@ -86,7 +82,7 @@
 </div>
 
 <!-- /form -->
-<%--<script src="js/jquery-3.1.0.js"></script>--%>
-<%--<script src="js/login.js"></script>--%>
+<script src="js/jquery-3.1.0.js"></script>
+<script src="js/login.js"></script>
 </body>
 </html>

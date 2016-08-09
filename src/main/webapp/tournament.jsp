@@ -1,5 +1,3 @@
-<%@ page import="com.workfront.intern.cb.service.TournamentService" %>
-<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 
@@ -50,7 +48,6 @@
             <h2>Tournament</h2>
         </header>
         <div class="box">
-                    <%= new TournamentServiceImpl().getTournamentById(1) %>
             <form method="post" action="#">
                 <%--Todo some logics--%>
             </form>
