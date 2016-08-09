@@ -14,9 +14,14 @@
 <header id="header" class="alt">
     <nav id="nav">
         <ul>
+            <li><% String userName = request.getParameter("userName");
+                if (userName != null) {
+            %> Hello, <%=userName%>
+                <%}%>
+
+            </li>
             <li><a href="index.jsp">Home</a></li>
-            <li>
-                <a href="#" class="icon fa-angle-down">Menu</a>
+            <li><a href="#" class="icon fa-angle-down">Menu</a>
                 <ul>
                     <li><a href="tournament.jsp">Tournaments</a></li>
                     <li><a href="match.jsp">Matches</a></li>
@@ -33,15 +38,14 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="login.jsp" name="login" class="button">Log In</a></li>
-            <li><a href="login.jsp" name="signup" class="button">Sign Up</a></li>
+            <li><a href="login.jsp" name="signUpMenuBtn" class="button">Sign Up</a></li>
+            <li><a href="login.jsp" name="logInMenuBtn" class="button">Log In</a></li>
         </ul>
     </nav>
 </header>
 
-<!-- Banner -->
+<!-- Banner/Searching -->
 <section id="banner">
-
     <form action="/" method="get" class="container">
         <div class="textarea">
             <input type="text" name="search" required autocomplete="off"/>

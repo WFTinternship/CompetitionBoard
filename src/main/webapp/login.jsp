@@ -1,3 +1,4 @@
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -16,61 +17,47 @@
     <ul class="tab-group">
         <li class="tab active"><a href="#signup">Sign Up</a></li>
         <li class="tab"><a href="#login">Log In</a></li>
-    </ul>
+          </ul>
 
-    <%--SignUp Menu--%>
     <div class="tab-content">
         <div id="signup">
             <h1>Sign Up for Free</h1>
 
+            <%--SignUp Form--%>
             <form action="login" method="post">
-                <div class="top-row">
-
-                    <%--First Name--%>
-                    <div class="field-wrap">
-                        <label>First Name<span class="req">*</span></label>
-                        <input type="text" required autocomplete="off"/>
-                    </div>
-
-                    <%--Last Name--%>
-                    <div class="field-wrap">
-                        <label>Last Name<span class="req">*</span></label>
-                        <input type="text" required autocomplete="off"/>
-                    </div>
-                </div>
-
-                <%--Email Address--%>
                 <div class="field-wrap">
-                    <label>Email Address<span class="req">*</span></label>
-                    <input type="email" required autocomplete="off"/>
+                    <label>Username/Login<span class="req">*</span></label>
+                    <input type="text" name="userName" required autocomplete="off"/>
                 </div>
 
-                <%--Set Password--%>
                 <div class="field-wrap">
-                    <label>Set A Password<span class="req">*</span></label>
-                    <input type="password" required autocomplete="off"/>
+                    <label>Password<span class="req">*</span></label>
+                    <input type="password" name="password" required autocomplete="off"/>
                 </div>
 
-                <button type="submit" class="button button-block">Get Started</button>
+                <div class="field-wrap">
+                    <label>Confirm Password<span class="req">*</span></label>
+                    <input type="password" name="passwordConfirm" required autocomplete="off"/>
+                </div>
+
+                <button type="submit" class="button button-block">Sign Up</button>
             </form>
         </div>
 
-        <%--LogIn Menu--%>
         <div id="login">
             <h1>Welcome Back!</h1>
 
+            <%--Log In Form--%>
             <form action="/" method="post">
-
-                <%--Email For Log In --%>
                 <div class="field-wrap">
-                    <label>Email Address<span class="req">*</span></label>
-                    <input type="email" name="email" required autocomplete="off"/>
+                    <label>Username/Login<span class="req">*</span></label>
+                    <input type="text" name="usernameSubmit" required autocomplete="off"/>
                 </div>
 
                 <%--Password For Log In --%>
                 <div class="field-wrap">
                     <label> Password<span class="req">*</span></label>
-                    <input type="password" name="pass" required autocomplete="off"/>
+                    <input type="password" name="passwordSubmit" required autocomplete="off"/>
                 </div>
                 <%--Password Forgot--%>
                 <p class="forgot"><a href="#">Forgot Password?</a></p>
