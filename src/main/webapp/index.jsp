@@ -4,7 +4,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="css/main.css"/>
-    <link rel="stylesheet" href="css/generic.css"/>
     <script src="js/ie/html5shiv.js"></script>
 
     <title>Competition Board</title>
@@ -34,15 +33,17 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="login.jsp" class="button">Log In</a></li>
-            <li><a href="login.jsp" class="button">Sign Up</a></li>
+            <li><a href="login.jsp" name="login" class="button">Log In</a></li>
+            <li><a href="login.jsp" name="signup" class="button">Sign Up</a></li>
         </ul>
     </nav>
 </header>
 
 <!-- Banner -->
 <section id="banner">
-
+    <center>
+        Hello, mr <>
+    </center>
 </section>
 
 <!-- Footer -->
@@ -52,16 +53,13 @@
     </ul>
 </footer>
 
-
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.dropotron.min.js"></script>
 <script src="js/jquery.scrollgress.min.js"></script>
 <script src="js/skel.min.js"></script>
 <script src="js/util.js"></script>
-<!--[if lte IE 8]>
-<script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="js/main.js"></script>
-
+<!--<script src="js/ie/respond.min.js"></script>-->
 </body>
 </html>

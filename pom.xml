@@ -18,15 +18,32 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- libraries/frameworks -->
+        <javax.servlet.version>3.0.1</javax.servlet.version>
+        <javax.servlet.jsp>2.3.1</javax.servlet.jsp>
+        <javax.servlet.jstl>1.2</javax.servlet.jstl>
         <mysql.connector.version>5.0.8</mysql.connector.version>
         <c3p0.version>0.9.5.1</c3p0.version>
         <junit.version>4.4</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <mockito.version>1.10.19</mockito.version>
-        <jquery.version>3.1.0</jquery.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${javax.servlet.jsp}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${javax.servlet.jstl}</version>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -53,12 +70,6 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.webjars</groupId>-->
-            <!--<artifactId>jquery</artifactId>-->
-            <!--<version>${jquery.version}</version>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <build>

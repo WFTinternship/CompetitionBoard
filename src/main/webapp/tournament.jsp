@@ -1,3 +1,5 @@
+<%@ page import="com.workfront.intern.cb.service.TournamentService" %>
+<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 
@@ -36,8 +38,8 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="#" class="button">Log In</a></li>
-                <li><a href="#" class="button">Sign Up</a></li>
+                <li><a href="login.jsp" name="login" class="button">Log In</a></li>
+                <li><a href="login.jsp" name="signup" class="button">Sign Up</a></li>
             </ul>
         </nav>
     </header>
@@ -48,9 +50,9 @@
             <h2>Tournament</h2>
         </header>
         <div class="box">
+                    <%= new TournamentServiceImpl().getTournamentById(1) %>
             <form method="post" action="#">
-
-
+                <%--Todo some logics--%>
             </form>
         </div>
     </section>
@@ -62,9 +64,10 @@
 <script src="js/jquery.scrollgress.min.js"></script>
 <script src="js/skel.min.js"></script>
 <script src="js/util.js"></script>
-<!--[if lte IE 8]>
-<script src="js/ie/respond.min.js"></script><![endif]-->
 <script src="js/main.js"></script>
+
+<!--<script src="js/ie/respond.min.js"></script>-->
+<![endif]-->
 
 </body>
 </html>
