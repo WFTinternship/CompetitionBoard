@@ -1,90 +1,154 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <title>Contact Us</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="js/ie/html5shiv.js"></script>
-    <link rel="stylesheet" href="css/main.css"/>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Home - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/blog-home.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 
 <body>
-<div id="page-wrapper">
 
-    <!-- Header -->
-    <header id="header">
-        <nav id="nav">
-            <ul>
-                <li><a href="index.jsp">Home</a></li>
-                <li>
-                    <a href="#" class="icon fa-angle-down">Menu</a>
-                    <ul>
-                        <li><a href="tournament.jsp">Tournaments</a></li>
-                        <li><a href="match.jsp">Matches</a></li>
-                        <li><a href="media.jsp">Media</a></li>
-                        <li><a href="contact.jsp">Contact Us</a></li>
-                        <li>
-                            <a href="#">Submenu</a>
-                            <ul>
-                                <li><a href="#">Option One</a></li>
-                                <li><a href="#">Option Two</a></li>
-                                <li><a href="#">Option Three</a></li>
-                                <li><a href="#">Option Four</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#" class="button">Log In</a></li>
-                <li><a href="#" class="button">Sign Up</a></li>
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="index.jsp">Home</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li><a class="page-scroll" href="#about">About</a></li>-->
+                <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
+                <li><a class="page-scroll" href="match.jsp">Matches</a></li>
+                <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
+                <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
+                <li><a href="login.jsp" name="signUpMenuBtn">Sign Up</a></li>
+                <li><a href="login.jsp" name="logInMenuBtn">Log In</a></li>
             </ul>
-        </nav>
-    </header>
+            <!-- /.navbar-collapse -->
+        </div>
+    </div>        <!-- /.container-fluid -->
+</nav>
 
-    <!-- Main -->
-    <section id="main" class="container 75%">
-        <header>
-            <h2>Contact Us</h2>
-        </header>
-        <div class="box">
-            <form method="post" action="#">
-                <div class="row uniform 50%">
-                    <div class="6u 12u(mobilep)">
-                        <input type="text" name="name" id="name" value="" placeholder="Name"/>
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <h1>Contact Us</h1>
+
+
+            <form id="contact-form" method="post" action="/" role="form">
+                <div class="messages"></div>
+                <div class="controls">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="form_name">Firstname *</label>
+                                <input id="form_name" type="text" name="name" class="form-control"
+                                       placeholder="Please enter your firstname *" required="required"
+                                       data-error="Firstname is required.">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="form_lastname">Lastname *</label>
+                                <input id="form_lastname" type="text" name="surname" class="form-control"
+                                       placeholder="Please enter your lastname *" required="required"
+                                       data-error="Lastname is required.">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="6u 12u(mobilep)">
-                        <input type="email" name="email" id="email" value="" placeholder="Email"/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="form_email">Email *</label>
+                                <input id="form_email" type="email" name="email" class="form-control"
+                                       placeholder="Please enter your email *" required="required"
+                                       data-error="Valid email is required.">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="form_phone">Phone</label>
+                                <input id="form_phone" type="tel" name="phone" class="form-control"
+                                       placeholder="Please enter your phone">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row uniform 50%">
-                    <div class="12u">
-                        <input type="text" name="subject" id="subject" value="" placeholder="Subject"/>
-                    </div>
-                </div>
-                <div class="row uniform 50%">
-                    <div class="12u">
-                        <textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
-                    </div>
-                </div>
-                <div class="row uniform">
-                    <div class="12u">
-                        <ul class="actions align-center">
-                            <li><input type="submit" value="Send Message"/></li>
-                        </ul>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="form_message">Message *</label>
+                                <textarea id="form_message" name="message" class="form-control"
+                                          placeholder="Message for me *" rows="4" required="required"
+                                          data-error="Please,leave us a message."></textarea>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-success btn-send" value="Send message">
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
-    </section>
+    </div>
 </div>
 
-<!-- Scripts -->
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.dropotron.min.js"></script>
-<script src="js/jquery.scrollgress.min.js"></script>
-<script src="js/skel.min.js"></script>
-<script src="js/util.js"></script>
-<script src="js/main.js"></script>
-<script src="js/ie/respond.min.js"></script>
+<hr>
+
+<!-- Footer -->
+<footer>
+    <div class="row">
+        <div class="col-lg-12">
+            <p>Copyright &copy; Artur Babayan 2016</p>
+        </div>
+    </div>
+</footer>
+</div>
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="validator.js"></script>
+<script src="contact.js"></script>
 </body>
+
 </html>
