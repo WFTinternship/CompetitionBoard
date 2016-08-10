@@ -1,4 +1,3 @@
-<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -12,6 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
+
 <body class="backgroundLogin">
 <div class="form">
     <ul class="tab-group">
@@ -24,40 +24,36 @@
             <h1>Sign Up for Free</h1>
 
             <%--SignUp Form--%>
-            <form action="login" method="post">
+            <form action="signin" method="post">
                 <div class="field-wrap">
                     <label>Username/Login<span class="req">*</span></label>
-                    <input type="text" name="userName" required autocomplete="off"/>
+                    <input type="text" name="userNameSignIn" required autocomplete="off"/>
                 </div>
-
                 <div class="field-wrap">
                     <label>Password<span class="req">*</span></label>
-                    <input type="password" name="password" required autocomplete="off"/>
+                    <input type="password" name="passwordSignIn" required autocomplete="off"/>
                 </div>
-
                 <div class="field-wrap">
                     <label>Confirm Password<span class="req">*</span></label>
-                    <input type="password" name="passwordConfirm" required autocomplete="off"/>
-                </div>
+                    <input type="password" name="passwordConfirmSignIn" required autocomplete="off"/>
+               </div>
 
                 <button type="submit" class="button button-block">Sign Up</button>
             </form>
         </div>
 
         <div id="login">
-            <h1>Welcome Back!</h1>
-
+           <h1>Welcome Back!</h1>
             <%--Log In Form--%>
-            <form action="/" method="post">
+            <form action="login" method="post">
                 <div class="field-wrap">
                     <label>Username/Login<span class="req">*</span></label>
-                    <input type="text" name="usernameSubmit" required autocomplete="off"/>
+                    <input type="text" name="usernameLogin" required autocomplete="off"/>
                 </div>
-
                 <%--Password For Log In --%>
                 <div class="field-wrap">
                     <label> Password<span class="req">*</span></label>
-                    <input type="password" name="passwordSubmit" required autocomplete="off"/>
+                    <input type="password" name="passwordLogin" required autocomplete="off"/>
                 </div>
                 <%--Password Forgot--%>
                 <p class="forgot"><a href="#">Forgot Password?</a></p>

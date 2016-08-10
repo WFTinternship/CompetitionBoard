@@ -109,7 +109,7 @@ aside {
 .navbar-default .nav > li > a, .navbar-default .nav > li > a:focus {
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 15px;
     color: #222
 }
 
@@ -137,8 +137,7 @@ aside {
     }
 
     .navbar-default .navbar-header .navbar-brand:focus, .navbar-default .navbar-header .navbar-brand:hover {
-        /*color: #E89980*/
-        color: #e7ee1c
+        color: #E89980
     }
 
     .navbar-default .nav > li > a, .navbar-default .nav > li > a:focus {
@@ -146,8 +145,7 @@ aside {
     }
 
     .navbar-default .nav > li > a:focus:hover, .navbar-default .nav > li > a:hover {
-        /*color: #E89980*/
-        color: #e7ee1c
+        color: #E89980
     }
 
     .navbar-default.affix {
