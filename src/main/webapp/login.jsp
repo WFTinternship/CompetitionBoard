@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="backgroundCustom">
+<body class="backgroundLogin">
 <div class="form">
     <ul class="tab-group">
         <li class="tab active"><a href="#signup">Sign Up</a></li>

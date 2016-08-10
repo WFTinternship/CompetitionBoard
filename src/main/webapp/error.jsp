@@ -5,7 +5,7 @@
 </head>
 <body>
 <div>
-    <img src="images/notifications/error.jpg" style="width: 50%; height: 100%">
+    <img src="img/notifications/error.jpg" style="width: 50%; height: 100%">
 </div>
 </body>
 </html>

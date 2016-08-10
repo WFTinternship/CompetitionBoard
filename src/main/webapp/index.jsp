@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Competition Board</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -46,8 +46,8 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <%--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"--%>
-                    <%--data-target="#bs-example-navbar-collapse-1">--%>
-                <%--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>--%>
+            <%--data-target="#bs-example-navbar-collapse-1">--%>
+            <%--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>--%>
             <%--</button>--%>
             <a class="navbar-brand page-scroll" href="#page-top">Home</a>
         </div>
@@ -65,7 +65,8 @@
             </ul>
             <!-- /.navbar-collapse -->
         </div>
-    </div>        <!-- /.container-fluid -->
+    </div>
+    <!-- /.container-fluid -->
 </nav>
 
 <header>
@@ -151,6 +152,7 @@
             <div class="col-lg-4 col-sm-6">
                 <a href="img/portfolio/fullsize/1.jpg" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
+
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
                             <div class="project-category text-faded">
@@ -166,6 +168,7 @@
             <div class="col-lg-4 col-sm-6">
                 <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
+
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
                             <div class="project-category text-faded">
@@ -181,6 +184,7 @@
             <div class="col-lg-4 col-sm-6">
                 <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
+
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
                             <div class="project-category text-faded">
@@ -196,6 +200,7 @@
             <div class="col-lg-4 col-sm-6">
                 <a href="img/portfolio/fullsize/4.jpg" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
+
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
                             <div class="project-category text-faded">
@@ -211,6 +216,7 @@
             <div class="col-lg-4 col-sm-6">
                 <a href="img/portfolio/fullsize/5.jpg" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
+
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
                             <div class="project-category text-faded">
@@ -226,6 +232,7 @@
             <div class="col-lg-4 col-sm-6">
                 <a href="img/portfolio/fullsize/6.jpg" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
+
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
                             <div class="project-category text-faded">
@@ -249,15 +256,18 @@
                 <h2 class="section-heading">Let's Get In Touch!</h2>
                 <hr class="primary">
                 <p>Write your review. We love hearing from our customers</p>
-                    <p>and we had love to hear from you too.
+
+                <p>and we had love to hear from you too.
                 </p>
             </div>
             <div class="col-lg-4 col-lg-offset-2 text-center">
                 <i class="fa fa-phone fa-3x sr-contact"></i>
+
                 <p>123-456-6789</p>
             </div>
             <div class="col-lg-4 text-center">
                 <i class="fa fa-envelope-o fa-3x sr-contact"></i>
+
                 <p><a href="mailto:arturbabayan@workfront.com">arturbabayan@workfront.com</a></p>
             </div>
         </div>

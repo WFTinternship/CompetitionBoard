@@ -14,8 +14,19 @@ html {
     overflow-y: scroll;
 }
 
-.backgroundCustom {
-    background-image: url("/img/banner.jpg");
+.backgroundTournament {
+    background-size: 100% 110%;
+    background: url("/img/background/tournamentBg.jpg") no-repeat;
+}
+
+.backgroundMatch {
+    background-image: url("/img/background/matchBg.jpg");
+    background-size: 100% 100%;
+}
+
+.backgroundLogin {
+    background-size: 100% 110%;
+    background: url("/img/background/indexBg.jpg") no-repeat;
 }
 
 .search {
@@ -213,7 +224,7 @@ textarea {
     background: #e87b6e;
 }
 
-.
+
 .buttonCustom:hover, .buttonCustom:focus {
     background: #e86273;
 }
