@@ -52,6 +52,38 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournament;
     }
 
+    @Override
+    public Tournament getTournamentByName(String tournamentName) throws ObjectNotFoundException, FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Tournament tournament = null;
+
+        String sql = "SELECT * FROM tournament WHERE tournament_name=?";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, tournamentName);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                tournament = extractTournamentFromResultSet(rs);
+            } else {
+                throw new ObjectNotFoundException(String.format("Tournament with name[%s] not found", tournamentName));
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return tournament;
+    }
+
     /**
      * Gets all tournament
      */
@@ -90,7 +122,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
      * Gets all tournament by manager id
      */
     @Override
-    public List<Tournament> getTournamentListByManager(int id) throws FailedOperationException {
+    public List<Tournament> getTournamentListByManager(int managerId) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -104,7 +136,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, managerId);
 
             // Execute statement
             rs = ps.executeQuery();

@@ -63,6 +63,12 @@ public class TournamentServiceUnitTest extends BaseTest {
         verify(tournamentDao).getTournamentById(NON_EXISTING_ID);
     }
 
+    @Test()
+    public void getTournamentByName_DAOSuccess() throws Exception {
+        tournamentService.getTournamentByName(TOURNAMENT_NAME);
+        verify(tournamentDao).getTournamentByName(TOURNAMENT_NAME);
+    }
+
     @Test(expected = RuntimeException.class)
     public void getTournamentListByManager_DAOError() throws Exception {
         when(tournamentDao.getTournamentListByManager(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);

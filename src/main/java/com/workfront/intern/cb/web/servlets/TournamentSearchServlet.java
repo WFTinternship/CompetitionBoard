@@ -1,20 +1,20 @@
 package com.workfront.intern.cb.web.servlets;
 
+import com.workfront.intern.cb.service.TournamentServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LogOutServlet extends HttpServlet {
+public class TournamentSearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session != null){
-            session.invalidate();
-        }
-        request.getRequestDispatcher("https://www.google.ru/").forward(request, response);
+        String searchTournamentStr = request.getParameter("tournamentSearch");
+        new TournamentServiceImpl().getTournamentList();
+
+
     }
 
     @Override

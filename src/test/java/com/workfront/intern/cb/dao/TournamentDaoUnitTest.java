@@ -50,6 +50,11 @@ public class TournamentDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
+    public void getTournamentByName_dbError() throws Exception {
+        tournamentDao.getTournamentByName(TOURNAMENT_NAME);
+    }
+
+    @Test(expected = FailedOperationException.class)
     public void getTournamentListByManager_dbError() throws Exception {
         tournamentDao.getTournamentListByManager(NON_EXISTING_ID);
     }

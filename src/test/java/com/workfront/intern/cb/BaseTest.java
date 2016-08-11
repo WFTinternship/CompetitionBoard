@@ -11,6 +11,8 @@ public class BaseTest {
 
     protected final String NON_EXISTING_LOGIN = "adgjOwkJ";
 
+    protected final String TOURNAMENT_NAME = "FIFA 2025";
+
     protected final String MESSAGE_TEST_COMPLETED_OK = "Test completed successfully!";
 
     protected final String MESSAGE_TEST_COMPLETED_ERROR = "Test completed with errors :(";

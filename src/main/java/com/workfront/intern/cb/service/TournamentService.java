@@ -1,8 +1,6 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
 import java.util.List;
 
@@ -13,6 +11,7 @@ public interface TournamentService {
 
     // READ
     Tournament getTournamentById(int id);
+    Tournament getTournamentByName(String tournamentName);
     List<Tournament> getTournamentListByManager(int managerId);
     List<Tournament> getTournamentList();
 
