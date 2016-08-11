@@ -45,13 +45,11 @@
     }
 %>
 
-
 <body id="page-top">
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-
             <a class="navbar-brand page-scroll" href="#page-top">Home  <%= loginUserStr%> <%= userNameSignInStr%>
             </a>
         </div>
@@ -64,8 +62,16 @@
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact">Contact Us</a></li>
+
+                <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
                 <li><a href="login.jsp" name="signUpMenuBtn">Sign Up</a></li>
                 <li><a href="login.jsp" name="logInMenuBtn">Log In</a></li>
+                <%} else if (loginUserStr != null) { %>
+                <li><a href="logout" name="signUpMenuBtn">Log Out </a></li>
+                <%} else if ((userNameSignInStr != null)) { %>
+                <li><a href="logout" name="signUpMenuBtn">Log Out </a></li>
+                <%}%>
+
             </ul>
             <!-- /.navbar-collapse -->
         </div>

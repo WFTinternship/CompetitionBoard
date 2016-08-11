@@ -15,8 +15,8 @@ html {
 }
 
 .backgroundTournament {
-    background-size: 100% 110%;
     background: url("/img/background/tournamentBg.jpg") no-repeat;
+    background-size: 100% 110%;
 }
 
 .backgroundMatch {
@@ -25,8 +25,8 @@ html {
 }
 
 .backgroundLogin {
-    background-size: 100% 110%;
     background: url("/img/background/indexBg.jpg") no-repeat;
+    background-size: cover;
 }
 
 
