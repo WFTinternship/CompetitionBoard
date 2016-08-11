@@ -26,6 +26,6 @@ public class SignInServlet extends HttpServlet {
         manager.setPassword(password);
 
         new ManagerServiceImpl().addManager(manager);
-        response.sendRedirect("/index.jsp");
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }

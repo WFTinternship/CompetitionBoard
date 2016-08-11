@@ -14,10 +14,10 @@
         <url-pattern>/signin</url-pattern>
     </servlet-mapping>
 
-    <!--LogIn-->
+    <!--LogInServlet-->
     <servlet>
         <servlet-name>LogInServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.LogIn</servlet-class>
+        <servlet-class>com.workfront.intern.cb.web.servlets.LogInServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
