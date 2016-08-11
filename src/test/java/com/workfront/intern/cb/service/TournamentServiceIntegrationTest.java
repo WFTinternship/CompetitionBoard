@@ -73,6 +73,11 @@ public class TournamentServiceIntegrationTest extends BaseTest {
 
     @Ignore
     @Test
+    public void getTournamentByName_found() throws Exception {
+    }
+
+    @Ignore
+    @Test
     public void getTournamentList_emptyList() throws Exception {
     }
 

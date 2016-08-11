@@ -51,7 +51,7 @@ public class TournamentDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void getTournamentByName_dbError() throws Exception {
-        tournamentDao.getTournamentByName(TOURNAMENT_NAME);
+        tournamentDao.getTournamentListByName(TOURNAMENT_NAME);
     }
 
     @Test(expected = FailedOperationException.class)

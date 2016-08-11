@@ -53,12 +53,14 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     }
 
     @Override
-    public Tournament getTournamentByName(String tournamentName) throws ObjectNotFoundException, FailedOperationException {
+    public List<Tournament> getTournamentListByName(String tournamentName) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Tournament tournament = null;
+        Tournament tournament;
+        List<Tournament> tournamentListByName = new ArrayList<>();
 
+//        String sql = "SELECT * FROM tournament WHERE tournament_name LIKE '%" + tournamentName + "%'";
         String sql = "SELECT * FROM tournament WHERE tournament_name=?";
         try {
             // Acquire connection
@@ -70,10 +72,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 tournament = extractTournamentFromResultSet(rs);
-            } else {
-                throw new ObjectNotFoundException(String.format("Tournament with name[%s] not found", tournamentName));
+                tournamentListByName.add(tournament);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -81,7 +82,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         } finally {
             closeResources(conn, ps, rs);
         }
-        return tournament;
+        return tournamentListByName;
     }
 
     /**

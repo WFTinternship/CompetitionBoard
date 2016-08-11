@@ -14,7 +14,7 @@ public class LogOutServlet extends HttpServlet {
         if (session != null){
             session.invalidate();
         }
-        request.getRequestDispatcher("https://www.google.ru/").forward(request, response);
+        request.getRequestDispatcher("/").forward(request, response);
     }
 
     @Override

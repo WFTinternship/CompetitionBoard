@@ -11,7 +11,7 @@ public interface TournamentService {
 
     // READ
     Tournament getTournamentById(int id);
-    Tournament getTournamentByName(String tournamentName);
+    List<Tournament>  getTournamentListByName(String tournamentName);
     List<Tournament> getTournamentListByManager(int managerId);
     List<Tournament> getTournamentList();
 

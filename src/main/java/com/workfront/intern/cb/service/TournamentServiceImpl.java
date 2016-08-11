@@ -43,9 +43,9 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public Tournament getTournamentByName(String tournamentName) {
+    public List<Tournament> getTournamentListByName(String tournamentName) {
         try {
-            return tournamentDao.getTournamentByName(tournamentName);
+            return tournamentDao.getTournamentListByName(tournamentName);
         } catch (ObjectNotFoundException e) {
             throw new RuntimeException(String.format("Tournament instance with name=%s not found", tournamentName));
         } catch (FailedOperationException e) {

@@ -65,8 +65,8 @@ public class TournamentServiceUnitTest extends BaseTest {
 
     @Test()
     public void getTournamentByName_DAOSuccess() throws Exception {
-        tournamentService.getTournamentByName(TOURNAMENT_NAME);
-        verify(tournamentDao).getTournamentByName(TOURNAMENT_NAME);
+        tournamentService.getTournamentListByName(TOURNAMENT_NAME);
+        verify(tournamentDao).getTournamentListByName(TOURNAMENT_NAME);
     }
 
     @Test(expected = RuntimeException.class)

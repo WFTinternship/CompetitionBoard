@@ -12,9 +12,10 @@ public class TournamentSearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchTournamentStr = request.getParameter("tournamentSearch");
-        new TournamentServiceImpl().getTournamentList();
+        new TournamentServiceImpl().getTournamentListByName(searchTournamentStr);
+//        request.setAttribute();
 
-
+        request.getRequestDispatcher("/tournament.jsp").forward(request, response);
     }
 
     @Override

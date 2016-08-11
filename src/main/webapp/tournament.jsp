@@ -54,6 +54,33 @@
 <!-- Page Content -->
 <div class="container">
 
+    <table style="width:100%">
+        <tr>
+            <th>TournamentId</th>
+            <th>TournamentName</th>
+            <th>StartDate</th>
+            <th>EndDate</th>
+            <th>Location</th>
+            <th>TournamentDescription</th>
+        </tr>
+        <tr>
+            <td><%= %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+
+
+
+
+
+
+
+
     <%--<div class="row">--%>
 
     <%--<!-- Blog Entries Column -->--%>

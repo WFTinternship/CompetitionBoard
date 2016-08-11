@@ -93,21 +93,15 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getTournamentByName_found() throws Exception {
-        String tournamentName = testTournament.getTournamentName();
-
+    public void getTournamentListByName_emptyList() throws Exception {
         // Testing method
-        Tournament tournament = tournamentDao.getTournamentByName(tournamentName);
+        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
 
-        assertNotNull(tournament);
-        assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
-        assertEquals(testTournament.getTournamentName(), tournament.getTournamentName());
-        assertEquals(testTournament.getStartDate(), tournament.getStartDate());
-        assertEquals(testTournament.getEndDate(), tournament.getEndDate());
-        assertEquals(testTournament.getLocation(), tournament.getLocation());
-        assertEquals(testTournament.getTournamentDescription(), tournament.getTournamentDescription());
-        assertEquals(testTournament.getTournamentFormatId(), tournament.getTournamentFormatId());
-        assertEquals(testTournament.getManagerId(), tournament.getManagerId());
+        String tournamentNameStr = testTournament.getTournamentName();
+        List<Tournament> tournamentList = tournamentDao.getTournamentListByName(tournamentNameStr);
+
+        assertNotNull(tournamentList);
+        assertEquals(0, tournamentList.size());
     }
 
     @Test
