@@ -13,16 +13,37 @@ public enum TournamentFormat {
         return formatId;
     }
 
-    public static TournamentFormat getTournamentFormatById(int formatId){
+    public static TournamentFormat getTournamentFormatById(int formatId) {
         TournamentFormat format = null;
-        switch (formatId){
-            case 1: format = TournamentFormat.ROUND_ROBBIN;
+        switch (formatId) {
+            case 1:
+                format = TournamentFormat.ROUND_ROBBIN;
                 break;
-            case 2: format = TournamentFormat.OLYMPIC;
+            case 2:
+                format = TournamentFormat.OLYMPIC;
                 break;
         }
         return format;
     }
+
+    /**
+     * Returns tournament format name(string) by specific tournament id
+     */
+    public static String parseTournamentFormatIdToString(int formatId) {
+        String formatStr;
+        switch (formatId) {
+            case 1:
+                formatStr = "ROUND_ROBBIN";
+                break;
+            case 2:
+                formatStr = "OLYMPIC";
+                break;
+            default:
+                formatStr = "UNKNOWN_FORMAT";
+        }
+        return formatStr;
+    }
+
 
     @Override
     public String toString() {

@@ -1,3 +1,9 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
+<%@ page import="com.workfront.intern.cb.service.ManagerServiceImpl" %>
+<%@ page import="com.workfront.intern.cb.common.Manager" %>
+<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,187 +57,215 @@
     </div>
 </nav>
 
-<!-- Page Content -->
-<div class="container">
 
-    <table style="width:100%">
-        <tr>
-            <th>TournamentId</th>
-            <th>TournamentName</th>
-            <th>StartDate</th>
-            <th>EndDate</th>
-            <th>Location</th>
-            <th>TournamentDescription</th>
-        </tr>
-        <tr>
-            <td><%= %></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+<div class="row">
 
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+        <h1 class="page-header">T o u r n a m e n t s</h1>
 
+        <div class="container">
 
+            <%
+                List<Tournament> tournamentList = new TournamentServiceImpl().getTournamentList();
+                int sizeList = tournamentList.size();
+            %>
 
+            <table class="tournamentTable">
+                <tr>
+                    <th>No</th>
+                    <th>TournamentId</th>
+                    <th>TournamentName</th>
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+                    <th>Location</th>
+                    <th>TournamentFormat</th>
+                    <th>TournamentDescription</th>
+                    <th>Tournament creator</th>
+                </tr>
+                <%
+                    for (int i = 0; i < sizeList; i++) {
+                %>
+                <tr>
+                    <%--No--%>
+                    <td><%=i%>
+                    </td>
 
+                    <%--TournamentId--%>
+                    <td><%=tournamentList.get(i).getTournamentId()%>
+                    </td>
 
+                    <%--TournamentName--%>
+                    <td><%=tournamentList.get(i).getTournamentName()%>
+                    </td>
 
+                    <%--StartDate--%>
+                    <td><%=tournamentList.get(i).getStartDate()%>
+                    </td>
 
+                    <%--EndDate--%>
+                    <td><%=tournamentList.get(i).getEndDate()%>
+                    </td>
 
-    <%--<div class="row">--%>
+                    <%--Location--%>
+                    <td><%=tournamentList.get(i).getLocation()%>
+                    </td>
 
-    <%--<!-- Blog Entries Column -->--%>
-    <%--<div class="col-md-8">--%>
+                    <%--TournamentFormat--%>
+                    <%
+                        int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                        String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                    %>
+                    <td><%=formatStr%>
+                    </td>
 
-    <%--<h1 class="page-header">--%>
-    <%--Tournaments--%>
-    <%--<small>Secondary Text</small>--%>
-    <%--</h1>--%>
+                    <%--TournamentDescription--%>
+                    <td><%=tournamentList.get(i).getTournamentDescription()%>
+                    </td>
 
-    <%--<!-- First Blog Post -->--%>
-    <%--<h2>--%>
-    <%--<a href="#">Blog Post Title</a>--%>
-    <%--</h2>--%>
-    <%--<p class="lead">--%>
-    <%--by <a href="index.php">Start Bootstrap</a>--%>
-    <%--</p>--%>
-    <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>--%>
-    <%--<hr>--%>
-    <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
-    <%--<hr>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus--%>
-    <%--inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum--%>
-    <%--officiis rerum.</p>--%>
-    <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
+                    <%--Tournament creator--%>
+                    <% int managerId = tournamentList.get(i).getManagerId();
+                        Manager manager = new ManagerServiceImpl().getManagerById(managerId);
+                        String managerName = manager.getLogin();
+                    %>
+                    <td>
+                        <%=managerName%>
+                    </td>
+                </tr><br>
+                <%}%>
 
-    <%--<hr>--%>
+            </table>
 
-    <%--<!-- Second Blog Post -->--%>
-    <%--<h2>--%>
-    <%--<a href="#">Blog Post Title</a>--%>
-    <%--</h2>--%>
-    <%--<p class="lead">--%>
-    <%--by <a href="index.php">Start Bootstrap</a>--%>
-    <%--</p>--%>
-    <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>--%>
-    <%--<hr>--%>
-    <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
-    <%--<hr>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, quasi, fugiat, asperiores harum--%>
-    <%--voluptatum tenetur a possimus nesciunt quod accusamus saepe tempora ipsam distinctio minima dolorum--%>
-    <%--perferendis labore impedit voluptates!</p>--%>
-    <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
-
-    <%--<hr>--%>
-
-    <%--<!-- Third Blog Post -->--%>
-    <%--<h2>--%>
-    <%--<a href="#">Blog Post Title</a>--%>
-    <%--</h2>--%>
-    <%--<p class="lead">--%>
-    <%--by <a href="index.php">Start Bootstrap</a>--%>
-    <%--</p>--%>
-    <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>--%>
-    <%--<hr>--%>
-    <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
-    <%--<hr>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, voluptates, voluptas dolore ipsam--%>
-    <%--cumque quam veniam accusantium laudantium adipisci architecto itaque dicta aperiam maiores provident id--%>
-    <%--incidunt autem. Magni, ratione.</p>--%>
-    <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
-
-    <%--<hr>--%>
-
-    <%--<!-- Pager -->--%>
-    <%--<ul class="pager">--%>
-    <%--<li class="previous">--%>
-    <%--<a href="#">&larr; Older</a>--%>
-    <%--</li>--%>
-    <%--<li class="next">--%>
-    <%--<a href="#">Newer &rarr;</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-
-    <%--</div>--%>
-
-    <%--<!-- Blog Sidebar Widgets Column -->--%>
-    <%--<div class="col-md-4">--%>
-
-    <%--<!-- Blog Search Well -->--%>
-    <%--<div class="well">--%>
-    <%--<h4>Blog Search</h4>--%>
-    <%--<div class="input-group">--%>
-    <%--<input type="text" class="form-control">--%>
-    <%--<span class="input-group-btn">--%>
-    <%--<button class="btn btn-default" type="button">--%>
-    <%--<span class="glyphicon glyphicon-search"></span>--%>
-    <%--</button>--%>
-    <%--</span>--%>
-    <%--</div>--%>
-    <%--<!-- /.input-group -->--%>
-    <%--</div>--%>
-
-    <%--<!-- Blog Categories Well -->--%>
-    <%--<div class="well">--%>
-    <%--<h4>Blog Categories</h4>--%>
-    <%--<div class="row">--%>
-    <%--<div class="col-lg-6">--%>
-    <%--<ul class="list-unstyled">--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-    <%--</div>--%>
-    <%--<!-- /.col-lg-6 -->--%>
-    <%--<div class="col-lg-6">--%>
-    <%--<ul class="list-unstyled">--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-    <%--</div>--%>
-    <%--<!-- /.col-lg-6 -->--%>
-    <%--</div>--%>
-    <%--<!-- /.row -->--%>
-    <%--</div>--%>
-
-    <%--<!-- Side Widget Well -->--%>
-    <%--<div class="well">--%>
-    <%--<h4>Side Widget Well</h4>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus--%>
-    <%--laudantium odit aliquam repellat tempore quos aspernatur vero.</p>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-</div>
-
-<!-- Footer -->
-<footer>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; Artur Babayan 2016</p>
         </div>
+
+
+
+
+
+
+        <%--<!-- Second Blog Post -->--%>
+        <%--<h2>--%>
+        <%--<a href="#">Blog Post Title</a>--%>
+        <%--</h2>--%>
+        <%--<p class="lead">--%>
+        <%--by <a href="index.php">Start Bootstrap</a>--%>
+        <%--</p>--%>
+        <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>--%>
+        <%--<hr>--%>
+        <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
+        <%--<hr>--%>
+        <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, quasi, fugiat, asperiores harum--%>
+        <%--voluptatum tenetur a possimus nesciunt quod accusamus saepe tempora ipsam distinctio minima dolorum--%>
+        <%--perferendis labore impedit voluptates!</p>--%>
+        <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
+
+        <%--<hr>--%>
+
+        <%--<!-- Third Blog Post -->--%>
+        <%--<h2>--%>
+        <%--<a href="#">Blog Post Title</a>--%>
+        <%--</h2>--%>
+        <%--<p class="lead">--%>
+        <%--by <a href="index.php">Start Bootstrap</a>--%>
+        <%--</p>--%>
+        <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>--%>
+        <%--<hr>--%>
+        <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
+        <%--<hr>--%>
+        <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, voluptates, voluptas dolore ipsam--%>
+        <%--cumque quam veniam accusantium laudantium adipisci architecto itaque dicta aperiam maiores provident id--%>
+        <%--incidunt autem. Magni, ratione.</p>--%>
+        <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
+
+        <%--<hr>--%>
+
+        <%--<!-- Pager -->--%>
+        <%--<ul class="pager">--%>
+        <%--<li class="previous">--%>
+        <%--<a href="#">&larr; Older</a>--%>
+        <%--</li>--%>
+        <%--<li class="next">--%>
+        <%--<a href="#">Newer &rarr;</a>--%>
+        <%--</li>--%>
+        <%--</ul>--%>
+
+        <%--</div>--%>
+
+        <%--<!-- Blog Sidebar Widgets Column -->--%>
+        <%--<div class="col-md-4">--%>
+
+        <%--<!-- Blog Search Well -->--%>
+        <%--<div class="well">--%>
+        <%--<h4>Blog Search</h4>--%>
+        <%--<div class="input-group">--%>
+        <%--<input type="text" class="form-control">--%>
+        <%--<span class="input-group-btn">--%>
+        <%--<button class="btn btn-default" type="button">--%>
+        <%--<span class="glyphicon glyphicon-search"></span>--%>
+        <%--</button>--%>
+        <%--</span>--%>
+        <%--</div>--%>
+        <%--<!-- /.input-group -->--%>
+        <%--</div>--%>
+
+        <%--<!-- Blog Categories Well -->--%>
+        <%--<div class="well">--%>
+        <%--<h4>Blog Categories</h4>--%>
+        <%--<div class="row">--%>
+        <%--<div class="col-lg-6">--%>
+        <%--<ul class="list-unstyled">--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--</ul>--%>
+        <%--</div>--%>
+        <%--<!-- /.col-lg-6 -->--%>
+        <%--<div class="col-lg-6">--%>
+        <%--<ul class="list-unstyled">--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--<li><a href="#">Category Name</a>--%>
+        <%--</li>--%>
+        <%--</ul>--%>
+        <%--</div>--%>
+        <%--<!-- /.col-lg-6 -->--%>
+        <%--</div>--%>
+        <%--<!-- /.row -->--%>
+        <%--</div>--%>
+
+        <%--<!-- Side Widget Well -->--%>
+        <%--<div class="well">--%>
+        <%--<h4>Side Widget Well</h4>--%>
+        <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus--%>
+        <%--laudantium odit aliquam repellat tempore quos aspernatur vero.</p>--%>
+        <%--</div>--%>
+        <%--</div>--%>
+        <%--</div>--%>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Artur Babayan 2016</p>
+                </div>
+            </div>
+        </footer>
+
     </div>
-</footer>
 
-</div>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
 
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

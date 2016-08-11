@@ -42,6 +42,9 @@ public class TournamentServiceImpl implements TournamentService {
         }
     }
 
+    /**
+     * Returns all tournament by name
+     */
     @Override
     public List<Tournament> getTournamentListByName(String tournamentName) {
         try {

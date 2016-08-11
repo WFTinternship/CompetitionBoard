@@ -78,11 +78,20 @@
 
 <header>
     <div class="header-content">
+
+        <%--tournament-search--%>
         <form action="tournament-search" method="get" class="container">
             <div class="textarea">
                 <input type="text" name="tournamentSearch" required autocomplete="off"/>
                 <br>
                 <button type="submit" class="buttonCustom">SEARCH</button>
+            </div>
+        </form>
+
+        <%--tournament-creates--%>
+        <form action="tournament.jsp" method="get" class="container">
+            <div class="textarea">
+                <button type="submit" class="buttonCustom">Create a tournament</button>
             </div>
         </form>
     </div>
@@ -197,9 +206,8 @@
             <div class="col-lg-8 col-lg-offset-2 text-center">
                 <h2 class="section-heading">Let's Get In Touch!</h2>
                 <hr class="primary">
-                <p>Write your review. We love hearing from our customers</p>
-
-                <p>and we had love to hear from you too.
+                <p>Write your review. We love hearing from our customers<br>
+                    and we had love to hear from you too.
                 </p>
             </div>
             <div class="col-lg-4 col-lg-offset-2 text-center">

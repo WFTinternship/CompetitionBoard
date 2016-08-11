@@ -7,7 +7,7 @@
     color: #000;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 150px;
+    margin-top: 30px;
 }
 
 html {
@@ -29,6 +29,35 @@ html {
     background-size: cover;
 }
 
+.searchButton {
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: #E89980;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+    display: inline-block;
+    padding: 15px 25px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 2px;
+}
+
+.tournamentTable {
+    font-size: 20px;
+    /*text-align: center;*/
+    color: #ffffff;
+    letter-spacing: 1px;
+    border: 1px solid black width : 150 %;
+    height: 50px;
+}
 
 .search {
     max-width: 600px;
@@ -219,12 +248,13 @@ textarea {
     text-decoration: none;
     border: none;
     border-radius: 2px;
+    width: 20em;
+    height: 3em;
 }
 
 .button:hover, .button:focus {
     background: #e87b6e;
 }
-
 
 .buttonCustom:hover, .buttonCustom:focus {
     background: #e86273;
