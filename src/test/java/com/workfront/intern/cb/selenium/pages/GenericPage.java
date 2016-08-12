@@ -15,7 +15,7 @@ public class GenericPage {
 
     static public void init () {
         webDriver = new ChromeDriver();
-        webDriver.get("http://localhost:8083");
+        webDriver.get("http://localhost:8080");
     }
 
     public WebDriver getWebDriver() {

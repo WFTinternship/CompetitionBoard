@@ -15,7 +15,9 @@ public class TournamentSearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchTournamentStr = request.getParameter("tournamentSearch");
         List<Tournament> list = new TournamentServiceImpl().getTournamentListByName(searchTournamentStr);
-        System.out.println(list);
+        for (Tournament aList : list) {
+            System.out.println(aList);
+        }
 
 //        request.setAttribute();
 

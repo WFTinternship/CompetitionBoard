@@ -41,7 +41,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>TournamentSearchServlet</servlet-name>
-        <url-pattern>/tournament-search</url-pattern>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
 
 

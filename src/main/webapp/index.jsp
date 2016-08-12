@@ -38,7 +38,6 @@
     if (loginUserStr == null) {
         loginUserStr = "";
     }
-
     String userNameSignInStr = request.getParameter("userNameSignIn");
     if (userNameSignInStr == null) {
         userNameSignInStr = "";
@@ -80,7 +79,7 @@
     <div class="header-content">
 
         <%--tournament-search--%>
-        <form action="tournament-search" method="get" class="container">
+        <form action="search" method="get" class="container">
             <div class="textarea">
                 <input type="text" name="tournamentSearch" required autocomplete="off"/>
                 <br>

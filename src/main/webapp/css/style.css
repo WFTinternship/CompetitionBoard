@@ -7,7 +7,7 @@
     color: #000;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 100px;
 }
 
 html {
@@ -28,6 +28,11 @@ html {
     background: url("/img/background/indexBg.jpg") no-repeat;
     background-size: cover;
 }
+
+.searchPanelCustom {
+    padding-top: 20px;
+}
+
 
 .searchButton {
     border: 0;
@@ -55,8 +60,8 @@ html {
     /*text-align: center;*/
     color: #ffffff;
     letter-spacing: 1px;
-    border: 1px solid black width : 150 %;
     height: 50px;
+    width: 100%;
 }
 
 .search {
@@ -174,7 +179,6 @@ input, textarea {
     height: 100%;
     padding: 10px 10px;
     background: none;
-    background-image: none;
     border: 1px solid #a0b3b0;
     color: #ffffff;
     border-radius: 0;
@@ -242,14 +246,13 @@ textarea {
     transition: all 0.5s ease;
     -webkit-appearance: none;
     display: inline-block;
-    padding: 15px 25px;
+    padding: 7px 35px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
-    border: none;
-    border-radius: 2px;
+    border-radius: 50px;
     width: 20em;
-    height: 3em;
+    /*height: 3em;*/
 }
 
 .button:hover, .button:focus {

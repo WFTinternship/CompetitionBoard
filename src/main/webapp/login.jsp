@@ -16,7 +16,7 @@
     <ul class="tab-group">
         <li class="tab active"><a href="#signup">Sign Up</a></li>
         <li class="tab"><a href="#login">Log In</a></li>
-          </ul>
+    </ul>
 
     <div class="tab-content">
         <div id="signup">
@@ -35,14 +35,14 @@
                 <div class="field-wrap">
                     <label>Confirm Password<span class="req">*</span></label>
                     <input type="password" name="passwordConfirmSignIn" required autocomplete="off"/>
-               </div>
+                </div>
 
                 <button type="submit" class="button button-block">Sign Up</button>
             </form>
         </div>
 
         <div id="login">
-           <h1>Welcome Back!</h1>
+            <h1>Welcome Back!</h1>
             <%--Log In Form--%>
             <form action="login" method="post">
                 <div class="field-wrap">
