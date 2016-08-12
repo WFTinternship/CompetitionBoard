@@ -63,14 +63,11 @@
     <!-- Blog Entries Column -->
     <div class="col-md-8">
         <h1 class="page-header">T o u r n a m e n t s</h1>
-
         <div class="container">
-
             <%
                 List<Tournament> tournamentList = new TournamentServiceImpl().getTournamentList();
                 int sizeList = tournamentList.size();
             %>
-
             <table class="tournamentTable">
                 <tr>
                     <th>No</th>

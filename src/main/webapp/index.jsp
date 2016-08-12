@@ -34,13 +34,15 @@
     <![endif]-->
 </head>
 
-<% String loginUserStr = request.getParameter("usernameLogin");
-    if (loginUserStr == null) {
-        loginUserStr = "";
-    }
-    String userNameSignInStr = request.getParameter("userNameSignIn");
+<%
+    String userNameSignInStr = (String) session.getAttribute("userNameSignIn");
     if (userNameSignInStr == null) {
         userNameSignInStr = "";
+    }
+
+    String loginUserStr = (String) session.getAttribute("usernameLogin");
+    if (loginUserStr == null) {
+        loginUserStr = "";
     }
 %>
 

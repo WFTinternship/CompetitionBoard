@@ -3,7 +3,7 @@ package com.workfront.intern.cb.selenium.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class LoginPopup extends GenericPage {
+public class LoginForm extends GenericPage {
 
     public void typeUsername(String username) throws InterruptedException {
         WebElement usernameField = getWebDriver().findElement(By.id("userNameSignIn"));

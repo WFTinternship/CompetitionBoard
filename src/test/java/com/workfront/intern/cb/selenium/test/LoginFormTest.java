@@ -1,7 +1,7 @@
 package com.workfront.intern.cb.selenium.test;
 
 import com.workfront.intern.cb.selenium.pages.HomePage;
-import com.workfront.intern.cb.selenium.pages.LoginPopup;
+import com.workfront.intern.cb.selenium.pages.LoginForm;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,12 +9,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-public class LoginPopupTest {
-    private static LoginPopup loginPopup;
+public class LoginFormTest {
+    private static LoginForm loginPopup;
     private static HomePage homePage;
     @BeforeClass
     public static void setUp(){
-        loginPopup = new LoginPopup();
+        loginPopup = new LoginForm();
         homePage = new HomePage();
         loginPopup.init();
     }

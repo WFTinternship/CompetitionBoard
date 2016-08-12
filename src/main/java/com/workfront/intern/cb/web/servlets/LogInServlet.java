@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class LogInServlet extends HttpServlet {
     @Override
@@ -26,10 +28,22 @@ public class LogInServlet extends HttpServlet {
         String getManagerLoginStr = manager.getLogin();
         String getManagerPasswordStr = manager.getPassword();
 
+        PrintWriter out = response.getWriter();
+
         if (login.equals(getManagerLoginStr) && passwordEncrypt.equals(getManagerPasswordStr)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("usernameLogin", login);
             request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("/error500.jsp");
         }
+
+        if (login.equals(getManagerLoginStr)) {
+            out.println("Sorry, username or password error!");
+            request.getRequestDispatcher("/search-result.jsp").include(request, response);
+        }
+
+//        else {
+//            System.out.println("Sorry, username or password error!");
+//            request.getRequestDispatcher("/login.jsp").include(request, response);
+//        }
     }
 }
