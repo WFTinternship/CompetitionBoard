@@ -23,7 +23,7 @@
             <h1>Sign Up for Free</h1>
 
             <%--SignUp Form--%>
-            <form action="signin" method="post">
+            <form action="signin" name="signUpForm" method="post">
                 <div class="field-wrap">
                     <label>Username/Login<span class="req">*</span></label>
                     <input type="text" name="userNameSignIn" required autocomplete="off"/>
@@ -44,7 +44,7 @@
         <div id="login">
             <h1>Welcome Back!</h1>
             <%--Log In Form--%>
-            <form action="login" method="post">
+            <form action="login" name="logInForm" method="post">
                 <div class="field-wrap">
                     <label>Username/Login<span class="req">*</span></label>
                     <input type="text" name="usernameLogin" required autocomplete="off"/>
@@ -57,7 +57,7 @@
                 <%--Password Forgot--%>
                 <p class="forgot"><a href="#">Forgot Password?</a></p>
 
-                <button class="button button-block">Log In</button>
+                <button class="button button-block" name="logInButton">Log In</button>
             </form>
         </div>
     </div>

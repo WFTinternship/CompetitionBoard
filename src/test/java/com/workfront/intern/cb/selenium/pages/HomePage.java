@@ -10,15 +10,17 @@ public class HomePage extends GenericPage {
     }
 
     public WebElement clickLogin() throws InterruptedException {
-        WebElement loginButton = getWebDriver().findElement(By.cssSelector("#login_button"));
-        loginButton.click();
-        return getLoginPopup();
+        WebElement logInFormBtn = getWebDriver().findElement(By.name("logInMenuBtn"));
+        logInFormBtn.click();
+        WebElement logInBtn = getWebDriver().findElement(By.cssSelector("a[href='#login']"));
+        logInBtn.click();
+
+        return getLoginForm();
     }
 
-    public WebElement getLoginPopup() throws InterruptedException {
+    public WebElement getLoginForm() throws InterruptedException {
         Thread.sleep(2000);
-        WebElement loginPopup = getWebDriver().findElement(By.cssSelector(".login_dialog"));
-        return loginPopup;
+        return getWebDriver().findElement(By.cssSelector(".form"));
     }
 
     public WebElement getLogoutButton() {

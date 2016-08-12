@@ -27,11 +27,11 @@ public class LoginPopupTest {
     @Test
     public void login_success() throws InterruptedException {
         homePage.clickLogin();
-        loginPopup.typeUsername("turshujyan@gmail.com");
-        loginPopup.typePassword("turshujyan");
+        loginPopup.typeUsername("artur");
+        loginPopup.typePassword("123456");
         loginPopup.clickSignin();
 
-        assertFalse("login popup is not closed", homePage.getLoginPopup().isDisplayed());
+        assertFalse("login popup is not closed", homePage.getLoginForm().isDisplayed());
         assertNotNull("loguot button is not displayed", homePage.getLogoutButton());
     }
 
