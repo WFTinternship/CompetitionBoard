@@ -33,6 +33,7 @@ public class LogInServlet extends HttpServlet {
         if (login.equals(getManagerLoginStr) && passwordEncrypt.equals(getManagerPasswordStr)) {
             HttpSession session = request.getSession();
             session.setAttribute("usernameLogin", login);
+
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
 

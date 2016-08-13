@@ -10,6 +10,8 @@
 
     <title>Competition Board</title>
 
+    <script src="js/login.js"></script>
+
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -51,7 +53,8 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand page-scroll" href="#page-top">Home  <%= loginUserStr%> <%= userNameSignInStr%>
+            <a class="navbar-brand page-scroll" href="#page-top">Home</a>
+            <a class="navbar-brand page-scroll"><%= loginUserStr%> <%= userNameSignInStr%>
             </a>
         </div>
 
@@ -65,12 +68,12 @@
                 <li><a class="page-scroll" href="#contact">Contact Us</a></li>
 
                 <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
-                <li><a href="login.jsp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="login.jsp" name="logInMenuBtn">Log In</a></li>
+                <li><a href="login.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
+                <li><a href="login.jsp?action=logIn" name="logInMenuBtn">Log In</a></li>
                 <%} else if (loginUserStr != null) { %>
-                <li><a href="logout" name="signUpMenuBtn">Log Out </a></li>
+                <li><a href="logout">Log Out </a></li>
                 <%} else if ((userNameSignInStr != null)) { %>
-                <li><a href="logout" name="signUpMenuBtn">Log Out </a></li>
+                <li><a href="logout">Log Out </a></li>
                 <%}%>
             </ul>
         </div>
@@ -86,9 +89,10 @@
                 <div class="row">
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                            <input type="text" class="  search-query form-control" placeholder="Tournament Search" />
-                <span class="input-group-btn">
-                    <button class="btn btn-danger" type="button">
+                            <input type="text" class="  search-query form-control" name="searchStr" placeholder="Search tournaments" required/>
+
+                            <span class="input-group-btn">
+                    <button class="btn btn-danger" type="submit" onclick="submitForm()" name="searchStr">
                         <span class=" glyphicon glyphicon-search"></span>
                     </button>
                 </span>
@@ -96,8 +100,14 @@
                     </div>
                 </div>
             </div>
-
         </form>
+
+            <br>
+            <%
+                String login_msg = (String) request.getAttribute("no-result");
+                if (login_msg != null)
+                    out.println("<font color=red size=4px>" + login_msg + "</font>");
+            %>
 
         <%--tournament-creates--%>
         <form action="tournament.jsp" method="get" class="container">

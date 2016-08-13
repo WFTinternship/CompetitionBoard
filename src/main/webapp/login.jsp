@@ -11,11 +11,19 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
+<%
+    String action = request.getParameter("action");
+    String activeSignUp = "";
+    String activeSignIn = "";
+    if (action.equals("signUp")) activeSignUp = " active";
+    if (action.equals("logIn")) activeSignIn = " active";
+%>
+
 <body class="backgroundLogin">
 <div class="form">
     <ul class="tab-group">
-        <li class="tab active"><a href="#signup">Sign Up</a></li>
-        <li class="tab"><a href="#login">Log In</a></li>
+        <li class="tab<%=activeSignUp%>" id="tabSignUp"><a href="#signup">Sign Up</a></li>
+        <li class="tab<%=activeSignIn%>" id="tabLogin"><a href="#login">Log In</a></li>
     </ul>
 
     <div class="tab-content">

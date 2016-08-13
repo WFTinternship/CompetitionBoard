@@ -1,3 +1,9 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
+<%@ page import="com.workfront.intern.cb.service.ManagerServiceImpl" %>
+<%@ page import="com.workfront.intern.cb.common.Manager" %>
+<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Matches</title>
+    <title>Your Tournaments</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -18,12 +24,14 @@
     <link href="css/creative.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
-<body class="backgroundMatch">
+<body class="backgroundTournament">
 
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -51,138 +59,52 @@
     </div>
 </nav>
 
-<!-- Page Content -->
-<div class="container">
 
-    <div class="row">
+<div class="row">
     <!-- Blog Entries Column -->
     <div class="col-md-8">
-    <!-- First Blog Post -->
-    <h2>
-    <a href="#">Blog Post Title</a>
-    </h2>
-    <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>
-    <hr>
-    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-    <hr>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus
-    inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum
-    officiis rerum.</p>
-    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row content">
+                    <div class="col-sm-3 sidenav">
 
-    <hr>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li>
+                                <button class="btn btn-danger"><B>CREATE A MATCH</B></button>
+                            </li>
+                        </ul>
+                        <br>
+                    </div>
 
-    <!-- Second Blog Post -->
-    <h2>
-    <a href="#">Blog Post Title</a>
-    </h2>
-    <p class="lead">
-    by <a href="index.php">Start Bootstrap</a>
-    </p>
-    <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>
-    <hr>
-    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-    <hr>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, quasi, fugiat, asperiores harum
-    voluptatum tenetur a possimus nesciunt quod accusamus saepe tempora ipsam distinctio minima dolorum
-    perferendis labore impedit voluptates!</p>
-    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <div class="col-sm-9">
+                        <h2>Your Matches</h2>
+                        <hr>
 
-    <hr>
+                        <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                                <input type="text" class="  search-query form-control"
+                                       placeholder="Search your match"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button">
+                        <span class=" glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Third Blog Post -->
-    <h2>
-    <a href="#">Blog Post Title</a>
-    </h2>
-    <p class="lead">
-    by <a href="index.php">Start Bootstrap</a>
-    </p>
-    <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>
-    <hr>
-    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-    <hr>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, voluptates, voluptas dolore ipsam
-    cumque quam veniam accusantium laudantium adipisci architecto itaque dicta aperiam maiores provident id
-    incidunt autem. Magni, ratione.</p>
-    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <!-- Footer -->
+            <footer id="footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright &copy; Artur Babayan 2016</p>
+                    </div>
+                </div>
+            </footer>
 
-    <hr>
-
-    <!-- Pager -->
-    <ul class="pager">
-    <li class="previous">
-    <a href="#">&larr; Older</a>
-    </li>
-    <li class="next">
-    <a href="#">Newer &rarr;</a>
-    </li>
-    </ul>
-
-    </div>
-
-    <!-- Blog Sidebar Widgets Column -->
-    <div class="col-md-4">
-
-
-
-    <!-- Blog Categories Well -->
-    <div class="well">
-    <h4>Blog Categories</h4>
-    <div class="row">
-    <div class="col-lg-6">
-    <ul class="list-unstyled">
-    <li><a href="#">Category Name</a>
-    </li>
-    <li><a href="#">Category Name</a>
-    </li>
-    <li><a href="#">Category Name</a>
-    </li>
-    <li><a href="#">Category Name</a>
-    </li>
-    </ul>
-    </div>
-    <!-- /.col-lg-6 -->
-    <div class="col-lg-6">
-    <ul class="list-unstyled">
-    <li><a href="#">Category Name</a>
-    </li>
-    <li><a href="#">Category Name</a>
-    </li>
-    <li><a href="#">Category Name</a>
-    </li>
-    <li><a href="#">Category Name</a>
-    </li>
-    </ul>
-    </div>
-    <!-- /.col-lg-6 -->
-    </div>
-    <!-- /.row -->
-    </div>
-
-    <!-- Side Widget Well -->
-    <div class="well">
-    <h4>Side Widget Well</h4>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus
-    laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-    </div>
-    </div>
-</div>
-
-<!-- Footer -->
-<footer>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; Artur Babayan 2016</p>
         </div>
-    </div>
-</footer>
 
-</div>
-
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

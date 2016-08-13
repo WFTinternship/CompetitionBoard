@@ -26,6 +26,14 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
     }
 });
 
+function submitForm() {
+    var searchStr = document.getElementById("searchStr").value;
+
+    if (searchStr != null) {
+        document.forms["loginForm"].submit();
+    }
+}
+
 $('.tab a').on('click', function (e) {
 
     e.preventDefault();

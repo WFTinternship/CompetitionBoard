@@ -15,8 +15,10 @@ html {
 }
 
 .backgroundTournament {
-    background: url("/img/background/tournamentBg.jpg") no-repeat;
+    /*background: url("/img/background/tournamentBg.jpg") repeat;*/
+    background-color: #838383;
     background-size: 100% 110%;
+
 }
 
 .backgroundMatch {
@@ -54,13 +56,41 @@ html {
     border-radius: 2px;
 }
 
+.createTournamentBtn {
+    text-decoration: none;
+    font-size: 15px;
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+    margin-top: 5px;
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
 .tournamentTable {
-    font-size: 20px;
-    /*text-align: center;*/
+    text-align: center;
     color: #ffffff;
     letter-spacing: 1px;
     height: 50px;
-    width: 100%;
+    width: 130%;
+    margin-top: -35px;
+    border: 1px solid black;
+    padding-top: 3px;
+}
+
+.searchTblResultTh, tr, td, th {
+    text-align: center;
+    border: 1px solid black;
+    padding-top: 3px;
+}
+
+#footer {
+    position:absolute;
+    bottom:0;
+    height:70px;
+    width:100%;
+    text-align: left;
+
 }
 
 .search {
@@ -73,6 +103,7 @@ html {
 a {
     text-decoration: none;
     color: #E89980;
+    font-size: 15px;
     -webkit-transition: .5s ease;
     transition: .5s ease;
 }
@@ -239,7 +270,7 @@ textarea {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .1em;
-    background: #FFA500;
+    background: #E89980;
     color: #ffffff;
     -webkit-transition: all 0.5s ease;
     transition: all 0.5s ease;
@@ -259,7 +290,7 @@ textarea {
 }
 
 .buttonCustom:hover, .buttonCustom:focus {
-    background: #FF8C00;
+    background: #e87b6e;
 }
 
 .button-block {

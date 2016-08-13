@@ -67,7 +67,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
-            ps.setString(1, "%" + String.format("%s", inputStr) + "%");
+            ps.setString(1, String.format("%s", inputStr) + "%");
 
             // Execute statement
             rs = ps.executeQuery();
