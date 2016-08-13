@@ -3,6 +3,7 @@ package com.workfront.intern.cb.web.servlets;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.util.StringHelper;
 import com.workfront.intern.cb.service.ManagerServiceImpl;
+import com.workfront.intern.cb.util.Params;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,16 +31,22 @@ public class LogInServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
+        /**
+         * Check login and password for LogIn system
+         */
         if (login.equals(getManagerLoginStr) && passwordEncrypt.equals(getManagerPasswordStr)) {
             HttpSession session = request.getSession();
             session.setAttribute("usernameLogin", login);
 
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
         }
 
+        /**
+         * Check login and password for LogIn system
+         */
         if (login.equals(getManagerLoginStr)) {
             out.println("Sorry, username or password error!");
-            request.getRequestDispatcher("/search-result.jsp").include(request, response);
+            request.getRequestDispatcher(Params.PAGE_SEARCH_RESULT).include(request, response);
         }
 
 //        else {
