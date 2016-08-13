@@ -383,9 +383,9 @@ header .header-content .header-content-inner p {
 }
 
 .btn {
-    border: none;
-    border-radius: 300px;
-    font-weight: 700;
+    /*border: none;*/
+    /*border-radius: 300px;*/
+    /*font-weight: 700;*/
     text-transform: uppercase
 }
 

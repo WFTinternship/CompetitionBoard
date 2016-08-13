@@ -239,7 +239,7 @@ textarea {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .1em;
-    background: #E89980;
+    background: #FFA500;
     color: #ffffff;
     -webkit-transition: all 0.5s ease;
     transition: all 0.5s ease;
@@ -259,7 +259,7 @@ textarea {
 }
 
 .buttonCustom:hover, .buttonCustom:focus {
-    background: #e86273;
+    background: #FF8C00;
 }
 
 .button-block {
