@@ -1,9 +1,4 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.common.Tournament" %>
-<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
-<%@ page import="com.workfront.intern.cb.service.ManagerServiceImpl" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,14 +47,13 @@
                     <%--data-target="#bs-example-navbar-collapse-1">--%>
                 <%--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>--%>
             <%--</button>--%>
-            <a class="navbar-brand page-scroll" href="#page-top">Home</a>
+            <a class="navbar-brand page-scroll" href="<%=Params.PAGE_INDEX%>">Home</a>
             <a class="navbar-brand page-scroll"><%= loginUserStr%> <%= userNameSignInStr%>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <!--<li><a class="page-scroll" href="#about">About</a></li>-->
                 <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
@@ -101,8 +95,7 @@
 
                         <div id="custom-search-input">
                             <div class="input-group col-md-12">
-                                <input type="text" class="  search-query form-control"
-                                       placeholder="Search your tournament"/>
+                                <input type="text" class="  search-query form-control" placeholder="Search your tournament"/>
                 <span class="input-group-btn">
                     <button class="btn btn-danger" type="button">
                         <span class=" glyphicon glyphicon-search"></span>
@@ -124,6 +117,8 @@
             </footer>
 
         </div>
+        </div>
+    </div>
 
 </body>
 </html>

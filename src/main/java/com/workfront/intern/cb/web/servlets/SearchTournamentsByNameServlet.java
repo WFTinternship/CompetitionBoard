@@ -2,7 +2,7 @@ package com.workfront.intern.cb.web.servlets;
 
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.TournamentServiceImpl;
-import com.workfront.intern.cb.util.Params;
+import com.workfront.intern.cb.web.util.Params;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * gets tournament list by specific tournament name
  */
-public class SearchingTournamentsByNameServlet extends HttpServlet {
+public class SearchTournamentsByNameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,7 +23,7 @@ public class SearchingTournamentsByNameServlet extends HttpServlet {
         int listSize = tournamentList.size();
 
         if (listSize == 0) {
-            request.setAttribute("no-result", "No Matches Found");
+            request.setAttribute("noSearchResult", "No tournament/s found");
             request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
         } else {
             request.setAttribute("tournamentList", tournamentList);

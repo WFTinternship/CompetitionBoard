@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.util;
+package com.workfront.intern.cb.web.util;
 
 public class Params {
 

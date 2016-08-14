@@ -39,10 +39,10 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
-    <!--SearchingTournamentsByNameServlet-->
+    <!--SearchTournamentsByNameServlet-->
     <servlet>
         <servlet-name>TournamentSearchServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.SearchingTournamentsByNameServlet</servlet-class>
+        <servlet-class>com.workfront.intern.cb.web.servlets.SearchTournamentsByNameServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TournamentSearchServlet</servlet-name>

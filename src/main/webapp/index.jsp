@@ -1,3 +1,4 @@
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +66,7 @@
                 <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
-                <li><a class="page-scroll" href="#contact">Contact Us</a></li>
+                <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
 
                 <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
                 <li><a href="login.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
@@ -89,7 +90,8 @@
                 <div class="row">
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                            <input type="text" class="  search-query form-control" name="searchStr" placeholder="Search tournaments" required/>
+                            <input type="text" class="  search-query form-control" name="searchStr"
+                                   placeholder="Search tournaments" required/>
 
                             <span class="input-group-btn">
                     <button class="btn btn-danger" type="submit" onclick="submitForm()" name="searchStr">
@@ -102,21 +104,32 @@
             </div>
         </form>
 
-            <br>
-            <%
-                String login_msg = (String) request.getAttribute("no-result");
-                if (login_msg != null)
-                    out.println("<font color=red size=4px>" + login_msg + "</font>");
-            %>
+        <br>
 
-        <%--tournament-creates--%>
+        <%
+            String login_msg = (String) request.getAttribute("noSearchResult");
+            if (login_msg != null)
+                out.println("<font color=red size=4px>" + login_msg + "</font>");
+        %>
+
+            <%--ToDo--%>
+        <%--TournamentCreatButton--%>
+        <%
+            String str1 = (String) session.getAttribute("loginUserStr");
+            String str2 = (String) session.getAttribute("userNameSignInStr");
+
+            if (str1 == null && str2 == null) {
+
+            }
+        %>
         <form action="tournament.jsp" method="get" class="container">
             <div class="textarea">
-                <button type="submit" class="buttonCustom">Create a tournament</button>
+                <button type="submit" class="buttonCustom" >Create a tournament</button>
             </div>
         </form>
     </div>
 </header>
+
 
 <section class="no-padding" id="portfolio">
     <div class="container-fluid">
@@ -249,12 +262,12 @@
 <script src="vendor/jquery/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<%--<script src="vendor/bootstrap/js/bootstrap.min.js"></script>--%>
 
 <!-- Plugin JavaScript -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
-<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+<%--<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>--%>
 
 <!-- Theme JavaScript -->
 <script src="js/creative.min.js"></script>
