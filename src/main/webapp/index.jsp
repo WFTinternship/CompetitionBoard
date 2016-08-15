@@ -126,11 +126,11 @@
                 idValue = "unhide";
             }
         %>
-        <form action="add-tournament.jsp" method="get" class="container">
+        <form action="tournament.jsp" method="get" class="container">
             <div class="textarea">
-                <button type="submit" class="buttonCustom" id=<%=idValue%>>Create a tournament
-                </button>
+                <button type="submit" class="buttonCustom" id=<%=idValue%>>Create a tournament</button>
             </div>
+
         </form>
 
 

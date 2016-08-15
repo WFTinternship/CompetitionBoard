@@ -41,9 +41,8 @@ public class LogInServlet extends HttpServlet {
             String loginFromDb = manager.getLogin();
             String passwordFromDb = manager.getPassword();
             PrintWriter out = response.getWriter();
-            /**
-             * Check login and password for LogIn system
-             */
+
+            // Check login and password for LogIn system
             if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb))
 
             {
@@ -52,17 +51,15 @@ public class LogInServlet extends HttpServlet {
 
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
-            /**
-             * Return wrong message
-             */
-            if (loginInput.equals(loginFromDb))
 
-            {
+            // Return wrong message where username is invalid
+            if (loginInput.equals(loginFromDb)) {
                 out.println("Sorry, username or password error!");
                 request.getRequestDispatcher(Params.PAGE_ERROR_500).include(request, response);
             }
         }
 
+        // Checking login
         if (signInLoginInput != null) {
             signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
             String passwordSignInInput = request.getParameter(Params.FORM_PARAM_SIGN_IN_PASSWORD);

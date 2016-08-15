@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>Add tournament</title>
+    <title>Add tournament form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +23,7 @@
         <div class="form-group">
             <label for="name" class="col-sm-3 control-label">Name</label>
             <div class="col-sm-9">
-                <input type="text" id="name" placeholder="Tournament Name" class="form-control" autofocus>
+                <input type="text" id="name" name="name" placeholder="Tournament Name" class="form-control" autofocus>
             </div>
         </div>
 
@@ -50,7 +49,7 @@
         <div class="form-group">
             <label for="location" class="col-sm-3 control-label">Location</label>
             <div class="col-sm-9">
-                <input type="text" id="location" placeholder="Location" class="form-control">
+                <input type="text" id="location" name="location" placeholder="Location" class="form-control">
             </div>
         </div>
 

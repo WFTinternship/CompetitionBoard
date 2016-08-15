@@ -14,10 +14,8 @@ public class AddTournamentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-
-        Tournament tournament = null;
-        String name = (String) request.getAttribute("name");
+        Tournament tournament = new Tournament();
+        String name = request.getParameter("name");
         String location = request.getParameter("location");
         int id = (int) request.getAttribute("manager_id");
 
