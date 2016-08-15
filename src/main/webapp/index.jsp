@@ -120,14 +120,13 @@
 
         <%
             String idValue = "";
-
             if ((loginUserStr.equals("") && (userNameSignInStr.equals("")))) {
                 idValue = "hide";
             } else if ((loginUserStr != null) || (loginUserStr != null)) {
                 idValue = "unhide";
             }
         %>
-        <form action="tournament.jsp" method="get" class="container">
+        <form action="add-tournament.jsp" method="get" class="container">
             <div class="textarea">
                 <button type="submit" class="buttonCustom" id=<%=idValue%>>Create a tournament
                 </button>

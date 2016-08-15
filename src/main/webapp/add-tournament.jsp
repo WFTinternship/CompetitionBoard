@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>Bootstrap 3 registration form example - Bootsnipp.com</title>
+    <title>Add tournament</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +16,7 @@
 
 <body class="backgroundTournament">
 <div class="container">
+
     <form action="add" class="form-horizontal" role="form" method="get">
         <h2>New Tournament</h2>
 

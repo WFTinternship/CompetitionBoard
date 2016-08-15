@@ -29,6 +29,7 @@ public class LogInServlet extends HttpServlet {
         HttpSession session2 = request.getSession();
         session2.setAttribute("signin", Params.FORM_PARAM_SIGN_IN);
 
+
         if (loginInput != null) {
             loginInput = request.getParameter(Params.FORM_PARAM_LOG_IN);
             String passwordInput = request.getParameter(Params.FORM_PARAM_LOG_IN_PASSWORD);
