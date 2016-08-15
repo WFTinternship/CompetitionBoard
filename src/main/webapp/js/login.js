@@ -26,23 +26,23 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
     }
 });
 
-function submitForm() {
-    var searchStr = document.getElementById("searchStr").value;
-
-    if (searchStr != null) {
-        document.forms["loginForm"].submit();
-    }
-}
-
+//Select active tab
 $('.tab a').on('click', function (e) {
-
     e.preventDefault();
+    loadTab(this);
+});
 
-    $(this).parent().addClass('active');
-    $(this).parent().siblings().removeClass('active');
+$(document).ready(function () {
+    // debugger;
+    loadTab($('div.form').find('li.active>a'));
+});
 
-    target = $(this).attr('href');
+function loadTab(param) {
+    $(param).parent().addClass('active');
+    $(param).parent().siblings().removeClass('active');
+
+    target = $(param).attr('href');
 
     $('.tab-content > div').not(target).hide();
     $(target).fadeIn(600);
-});
+}

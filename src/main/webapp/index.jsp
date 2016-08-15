@@ -11,7 +11,8 @@
 
     <title>Competition Board</title>
 
-    <script src="js/login.js"></script>
+    <%--Custom JS--%>
+    <script src="js/custom.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,6 +38,7 @@
     <![endif]-->
 </head>
 
+<%--Gets specific atributes from http session--%>
 <%
     String userNameSignInStr = (String) session.getAttribute("userNameSignIn");
     if (userNameSignInStr == null) {
@@ -49,13 +51,13 @@
     }
 %>
 
-<body id="page-top">
+<body onload="hiddenBtn()" id="page-top" >
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand page-scroll" href="#page-top">Home</a>
-            <a class="navbar-brand page-scroll"><%= loginUserStr%> <%= userNameSignInStr%>
+            <a class="navbar-brand page-scroll"><%= userNameSignInStr%> <%= loginUserStr%>
             </a>
         </div>
 
@@ -63,17 +65,17 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <!--<li><a class="page-scroll" href="#about">About</a></li>-->
-                <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
+                <li><a class="page-scroll" href="all-tournaments.jsp">Tournaments</a></li>
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
 
                 <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
                 <li><a href="login.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="login.jsp?action=logIn" name="logInMenuBtn">Log In</a></li>
-                <%} else if (loginUserStr != null) { %>
+                <li><a href="login.jsp?action=logIn" name="logInMenuBtn" onclick="autoClick()">Log In</a></li>
+                <%} else if (userNameSignInStr != null) { %>
                 <li><a href="logout">Log Out </a></li>
-                <%} else if ((userNameSignInStr != null)) { %>
+                <%} else if ((loginUserStr != null)) { %>
                 <li><a href="logout">Log Out </a></li>
                 <%}%>
             </ul>
@@ -106,30 +108,35 @@
 
         <br>
 
+        <%--Read attribute from request--%>
         <%
-            String login_msg = (String) request.getAttribute("noSearchResult");
-            if (login_msg != null)
-                out.println("<font color=red size=4px>" + login_msg + "</font>");
+            String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");
+            if (searchResultMsg != null)
+                out.println("<font color=red size=4px>" + searchResultMsg + "</font>");
         %>
 
-            <%--ToDo--%>
+        <%--ToDo--%>
         <%--TournamentCreatButton--%>
+
         <%
-            String str1 = (String) session.getAttribute("loginUserStr");
-            String str2 = (String) session.getAttribute("userNameSignInStr");
+            String idValue = "";
 
-            if (str1 == null && str2 == null) {
-
+            if ((loginUserStr.equals("") && (userNameSignInStr.equals("")))) {
+                idValue = "hide";
+            } else if ((loginUserStr != null) || (loginUserStr != null)) {
+                idValue = "unhide";
             }
         %>
         <form action="tournament.jsp" method="get" class="container">
             <div class="textarea">
-                <button type="submit" class="buttonCustom" >Create a tournament</button>
+                <button type="submit" class="buttonCustom" id=<%=idValue%>>Create a tournament
+                </button>
             </div>
         </form>
+
+
     </div>
 </header>
-
 
 <section class="no-padding" id="portfolio">
     <div class="container-fluid">

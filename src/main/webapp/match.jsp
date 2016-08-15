@@ -96,15 +96,17 @@
             </div>
 
             <!-- Footer -->
-            <footer id="footer">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>Copyright &copy; Artur Babayan 2016</p>
-                    </div>
-                </div>
-            </footer>
+            <%--<footer id="footer">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-lg-12">--%>
+                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</footer>--%>
 
         </div>
+    </div>
+</div>
 
 </body>
 </html>

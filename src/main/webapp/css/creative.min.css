@@ -50,8 +50,8 @@ a:focus, a:hover {
 p {
     font-size: 16px;
     line-height: 1.5;
-    color: white;
-    margin-bottom: 500px
+    color: #000000;
+    /*margin-bottom: 500px*/
 }
 
 .bg-primary {

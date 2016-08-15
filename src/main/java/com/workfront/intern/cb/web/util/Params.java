@@ -17,13 +17,22 @@ public class Params {
     // Scope parameters
     public static final String SESSION_CONTEXT_PARAM = "user_session_context";
 
-    // Forms parameters, manager
+    // Forms parameters, new manager
+    public static final String FORM_PARAM_SIGN_IN = "userNameSignIn";
+    public static final String FORM_PARAM_SIGN_IN_PASSWORD = "passwordSignIn";
+
+    // Forms parameters, existing manager
+    public static final String FORM_PARAM_LOG_IN = "usernameLogin";
+    public static final String FORM_PARAM_LOG_IN_PASSWORD = "passwordLogin";
+
+    // Entries id
     public static final String FORM_PARAM_MANAGER_ID = "manager_id";
-    public static final String FORM_PARAM_LOGIN = "login";
-    public static final String FORM_PARAM_PASSWORD = "password";
+    public static final String FORM_PARAM_TOURNAMENT_ID = "tournament_id";
+    public static final String FORM_PARAM_MEDIA_ID = "media_id";
+    public static final String FORM_PARAM_GROUP_ID = "group_id";
+    public static final String FORM_PARAM_MATCH_ID = "match_id";
 
     // Forms parameters, tournament
-    public static final String FORM_PARAM_TOURNAMENT_ID = "tournament_id";
     public static final String FORM_PARAM_TOURNAMENT_NAME = "tournament_name";
     public static final String FORM_PARAM_TOURNAMENT_START_DATE = "start_date";
     public static final String FORM_PARAM_TOURNAMENT_END_DATE = "end_date";
@@ -33,20 +42,17 @@ public class Params {
     public static final String FORM_PARAM_TOURNAMENT_MANAGER_ID = "manager_id";
 
     // Forms parameters, group
-    public static final String FORM_PARAM_GROUP_ID = "group_id";
     public static final String FORM_PARAM_PARTICIPANTS_COUNT = "participants_count";
     public static final String FORM_PARAM_ROUND = "round";
     public static final String FORM_PARAM_NEXT_ROUND_PARTICIPANTS = "next_round_participants";
 
     // Forms parameters, match
-    public static final String FORM_PARAM_MATCH_ID = "match_id";
     public static final String FORM_PARAM_PARTICIPANT_1_ID = "participant_1_id";
     public static final String FORM_PARAM_PARTICIPANT_2_ID = "participant_2_id";
     public static final String FORM_PARAM_SCORE_PARTICIPANT_1 = "score_participant_1";
     public static final String FORM_PARAM_SCORE_PARTICIPANT_2 = "score_participant_2";
 
     // Forms parameters, media
-    public static final String FORM_PARAM_MEDIA_ID = "media_id";
     public static final String FORM_PARAM_PHOTO = "photo";
     public static final String FORM_PARAM_VIDEO = "video";
 

@@ -23,7 +23,7 @@ public class SearchTournamentsByNameServlet extends HttpServlet {
         int listSize = tournamentList.size();
 
         if (listSize == 0) {
-            request.setAttribute("noSearchResult", "No tournament/s found");
+            request.setAttribute("noSearchResultMsg", "No tournament/s found");
             request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
         } else {
             request.setAttribute("tournamentList", tournamentList);

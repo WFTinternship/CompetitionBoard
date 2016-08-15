@@ -8,8 +8,7 @@
         <session-timeout>30</session-timeout>
     </session-config>
 
-
-    <!--SignIn-->
+        <!--SignIn-->
     <servlet>
         <servlet-name>SignInServlet</servlet-name>
         <servlet-class>com.workfront.intern.cb.web.servlets.SignInServlet</servlet-class>
@@ -49,22 +48,33 @@
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
 
+    <!--AddTournamentServlet-->
+    <servlet>
+        <servlet-name>AddTournamentServlet</servlet-name>
+        <servlet-class>com.workfront.intern.cb.web.servlets.AddTournamentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddTournamentServlet</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+
+
 
     <!--Errors handling-->
     <!--<error-page>-->
         <!--<exception-type>java.lang.Throwable</exception-type>-->
         <!--<location>/error.jsp</location>-->
     <!--</error-page>-->
-    <!--<error-page>-->
-        <!--<error-code>401</error-code>-->
-        <!--<location>/error401.jsp</location>-->
-    <!--</error-page>-->
-    <!--<error-page>-->
-        <!--<error-code>404</error-code>-->
-        <!--<location>/error404.jsp</location>-->
-    <!--</error-page>-->
-    <!--<error-page>-->
-        <!--<error-code>500</error-code>-->
-        <!--<location>/error500.jsp</location>-->
-    <!--</error-page>-->
+    <error-page>
+        <error-code>401</error-code>
+        <location>/error401.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error500.jsp</location>
+    </error-page>
 </web-app>

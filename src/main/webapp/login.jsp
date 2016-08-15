@@ -9,6 +9,9 @@
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/custom.js"></script>
+
 </head>
 
 <%
@@ -22,8 +25,8 @@
 <body class="backgroundLogin">
 <div class="form">
     <ul class="tab-group">
-        <li class="tab<%=activeSignUp%>" id="tabSignUp"><a href="#signup">Sign Up</a></li>
-        <li class="tab<%=activeSignIn%>" id="tabLogin"><a href="#login">Log In</a></li>
+        <li class="tab<%=activeSignUp%>" id="hrefSignIn"><a href="#signup" id="hrefSignInId">Sign Up</a></li>
+        <li class="tab<%=activeSignIn%>"><a href="#login" id="hrefLogInId">Log In</a></li>
     </ul>
 
     <div class="tab-content">
@@ -31,7 +34,7 @@
             <h1>Sign Up for Free</h1>
 
             <%--SignUp Form--%>
-            <form action="signin" name="signUpForm" method="post">
+            <form action="login" name="signUpForm" method="post">
                 <div class="field-wrap">
                     <label>Username/Login<span class="req">*</span></label>
                     <input type="text" name="userNameSignIn" required autocomplete="off"/>
@@ -49,9 +52,9 @@
             </form>
         </div>
 
+        <%--LogIn Form--%>
         <div id="login">
             <h1>Welcome Back!</h1>
-            <%--Log In Form--%>
             <form action="login" name="logInForm" method="post">
                 <div class="field-wrap">
                     <label>Username/Login<span class="req">*</span></label>
@@ -71,7 +74,6 @@
     </div>
 </div>
 
-<!-- /form -->
 <script src="js/jquery-3.1.0.js"></script>
 <script src="js/login.js"></script>
 </body>

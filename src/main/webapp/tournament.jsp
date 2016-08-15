@@ -93,6 +93,63 @@
                         <h2>Your Tournaments</h2>
                         <hr>
 
+                        <div class="container">
+                            <form action="add" class="form-horizontal" role="form" method="get">
+                                <h2>New Tournament</h2>
+
+                                <%--Tournament Name--%>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-3 control-label">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="name" placeholder="Tournament Name" class="form-control" autofocus>
+                                    </div>
+                                </div>
+
+                                <%--StartDate--%>
+                                <div class="form-group">
+                                    <label for="startDate" class="col-sm-3 control-label">Start Time</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="startDate" placeholder="Start Time" class="form-control">
+                                        <span class="help-block">eg.: 2020-07-10 10:00:00 </span>
+                                    </div>
+                                </div>
+
+                                <%--EndDate--%>
+                                <div class="form-group">
+                                    <label for="endDate" class="col-sm-3 control-label">End time</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="endDate" placeholder="End time" class="form-control">
+                                        <span class="help-block">eg.: 2020-07-10 10:00:00 </span>
+                                    </div>
+                                </div>
+
+                                <%--Location--%>
+                                <div class="form-group">
+                                    <label for="location" class="col-sm-3 control-label">Location</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="location" placeholder="Location" class="form-control">
+                                    </div>
+                                </div>
+
+                                <%--TournamentFormat--%>
+                                <div class="form-group">
+                                    <label for="format" class="col-sm-3 control-label">Format</label>
+                                    <div class="col-sm-9">
+                                        <select id="format" class="form-control"> <option>Round Robin</option>
+                                            <option>Olympic</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <div class="col-sm-9 col-sm-offset-3">
+                                        <input type="submit" class="btn btn-primary btn-block">Save and continue</input>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /form -->
+                        </div>
+
                         <div id="custom-search-input">
                             <div class="input-group col-md-12">
                                 <input type="text" class="  search-query form-control" placeholder="Search your tournament"/>
@@ -108,13 +165,13 @@
             </div>
 
             <!-- Footer -->
-            <footer id="footer">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>Copyright &copy; Artur Babayan 2016</p>
-                    </div>
-                </div>
-            </footer>
+            <%--<footer id="footer">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-lg-12">--%>
+                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</footer>--%>
 
         </div>
         </div>

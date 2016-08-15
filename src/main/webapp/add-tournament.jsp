@@ -6,16 +6,17 @@
     <title>Bootstrap 3 registration form example - Bootsnipp.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <%--<link href="css/bootstrap.min.css" rel="stylesheet">--%>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <%--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">--%>
     <link href="css/style.css" rel="stylesheet">
+
 
     <script src="vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body class="backgroundTournament">
 <div class="container">
-    <form class="form-horizontal" role="form">
+    <form action="add" class="form-horizontal" role="form" method="get">
         <h2>New Tournament</h2>
 
         <%--Tournament Name--%>
@@ -31,7 +32,7 @@
             <label for="startDate" class="col-sm-3 control-label">Start Time</label>
             <div class="col-sm-9">
                 <input type="text" id="startDate" placeholder="Start Time" class="form-control">
-                <span class="help-block">eg.: 2020-07-10 10:00:00, </span>
+                <span class="help-block">eg.: 2020-07-10 10:00:00 </span>
             </div>
         </div>
 
@@ -40,7 +41,7 @@
             <label for="endDate" class="col-sm-3 control-label">End time</label>
             <div class="col-sm-9">
                 <input type="text" id="endDate" placeholder="End time" class="form-control">
-                <span class="help-block">eg.: 2020-07-10 10:00:00, </span>
+                <span class="help-block">eg.: 2020-07-10 10:00:00 </span>
             </div>
         </div>
 
@@ -64,7 +65,7 @@
         <!-- /.form-group -->
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-                <button type="submit" class="btn btn-primary btn-block">Save and continue</button>
+                <input type="submit" class="btn btn-primary btn-block">Save and continue</input>
             </div>
         </div>
     </form>
