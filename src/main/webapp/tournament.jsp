@@ -1,4 +1,10 @@
+<%@ page import="com.workfront.intern.cb.common.Manager" %>
+<%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
+<%@ page import="com.workfront.intern.cb.service.ManagerServiceImpl" %>
 <%@ page import="com.workfront.intern.cb.web.util.Params" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +26,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="js/jquery.js"></script>
+    <script src="js/login.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -43,6 +50,10 @@
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
+            <%--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"--%>
+            <%--data-target="#bs-example-navbar-collapse-1">--%>
+            <%--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>--%>
+            <%--</button>--%>
             <a class="navbar-brand page-scroll" href="<%=Params.PAGE_INDEX%>">Home</a>
             <a class="navbar-brand page-scroll"><%= loginUserStr%> <%= userNameSignInStr%>
         </div>
@@ -52,8 +63,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
-                <li><a class="page-scroll" href="#contact">Contact Us</a></li>
+                <li><a class="page-scroll" href="media.jsp">Gallery</a></li>
+                <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
 
                 <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
                 <li><a href="login.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
@@ -79,7 +90,15 @@
                         <form action="add-tournament.jsp">
                             <ul class="nav nav-pills nav-stacked">
                                 <li>
-                                    <button type="submit" class="btn btn-danger"><B>CREATE A TOURNAMENT</B></button>
+                                    <button type="submit" class="btn btn-danger"><B>CREATE TOURNAMENT</B></button>
+                                </li>
+                                <BR>
+                                <li>
+                                    <button type="submit" class="btn btn-danger"><B>EDIT TOURNAMENT</B></button>
+                                </li>
+                                <BR>
+                                <li>
+                                    <button type="submit" class="btn btn-danger"><B>DELETE TOURNAMENT</B></button>
                                 </li>
                             </ul>
                             <br>
@@ -100,10 +119,107 @@
                     </button>
                 </span>
                             </div>
+
+                            <div class="col-sm-9">
+                               <br>
+                                <%
+                                    session = request.getSession();
+                                    Manager manager = (Manager) session.getAttribute("manager");
+                                    int managerId = manager.getId();
+                                    List<Tournament> tournamentList = new TournamentServiceImpl().getTournamentListByManager(managerId);
+                                    int sizeList = tournamentList.size();
+                                %>
+                                <table class="tournamentTable">
+                                    <tr class="searchTblResultTr">
+                                        <th>No</th>
+                                        <th>TournamentId</th>
+                                        <th>TournamentName</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>Location</th>
+                                        <th>TournamentDescription</th>
+                                        <th>TournamentFormat</th>
+                                        <th>Tournament creator</th>
+                                    </tr>
+                                    <%
+                                        for (int i = 0; i < sizeList; i++) {
+                                    %>
+                                    <tr>
+                                        <%--No--%>
+                                        <td>
+                                            <%=i%>
+                                        </td>
+
+                                        <%--TournamentId--%>
+                                        <td>
+                                            <%=tournamentList.get(i).getTournamentId()%>
+                                        </td>
+
+                                        <%--TournamentName--%>
+                                        <td>
+                                            <%=tournamentList.get(i).getTournamentName()%>
+
+                                        </td>
+
+                                        <%--StartDate--%>
+                                        <td>
+                                            <%=tournamentList.get(i).getStartDate()%>
+                                        </td>
+
+                                        <%--EndDate--%>
+                                        <td>
+                                            <%=tournamentList.get(i).getEndDate()%>
+                                        </td>
+
+                                        <%--Location--%>
+                                        <td>
+                                            <%=tournamentList.get(i).getLocation()%>
+                                        </td>
+
+                                        <%--TournamentDescription--%>
+                                        <td>
+                                            <%=tournamentList.get(i).getTournamentDescription()%>
+                                        </td>
+
+                                        <%--TournamentFormatId--%>
+                                        <%
+                                            int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                            String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                        %>
+                                        <td>
+                                            <%=formatStr%>
+                                        </td>
+
+                                        <%--Tournament creator--%>
+                                        <td>
+                                            <%= managerId%>
+                                        </td>
+                                    </tr>
+                                    <br>
+                                    <%}%>
+                                </table>
+
+                                <!-- Footer -->
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>Copyright &copy; Artur Babayan 2016</p>
+                                        </div>
+                                    </div>
+                                </footer>
+
+                            </div>
+
+
                         </div>
                     </div>
-                </div>
-            </div>
+
+
+
+                        </div>
+                    </div>
+
+
 
             <!-- Footer -->
             <%--<footer id="footer">--%>

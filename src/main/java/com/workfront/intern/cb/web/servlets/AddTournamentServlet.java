@@ -14,26 +14,30 @@ import java.io.IOException;
 public class AddTournamentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
 
-        Tournament tournament = new Tournament();
         String name = request.getParameter("name");
+//        Timestamp startDate = Timestamp.valueOf(request.getParameter("start_date"));
+//        Timestamp endDate = Timestamp.valueOf(request.getParameter("end_date"));
         String location = request.getParameter("location");
+        String description = request.getParameter("tournament_description");
         int format = Integer.parseInt(request.getParameter("format"));
+        int managerId = manager.getId();
 
-        int id = manager.getId();
-
-
+        Tournament tournament = new Tournament();
         tournament.setTournamentName(name);
+//        tournament.setStartDate(startDate);
+//        tournament.setStartDate(endDate);
         tournament.setLocation(location);
+        tournament.setTournamentDescription(description);
         tournament.setTournamentFormatId(format);
-        tournament.setManagerId(id);
+        tournament.setManagerId(managerId);
 
         new TournamentServiceImpl().addTournament(tournament);
 
-
+        request.setAttribute("managerId", managerId);
+        request.getRequestDispatcher("/tournament.jsp").forward(request, response);
     }
 
     @Override

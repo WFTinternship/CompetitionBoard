@@ -1,4 +1,5 @@
 <%@ page import="com.workfront.intern.cb.web.util.Params" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +14,7 @@
 
     <%--Custom JS--%>
     <script src="js/custom.js"></script>
+    <script src="js/jquery-3.1.0.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +38,18 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script>
+        $( document ).ready(function() {
+            var hidden = false;
+                hidden = !hidden;
+                if (hidden) {
+                    document.getElementById("hide").style.visibility = 'hidden';
+                } else {
+                    document.getElementById("unhide").style.visibility = 'visible';
+                }
+            });
+    </script>
 </head>
 
 <%--Gets specific atributes from http session--%>
@@ -51,7 +65,7 @@
     }
 %>
 
-<body onload="hiddenBtn()" id="page-top" >
+<body id="page-top" >
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -94,9 +108,8 @@
                         <div class="input-group col-md-12">
                             <input type="text" class="  search-query form-control" name="searchStr"
                                    placeholder="Search tournaments" required/>
-
                             <span class="input-group-btn">
-                    <button class="btn btn-danger" type="submit" onclick="submitForm()" name="searchStr">
+                    <button class="btn btn-danger" type="submit" onclick="submitForm()">
                         <span class=" glyphicon glyphicon-search"></span>
                     </button>
                 </span>
@@ -139,7 +152,7 @@
     <div class="container-fluid">
         <div class="row no-gutter popup-gallery">
             <div class="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/1.jpg" class="portfolio-box">
+                <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
@@ -148,20 +161,20 @@
                                 Category
                             </div>
                             <div class="project-name">
-                                Gallery
+                                Fifa 2020
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
+                <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
                             <div class="project-category text-faded">
-                                Category
+                                Gorci texi txeqov
                             </div>
                             <div class="project-name">
                                 Gallery
@@ -171,7 +184,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
+                <a href="i<%=Params.PAGE_MEDIA%>" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
@@ -187,7 +200,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/4.jpg" class="portfolio-box">
+                <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
@@ -203,7 +216,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/5.jpg" class="portfolio-box">
+                <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
@@ -219,7 +232,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/6.jpg" class="portfolio-box">
+                <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
                     <img src="img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
@@ -228,7 +241,7 @@
                                 Category
                             </div>
                             <div class="project-name">
-                                Gallery
+                                Liqy sirun axjik
                             </div>
                         </div>
                     </div>
@@ -277,5 +290,7 @@
 <script src="js/creative.min.js"></script>
 
 </body>
+
+<script></script>
 
 </html>

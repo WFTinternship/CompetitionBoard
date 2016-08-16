@@ -21,22 +21,22 @@ public class LogInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession sessionContext = null;
+//        HttpSession sessionContext = null;
         String loginInput = request.getParameter(Params.FORM_PARAM_LOG_IN);
         String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
 
-        HttpSession sessionLogin = request.getSession();
-        HttpSession sessionSignIn = request.getSession();
-
-        if (sessionLogin != null) {
-            sessionLogin.setAttribute("login", Params.FORM_PARAM_LOG_IN);
-            sessionContext = sessionSignIn;
-        }
-
-        if (sessionSignIn == null) {
-            sessionSignIn.setAttribute("signin", Params.FORM_PARAM_SIGN_IN);
-            sessionContext = sessionSignIn;
-        }
+//        HttpSession sessionLogin = request.getSession();
+//        HttpSession sessionSignIn = request.getSession();
+//
+//        if (sessionLogin != null) {
+//            sessionLogin.setAttribute("login", Params.FORM_PARAM_LOG_IN);
+//            sessionContext = sessionSignIn;
+//        }
+//
+//        if (sessionSignIn == null) {
+//            sessionSignIn.setAttribute("signin", Params.FORM_PARAM_SIGN_IN);
+//            sessionContext = sessionSignIn;
+//        }
 
 
 
@@ -64,8 +64,8 @@ public class LogInServlet extends HttpServlet {
 
             // Return wrong message where username is invalid
             if (loginInput.equals(loginFromDb)) {
-                out.println("Sorry, username or password error!");
-                request.getRequestDispatcher(Params.PAGE_ERROR_500).include(request, response);
+                request.setAttribute("userNameErr", "Sorry, username or password error");
+                response.sendRedirect(Params.PAGE_ERROR_500);
             }
         }
 
@@ -83,7 +83,7 @@ public class LogInServlet extends HttpServlet {
             session.setAttribute("userNameSignIn", signInLoginInput);
             session.setAttribute("manager", manager);
 
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
         }
     }
 }

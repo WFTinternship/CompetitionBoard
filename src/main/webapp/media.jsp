@@ -44,7 +44,7 @@
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="media.jsp">Media</a></li>
                 <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
-                <li><a href="login.jsp" name="signUpMenuBtn">Sign Up</a></li>
+                <li><a href="login.jsp" name="signUpMenuBtn" >Sign Up</a></li>
                 <li><a href="login.jsp" name="logInMenuBtn">Log In</a></li>
             </ul>
         </div>

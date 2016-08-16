@@ -9,9 +9,9 @@
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
+    <%--<link rel="stylesheet" href="css/custom.css">--%>
 
     <script src="js/custom.js"></script>
-
 </head>
 
 <%
@@ -55,6 +55,7 @@
         <%--LogIn Form--%>
         <div id="login">
             <h1>Welcome Back!</h1>
+
             <form action="login" name="logInForm" method="post">
                 <div class="field-wrap">
                     <label>Username/Login<span class="req">*</span></label>

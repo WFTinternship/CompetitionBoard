@@ -68,14 +68,13 @@
                     <div class="col-sm-3 sidenav">
 
                         <%--LeftColumn--%>
-
                     </div>
 
                     <div class="col-sm-9">
                         <h2>Searching result</h2>
                         <hr>
                         <%
-                            List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentList");
+                            List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("searchResult");
                             int sizeList = tournamentList.size();
                         %>
                         <table class="tournamentTable">
@@ -95,43 +94,54 @@
                             %>
                             <tr>
                                 <%--No--%>
-                                <td><%=i%>
+                                <td>
+                                    <%=i%>
                                 </td>
 
                                 <%--TournamentId--%>
-                                <td><%=request.getAttribute("tournamentId")%>
+                                <td>
+                                    <%--<%=request.getAttribute("tournamentId"+i)%>--%>
+                                    <%=tournamentList.get(i).getTournamentId()%>
                                 </td>
 
                                 <%--TournamentName--%>
-                                <td><%=request.getAttribute("tournamentName")%>
+                                <td>
+                                    <%--<%=request.getAttribute("tournamentName")%>--%>
+                                    <%=tournamentList.get(i).getTournamentName()%>
+
                                 </td>
 
                                 <%--StartDate--%>
-                                <td><%=request.getAttribute("startDate")%>
+                                <td>
+                                    <%=tournamentList.get(i).getStartDate()%>
                                 </td>
 
                                 <%--EndDate--%>
-                                <td><%=request.getAttribute("endDate")%>
+                                <td>
+                                    <%=tournamentList.get(i).getEndDate()%>
                                 </td>
 
                                 <%--Location--%>
-                                <td><%=request.getAttribute("tournamentLocation")%>
+                                <td>
+                                    <%=tournamentList.get(i).getLocation()%>
                                 </td>
 
                                 <%--TournamentDescription--%>
-                                <td><%=request.getAttribute("tournamentDescription")%>
+                                <td>
+                                    <%=tournamentList.get(i).getTournamentDescription()%>
                                 </td>
 
                                 <%--TournamentFormatId--%>
                                 <%
-                                    int tournamentFormatId = (int) request.getAttribute("tournamentFormatId");
+                                    int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
                                     String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
                                 %>
-                                <td><%=formatStr%>
+                                <td>
+                                    <%=formatStr%>
                                 </td>
 
                                 <%--Tournament creator--%>
-                                <% int managerId = (int) request.getAttribute("tournamentManagerId");
+                                <% int managerId = tournamentList.get(i).getManagerId();
                                     Manager manager = new ManagerServiceImpl().getManagerById(managerId);
                                     String managerName = manager.getLogin();
                                 %>

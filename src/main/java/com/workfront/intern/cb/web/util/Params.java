@@ -3,16 +3,16 @@ package com.workfront.intern.cb.web.util;
 public class Params {
 
     // Pages
-    public static final String PAGE_INDEX = "index.jsp";
-    public static final String PAGE_LOGIN = "login.jsp";
-    public static final String PAGE_TOURNAMENT = "tournament.jsp";
-    public static final String PAGE_MATCH = "match.jsp";
-    public static final String PAGE_MEDIA = "media.jsp";
-    public static final String PAGE_CONTACT = "contact.jsp";
-    public static final String PAGE_SEARCH_RESULT = "search-result.jsp";
-    public static final String PAGE_ERROR_401 = "error401.jsp";
-    public static final String PAGE_ERROR_404 = "error404.jsp";
-    public static final String PAGE_ERROR_500 = "error500.jsp";
+    public static final String PAGE_INDEX = "/index.jsp";
+    public static final String PAGE_LOGIN = "/login.jsp";
+    public static final String PAGE_TOURNAMENT = "/tournament.jsp";
+    public static final String PAGE_MATCH = "/match.jsp";
+    public static final String PAGE_MEDIA = "/media.jsp";
+    public static final String PAGE_CONTACT = "/contact.jsp";
+    public static final String PAGE_SEARCH_RESULT = "/search-result.jsp";
+    public static final String PAGE_ERROR_401 = "/error401.jsp";
+    public static final String PAGE_ERROR_404 = "/error404.jsp";
+    public static final String PAGE_ERROR_500 = "/error500.jsp";
 
     // Scope parameters
     public static final String SESSION_CONTEXT_PARAM = "user_session_context";

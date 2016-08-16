@@ -22,23 +22,13 @@ public class SearchTournamentsByNameServlet extends HttpServlet {
         List<Tournament> tournamentList = new TournamentServiceImpl().getTournamentListByName(searchTournamentStr);
         int listSize = tournamentList.size();
 
-        if (listSize == 0) {
+        if (listSize != 0) {
+            request.setAttribute("searchResult", tournamentList);
+
+            request.getRequestDispatcher("/search-result.jsp").forward(request, response);
+        } else {
             request.setAttribute("noSearchResultMsg", "No tournament/s found");
             request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
-        } else {
-            request.setAttribute("tournamentList", tournamentList);
-            for (int i = 0; i < listSize; i++) {
-                request.setAttribute("tournamentId", tournamentList.get(i).getTournamentId());
-                request.setAttribute("tournamentName", tournamentList.get(i).getTournamentName());
-                request.setAttribute("startDate", tournamentList.get(i).getStartDate());
-                request.setAttribute("endDate", tournamentList.get(i).getEndDate());
-                request.setAttribute("tournamentLocation", tournamentList.get(i).getLocation());
-                request.setAttribute("tournamentDescription", tournamentList.get(i).getTournamentDescription());
-                request.setAttribute("tournamentFormatId", tournamentList.get(i).getTournamentFormatId());
-                request.setAttribute("tournamentManagerId", tournamentList.get(i).getManagerId());
-
-                request.getRequestDispatcher(Params.PAGE_SEARCH_RESULT).forward(request, response);
-            }
         }
     }
 

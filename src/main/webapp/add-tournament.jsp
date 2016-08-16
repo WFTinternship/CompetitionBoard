@@ -24,7 +24,8 @@
         <div class="form-group">
             <label for="name" class="col-sm-3 control-label">Name</label>
             <div class="col-sm-9">
-                <input type="text" id="name" name="name" placeholder="Tournament Name" class="form-control" autofocus >
+                <input type="text" id="name" name="name" placeholder="Tournament Name"
+                       class="form-control" autofocus required >
             </div>
         </div>
 
@@ -32,7 +33,7 @@
         <div class="form-group">
             <label for="startDate" class="col-sm-3 control-label">Start Time</label>
             <div class="col-sm-9">
-                <input type="text" id="startDate" placeholder="Start Time" class="form-control" >
+                <input type="text" id="startDate" placeholder="Start Time" class="form-control "pattern="^[ 0-9]+$">
                 <span class="help-block">eg.: 2020-07-10 10:00:00 </span>
             </div>
         </div>
@@ -50,15 +51,15 @@
         <div class="form-group">
             <label for="location" class="col-sm-3 control-label">Location</label>
             <div class="col-sm-9">
-                <input type="text" id="location" name="location" placeholder="Location" class="form-control" >
+                <input type="text" id="location" name="location" placeholder="Location" class="form-control" required>
             </div>
         </div>
 
         <%--Description--%>
         <div class="form-group">
-            <label for="description" class="col-sm-3 control-label">Location</label>
+            <label  class="col-sm-3 control-label">Description</label>
             <div class="col-sm-9">
-                <input type="text" id="description" name="description" placeholder="Description" class="form-control" >
+                <textarea rows="5" cols="20" name="tournament_description" id="field2" class="form-control" required="required"></textarea>
             </div>
         </div>
 

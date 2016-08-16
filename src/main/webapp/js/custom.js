@@ -1,6 +1,7 @@
 // JS submit for button
+var searchStr;
 function submitForm() {
-    var searchStr = document.getElementById("searchStr").value;
+     searchStr = document.getElementById("searchStr").value;
     if (searchStr != null) {
         document.forms["loginForm"].submit();
     }
@@ -21,7 +22,6 @@ function selectElement() {
     var x = document.getElementById("formatId");
     // if (x != 0){
     //     alert(x.options[x.selectedIndex].value);    
-    // }
-    
+    // }   
 
 }

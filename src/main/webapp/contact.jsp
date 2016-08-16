@@ -46,7 +46,7 @@
                 <!--<li><a class="page-scroll" href="#about">About</a></li>-->
                 <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
+                <li><a class="page-scroll" href="media.jsp">Gallery</a></li>
                 <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
                 <li><a href="login.jsp" name="signUpMenuBtn">Sign Up</a></li>
                 <li><a href="login.jsp" name="logInMenuBtn">Log In</a></li>
