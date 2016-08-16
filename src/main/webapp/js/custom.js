@@ -1,20 +1,12 @@
-//JS submit for button
+// JS submit for button
 function submitForm() {
     var searchStr = document.getElementById("searchStr").value;
     if (searchStr != null) {
         document.forms["loginForm"].submit();
     }
 }
-// function autoClick() {
-//     if ("hrefLoginId") {
-//         document.getElementById("hrefLogInId").click();
-//     } else {
-//         document.getElementById("hrefSignInId").click();
-//
-//     }
-//
-// }
 
+// Hide/unhide button by specific element id
 var hidden = false;
 function hiddenBtn() {
     hidden = !hidden;
@@ -23,4 +15,13 @@ function hiddenBtn() {
     } else {
         document.getElementById("unhide").style.visibility = 'visible';
     }
+}
+
+function selectElement() {
+    var x = document.getElementById("formatId");
+    // if (x != 0){
+    //     alert(x.options[x.selectedIndex].value);    
+    // }
+    
+
 }

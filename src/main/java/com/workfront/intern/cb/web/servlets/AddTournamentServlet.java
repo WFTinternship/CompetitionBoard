@@ -1,5 +1,6 @@
 package com.workfront.intern.cb.web.servlets;
 
+import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.TournamentServiceImpl;
 
@@ -14,13 +15,20 @@ public class AddTournamentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+
         Tournament tournament = new Tournament();
         String name = request.getParameter("name");
         String location = request.getParameter("location");
-        int id = (int) request.getAttribute("manager_id");
+        int format = Integer.parseInt(request.getParameter("format"));
+
+        int id = manager.getId();
+
 
         tournament.setTournamentName(name);
         tournament.setLocation(location);
+        tournament.setTournamentFormatId(format);
         tournament.setManagerId(id);
 
         new TournamentServiceImpl().addTournament(tournament);

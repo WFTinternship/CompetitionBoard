@@ -21,13 +21,24 @@ public class LogInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession sessionContext = null;
         String loginInput = request.getParameter(Params.FORM_PARAM_LOG_IN);
-        HttpSession session1 = request.getSession();
-        session1.setAttribute("login", Params.FORM_PARAM_LOG_IN);
-
         String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
-        HttpSession session2 = request.getSession();
-        session2.setAttribute("signin", Params.FORM_PARAM_SIGN_IN);
+
+        HttpSession sessionLogin = request.getSession();
+        HttpSession sessionSignIn = request.getSession();
+
+        if (sessionLogin != null) {
+            sessionLogin.setAttribute("login", Params.FORM_PARAM_LOG_IN);
+            sessionContext = sessionSignIn;
+        }
+
+        if (sessionSignIn == null) {
+            sessionSignIn.setAttribute("signin", Params.FORM_PARAM_SIGN_IN);
+            sessionContext = sessionSignIn;
+        }
+
+
 
 
         if (loginInput != null) {
@@ -43,11 +54,10 @@ public class LogInServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             // Check login and password for LogIn system
-            if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb))
-
-            {
+            if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("usernameLogin", loginInput);
+                session.setAttribute("manager", manager);
 
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
@@ -71,14 +81,9 @@ public class LogInServlet extends HttpServlet {
             new ManagerServiceImpl().addManager(manager);
             HttpSession session = request.getSession();
             session.setAttribute("userNameSignIn", signInLoginInput);
+            session.setAttribute("manager", manager);
+
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
-
-
-//        else {
-//            System.out.println("Sorry, username or password error!");
-//            request.getRequestDispatcher("/login.jsp").include(request, response);
-//        }
-//}
 }

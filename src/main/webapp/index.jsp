@@ -72,7 +72,7 @@
 
                 <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
                 <li><a href="login.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="login.jsp?action=logIn" name="logInMenuBtn" onclick="autoClick()">Log In</a></li>
+                <li><a href="login.jsp?action=logIn" name="logInMenuBtn">Log In</a></li>
                 <%} else if (userNameSignInStr != null) { %>
                 <li><a href="logout">Log Out </a></li>
                 <%} else if ((loginUserStr != null)) { %>
@@ -115,9 +115,7 @@
                 out.println("<font color=red size=4px>" + searchResultMsg + "</font>");
         %>
 
-        <%--ToDo--%>
         <%--TournamentCreatButton--%>
-
         <%
             String idValue = "";
             if ((loginUserStr.equals("") && (userNameSignInStr.equals("")))) {
