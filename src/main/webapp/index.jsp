@@ -53,7 +53,7 @@
     }
 %>
 
-<body id="page-top" onload="hiddenBtn()" >
+<body id="page-top" onload="hiddenBtn()">
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -63,23 +63,40 @@
             </a>
         </div>
 
+        <%--ToDo--%>
+        <%--Hide/unhide--%>
+        <%
+            String addTournamentMenuItem = null;
+            String signUpMenuItem = null;
+            String logInMenuBtnItem = null;
+            String logOutMenuBtnItem = null;
+            if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) {
+                addTournamentMenuItem = "";
+                signUpMenuItem = "Sign Up";
+                logInMenuBtnItem = "Log In";
+                logOutMenuBtnItem = "";
+            } else if ((userNameSignInStr != null) || (loginUserStr != null)) {
+                addTournamentMenuItem = "Add Tournament";
+                signUpMenuItem = "";
+                logInMenuBtnItem = "";
+                logOutMenuBtnItem = "Log Out";
+            }
+        %>
+
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <!--<li><a class="page-scroll" href="#about">About</a></li>-->
+                <li><a class="page-scroll" href="add-tournament.jsp"><%=addTournamentMenuItem%></a></li>
                 <li><a class="page-scroll" href="all-tournaments.jsp">Tournaments</a></li>
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
+                <li><a href="<%=Params.PAGE_SIGN_IN%>"><%=signUpMenuItem%></a></li>
+                <li><a href="<%=Params.PAGE_LOG_IN%>"><%=logInMenuBtnItem%></a></li>
+                <li><a href="logout"><%=logOutMenuBtnItem%> </a></li>
 
-                <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
-                <li><a href="<%=Params.PAGE_SIGN_IN%>" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="<%=Params.PAGE_LOG_IN%>" name="logInMenuBtn">Log In</a></li>
-                <%} else if (userNameSignInStr != null) { %>
-                <li><a href="logout">Log Out </a></li>
-                <%} else if ((loginUserStr != null)) { %>
-                <li><a href="logout">Log Out </a></li>
-                <%}%>
             </ul>
         </div>
     </div>
@@ -117,20 +134,20 @@
         %>
 
         <%--TournamentCreatButton--%>
-        <%
-            String idValue = "";
-            if ((loginUserStr.equals("") && (userNameSignInStr.equals("")))) {
-                idValue = "hide";
-            } else if ((loginUserStr != null) || (loginUserStr != null)) {
-                idValue = "unhide";
-            }
-        %>
-        <form action="tournament.jsp" method="get" class="container">
-            <div class="textarea">
-                <button type="submit" class="buttonCustom" id=<%=idValue%>>Create a tournament</button>
-            </div>
+        <%--<%--%>
+        <%--String idValue = "";--%>
+        <%--if ((loginUserStr.equals("") && (userNameSignInStr.equals("")))) {--%>
+        <%--idValue = "hide";--%>
+        <%--} else if ((loginUserStr != null) || (loginUserStr != null)) {--%>
+        <%--idValue = "unhide";--%>
+        <%--}--%>
+        <%--%>--%>
+        <%--<form action="tournament.jsp" method="get" class="container">--%>
+        <%--<div class="textarea">--%>
+        <%--<button type="submit" class="buttonCustom" id=<%=idValue%>>Create a tournament</button>--%>
+        <%--</div>--%>
 
-        </form>
+        <%--</form>--%>
 
 
     </div>
