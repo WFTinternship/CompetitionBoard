@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.web.servlets;
+package com.workfront.intern.cb.web.servlets.tournament;
 
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.TournamentServiceImpl;

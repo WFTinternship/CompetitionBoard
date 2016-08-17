@@ -38,18 +38,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script>
-        $( document ).ready(function() {
-            var hidden = false;
-                hidden = !hidden;
-                if (hidden) {
-                    document.getElementById("hide").style.visibility = 'hidden';
-                } else {
-                    document.getElementById("unhide").style.visibility = 'visible';
-                }
-            });
-    </script>
 </head>
 
 <%--Gets specific atributes from http session--%>
@@ -65,7 +53,7 @@
     }
 %>
 
-<body id="page-top" >
+<body id="page-top" onload="hiddenBtn()" >
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -85,8 +73,8 @@
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
 
                 <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
-                <li><a href="login.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="login.jsp?action=logIn" name="logInMenuBtn">Log In</a></li>
+                <li><a href="<%=Params.PAGE_SIGN_IN%>" name="signUpMenuBtn">Sign Up</a></li>
+                <li><a href="<%=Params.PAGE_LOG_IN%>" name="logInMenuBtn">Log In</a></li>
                 <%} else if (userNameSignInStr != null) { %>
                 <li><a href="logout">Log Out </a></li>
                 <%} else if ((loginUserStr != null)) { %>

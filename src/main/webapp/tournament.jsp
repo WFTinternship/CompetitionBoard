@@ -67,8 +67,8 @@
                 <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
 
                 <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
-                <li><a href="login.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="login.jsp?action=logIn" name="logInMenuBtn">Log In</a></li>
+                <li><a href="log-in.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
+                <li><a href="log-in.jsp?action=logIn" name="logInMenuBtn">Log In</a></li>
                 <%} else if (loginUserStr != null) { %>
                 <li><a href="logout">Log Out </a></li>
                 <%} else if ((userNameSignInStr != null)) { %>

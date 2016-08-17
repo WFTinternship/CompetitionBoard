@@ -4,7 +4,8 @@ public class Params {
 
     // Pages
     public static final String PAGE_INDEX = "/index.jsp";
-    public static final String PAGE_LOGIN = "/login.jsp";
+    public static final String PAGE_SIGN_IN = "/sign-up.jsp";
+    public static final String PAGE_LOG_IN = "/log-in.jsp";
     public static final String PAGE_TOURNAMENT = "/tournament.jsp";
     public static final String PAGE_MATCH = "/match.jsp";
     public static final String PAGE_MEDIA = "/media.jsp";

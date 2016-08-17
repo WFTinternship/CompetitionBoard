@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.web.servlets;
+package com.workfront.intern.cb.web.servlets.tournament;
 
 /**
  * Created by artbabayan on 8/12/16.

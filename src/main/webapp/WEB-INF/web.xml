@@ -15,7 +15,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SignInServlet</servlet-name>
-        <url-pattern>/signin</url-pattern>
+        <url-pattern>/sign-in</url-pattern>
     </servlet-mapping>
 
     <!--LogInServlet-->
@@ -41,7 +41,7 @@
     <!--SearchTournamentsByNameServlet-->
     <servlet>
         <servlet-name>TournamentSearchServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.SearchTournamentsByNameServlet</servlet-class>
+        <servlet-class>com.workfront.intern.cb.web.servlets.tournament.SearchTournamentsByNameServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TournamentSearchServlet</servlet-name>
@@ -51,7 +51,7 @@
     <!--AddTournamentServlet-->
     <servlet>
         <servlet-name>AddTournamentServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.AddTournamentServlet</servlet-class>
+        <servlet-class>com.workfront.intern.cb.web.servlets.tournament.AddTournamentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddTournamentServlet</servlet-name>
@@ -73,8 +73,8 @@
         <error-code>404</error-code>
         <location>/error404.jsp</location>
     </error-page>
-    <!--<error-page>-->
-        <!--<error-code>500</error-code>-->
-        <!--<location>/error500.jsp</location>-->
-    <!--</error-page>-->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/log-in.jsp</location>
+    </error-page>
 </web-app>

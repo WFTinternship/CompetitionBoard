@@ -113,9 +113,9 @@ a:hover {
 }
 
 .form {
-    background: rgba(19, 35, 47, 0.9);
+    background: rgba(19, 35, 47, 0.58);
     padding: 40px;
-    max-width: 600px;
+    max-width: 430px;
     margin: 40px auto;
     border-radius: 4px;
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
@@ -203,7 +203,7 @@ label.highlight {
 }
 
 input, textarea {
-    font-size: 20px;
+    font-size: 15px;
     display: block;
     width: 100%;
     height: 100%;
@@ -250,9 +250,9 @@ textarea {
 .button {
     border: 0;
     outline: none;
-    border-radius: 0;
-    padding: 15px 0;
-    font-size: 20px;
+    border-radius: 50px;
+    padding: 12px 0;
+    font-size: 19px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .1em;
