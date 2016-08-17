@@ -17,13 +17,6 @@
 <body class="backgroundLogin">
 <div class="form">
 
-    <%--<ul class="tab-content tab active">--%>
-        <%--<li class="tab active" id="hrefSignIn">--%>
-            <%--<a href="#signup"></a></li>--%>
-    <%--</ul>--%>
-    <%--<div class="tab-content">--%>
-
-
         <div id="signup">
             <h1>Create account</h1>
 
@@ -35,11 +28,11 @@
                     <input type="text" name="userNameSignIn" required autocomplete="off"/>
                 </div>
                 <%--Avatar Label--%>
-                <div id="field6-container" class="field-wrap">
-                    <div class="field f_100">
+                <div id="avatar" class="field-wrap">
+                    <%--<div class="field f_100">--%>
                         <label></label>
-                        <input size="48" name="field6" id="field6" type="file">
-                    </div>
+                        <input type="file" size="48" name="avatar" multiple accept="image/*,image/jpeg">
+                    <%--</div>--%>
                 </div>
                 <%--Password Label--%>
                 <div class="field-wrap">
@@ -48,7 +41,7 @@
                 </div>
                 <%--Confirm Password Label--%>
                 <div class="field-wrap">
-                    <label>Confirm Password<span class="req">*</span></label>
+                    <label>Confirm Password<span class="req"></span></label>
                     <input type="password" name="passwordConfirmSignIn" required autocomplete="off"/>
                 </div>
 

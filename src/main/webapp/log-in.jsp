@@ -12,17 +12,10 @@
     <link rel="stylesheet" href="css/custom.css">
 
     <script src="js/custom.js"></script>
-
 </head>
 
 <body class="backgroundLogin">
 <div class="form">
-
-    <%--<ul class="tab-content tab active">--%>
-        <%--<li class="tab active" id="hrefSignIn">--%>
-            <%--<a href="#login"></a></li>--%>
-    <%--</ul>--%>
-
 
     <%--Gets error message from LogInServlet--%>
     <%
@@ -35,7 +28,7 @@
     <%--LogIn Form--%>
     <div id="login">
         <h1>Welcome Back!</h1>
-        <h4 class="err-msg"><%=userNameErrStr%></h4>
+        <div class="err-msg"><%=userNameErrStr%></div>
 
         <form action="login" name="logInForm" method="post">
             <div class="field-wrap">

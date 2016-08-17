@@ -4,9 +4,9 @@ body {
 h1{
     margin-bottom: 40px;
 }
-label {
-    color: #333;
-}
+/*label {*/
+    /*color: #333;*/
+/*}*/
 .btn-send {
     font-weight: 300;
     text-transform: uppercase;
@@ -15,6 +15,8 @@ label {
 }
 
 .err-msg{
+    color: #e87b6e;
     text-align: center;
-    font-size: 15px;
+    font-size: 17px;
+    letter-spacing: 1px;
 }
