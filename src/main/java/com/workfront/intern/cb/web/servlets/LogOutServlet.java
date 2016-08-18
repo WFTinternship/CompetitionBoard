@@ -1,5 +1,7 @@
 package com.workfront.intern.cb.web.servlets;
 
+import com.workfront.intern.cb.web.util.Params;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +12,12 @@ import java.io.IOException;
 public class LogOutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         if (session != null){
             session.invalidate();
         }
-        request.getRequestDispatcher("/").forward(request, response);
+        response.sendRedirect(Params.PAGE_INDEX);
+//        request.getRequestDispatcher("/").forward(request, response);
     }
 
     @Override

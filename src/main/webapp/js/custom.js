@@ -22,6 +22,15 @@ function selectElement() {
     var x = document.getElementById("formatId");
     // if (x != 0){
     //     alert(x.options[x.selectedIndex].value);    
-    // }   
+    // }
+}
 
+function showMenuItem() {
+    document.getElementById("hide").style.visibility = "hidden";
+    document.getElementById("unHide").style.visibility = "visible";
+}
+
+function showMenuItemReverse() {
+    document.getElementById("unHide").style.visibility = "hidden";
+    document.getElementById("hide").style.visibility = "visible";
 }

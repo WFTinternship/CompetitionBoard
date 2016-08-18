@@ -70,33 +70,39 @@
             String signUpMenuItem = null;
             String logInMenuBtnItem = null;
             String logOutMenuBtnItem = null;
+            String hideStr = null;
+            String unHideStr;
+
             if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) {
                 addTournamentMenuItem = "";
                 signUpMenuItem = "Sign Up";
                 logInMenuBtnItem = "Log In";
                 logOutMenuBtnItem = "";
+                hideStr = "hide";
+
             } else if ((userNameSignInStr != null) || (loginUserStr != null)) {
                 addTournamentMenuItem = "Add Tournament";
                 signUpMenuItem = "";
                 logInMenuBtnItem = "";
                 logOutMenuBtnItem = "Log Out";
+                hideStr = "unHide";
+
             }
         %>
 
-
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <!--<li><a class="page-scroll" href="#about">About</a></li>-->
-                <li><a class="page-scroll" href="add-tournament.jsp"><%=addTournamentMenuItem%></a></li>
+                <li><a class="page-scroll" href="add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%>
+                </a></li>
                 <li><a class="page-scroll" href="all-tournaments.jsp">Tournaments</a></li>
-                <li><a class="page-scroll" href="match.jsp">Matches</a></li>
+                <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
-                <li><a href="<%=Params.PAGE_SIGN_IN%>"><%=signUpMenuItem%></a></li>
-                <li><a href="<%=Params.PAGE_LOG_IN%>"><%=logInMenuBtnItem%></a></li>
-                <li><a href="logout"><%=logOutMenuBtnItem%> </a></li>
-
+                <li><a href="<%=Params.PAGE_SIGN_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=signUpMenuItem%> </a></li>
+                <li><a href="<%=Params.PAGE_LOG_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=logInMenuBtnItem%> </a></li>
+                <li><a href="logout" id="<%=hideStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>
             </ul>
         </div>
     </div>
