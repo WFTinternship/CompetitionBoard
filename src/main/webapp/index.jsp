@@ -14,7 +14,7 @@
     <title>Competition Board</title>
 
     <%--Custom JS--%>
-    <%--<script src="js/custom.js"></script>--%>
+    <script src="js/custom.js"></script>
     <script src="js/jquery-3.1.0.js"></script>
 
     <!-- Bootstrap Core CSS -->
@@ -93,8 +93,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="page-scroll" href="add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
-                <li><a class="page-scroll" href="all-tournaments.jsp">Tournaments</a></li>
+                <li><a class="page-scroll" href="temp.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="page-scroll" href="<%=Params.PAGE_TOURNAMENT%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>

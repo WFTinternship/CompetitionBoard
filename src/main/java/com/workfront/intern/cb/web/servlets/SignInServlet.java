@@ -40,6 +40,7 @@ public class SignInServlet extends HttpServlet {
 
             request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
         } catch (RuntimeException ex) {
+            // Checking duplicate of manager name during registration
             request.setAttribute("existsManager", "Sorry, but user with this name exists");
             request.getRequestDispatcher(Params.PAGE_SIGN_IN).include(request, response);
         }

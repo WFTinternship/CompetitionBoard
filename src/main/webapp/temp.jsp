@@ -1,18 +1,45 @@
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title>Add tournament form</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <title>Your Tournaments</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom/bootstrap.min.css" rel="stylesheet">
-    <%--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">--%>
+
+    <!-- Custom CSS -->
+    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="css/creative.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
 
     <script src="js/custom.js"></script>
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
+    <%
+    String userNameSignInStr = (String) session.getAttribute("userNameSignIn");
+    if (userNameSignInStr == null) {
+        userNameSignInStr = "";
+    }
+
+    String loginUserStr = (String) session.getAttribute("usernameLogin");
+    if (loginUserStr == null) {
+        loginUserStr = "";
+    }
+%>
 
 <%--Gets error message from SignInServlet--%>
 <%
@@ -23,6 +50,36 @@
 %>
 
 <body class="backgroundTournament">
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+            <a class="navbar-brand page-scroll" href="<%=Params.PAGE_INDEX%>">Home</a>
+            <a class="navbar-brand page-scroll"><%= loginUserStr%> <%= userNameSignInStr%>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
+                <li><a class="page-scroll" href="match.jsp">Matches</a></li>
+                <li><a class="page-scroll" href="media.jsp">Gallery</a></li>
+                <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
+
+                <% if ((loginUserStr.equals("")) && (userNameSignInStr.equals(""))) { %>
+                <li><a href="log-in.jsp?action=signUp" name="signUpMenuBtn">Sign Up</a></li>
+                <li><a href="log-in.jsp?action=logIn" name="logInMenuBtn">Log In</a></li>
+                <%} else if (loginUserStr != null) { %>
+                <li><a href="logout">Log Out </a></li>
+                <%} else if ((userNameSignInStr != null)) { %>
+                <li><a href="logout">Log Out </a></li>
+                <%}%>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="container">
 
     <form action="add" class="form-horizontal" role="form" method="get">
@@ -31,7 +88,7 @@
 
         <div class="err-msg"><%=existsTournament%></div>
 
-    <%--Tournament Name--%>
+        <%--Tournament Name--%>
         <div class="form-group">
             <label for="name" class="col-sm-3 control-label">Name</label>
             <div class="col-sm-9">
@@ -94,6 +151,6 @@
     </form>
     <!-- /form -->
 </div>
-<!-- ./container -->
+<!--
 </body>
 </html>

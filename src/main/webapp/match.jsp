@@ -1,9 +1,3 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.common.Tournament" %>
-<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
-<%@ page import="com.workfront.intern.cb.service.ManagerServiceImpl" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <!DOCTYPE html>
 <html lang="en">
 

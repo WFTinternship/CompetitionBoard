@@ -7,10 +7,11 @@ public class Params {
     public static final String PAGE_SIGN_IN = "/sign-in.jsp";
     public static final String PAGE_LOG_IN = "/log-in.jsp";
     public static final String PAGE_TOURNAMENT = "/tournament.jsp";
+    public static final String PAGE_ALL_AVALABLE_TOURNAMENTS = "/all-tournaments.jsp";
+    public static final String PAGE_ADD_TOURNAMENT = "add-tournament.jsp";
     public static final String PAGE_MATCH = "/match.jsp";
     public static final String PAGE_MEDIA = "/media.jsp";
     public static final String PAGE_CONTACT = "/contact.jsp";
-    public static final String PAGE_ADD_TOURNAMENT = "add-tournament.jsp";
     public static final String PAGE_SEARCH_RESULT = "/search-result.jsp";
     public static final String PAGE_ERROR_401 = "/error401.jsp";
     public static final String PAGE_ERROR_404 = "/error404.jsp";

@@ -1,7 +1,6 @@
 package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.custom.exception.ExistsEntriesException;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 
