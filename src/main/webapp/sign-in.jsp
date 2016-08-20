@@ -9,18 +9,25 @@
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <%--<link rel="stylesheet" href="css/custom.css">--%>
+    <link rel="stylesheet" href="css/custom.css">
+
 
     <script src="js/custom.js"></script>
 </head>
 
 <body class="backgroundLogin">
 <div class="form">
-
+    <%--Gets error message from SignInServlet--%>
+    <%
+        String existsManagerStr = (String) request.getAttribute("existsManager");
+        if (existsManagerStr == null) {
+            existsManagerStr = "";
+        }
+    %>
         <div id="signup">
             <h1>Create account</h1>
-
-            <%--SignUp Form--%>
+            <div class="err-msg"><%=existsManagerStr%></div>
+        <%--SignUp Form--%>
             <form action="sign-in" name="signUpForm" method="post">
                 <%--Login Label--%>
                 <div class="field-wrap">

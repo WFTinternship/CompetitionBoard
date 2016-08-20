@@ -22,21 +22,26 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
-        String passwordSignInInput = request.getParameter(Params.FORM_PARAM_SIGN_IN_PASSWORD);
+        try {
+            String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
+            String passwordSignInInput = request.getParameter(Params.FORM_PARAM_SIGN_IN_PASSWORD);
 
-        Manager manager = new Manager();
-        manager.setLogin(signInLoginInput);
-        manager.setPassword(passwordSignInInput);
+            Manager manager = new Manager();
+            manager.setLogin(signInLoginInput);
+            manager.setPassword(passwordSignInInput);
 
-        new ManagerServiceImpl().addManager(manager);
-        session.setAttribute("signInLoginInput", signInLoginInput);
+            new ManagerServiceImpl().addManager(manager);
+            session.setAttribute("signInLoginInput", signInLoginInput);
 
-        // Gets added manager id and set in session
-        Manager managerFromDb = new ManagerServiceImpl().getManagerByLogin(signInLoginInput);
-        int managerId = managerFromDb.getId();
-        session.setAttribute("managerId", managerId);
+            // Gets added manager id and set in session
+            Manager managerFromDb = new ManagerServiceImpl().getManagerByLogin(signInLoginInput);
+            int managerId = managerFromDb.getId();
+            session.setAttribute("managerId", managerId);
 
-        request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
+            request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
+        } catch (RuntimeException ex) {
+            request.setAttribute("existsManager", "Sorry, but user with this name exists");
+            request.getRequestDispatcher(Params.PAGE_SIGN_IN).include(request, response);
+        }
     }
 }

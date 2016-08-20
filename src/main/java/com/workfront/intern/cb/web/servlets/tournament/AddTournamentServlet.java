@@ -37,7 +37,7 @@ public class AddTournamentServlet extends HttpServlet {
 
             new TournamentServiceImpl().addTournament(tournament);
             request.getRequestDispatcher(Params.PAGE_TOURNAMENT).forward(request, response);
-        } catch (FailedOperationException ex) {
+        } catch (RuntimeException ex) {
             request.setAttribute("existsTournament", "Sorry, but tournament with this name exists");
             request.getRequestDispatcher(Params.PAGE_ADD_TOURNAMENT).include(request, response);
         }
