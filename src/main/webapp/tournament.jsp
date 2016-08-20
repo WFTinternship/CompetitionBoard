@@ -50,10 +50,6 @@
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <%--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"--%>
-            <%--data-target="#bs-example-navbar-collapse-1">--%>
-            <%--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>--%>
-            <%--</button>--%>
             <a class="navbar-brand page-scroll" href="<%=Params.PAGE_INDEX%>">Home</a>
             <a class="navbar-brand page-scroll"><%= loginUserStr%> <%= userNameSignInStr%>
         </div>
@@ -124,8 +120,7 @@
                                <br>
                                 <%
                                     session = request.getSession();
-                                    Manager manager = (Manager) session.getAttribute("manager");
-                                    int managerId = manager.getId();
+                                    int managerId = (int) session.getAttribute("managerId");
                                     List<Tournament> tournamentList = new TournamentServiceImpl().getTournamentListByManager(managerId);
                                     int sizeList = tournamentList.size();
                                 %>

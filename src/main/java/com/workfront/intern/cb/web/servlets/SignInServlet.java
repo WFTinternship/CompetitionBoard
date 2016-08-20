@@ -1,8 +1,7 @@
 package com.workfront.intern.cb.web.servlets;
 
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.service.ManagerService;
-import com.workfront.intern.cb.spring.CompetitionBoardApp;
+import com.workfront.intern.cb.service.ManagerServiceImpl;
 import com.workfront.intern.cb.web.util.Params;
 
 import javax.servlet.ServletException;
@@ -13,13 +12,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SignInServlet extends HttpServlet {
-    private ManagerService managerService;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        managerService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(ManagerService.class);
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,18 +20,29 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
-        String passwordSignInInput = request.getParameter(Params.FORM_PARAM_SIGN_IN_PASSWORD);
-
         HttpSession session = request.getSession();
 
-        Manager manager = new Manager();
-        manager.setLogin(signInLoginInput);
-        manager.setPassword(passwordSignInInput);
+        try {
+            String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
+            String passwordSignInInput = request.getParameter(Params.FORM_PARAM_SIGN_IN_PASSWORD);
 
-        managerService.addManager(manager);
-        session.setAttribute(Params.FORM_PARAM_SIGN_IN, signInLoginInput);
+            Manager manager = new Manager();
+            manager.setLogin(signInLoginInput);
+            manager.setPassword(passwordSignInInput);
 
-        request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
+            new ManagerServiceImpl().addManager(manager);
+            session.setAttribute("signInLoginInput", signInLoginInput);
+
+            // Gets added manager id and set in session
+            Manager managerFromDb = new ManagerServiceImpl().getManagerByLogin(signInLoginInput);
+            int managerId = managerFromDb.getId();
+            session.setAttribute("managerId", managerId);
+
+            request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
+        } catch (RuntimeException ex) {
+            // Checking duplicate of manager name during registration
+            request.setAttribute("existsManager", "Sorry, but user with this name exists");
+            request.getRequestDispatcher(Params.PAGE_SIGN_IN).include(request, response);
+        }
     }
 }
