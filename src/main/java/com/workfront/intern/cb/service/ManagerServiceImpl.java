@@ -3,17 +3,19 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.ManagerDao;
-import com.workfront.intern.cb.dao.ManagerDaoImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class ManagerServiceImpl implements ManagerService {
     private static final Logger LOG = Logger.getLogger(ManagerServiceImpl.class);
 
-    private ManagerDao managerDao = new ManagerDaoImpl(DBManager.getDataSource());
+    @Autowired
+    private ManagerDao managerDao;
 
     /**
      * Adds new manager in db

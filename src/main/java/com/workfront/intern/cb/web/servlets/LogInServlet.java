@@ -2,8 +2,10 @@ package com.workfront.intern.cb.web.servlets;
 
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.util.StringHelper;
-import com.workfront.intern.cb.service.ManagerServiceImpl;
+import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.spring.CompetitionBoardApp;
 import com.workfront.intern.cb.web.util.Params;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,11 +15,20 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LogInServlet extends HttpServlet {
+    private ManagerService managerService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        managerService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(ManagerService.class);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     }
 
+    @Autowired
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String loginInput = request.getParameter(Params.FORM_PARAM_LOG_IN);
@@ -28,11 +39,11 @@ public class LogInServlet extends HttpServlet {
             String passwordEncrypt = StringHelper.passToEncrypt(passwordInput);
 
             try {
-                Manager manager = new ManagerServiceImpl().getManagerByLogin(loginInput);
+                Manager manager = managerService.getManagerByLogin(loginInput);
                 String loginFromDb = manager.getLogin();
                 String passwordFromDb = manager.getPassword();
 
-                // Check login and password for LogIn system
+                // Checking of login and password for login system
                 if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
                     HttpSession session = request.getSession();
                     session.setAttribute("usernameLogin", loginInput);

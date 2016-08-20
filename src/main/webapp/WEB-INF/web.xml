@@ -58,17 +58,7 @@
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
 
-
-
     <!--Errors handling-->
-    <!--<error-page>-->
-        <!--<exception-type>java.lang.Throwable</exception-type>-->
-        <!--<location>/error.jsp</location>-->
-    <!--</error-page>-->
-    <!--<error-page>-->
-        <!--<error-code>401</error-code>-->
-        <!--<location>/error401.jsp</location>-->
-    <!--</error-page>-->
     <error-page>
         <error-code>404</error-code>
         <location>/error404.jsp</location>
@@ -77,4 +67,9 @@
         <error-code>500</error-code>
         <location>/log-in.jsp</location>
     </error-page>
+
+    <!--Listener-->
+    <listener>
+        <listener-class>com.workfront.intern.cb.spring.SpringContextListener</listener-class>
+    </listener>
 </web-app>

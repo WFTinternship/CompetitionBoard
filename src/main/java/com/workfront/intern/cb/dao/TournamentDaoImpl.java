@@ -4,16 +4,18 @@ import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     private static final Logger LOG = Logger.getLogger(TournamentDaoImpl.class);
 
-    public TournamentDaoImpl(DataSource dataSource) {
+    public TournamentDaoImpl(@Autowired DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

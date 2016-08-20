@@ -5,16 +5,19 @@ import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     private static final Logger LOG = Logger.getLogger(ManagerDaoImpl.class);
 
-    public ManagerDaoImpl(DataSource dataSource) {
+    public ManagerDaoImpl(@Autowired DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

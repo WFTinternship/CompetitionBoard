@@ -43,11 +43,13 @@
 <%--Gets specific atributes from http session--%>
 <%
     String userNameSignInStr = (String) session.getAttribute("userNameSignIn");
+    session.setAttribute("manager", userNameSignInStr);
     if (userNameSignInStr == null) {
         userNameSignInStr = "";
     }
 
     String loginUserStr = (String) session.getAttribute("usernameLogin");
+    session.setAttribute("manager", loginUserStr);
     if (loginUserStr == null) {
         loginUserStr = "";
     }
@@ -63,7 +65,6 @@
             </a>
         </div>
 
-        <%--ToDo--%>
         <%--Hide/unhide--%>
         <%
             String addTournamentMenuItem = null;
@@ -86,7 +87,6 @@
                 logInMenuBtnItem = "";
                 logOutMenuBtnItem = "Log Out";
                 hideStr = "unHide";
-
             }
         %>
 

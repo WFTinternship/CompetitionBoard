@@ -17,7 +17,6 @@ public class LogOutServlet extends HttpServlet {
             session.invalidate();
         }
         response.sendRedirect(Params.PAGE_INDEX);
-//        request.getRequestDispatcher("/").forward(request, response);
     }
 
     @Override

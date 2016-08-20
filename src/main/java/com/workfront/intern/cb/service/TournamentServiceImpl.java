@@ -3,17 +3,19 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.TournamentDao;
-import com.workfront.intern.cb.dao.TournamentDaoImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class TournamentServiceImpl implements TournamentService {
     private static final Logger LOG = Logger.getLogger(TournamentServiceImpl.class);
 
-    private TournamentDao tournamentDao = new TournamentDaoImpl(DBManager.getDataSource());
+    @Autowired
+    private TournamentDao tournamentDao;
 
     /**
      * Adds new tournament in db
