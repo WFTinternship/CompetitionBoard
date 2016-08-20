@@ -15,6 +15,12 @@
 
 <body class="backgroundTournament">
 <div class="container">
+    <%
+        String searchResultMsg = (String) request.getAttribute("existsTournament");
+        if (searchResultMsg != null)
+            out.println("<font color=red size=4px>" + searchResultMsg + "</font>");
+    %>
+</div>
 
     <form action="add" class="form-horizontal" role="form" method="get">
         <h2>New Tournament</h2>
@@ -59,7 +65,7 @@
         <div class="form-group">
             <label  class="col-sm-3 control-label">Description</label>
             <div class="col-sm-9">
-                <textarea rows="5" cols="20" name="tournament_description" id="field2" class="form-control" required="required"></textarea>
+                <textarea rows="5" cols="20" name="tournament_description" id="field2" class="form-control" ></textarea>
             </div>
         </div>
 

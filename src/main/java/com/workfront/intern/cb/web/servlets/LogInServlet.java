@@ -27,21 +27,19 @@ public class LogInServlet extends HttpServlet {
             // Encrypted input password
             String passwordEncrypt = StringHelper.passToEncrypt(passwordInput);
 
+            // Check valid login and password.
+            // For invalid login and password sends error messages.
             try {
                 Manager manager = new ManagerServiceImpl().getManagerByLogin(loginInput);
+                int managerId = manager.getId();
                 String loginFromDb = manager.getLogin();
                 String passwordFromDb = manager.getPassword();
 
                 // Check login and password for LogIn system
                 if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("usernameLogin", loginInput);
-
-                    request.getRequestDispatcher("/index.jsp").forward(request, response);
-                }
-                if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("usernameLogin", loginInput);
+                    session.setAttribute("loginInput", loginInput);
+                    session.setAttribute("managerId", managerId);
 
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                 }
@@ -52,5 +50,3 @@ public class LogInServlet extends HttpServlet {
         }
     }
 }
-
-

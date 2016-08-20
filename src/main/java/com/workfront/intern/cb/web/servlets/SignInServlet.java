@@ -20,17 +20,22 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
         String passwordSignInInput = request.getParameter(Params.FORM_PARAM_SIGN_IN_PASSWORD);
-
-        HttpSession session = request.getSession();
 
         Manager manager = new Manager();
         manager.setLogin(signInLoginInput);
         manager.setPassword(passwordSignInInput);
 
         new ManagerServiceImpl().addManager(manager);
-        session.setAttribute(Params.FORM_PARAM_SIGN_IN, signInLoginInput);
+        session.setAttribute("signInLoginInput", signInLoginInput);
+
+        // Gets added manager id and set in session
+        Manager managerFromDb = new ManagerServiceImpl().getManagerByLogin(signInLoginInput);
+        int managerId = managerFromDb.getId();
+        session.setAttribute("managerId", managerId);
 
         request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
     }
