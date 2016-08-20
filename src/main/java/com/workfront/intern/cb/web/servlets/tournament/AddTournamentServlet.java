@@ -1,7 +1,10 @@
 package com.workfront.intern.cb.web.servlets.tournament;
 
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.service.TournamentServiceImpl;
+import com.workfront.intern.cb.spring.CompetitionBoardApp;
 import com.workfront.intern.cb.web.util.Params;
 
 import javax.servlet.ServletException;
@@ -12,6 +15,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AddTournamentServlet extends HttpServlet {
+    TournamentService tournamentService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        tournamentService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(TournamentService.class);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -34,7 +45,7 @@ public class AddTournamentServlet extends HttpServlet {
             tournament.setTournamentFormatId(format);
             tournament.setManagerId(managerId);
 
-            new TournamentServiceImpl().addTournament(tournament);
+            tournamentService.addTournament(tournament);
             request.getRequestDispatcher(Params.PAGE_TOURNAMENT).forward(request, response);
         } catch (RuntimeException ex) {
             // Checking duplicate of manager name during registration

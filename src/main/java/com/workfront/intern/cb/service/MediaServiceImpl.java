@@ -5,9 +5,11 @@ import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.dao.*;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class MediaServiceImpl implements MediaService {
     private static final Logger LOG = Logger.getLogger(MediaServiceImpl.class);
 

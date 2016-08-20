@@ -8,9 +8,11 @@ import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.GroupDao;
 import com.workfront.intern.cb.dao.GroupDaoImpl;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class GroupServiceImpl implements GroupService {
     private static final Logger LOG = Logger.getLogger(GroupServiceImpl.class);
 

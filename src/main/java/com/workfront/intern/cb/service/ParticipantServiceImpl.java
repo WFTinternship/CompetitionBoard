@@ -9,9 +9,11 @@ import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.ParticipantDao;
 import com.workfront.intern.cb.dao.ParticipantDaoImpl;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class ParticipantServiceImpl implements ParticipantService {
     private static final Logger LOG = Logger.getLogger(ParticipantServiceImpl.class);
 
