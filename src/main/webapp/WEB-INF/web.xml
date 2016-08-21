@@ -58,14 +58,29 @@
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
 
+    <!--AddTournamentServlet-->
+    <servlet>
+        <servlet-name>AllTournamentsServlet</servlet-name>
+        <servlet-class>com.workfront.intern.cb.web.servlets.tournament.AllTournamentsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AllTournamentsServlet</servlet-name>
+        <url-pattern>/allTournamentsServlet/*</url-pattern>
+    </servlet-mapping>
+
+
     <!--Errors handling-->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
     <error-page>
         <error-code>404</error-code>
         <location>/error404.jsp</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/log-in.jsp</location>
+        <location>/error500.jsp</location>
     </error-page>
 
     <!--Listener-->

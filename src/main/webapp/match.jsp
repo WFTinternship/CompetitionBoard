@@ -1,3 +1,5 @@
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
+<%@ page import="com.workfront.intern.cb.common.Manager" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Your Tournaments</title>
+    <title>Your Matches</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +27,41 @@
     <![endif]-->
 </head>
 
+<%--Gets specific atributes from http session--%>
+<%
+    String userName = "";
+    String welcomeStr = "";
+    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
+
+    String addTournamentMenuItem = null;
+    String signUpMenuItem = null;
+    String logInMenuBtnItem = null;
+    String logOutMenuBtnItem = null;
+    String hideStr = null;
+
+    Manager sessionContext = (Manager) session.getAttribute("manager");
+    if (sessionContext != null) {
+        userName = sessionContext.getLogin();
+        welcomeStr = "Hi, ";
+        hrefToSpecificTournamentPage = Params.PAGE_TOURNAMENT;
+
+        addTournamentMenuItem = "Add Tournament";
+        signUpMenuItem = "";
+        logInMenuBtnItem = "";
+        logOutMenuBtnItem = "Log Out";
+        hideStr = "unHide";
+    }
+
+    if (userName.equals("")) {
+        addTournamentMenuItem = "";
+        signUpMenuItem = "Sign Up";
+        logInMenuBtnItem = "Log In";
+        logOutMenuBtnItem = "";
+        hideStr = "hide";
+    }
+%>
+
+
 <body class="backgroundTournament">
 
 <!-- Navigation -->
@@ -36,18 +73,21 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="index.jsp">Home</a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <!--<li><a class="page-scroll" href="#about">About</a></li>-->
-                <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
-                <li><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="media.jsp">Media</a></li>
-                <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
-                <li><a href="log-in.jsp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="log-in.jsp" name="logInMenuBtn">Log In</a></li>
+                <li><a class="page-scroll" href="add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li type="hide"><a class="page-scroll" href="<%=Params.PAGE_MATCH%>">Matches</a></li>
+                <li><a class="page-scroll" href="<%=Params.PAGE_MEDIA%>">Media</a></li>
+                <li><a class="page-scroll" href="<%=Params.PAGE_CONTACT%>">Contact Us</a></li>
+                <li><a href="<%=Params.PAGE_SIGN_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=signUpMenuItem%> </a></li>
+                <li><a href="<%=Params.PAGE_LOG_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=logInMenuBtnItem%> </a></li>
+                <li><a href="logout" id="<%=hideStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>
             </ul>
         </div>
     </div>
@@ -66,6 +106,15 @@
                             <li>
                                 <button class="btn btn-danger"><B>CREATE A MATCH</B></button>
                             </li>
+                            <BR>
+                            <li>
+                                <button class="btn btn-danger"><B>EDIT A MATCH</B></button>
+                            </li>
+                            <BR>
+                            <li>
+                                <button class="btn btn-danger"><B>DELETE A MATCH</B></button>
+                            </li>
+
                         </ul>
                         <br>
                     </div>

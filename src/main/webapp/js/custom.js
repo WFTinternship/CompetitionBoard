@@ -1,11 +1,21 @@
-// JS submit for button
+// JS submit for tournament search button
 var searchStr;
-function submitForm() {
+function submitSearchNameInForm() {
      searchStr = document.getElementById("searchStr").value;
     if (searchStr != null) {
         document.forms["loginForm"].submit();
     }
 }
+
+// return date value from calendar
+var startDate;
+var endDate;
+function submitSearchNameInForm() {
+    startDate = document.getElementById("startDate").value;
+    endDate = document.getElementById("endDate").value;
+}
+
+
 
 // Hide/unhide button by specific element id
 var hidden = false;

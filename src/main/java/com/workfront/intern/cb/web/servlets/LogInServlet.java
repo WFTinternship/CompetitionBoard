@@ -40,15 +40,13 @@ public class LogInServlet extends HttpServlet {
             // For invalid login and password sends error messages.
             try {
                 Manager manager = managerService.getManagerByLogin(loginInput);
-                int managerId = manager.getId();
                 String loginFromDb = manager.getLogin();
                 String passwordFromDb = manager.getPassword();
 
                 // Check login and password for LogIn system
                 if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("loginInput", loginInput);
-                    session.setAttribute("managerId", managerId);
+                    session.setAttribute("manager", manager);
 
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                 }

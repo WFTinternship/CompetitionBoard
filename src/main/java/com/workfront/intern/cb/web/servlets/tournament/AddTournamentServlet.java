@@ -1,11 +1,11 @@
 package com.workfront.intern.cb.web.servlets.tournament;
 
+import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
-import com.workfront.intern.cb.service.TournamentServiceImpl;
 import com.workfront.intern.cb.spring.CompetitionBoardApp;
 import com.workfront.intern.cb.web.util.Params;
+import com.workfront.intern.cb.web.util.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Timestamp;
 
 public class AddTournamentServlet extends HttpServlet {
     TournamentService tournamentService;
@@ -26,27 +27,31 @@ public class AddTournamentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int managerId = (int) session.getAttribute("managerId");
+
+        Manager manager = (Manager) session.getAttribute("manager");
 
         try {
             String name = request.getParameter("name");
-//        Timestamp startDate = Timestamp.valueOf(request.getParameter("start_date"));
-//        Timestamp endDate = Timestamp.valueOf(request.getParameter("end_date"));
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
             String location = request.getParameter("location");
             String description = request.getParameter("tournament_description");
             int format = Integer.parseInt(request.getParameter("format"));
+            int managerId = manager.getId();
 
             Tournament tournament = new Tournament();
+
             tournament.setTournamentName(name);
-//        tournament.setStartDate(startDate);
-//        tournament.setStartDate(endDate);
+            tournament.setStartDate(Util.stringParseToTimeStamp(startDate));
+            tournament.setEndDate(Util.stringParseToTimeStamp(endDate));
             tournament.setLocation(location);
             tournament.setTournamentDescription(description);
             tournament.setTournamentFormatId(format);
             tournament.setManagerId(managerId);
 
             tournamentService.addTournament(tournament);
-            request.getRequestDispatcher(Params.PAGE_TOURNAMENT).forward(request, response);
+            request.getRequestDispatcher("tournament.jsp").forward(request, response);
+
         } catch (RuntimeException ex) {
             // Checking duplicate of manager name during registration
             request.setAttribute("existsTournament", "Sorry, but tournament with this name exists");

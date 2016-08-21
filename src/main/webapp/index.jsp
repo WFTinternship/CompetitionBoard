@@ -43,16 +43,36 @@
 
 <%--Gets specific atributes from http session--%>
 <%
-    String signInLoginInput = (String) session.getAttribute("signInLoginInput");
-    if (signInLoginInput == null) {
-        signInLoginInput = "";
+    String userName = "";
+    String welcomeStr = "";
+    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
+
+    String addTournamentMenuItem = null;
+    String signUpMenuItem = null;
+    String logInMenuBtnItem = null;
+    String logOutMenuBtnItem = null;
+    String hideStr = null;
+
+    Manager sessionContext = (Manager) session.getAttribute("manager");
+    if (sessionContext != null) {
+        userName = sessionContext.getLogin();
+        welcomeStr = "Hi, ";
+        hrefToSpecificTournamentPage = Params.PAGE_TOURNAMENT;
+
+        addTournamentMenuItem = "Add Tournament";
+        signUpMenuItem = "";
+        logInMenuBtnItem = "";
+        logOutMenuBtnItem = "Log Out";
+        hideStr = "unHide";
     }
 
-    String loginInput = (String) session.getAttribute("loginInput");
-    if (loginInput == null) {
-        loginInput = "";
+    if (userName.equals("")) {
+        addTournamentMenuItem = "";
+        signUpMenuItem = "Sign Up";
+        logInMenuBtnItem = "Log In";
+        logOutMenuBtnItem = "";
+        hideStr = "hide";
     }
-
 %>
 
 <body id="page-top" onload="hiddenBtn()">
@@ -61,65 +81,38 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand page-scroll" href="#page-top">Home</a>
-            <a class="navbar-brand page-scroll"> <%= signInLoginInput%> <%= loginInput%></a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+            </a>
         </div>
-
-        <%--ToDo--%>
-        <%--Hide/unhide--%>
-        <%
-        String addTournamentMenuItem = null;
-        String signUpMenuItem = null;
-        String logInMenuBtnItem = null;
-        String logOutMenuBtnItem = null;
-        String hideStr = null;
-        String unHideStr;
-
-        if ((signInLoginInput.equals("")) && (loginInput.equals(""))) {
-        addTournamentMenuItem = "";
-        signUpMenuItem = "Sign Up";
-        logInMenuBtnItem = "Log In";
-        logOutMenuBtnItem = "";
-        hideStr = "hide";
-
-        } else if ((signInLoginInput != null) || (loginInput != null)) {
-        addTournamentMenuItem = "Add Tournament";
-        signUpMenuItem = "";
-        logInMenuBtnItem = "";
-        logOutMenuBtnItem = "Log Out";
-        hideStr = "unHide";
-        }
-        %>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="page-scroll" href="temp.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
-                <li><a class="page-scroll" href="<%=Params.PAGE_TOURNAMENT%>">Tournaments</a></li>
+                <li><a class="page-scroll" href="add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
-                <li><a href="<%=Params.PAGE_SIGN_IN%>"id="<%=hideStr%>" onload="showMenuItemReverse()"><%=signUpMenuItem%></a></li>
-                <li><a href="<%=Params.PAGE_LOG_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=logInMenuBtnItem%></a></li>
-                <li><a href="logout" id="<%=hideStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%>
-                </a></li>
+                <li><a href="<%=Params.PAGE_SIGN_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=signUpMenuItem%> </a></li>
+                <li><a href="<%=Params.PAGE_LOG_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=logInMenuBtnItem%> </a></li>
+                <li><a href="logout" id="<%=hideStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <header>
-    <div class="header-content">
 
-        <%--tournament-search--%>
+    <%--Search tournament---%>
+        <div class="header-content">
         <form action="search" method="get" class="container">
             <div class="container">
                 <div class="row">
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                            <input type="text" class="  search-query form-control" name="searchStr"
-                                   placeholder="Search tournaments" required/>
+                            <input type="text" class="  search-query form-control" name="searchStr" placeholder="Search tournaments" required/>
                             <span class="input-group-btn">
-                    <button class="btn btn-danger" type="submit" onclick="submitForm()">
+                    <button class="btn btn-danger" type="submit" onclick="submitSearchNameInForm()">
                         <span class=" glyphicon glyphicon-search"></span>
                     </button>
                 </span>
@@ -270,19 +263,12 @@
 <!-- jQuery -->
 <script src="vendor/jquery/jquery.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<%--<script src="vendor/bootstrap/js/bootstrap.min.js"></script>--%>
-
 <!-- Plugin JavaScript -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
-<%--<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>--%>
 
 <!-- Theme JavaScript -->
 <script src="js/creative.min.js"></script>
 
 </body>
-
-<script></script>
-
 </html>

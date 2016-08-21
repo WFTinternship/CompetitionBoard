@@ -39,7 +39,7 @@ public class BaseTest {
     protected static Tournament createRandomTournament() {
         Tournament testTournament = new Tournament();
 
-        String tournamentName = "THE BEST OF IF THE BEST";
+        String tournamentName = generateRandomString();
         Timestamp startDate = Timestamp.valueOf("2020-08-08 10:00:00");
         Timestamp endDate = Timestamp.valueOf("2020-08-08 20:00:00");
         String location = "Yerevan, Armenia";

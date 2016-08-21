@@ -2,11 +2,14 @@ package com.workfront.intern.cb.web.util;
 
 public class Params {
 
+    //Servlets
+    public static final String SERVLET_ALL_TOURNAMENT = "com.workfront.intern.cb.web.servlets.tournament.AllTournamentsServlet";
+
     // Pages
     public static final String PAGE_INDEX = "/index.jsp";
     public static final String PAGE_SIGN_IN = "/sign-in.jsp";
     public static final String PAGE_LOG_IN = "/log-in.jsp";
-    public static final String PAGE_TOURNAMENT = "/tournament.jsp";
+    public static final String PAGE_TOURNAMENT = "tournament.jsp";
     public static final String PAGE_ALL_AVALABLE_TOURNAMENTS = "/all-tournaments.jsp";
     public static final String PAGE_ADD_TOURNAMENT = "add-tournament.jsp";
     public static final String PAGE_MATCH = "/match.jsp";

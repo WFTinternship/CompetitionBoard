@@ -1,7 +1,9 @@
 package com.workfront.intern.cb.web.servlets;
 
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.ManagerServiceImpl;
+import com.workfront.intern.cb.spring.CompetitionBoardApp;
 import com.workfront.intern.cb.web.util.Params;
 
 import javax.servlet.ServletException;
@@ -12,6 +14,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SignInServlet extends HttpServlet {
+    ManagerService managerService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        managerService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(ManagerService.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,17 +35,16 @@ public class SignInServlet extends HttpServlet {
             String signInLoginInput = request.getParameter(Params.FORM_PARAM_SIGN_IN);
             String passwordSignInInput = request.getParameter(Params.FORM_PARAM_SIGN_IN_PASSWORD);
 
-            Manager manager = new Manager();
-            manager.setLogin(signInLoginInput);
-            manager.setPassword(passwordSignInInput);
+            Manager signInUser = new Manager();
+            signInUser.setLogin(signInLoginInput);
+            signInUser.setPassword(passwordSignInInput);
 
-            new ManagerServiceImpl().addManager(manager);
-            session.setAttribute("signInLoginInput", signInLoginInput);
+            managerService.addManager(signInUser);
 
             // Gets added manager id and set in session
-            Manager managerFromDb = new ManagerServiceImpl().getManagerByLogin(signInLoginInput);
-            int managerId = managerFromDb.getId();
-            session.setAttribute("managerId", managerId);
+            Manager manager = managerService.getManagerByLogin(signInLoginInput);
+            session.setAttribute("manager", manager);
+
 
             request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
         } catch (RuntimeException ex) {

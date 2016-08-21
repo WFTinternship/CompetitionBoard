@@ -41,7 +41,9 @@
                 <input type="password" name="passwordLogin" required autocomplete="off"/>
             </div>
             <%--Password Forgot--%>
-            <p class="forgot"><a href="#">Forgot Password?</a></p>
+
+            <p class="forgot"><a href="sign-in.jsp">No account? Create one!</a></p>
+            <%--<p class="forgot"><a href="#">Forgot Password?</a></p>--%>
 
             <button class="button button-block" name="logInButton">Log In</button>
         </form>

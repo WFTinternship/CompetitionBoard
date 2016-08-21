@@ -1,14 +1,16 @@
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
+<%@ page import="com.workfront.intern.cb.common.Manager" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <title>Your Media</title>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Media</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -16,14 +18,51 @@
     <!-- Custom CSS -->
     <link href="css/blog-home.css" rel="stylesheet">
     <link href="css/creative.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
-<body <%--style="background-image: url('/img/banner.jpg');"  >--%>
-        style="background-color: #313131">
+<%--Gets specific atributes from http session--%>
+<%
+    String userName = "";
+    String welcomeStr = "";
+    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
+
+    String addTournamentMenuItem = null;
+    String signUpMenuItem = null;
+    String logInMenuBtnItem = null;
+    String logOutMenuBtnItem = null;
+    String hideStr = null;
+
+    Manager sessionContext = (Manager) session.getAttribute("manager");
+    if (sessionContext != null) {
+        userName = sessionContext.getLogin();
+        welcomeStr = "Hi, ";
+        hrefToSpecificTournamentPage = Params.PAGE_TOURNAMENT;
+
+        addTournamentMenuItem = "Add Tournament";
+        signUpMenuItem = "";
+        logInMenuBtnItem = "";
+        logOutMenuBtnItem = "Log Out";
+        hideStr = "unHide";
+    }
+
+    if (userName.equals("")) {
+        addTournamentMenuItem = "";
+        signUpMenuItem = "Sign Up";
+        logInMenuBtnItem = "Log In";
+        logOutMenuBtnItem = "";
+        hideStr = "hide";
+    }
+%>
+
+
+<body class="backgroundTournament">
 
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -34,177 +73,75 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="index.jsp">Home</a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <!--<li><a class="page-scroll" href="#about">About</a></li>-->
-                <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
-                <li><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="media.jsp">Media</a></li>
-                <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
-                <li><a href="log-in.jsp" name="signUpMenuBtn" >Sign Up</a></li>
-                <li><a href="log-in.jsp" name="logInMenuBtn">Log In</a></li>
+                <li><a class="page-scroll" href="add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li type="hide"><a class="page-scroll" href="<%=Params.PAGE_MATCH%>">Matches</a></li>
+                <li><a class="page-scroll" href="<%=Params.PAGE_MEDIA%>">Media</a></li>
+                <li><a class="page-scroll" href="<%=Params.PAGE_CONTACT%>">Contact Us</a></li>
+                <li><a href="<%=Params.PAGE_SIGN_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=signUpMenuItem%> </a></li>
+                <li><a href="<%=Params.PAGE_LOG_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=logInMenuBtnItem%> </a></li>
+                <li><a href="logout" id="<%=hideStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Page Content -->
-<div class="container">
 
-    <%--<div class="row">--%>
+<div class="row">
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row content">
+                    <div class="col-sm-3 sidenav">
 
-    <%--<!-- Blog Entries Column -->--%>
-    <%--<div class="col-md-8">--%>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li>
+                                <button class="btn btn-danger"><B>UPLOAD A PHOTO</B></button>
+                            </li>
+                            <BR>
+                            <li>
+                                <button class="btn btn-danger"><B>UPLOAD A VIDEO</B></button>
+                            </li>
+                            <BR>
+                            <li>
+                                <button class="btn btn-danger"><B>DELETE A PHOTO</B></button>
+                            </li>
+                            <BR>
+                            <li>
+                                <button class="btn btn-danger"><B>DELETE A VIDEO</B></button>
+                            </li>
+                        </ul>
+                        <br>
+                    </div>
 
-    <%--<h1 class="page-header">--%>
-    <%--Tournaments--%>
-    <%--<small>Secondary Text</small>--%>
-    <%--</h1>--%>
+                    <div class="col-sm-9">
+                        <h2>Your MEDIA</h2>
+                        <hr>
 
-    <%--<!-- First Blog Post -->--%>
-    <%--<h2>--%>
-    <%--<a href="#">Blog Post Title</a>--%>
-    <%--</h2>--%>
-    <%--<p class="lead">--%>
-    <%--by <a href="index.php">Start Bootstrap</a>--%>
-    <%--</p>--%>
-    <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>--%>
-    <%--<hr>--%>
-    <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
-    <%--<hr>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus--%>
-    <%--inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum--%>
-    <%--officiis rerum.</p>--%>
-    <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
+                    </div>
+                </div>
+            </div>
 
-    <%--<hr>--%>
+            <!-- Footer -->
+            <%--<footer id="footer">--%>
+            <%--<div class="row">--%>
+            <%--<div class="col-lg-12">--%>
+            <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
+            <%--</div>--%>
+            <%--</div>--%>
+            <%--</footer>--%>
 
-    <%--<!-- Second Blog Post -->--%>
-    <%--<h2>--%>
-    <%--<a href="#">Blog Post Title</a>--%>
-    <%--</h2>--%>
-    <%--<p class="lead">--%>
-    <%--by <a href="index.php">Start Bootstrap</a>--%>
-    <%--</p>--%>
-    <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>--%>
-    <%--<hr>--%>
-    <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
-    <%--<hr>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, quasi, fugiat, asperiores harum--%>
-    <%--voluptatum tenetur a possimus nesciunt quod accusamus saepe tempora ipsam distinctio minima dolorum--%>
-    <%--perferendis labore impedit voluptates!</p>--%>
-    <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
-
-    <%--<hr>--%>
-
-    <%--<!-- Third Blog Post -->--%>
-    <%--<h2>--%>
-    <%--<a href="#">Blog Post Title</a>--%>
-    <%--</h2>--%>
-    <%--<p class="lead">--%>
-    <%--by <a href="index.php">Start Bootstrap</a>--%>
-    <%--</p>--%>
-    <%--<p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>--%>
-    <%--<hr>--%>
-    <%--<img class="img-responsive" src="http://placehold.it/900x300" alt="">--%>
-    <%--<hr>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, voluptates, voluptas dolore ipsam--%>
-    <%--cumque quam veniam accusantium laudantium adipisci architecto itaque dicta aperiam maiores provident id--%>
-    <%--incidunt autem. Magni, ratione.</p>--%>
-    <%--<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>--%>
-
-    <%--<hr>--%>
-
-    <%--<!-- Pager -->--%>
-    <%--<ul class="pager">--%>
-    <%--<li class="previous">--%>
-    <%--<a href="#">&larr; Older</a>--%>
-    <%--</li>--%>
-    <%--<li class="next">--%>
-    <%--<a href="#">Newer &rarr;</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-
-    <%--</div>--%>
-
-    <%--<!-- Blog Sidebar Widgets Column -->--%>
-    <%--<div class="col-md-4">--%>
-
-    <%--<!-- Blog Search Well -->--%>
-    <%--<div class="well">--%>
-    <%--<h4>Blog Search</h4>--%>
-    <%--<div class="input-group">--%>
-    <%--<input type="text" class="form-control">--%>
-    <%--<span class="input-group-btn">--%>
-    <%--<button class="btn btn-default" type="button">--%>
-    <%--<span class="glyphicon glyphicon-search"></span>--%>
-    <%--</button>--%>
-    <%--</span>--%>
-    <%--</div>--%>
-    <%--<!-- /.input-group -->--%>
-    <%--</div>--%>
-
-    <%--<!-- Blog Categories Well -->--%>
-    <%--<div class="well">--%>
-    <%--<h4>Blog Categories</h4>--%>
-    <%--<div class="row">--%>
-    <%--<div class="col-lg-6">--%>
-    <%--<ul class="list-unstyled">--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-    <%--</div>--%>
-    <%--<!-- /.col-lg-6 -->--%>
-    <%--<div class="col-lg-6">--%>
-    <%--<ul class="list-unstyled">--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--<li><a href="#">Category Name</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-    <%--</div>--%>
-    <%--<!-- /.col-lg-6 -->--%>
-    <%--</div>--%>
-    <%--<!-- /.row -->--%>
-    <%--</div>--%>
-
-    <%--<!-- Side Widget Well -->--%>
-    <%--<div class="well">--%>
-    <%--<h4>Side Widget Well</h4>--%>
-    <%--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus--%>
-    <%--laudantium odit aliquam repellat tempore quos aspernatur vero.</p>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-</div>
-
-<!-- Footer -->
-<footer>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; Artur Babayan 2016</p>
         </div>
     </div>
-</footer>
-
 </div>
 
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

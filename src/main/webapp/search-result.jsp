@@ -4,6 +4,7 @@
 <%@ page import="com.workfront.intern.cb.service.ManagerServiceImpl" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
+<%@ page import="com.workfront.intern.cb.service.ManagerService" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,7 +75,7 @@
                         <h2>Searching result</h2>
                         <hr>
                         <%
-                            List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("searchResult");
+                            List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("searchResultList");
                             int sizeList = tournamentList.size();
                         %>
                         <table class="tournamentTable">
@@ -141,13 +142,11 @@
                                 </td>
 
                                 <%--Tournament creator--%>
-                                <% int managerId = tournamentList.get(i).getManagerId();
-                                    Manager manager = new ManagerServiceImpl().getManagerById(managerId);
-                                    String managerName = manager.getLogin();
-                                %>
-                                <td>
-                                    <%= managerName%>
-                                </td>
+                                    <% int id = tournamentList.get(i).getManagerId();
+                                    %>
+                                    <td>
+                                        <%=id%>
+                                    </td>
                             </tr>
                             <br>
                             <%}%>

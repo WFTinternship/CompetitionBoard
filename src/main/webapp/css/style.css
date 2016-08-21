@@ -28,7 +28,7 @@ html {
 
 .backgroundLogin {
     background: url("/img/background/indexBg.jpg") no-repeat;
-    background-size: cover;
+    background-size: 1920px 970px;
 }
 
 .searchPanelCustom {
@@ -101,9 +101,9 @@ html {
 }
 
 a {
-    text-decoration: none;
+    /*text-decoration: none;*/
     color: #E89980;
-    font-size: 15px;
+    font-size: 12px;
     -webkit-transition: .5s ease;
     transition: .5s ease;
 }

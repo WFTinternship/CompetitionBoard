@@ -51,6 +51,7 @@
                     <label>Confirm Password<span class="req"></span></label>
                     <input type="password" name="passwordConfirmSignIn" required autocomplete="off"/>
                 </div>
+                    <p class="forgot"><a href="log-in.jsp">Already have an account? LogIn</a></p>
 
                 <button type="submit" class="button button-block">Sign Up</button>
             </form>
