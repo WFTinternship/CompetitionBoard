@@ -44,7 +44,7 @@
         <div class="form-group">
             <label for="startDate" class="col-sm-3 control-label">Start Time</label>
             <div class="col-sm-9">
-                <input type="datetime-local" id="startDate" name="startDate" class="form-control" value="2016-08-21T00:00:00" onload="submitSearchNameInForm()" />
+                <input type="datetime-local" id="startDate" name="startDate" class="form-control" value="2016-08-21T00:00" onload="submitDateNameInForm()" />
             </div>
         </div>
 
@@ -52,7 +52,7 @@
         <div class="form-group">
             <label for="endDate" class="col-sm-3 control-label">End time</label>
             <div class="col-sm-9">
-                <input type="datetime-local" id="endDate" name="endDate" class="form-control" value="2016-08-21T00:00:00" onload="submitSearchNameInForm()" />
+                <input type="datetime-local" id="endDate" name="endDate" class="form-control" value="2016-08-21T00:00" onload="submitDateNameInForm()" />
             </div>
         </div>
 

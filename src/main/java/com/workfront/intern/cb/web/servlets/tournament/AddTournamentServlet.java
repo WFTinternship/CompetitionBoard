@@ -50,7 +50,7 @@ public class AddTournamentServlet extends HttpServlet {
             tournament.setManagerId(managerId);
 
             tournamentService.addTournament(tournament);
-            request.getRequestDispatcher("tournament.jsp").forward(request, response);
+            response.sendRedirect(Params.PAGE_TOURNAMENT);
 
         } catch (RuntimeException ex) {
             // Checking duplicate of manager name during registration

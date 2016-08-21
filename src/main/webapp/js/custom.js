@@ -10,11 +10,10 @@ function submitSearchNameInForm() {
 // return date value from calendar
 var startDate;
 var endDate;
-function submitSearchNameInForm() {
+function submitDateNameInForm() {
     startDate = document.getElementById("startDate").value;
     endDate = document.getElementById("endDate").value;
 }
-
 
 
 // Hide/unhide button by specific element id

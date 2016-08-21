@@ -7,15 +7,18 @@ import java.util.Date;
 
 public class Util {
 
+
     /**
      * Parse input string to timestamp format
      */
     public static Timestamp stringParseToTimeStamp(String input) {
-        Date startDate = null;
+        Date date = null;
         long time = 0;
+
         try {
-            startDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(input);
-            time = startDate.getTime();
+            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(input);
+
+            time = date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -23,4 +26,12 @@ public class Util {
 
         return new Timestamp(time);
     }
+
+    public static void main(String[] args) {
+
+        String str = "1985-04-12T23:20";
+        Timestamp timestamp = stringParseToTimeStamp(str);
+        System.out.println(timestamp);
+    }
+
 }
