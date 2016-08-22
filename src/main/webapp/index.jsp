@@ -5,13 +5,13 @@
 <html lang="en">
 
 <head>
+    <title>Competition Board Home Page</title>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Competition Board</title>
 
     <%--Custom JS--%>
     <script src="js/custom.js"></script>
@@ -45,7 +45,8 @@
 <%
     String userName = "";
     String welcomeStr = "";
-    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
+//    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
+    String hrefToSpecificTournamentPage = "/allTournamentsServlet";
 
     String addTournamentMenuItem = null;
     String signUpMenuItem = null;

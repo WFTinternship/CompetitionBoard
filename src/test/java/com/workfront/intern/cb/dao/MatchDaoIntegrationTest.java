@@ -31,7 +31,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() throws Exception {
-        managerDao = new ManagerDaoImpl(dataSource);
+//        managerDao = new ManagerDaoImpl(dataSource);
         tournamentDao = new TournamentDaoImpl(dataSource);
         groupDao = new GroupDaoImpl(dataSource);
         matchDao = new MatchDaoImpl(dataSource);

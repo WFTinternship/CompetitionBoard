@@ -1,21 +1,17 @@
-<%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
-<%@ page import="com.workfront.intern.cb.service.TournamentServiceImpl" %>
-<%@ page import="com.workfront.intern.cb.service.ManagerServiceImpl" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
-<%@ page import="com.workfront.intern.cb.service.ManagerService" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <title>Search result...</title>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Your Tournaments</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -72,7 +68,7 @@
                     </div>
 
                     <div class="col-sm-9">
-                        <h2>Searching result</h2>
+                        <h2>Search result</h2>
                         <hr>
                         <%
                             List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("searchResultList");

@@ -28,7 +28,7 @@ public class AllTournamentsServlet extends HttpServlet {
         List<Tournament> allTournamentList = tournamentService.getTournamentList();
         session.setAttribute("allTournamentList", allTournamentList);
 
-        request.getRequestDispatcher("allTournamentsServlet/all-tournaments.jsp").forward(request, response);
+        response.sendRedirect("all-tournaments.jsp");
     }
 
     @Override

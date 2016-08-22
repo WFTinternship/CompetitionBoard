@@ -3,10 +3,16 @@ package com.workfront.intern.cb.service;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.dao.DBManager;
+import com.workfront.intern.cb.dao.ManagerDao;
+import com.workfront.intern.cb.dao.ManagerDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.internal.util.reflection.Whitebox;
+
+import javax.sql.DataSource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,13 +20,19 @@ import static org.junit.Assert.assertTrue;
 
 public class ManagerServiceIntegrationTest extends BaseTest {
     private ManagerService managerService;
+    private ManagerDao managerDao;
 
     // Test helper objects
     private Manager testManager;
 
     @Before
     public void beforeTest() throws Exception {
+        DataSource dataSource = DBManager.getDataSource();
+        managerDao = new ManagerDaoImpl(dataSource);
+        Whitebox.setInternalState(managerDao, "dataSource", dataSource);
+
         managerService = new ManagerServiceImpl();
+        Whitebox.setInternalState(managerService, "managerDao", managerDao);
 
         // Delete all remaining objects
         cleanUp();
