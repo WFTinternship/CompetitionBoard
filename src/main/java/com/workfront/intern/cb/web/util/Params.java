@@ -3,7 +3,7 @@ package com.workfront.intern.cb.web.util;
 public class Params {
 
     //Servlets
-    public static final String SERVLET_ALL_TOURNAMENT = "com.workfront.intern.cb.web.servlets.tournament.AllTournamentsServlet";
+    public static final String SERVLET_ALL_TOURNAMENT_URL = "/allTournamentsServlet";
 
     // Pages
     public static final String PAGE_INDEX = "/index.jsp";

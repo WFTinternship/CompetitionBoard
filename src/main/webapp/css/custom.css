@@ -20,3 +20,17 @@ h1{
     font-size: 17px;
     letter-spacing: 1px;
 }
+.hidden-element {
+    display: none !important;
+}
+
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.container-fluid .navbar-header {
+    padding-left: 20px;
+}
+.container-fluid .navbar-collapse {
+    padding-right: 20px;
+}

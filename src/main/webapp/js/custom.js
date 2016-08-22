@@ -21,9 +21,11 @@ var hidden = false;
 function hiddenBtn() {
     hidden = !hidden;
     if (hidden) {
-        document.getElementById("hide").style.visibility = 'hidden';
+        // document.getElementById("hide").style.visibility = 'hidden';
+        // document.getElementById("hide").style.display = 'none';
     } else {
-        document.getElementById("unhide").style.visibility = 'visible';
+        // document.getElementById("unhide").style.visibility = 'visible';
+        // document.getElementById("unhide").style.display = 'block';
     }
 }
 
@@ -34,12 +36,37 @@ function selectElement() {
     // }
 }
 
+$(document).ready(function() {     
+    showMenuItem();
+});
+
 function showMenuItem() {
-    document.getElementById("hide").style.visibility = "hidden";
-    document.getElementById("unHide").style.visibility = "visible";
+    if($('#login-status').val() !== '') {
+        $('.visible-when-logged-in').each(function() {
+            $(this).removeClass('hidden-element');
+        });
+        $('.hidden-when-logged-in').each(function() {
+            $(this).addClass('hidden-element');
+        });
+    } else {
+        $('.visible-when-logged-in').each(function () {
+            $(this).addClass('hidden-element');
+        });
+        $('.hidden-when-logged-in').each(function () {
+            $(this).removeClass('hidden-element');
+        });
+    }
+    
+    
 }
 
 function showMenuItemReverse() {
-    document.getElementById("unHide").style.visibility = "hidden";
-    document.getElementById("hide").style.visibility = "visible";
+    // document.getElementById("unHide").style.display = "none";
+    // document.getElementById("hide").style.display = "block";
+    
+    // document.querySelectorAll(".unHide2").style.display = "none";
+    // document.querySelectorAll(".hide2").style.display = "block";
+    $('.visible-element').each(function() {
+        $(this).removeClass('visible-element').addClass('hidden-element');
+    });
 }

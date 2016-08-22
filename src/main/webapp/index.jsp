@@ -13,10 +13,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <%--Custom JS--%>
-    <script src="js/custom.js"></script>
-    <script src="js/jquery-3.1.0.js"></script>
-
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -35,6 +31,7 @@
     <link href="css/creative.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
 
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -45,14 +42,14 @@
 <%
     String userName = "";
     String welcomeStr = "";
-//    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
-    String hrefToSpecificTournamentPage = "/allTournamentsServlet";
+    String hrefToSpecificTournamentPage = Params.SERVLET_ALL_TOURNAMENT_URL;
 
     String addTournamentMenuItem = null;
     String signUpMenuItem = null;
     String logInMenuBtnItem = null;
     String logOutMenuBtnItem = null;
-    String hideStr = null;
+    String classStr = null;
+
 
     Manager sessionContext = (Manager) session.getAttribute("manager");
     if (sessionContext != null) {
@@ -64,7 +61,7 @@
         signUpMenuItem = "";
         logInMenuBtnItem = "";
         logOutMenuBtnItem = "Log Out";
-        hideStr = "unHide";
+        classStr = "visible-element";
     }
 
     if (userName.equals("")) {
@@ -72,7 +69,7 @@
         signUpMenuItem = "Sign Up";
         logInMenuBtnItem = "Log In";
         logOutMenuBtnItem = "";
-        hideStr = "hide";
+        classStr = "hidden-element";
     }
 %>
 
@@ -85,18 +82,24 @@
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
             </a>
         </div>
+        <input type="hidden" id="login-status" value="<%=userName%>" />
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="page-scroll" href="add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
-                <li><a class="page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="add-tournament.jsp" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
-                <li><a href="<%=Params.PAGE_SIGN_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=signUpMenuItem%> </a></li>
-                <li><a href="<%=Params.PAGE_LOG_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=logInMenuBtnItem%> </a></li>
-                <li><a href="logout" id="<%=hideStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>
+                <li><a href="<%=Params.PAGE_SIGN_IN%>" class="hidden-when-logged-in">Sign Up</a></li>
+                <li><a href="<%=Params.PAGE_LOG_IN%>" class="hidden-when-logged-in">Log In </a></li>
+                <li><a href="logout" class="visible-when-logged-in hidden-element">Log Out</a></li>
+
+
+                <%--<li><a href="<%=Params.PAGE_SIGN_IN%>" class="<%=classStr%>" onload="showMenuItem()"><%=signUpMenuItem%> </a></li>--%>
+                <%--<li><a href="<%=Params.PAGE_LOG_IN%>" class="<%=classStr%>" onload="showMenuItem()"><%=logInMenuBtnItem%> </a></li>--%>
+                <%--<li><a href="logout" class="<%=classStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>--%>
             </ul>
         </div>
     </div>
@@ -125,7 +128,7 @@
 
         <br>
 
-        <%--Read attribute from request--%>
+        <%--Write error message in jsp --%>
         <%
             String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");
             if (searchResultMsg != null)
@@ -270,6 +273,9 @@
 
 <!-- Theme JavaScript -->
 <script src="js/creative.min.js"></script>
+
+<%--Custom JS--%>
+<script src="js/custom.js"></script>
 
 </body>
 </html>

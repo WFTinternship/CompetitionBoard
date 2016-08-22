@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/custom.css">
 
-    <script src="js/custom.js"></script>
 </head>
 
 <body class="backgroundLogin">
