@@ -25,24 +25,3 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
         }
     }
 });
-
-//Select active tab
-// $('.tab a').on('click', function (e) {
-//     e.preventDefault();
-//     loadTab(this);
-// });
-
-// $(document).ready(function () {
-//     // debugger;
-//     loadTab($('div.form').find('li.active>a'));
-// });
-
-// function loadTab(param) {
-//     $(param).parent().addClass('active');
-//     $(param).parent().siblings().removeClass('active');
-//
-//     target = $(param).attr('href');
-//
-//     $('.tab-content > div').not(target).hide();
-//     $(target).fadeIn(600);
-// }

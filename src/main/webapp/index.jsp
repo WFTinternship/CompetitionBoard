@@ -14,7 +14,7 @@
     <meta name="author" content="">
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -24,14 +24,14 @@
           rel='stylesheet' type='text/css'>
 
     <!-- Plugin CSS -->
-    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="resources/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
     <!-- Theme CSS -->
-    <link href="css/creative.min.css" rel="stylesheet">
-    <link href="css/creative.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/normalize.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="resources/css/creative.min.css" rel="stylesheet">
+    <link href="resources/css/creative.min.css" rel="stylesheet">
+    <link href="resources/css/style.css" rel="stylesheet">
+    <link href="resources/css/normalize.css" rel="stylesheet">
+    <link href="resources/css/custom.css" rel="stylesheet">
 
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -45,35 +45,25 @@
     String hrefToSpecificTournamentPage = Params.SERVLET_ALL_TOURNAMENT_URL;
 
     String addTournamentMenuItem = null;
-    String signUpMenuItem = null;
-    String logInMenuBtnItem = null;
-    String logOutMenuBtnItem = null;
     String classStr = null;
 
-
-    Manager sessionContext = (Manager) session.getAttribute("manager");
+     Manager sessionContext = (Manager) request.getAttribute("manager");
     if (sessionContext != null) {
         userName = sessionContext.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = Params.PAGE_TOURNAMENT;
 
         addTournamentMenuItem = "Add Tournament";
-        signUpMenuItem = "";
-        logInMenuBtnItem = "";
-        logOutMenuBtnItem = "Log Out";
         classStr = "visible-element";
     }
 
     if (userName.equals("")) {
         addTournamentMenuItem = "";
-        signUpMenuItem = "Sign Up";
-        logInMenuBtnItem = "Log In";
-        logOutMenuBtnItem = "";
         classStr = "hidden-element";
     }
 %>
 
-<body id="page-top" onload="hiddenBtn()">
+<body id="page-top">
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -92,14 +82,9 @@
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
-                <li><a href="<%=Params.PAGE_SIGN_IN%>" class="hidden-when-logged-in">Sign Up</a></li>
-                <li><a href="<%=Params.PAGE_LOG_IN%>" class="hidden-when-logged-in">Log In </a></li>
-                <li><a href="logout" class="visible-when-logged-in hidden-element">Log Out</a></li>
-
-
-                <%--<li><a href="<%=Params.PAGE_SIGN_IN%>" class="<%=classStr%>" onload="showMenuItem()"><%=signUpMenuItem%> </a></li>--%>
-                <%--<li><a href="<%=Params.PAGE_LOG_IN%>" class="<%=classStr%>" onload="showMenuItem()"><%=logInMenuBtnItem%> </a></li>--%>
-                <%--<li><a href="logout" class="<%=classStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>--%>
+                <li><a href="to-signIn" class="hidden-when-logged-in">Sign Up</a></li>
+                <li><a href="to-login-page" class="hidden-when-logged-in">Log In </a></li>
+                <li><a href="#" class="visible-when-logged-in hidden-element">Log Out</a></li>
             </ul>
         </div>
     </div>
@@ -142,7 +127,7 @@
         <div class="row no-gutter popup-gallery">
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
+                    <img src="resources/img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -158,7 +143,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
+                    <img src="resources/img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -174,7 +159,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="i<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
+                    <img src="resources/img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -190,7 +175,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
+                    <img src="resources/img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -206,7 +191,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
+                    <img src="resources/img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -222,7 +207,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
+                    <img src="resources/img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -265,17 +250,17 @@
 </section>
 
 <!-- jQuery -->
-<script src="vendor/jquery/jquery.min.js"></script>
+<script src="resources/vendor/jquery/jquery.min.js"></script>
 
 <!-- Plugin JavaScript -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="resources/vendor/scrollreveal/scrollreveal.min.js"></script>
 
 <!-- Theme JavaScript -->
-<script src="js/creative.min.js"></script>
+<script src="resources/js/creative.min.js"></script>
 
 <%--Custom JS--%>
-<script src="js/custom.js"></script>
+<script src="resources/js/custom.js"></script>
 
 </body>
 </html>

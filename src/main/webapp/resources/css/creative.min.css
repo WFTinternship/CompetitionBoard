@@ -179,7 +179,8 @@ header {
     background-size: cover;
     -o-background-size: cover;
     background-position: center;
-    background-image: url("/img/background/indexBg.jpg");
+    background-image: url("/resources/img/background/indexBg.jpg");
+    /*background-color: #2b542c;*/
     color: #fff
 }
 

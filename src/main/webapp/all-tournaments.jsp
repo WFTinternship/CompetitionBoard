@@ -49,8 +49,8 @@
                 <li><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="media.jsp">Media</a></li>
                 <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
-                <li><a href="log-in.jsp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="log-in.jsp" name="logInMenuBtn">Log In</a></li>
+                <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="signUpMenuBtn">Sign Up</a></li>
+                <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="logInMenuBtn">Log In</a></li>
             </ul>
         </div>
     </div>

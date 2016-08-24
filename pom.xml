@@ -29,6 +29,8 @@
         <selenium.version>2.53.0</selenium.version>
         <spring.version>4.3.2.RELEASE</spring.version>
         <spring-context.version>4.3.2.RELEASE</spring-context.version>
+        <spring-mvc.version>4.3.2.RELEASE</spring-mvc.version>
+        <JSTL.version>1.2</JSTL.version>
     </properties>
 
     <dependencies>
@@ -87,6 +89,16 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring-context.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring-mvc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${JSTL.version}</version>
         </dependency>
     </dependencies>
 

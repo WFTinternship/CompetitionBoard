@@ -18,16 +18,15 @@ html {
     /*background: url("/img/background/tournamentBg.jpg") repeat;*/
     background-color: #838383;
     background-size: 100% 110%;
-
 }
 
 .backgroundMatch {
-    background-image: url("/img/background/matchBg.jpg");
+    background-image: url("/resources/img/background/matchBg.jpg");
     background-size: 100% 100%;
 }
 
 .backgroundLogin {
-    background: url("/img/background/indexBg.jpg") no-repeat;
+    background: url("/resources/img/background/indexBg.jpg") no-repeat;
     background-size: 1920px 970px;
 }
 

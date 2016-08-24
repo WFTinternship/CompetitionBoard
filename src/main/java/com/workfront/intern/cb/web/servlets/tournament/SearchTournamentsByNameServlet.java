@@ -3,9 +3,7 @@ package com.workfront.intern.cb.web.servlets.tournament;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.ManagerService;
-import com.workfront.intern.cb.service.ManagerServiceImpl;
 import com.workfront.intern.cb.service.TournamentService;
-import com.workfront.intern.cb.service.TournamentServiceImpl;
 import com.workfront.intern.cb.spring.CompetitionBoardApp;
 import com.workfront.intern.cb.web.util.Params;
 
@@ -21,8 +19,8 @@ import java.util.List;
  * gets tournament list by specific tournament name
  */
 public class SearchTournamentsByNameServlet extends HttpServlet {
-    ManagerService managerService;
-    TournamentService tournamentService;
+    private ManagerService managerService;
+    private TournamentService tournamentService;
 
     @Override
     public void init() throws ServletException {

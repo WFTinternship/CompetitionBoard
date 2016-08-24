@@ -7,10 +7,9 @@
     <title>SignUp/Login Form</title>
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/custom.css">
-
+    <link rel="stylesheet" href="resources/css/normalize.css">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/custom.css">
 </head>
 
 <body class="backgroundLogin">
@@ -29,7 +28,7 @@
         <h1>Welcome Back!</h1>
         <div class="err-msg"><%=userNameErrStr%></div>
 
-        <form action="login" name="logInForm" method="post">
+        <form action="login-form" name="logInForm" method="post">
             <div class="field-wrap">
                 <label>Username/Login<span class="req"></span></label>
                 <input type="text" name="usernameLogin" required autocomplete="off"/>
@@ -49,7 +48,7 @@
     </div>
 </div>
 
-<script src="js/jquery-3.1.0.js"></script>
-<script src="js/login.js"></script>
+<script src="resources/js/jquery-3.1.0.js"></script>
+<script src="resources/js/login.js"></script>
 </body>
 </html>

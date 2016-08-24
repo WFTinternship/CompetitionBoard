@@ -7,12 +7,12 @@
     <title>SignUp/Login Form</title>
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="resources/css/normalize.css">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/custom.css">
 
 
-    <script src="js/custom.js"></script>
+    <script src="resources/js/custom.js"></script>
 </head>
 
 <body class="backgroundLogin">
@@ -59,7 +59,7 @@
     </div>
 </div>
 
-<script src="js/jquery-3.1.0.js"></script>
-<script src="js/login.js"></script>
+<script src="resources/js/jquery-3.1.0.js"></script>
+<script src="resources/js/login.js"></script>
 </body>
 </html>

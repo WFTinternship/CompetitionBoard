@@ -8,83 +8,96 @@
         <session-timeout>30</session-timeout>
     </session-config>
 
-        <!--SignIn-->
     <servlet>
-        <servlet-name>SignInServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.SignInServlet</servlet-class>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
-        <servlet-name>SignInServlet</servlet-name>
-        <url-pattern>/sign-in</url-pattern>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!--LogInServlet-->
-    <servlet>
-        <servlet-name>LogInServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.LogInServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogInServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
 
-    <!--LogOutServlet-->
-    <servlet>
-        <servlet-name>LogOutServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.LogOutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogOutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
 
-    <!--SearchTournamentsByNameServlet-->
-    <servlet>
-        <servlet-name>TournamentSearchServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.tournament.SearchTournamentsByNameServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TournamentSearchServlet</servlet-name>
-        <url-pattern>/search</url-pattern>
-    </servlet-mapping>
+        <!--&lt;!&ndash;SignIn&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>SignInServlet</servlet-name>-->
+        <!--<servlet-class>com.workfront.intern.cb.web.servlets.SignInServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>SignInServlet</servlet-name>-->
+        <!--<url-pattern>/sign-in</url-pattern>-->
+    <!--</servlet-mapping>-->
 
-    <!--AddTournamentServlet-->
-    <servlet>
-        <servlet-name>AddTournamentServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.tournament.AddTournamentServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AddTournamentServlet</servlet-name>
-        <url-pattern>/add</url-pattern>
-    </servlet-mapping>
+    <!--&lt;!&ndash;LogInServlet&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>LogInServlet</servlet-name>-->
+        <!--<servlet-class>com.workfront.intern.cb.web.servlets.LogInServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>LogInServlet</servlet-name>-->
+        <!--<url-pattern>/login</url-pattern>-->
+    <!--</servlet-mapping>-->
 
-    <!--AddTournamentServlet-->
-    <servlet>
-        <servlet-name>AllTournamentsServlet</servlet-name>
-        <servlet-class>com.workfront.intern.cb.web.servlets.tournament.AllTournamentsServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AllTournamentsServlet</servlet-name>
-        <url-pattern>/allTournamentsServlet/*</url-pattern>
-    </servlet-mapping>
+    <!--&lt;!&ndash;LogOutServlet&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>LogOutServlet</servlet-name>-->
+        <!--<servlet-class>com.workfront.intern.cb.web.servlets.LogOutServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>LogOutServlet</servlet-name>-->
+        <!--<url-pattern>/logout</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!--&lt;!&ndash;SearchTournamentsByNameServlet&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>TournamentSearchServlet</servlet-name>-->
+        <!--<servlet-class>com.workfront.intern.cb.web.servlets.tournament.SearchTournamentsByNameServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>TournamentSearchServlet</servlet-name>-->
+        <!--<url-pattern>/search</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!--&lt;!&ndash;AddTournamentServlet&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>AddTournamentServlet</servlet-name>-->
+        <!--<servlet-class>com.workfront.intern.cb.web.servlets.tournament.AddTournamentServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>AddTournamentServlet</servlet-name>-->
+        <!--<url-pattern>/add</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!--&lt;!&ndash;AddTournamentServlet&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>AllTournamentsServlet</servlet-name>-->
+        <!--<servlet-class>com.workfront.intern.cb.web.servlets.tournament.AllTournamentsServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>AllTournamentsServlet</servlet-name>-->
+        <!--<url-pattern>/allTournamentsServlet/*</url-pattern>-->
+    <!--</servlet-mapping>-->
 
 
     <!--Errors handling-->
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/error.jsp</location>
+        <location>/WEB-INF/views/page/error/error.jsp</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/error404.jsp</location>
+        <location>/WEB-INF/views/page/error/error404.jsp</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/error500.jsp</location>
+        <location>/WEB-INF/views/page/error/error500.jsp</location>
     </error-page>
 
-    <!--Listener-->
-    <listener>
-        <listener-class>com.workfront.intern.cb.spring.SpringContextListener</listener-class>
-    </listener>
+    <!--&lt;!&ndash;Listener&ndash;&gt;-->
+    <!--<listener>-->
+        <!--<listener-class>com.workfront.intern.cb.spring.SpringContextListener</listener-class>-->
+    <!--</listener>-->
 </web-app>
