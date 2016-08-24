@@ -2,12 +2,10 @@ package com.workfront.intern.cb.controller.tournament;
 
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.TournamentDao;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Params;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,10 @@ import java.util.List;
 
 @Controller
 public class SearchTournamentsByNameController {
+    @Autowired
     ManagerService managerService;
+
+    @Autowired
     TournamentService tournamentService;
 
     @RequestMapping("/search-result")
@@ -39,17 +40,15 @@ public class SearchTournamentsByNameController {
 
         int listSize = tournamentList.size();
         if (listSize != 0) {
-            HttpSession session = request.getSession();
             List<Manager> managerList = managerService.getManagerList();
-
-            session.setAttribute("searchResultList", tournamentList);
-            session.setAttribute("searchResultListManager", managerList);
-
+            model.addAttribute("searchResultList", tournamentList);
+            model.addAttribute("searchResultListManager", managerList);
         } else {
-            request.setAttribute("noSearchResultMsg", "No tournament/s found");
-            request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("noSearchResultMsg", "No tournament/s found");
+            return "redirect" + Params.PAGE_INDEX;
         }
 
-        return "redirect:Params.PAGE_SEARCH_TOURNAMENT_BY_NAME_RESULT";
+        return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME_RESULT;
     }
 }

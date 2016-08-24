@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="java.util.List" %>
@@ -14,15 +15,17 @@
     <meta name="author" content="">
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>" >
 
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
-    <link href="css/creative.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/css/blog-home.css"/>">
 
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/creative.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+
+    <%--JS--%>
+    <script src="<c:url value="/resources/js/jquery.js" />"></script>
+    <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -38,17 +41,17 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="index.jsp">Home</a>
+            <a class="navbar-brand page-scroll" href="../../../index.jsp">Home</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <!--<li><a class="page-scroll" href="#about">About</a></li>-->
-                <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
-                <li><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="media.jsp">Media</a></li>
-                <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
+                <li><a class="page-scroll" href="../../../tournament.jsp">Tournaments</a></li>
+                <li><a class="page-scroll" href="../../../match.jsp">Matches</a></li>
+                <li><a class="page-scroll" href="../../../media.jsp">Media</a></li>
+                <li><a class="page-scroll" href="../../../contact.jsp">Contact Us</a></li>
                 <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="signUpMenuBtn">Sign Up</a></li>
                 <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="logInMenuBtn">Log In</a></li>
             </ul>

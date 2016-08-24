@@ -34,8 +34,9 @@ public class LogInController extends HttpServlet {
     public String logInReg(Model model,
                            @RequestParam("usernameLogin") String loginInput,
                            @RequestParam("passwordLogin") String passwordInput,
-                           HttpServletRequest request, HttpServletResponse response
-    ) throws ServletException, IOException {
+                           HttpServletRequest request, HttpServletResponse response)  {
+
+        HttpSession session = request.getSession();
 
         if (loginInput != null && passwordInput != null) {
             // Encrypted input password
@@ -50,18 +51,16 @@ public class LogInController extends HttpServlet {
 
                 // Check login and password for LogIn system
                 if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
-                    HttpSession session = request.getSession();
                     session.setAttribute("manager", manager);
-
-                    return "redirect:index.jsp";
                 }
             } catch (RuntimeException ex) {
-                request.setAttribute("userNameErr", "Sorry, username or password error");
-                request.getRequestDispatcher(Params.PAGE_LOG_IN).include(request, response);
-                }
+                session.setAttribute("userNameErr", "Sorry, username or password error");
+                return "redirect:" + Params.PAGE_LOG_IN;
             }
+        }
 
-        return "index";
+
+        return "redirect:" + Params.PAGE_INDEX;
     }
 
 }

@@ -4,7 +4,7 @@
     <title>Error 401</title>
 </head>
 <body>
-<img src="img/notifications/error401.jpg" style="width: 100%; height: 100%">
+<img src="recources/img/notifications/error401.jpg" style="width: 100%; height: 100%">
 
 
 </body>

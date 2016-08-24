@@ -55,8 +55,9 @@ public class AddTournamentServlet extends HttpServlet {
         } catch (RuntimeException ex) {
             // Checking duplicate of manager name during registration
             request.setAttribute("existsTournament", "Sorry, but tournament with this name exists");
-            request.getRequestDispatcher(Params.PAGE_ADD_TOURNAMENT).include(request, response);
+//            request.getRequestDispatcher(Params.PAGE_ADD_TOURNAMENT).include(request, response);
         }
+
     }
 
     @Override

@@ -18,7 +18,7 @@
 
     <%--Gets error message from LogInServlet--%>
     <%
-        String userNameErrStr = (String) request.getAttribute("userNameErr");
+        String userNameErrStr = (String) session.getAttribute("userNameErr");
         if (userNameErrStr == null) {
             userNameErrStr = "";
         }

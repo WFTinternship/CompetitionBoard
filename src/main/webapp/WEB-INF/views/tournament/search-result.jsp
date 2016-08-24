@@ -14,15 +14,15 @@
     <meta name="author" content="">
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
-    <link href="css/creative.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="resources/css/blog-home.css" rel="stylesheet">
+    <link href="resources/css/creative.min.css" rel="stylesheet">
+    <link href="resources/css/style.css" rel="stylesheet">
 
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="resources/js/jquery.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -71,7 +71,7 @@
                         <h2>Search result</h2>
                         <hr>
                         <%
-                            List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("searchResultList");
+                            List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("searchResultList");
                             int sizeList = tournamentList.size();
                         %>
                         <table class="tournamentTable">

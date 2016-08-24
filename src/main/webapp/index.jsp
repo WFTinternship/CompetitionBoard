@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 
@@ -14,24 +15,23 @@
     <meta name="author" content="">
 
     <!-- Bootstrap Core CSS -->
-    <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.min.css"/>">
 
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="<c:url value="/resources/vendor/font-awesome/css/font-awesome.min.css"/>">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
           rel='stylesheet' type='text/css'>
 
     <!-- Plugin CSS -->
-    <link href="resources/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/vendor/magnific-popup/magnific-popup.css"/>">
 
     <!-- Theme CSS -->
-    <link href="resources/css/creative.min.css" rel="stylesheet">
-    <link href="resources/css/creative.min.css" rel="stylesheet">
-    <link href="resources/css/style.css" rel="stylesheet">
-    <link href="resources/css/normalize.css" rel="stylesheet">
-    <link href="resources/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/css/creative.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/normalize.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -42,7 +42,7 @@
 <%
     String userName = "";
     String welcomeStr = "";
-    String hrefToSpecificTournamentPage = Params.SERVLET_ALL_TOURNAMENT_URL;
+    String hrefToSpecificTournamentPage = "all-tournaments";
 
     String addTournamentMenuItem = null;
     String classStr = null;
@@ -115,7 +115,7 @@
 
         <%--Write error message in jsp --%>
         <%
-            String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");
+            String searchResultMsg = (String) session.getAttribute("noSearchResultMsg");
             if (searchResultMsg != null)
                 out.println("<font color=red size=4px>" + searchResultMsg + "</font>");
         %>
@@ -250,17 +250,17 @@
 </section>
 
 <!-- jQuery -->
-<script src="resources/vendor/jquery/jquery.min.js"></script>
+<script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 
 <!-- Plugin JavaScript -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script src="resources/vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="<c:url value="/resources/vendor/scrollreveal/scrollreveal.min.js" />"></script>
 
 <!-- Theme JavaScript -->
-<script src="resources/js/creative.min.js"></script>
+<script src="<c:url value="/resources/js/creative.min.js" />"></script>
 
 <%--Custom JS--%>
-<script src="resources/js/custom.js"></script>
+<script src="<c:url value="/resources/js/custom.js" />"></script>
 
 </body>
 </html>
