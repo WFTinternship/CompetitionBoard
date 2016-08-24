@@ -94,7 +94,7 @@
 
     <%--Search tournament---%>
         <div class="header-content">
-        <form action="search" method="get" class="container">
+        <form action="searchTournamentByNameForm" method="get" class="container">
             <div class="container">
                 <div class="row">
                     <div id="custom-search-input">

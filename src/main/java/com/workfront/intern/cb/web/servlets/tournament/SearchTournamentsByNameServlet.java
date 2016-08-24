@@ -25,13 +25,13 @@ public class SearchTournamentsByNameServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        managerService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(ManagerService.class);
-        tournamentService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(TournamentService.class);
-        
+//        managerService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(ManagerService.class);
+//        tournamentService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(TournamentService.class);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String searchTournamentStr = request.getParameter("searchStr");
         List<Tournament> tournamentList = tournamentService.getTournamentListByName(searchTournamentStr);
 
@@ -44,7 +44,7 @@ public class SearchTournamentsByNameServlet extends HttpServlet {
             session.setAttribute("searchResultListManager", managerList);
 
 
-            request.getRequestDispatcher(Params.PAGE_SEARCH_RESULT).forward(request, response);
+            request.getRequestDispatcher(Params.PAGE_SEARCH_TOURNAMENT_BY_NAME_RESULT).forward(request, response);
 
         } else {
             request.setAttribute("noSearchResultMsg", "No tournament/s found");

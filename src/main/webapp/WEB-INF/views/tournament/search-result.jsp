@@ -38,17 +38,17 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="index.jsp">Home</a>
+            <a class="navbar-brand page-scroll" href="../../../index.jsp">Home</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <!--<li><a class="page-scroll" href="#about">About</a></li>-->
-                <li><a class="page-scroll" href="tournament.jsp">Tournaments</a></li>
-                <li><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="media.jsp">Media</a></li>
-                <li><a class="page-scroll" href="contact.jsp">Contact Us</a></li>
+                <li><a class="page-scroll" href="../../../tournament.jsp">Tournaments</a></li>
+                <li><a class="page-scroll" href="../../../match.jsp">Matches</a></li>
+                <li><a class="page-scroll" href="../../../media.jsp">Media</a></li>
+                <li><a class="page-scroll" href="../../../contact.jsp">Contact Us</a></li>
                 <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="signUpMenuBtn">Sign Up</a></li>
                 <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="logInMenuBtn">Log In</a></li>
             </ul>

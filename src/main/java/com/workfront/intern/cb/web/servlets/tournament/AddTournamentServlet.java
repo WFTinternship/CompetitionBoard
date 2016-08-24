@@ -21,7 +21,7 @@ public class AddTournamentServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        tournamentService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(TournamentService.class);
+//        tournamentService = CompetitionBoardApp.getApplicationContext(getServletContext()).getBean(TournamentService.class);
     }
 
     @Override
