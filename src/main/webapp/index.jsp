@@ -47,7 +47,7 @@
     String addTournamentMenuItem = null;
     String classStr = null;
 
-     Manager sessionContext = (Manager) request.getAttribute("manager");
+     Manager sessionContext = (Manager) session.getAttribute("manager");
     if (sessionContext != null) {
         userName = sessionContext.getLogin();
         welcomeStr = "Hi, ";
@@ -82,9 +82,9 @@
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
-                <li><a href="to-signIn" class="hidden-when-logged-in">Sign Up</a></li>
-                <li><a href="to-login-page" class="hidden-when-logged-in">Log In </a></li>
-                <li><a href="#" class="visible-when-logged-in hidden-element">Log Out</a></li>
+                <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
+                <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
+                <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>
             </ul>
         </div>
     </div>

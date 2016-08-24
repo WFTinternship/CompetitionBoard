@@ -15,17 +15,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
 public class LogInController extends HttpServlet {
+
     @Autowired
     private ManagerService managerService;
 
-    @RequestMapping("/to-login-page")
+    @RequestMapping("/login-page")
     public String toLogIin() {
-        return "WEB-INF/views/page/secure/log-in";
+        return Params.PAGE_LOG_IN;
     }
+
 
     @RequestMapping(value = "/login-form", method = RequestMethod.POST)
     public String logInReg(Model model,
@@ -47,12 +50,10 @@ public class LogInController extends HttpServlet {
 
                 // Check login and password for LogIn system
                 if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
-//                    HttpSession session = request.getSession();
-//                    session.setAttribute("manager", manager);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("manager", manager);
 
-                    model.addAttribute("manager", manager);
-
-                    return "forward:index.jsp";
+                    return "redirect:index.jsp";
                 }
             } catch (RuntimeException ex) {
                 request.setAttribute("userNameErr", "Sorry, username or password error");

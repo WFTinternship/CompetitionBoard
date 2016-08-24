@@ -19,16 +19,16 @@
 <div class="form">
     <%--Gets error message from SignInServlet--%>
     <%
-        String existsManagerStr = (String) request.getAttribute("existsManager");
-        if (existsManagerStr == null) {
-            existsManagerStr = "";
+        String errMessage = (String) request.getAttribute("existsManager");
+        if (errMessage == null) {
+            errMessage = "";
         }
     %>
         <div id="signup">
             <h1>Create account</h1>
-            <div class="err-msg"><%=existsManagerStr%></div>
+            <div class="err-msg"><%=errMessage%></div>
         <%--SignUp Form--%>
-            <form action="sign-in" name="signUpForm" method="post">
+            <form action="signup-form" name="signUpForm" method="post">
                 <%--Login Label--%>
                 <div class="field-wrap">
                     <label>Login<span class="req"></span></label>

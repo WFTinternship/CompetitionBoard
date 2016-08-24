@@ -2,16 +2,14 @@ package com.workfront.intern.cb.web.util;
 
 public class Params {
 
-    //Servlets
-    public static final String SERVLET_ALL_TOURNAMENT_URL = "/allTournamentsServlet";
-
     // Pages
     public static final String PAGE_INDEX = "/index.jsp";
-    public static final String PAGE_SIGN_IN = "/WEB-INF/views/sign-in.jsp";
 
-    public static final String PAGE_LOG_IN = "/logIn";
+    public static final String PAGE_SIGN_UP = "WEB-INF/views/page/secure/sign-up";
+    public static final String PAGE_LOG_IN = "WEB-INF/views/page/secure/log-in";
 
     public static final String PAGE_TOURNAMENT = "tournament.jsp";
+
     public static final String PAGE_ALL_AVALABLE_TOURNAMENTS = "/all-tournaments.jsp";
     public static final String PAGE_ADD_TOURNAMENT = "add-tournament.jsp";
     public static final String PAGE_MATCH = "/match.jsp";
@@ -21,6 +19,9 @@ public class Params {
     public static final String PAGE_ERROR_401 = "/error401.jsp";
     public static final String PAGE_ERROR_404 = "/error404.jsp";
     public static final String PAGE_ERROR_500 = "/error500.jsp";
+
+    //Servlets
+    public static final String SERVLET_ALL_TOURNAMENT_URL = "/allTournamentsServlet";
 
     // Scope parameters
     public static final String SESSION_CONTEXT_PARAM = "user_session_context";

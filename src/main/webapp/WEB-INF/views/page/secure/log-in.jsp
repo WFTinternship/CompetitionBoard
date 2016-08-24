@@ -1,3 +1,4 @@
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -40,7 +41,7 @@
             </div>
             <%--Password Forgot--%>
 
-            <p class="forgot"><a href="sign-in.jsp">No account? Create one!</a></p>
+            <p class="forgot"><a href="<%=Params.PAGE_SIGN_UP%>">No account? Create one!</a></p>
             <%--<p class="forgot"><a href="#">Forgot Password?</a></p>--%>
 
             <button class="button button-block" name="logInButton">Log In</button>
