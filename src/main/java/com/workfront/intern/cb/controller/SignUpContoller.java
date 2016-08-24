@@ -23,7 +23,7 @@ public class SignUpContoller {
     private ManagerService managerService;
 
     @RequestMapping("/signup-page")
-    public String toLogIin() {
+    public String toSignUp() {
         return Params.PAGE_SIGN_UP;
     }
 

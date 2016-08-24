@@ -1,3 +1,4 @@
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -51,7 +52,7 @@
                     <label>Confirm Password<span class="req"></span></label>
                     <input type="password" name="passwordConfirmSignIn" required autocomplete="off"/>
                 </div>
-                    <p class="forgot"><a href="log-in.jsp">Already have an account? LogIn</a></p>
+                    <p class="forgot"><a href="/login-page">Already have an account? LogIn</a></p>
 
                 <button type="submit" class="button button-block">Sign Up</button>
             </form>

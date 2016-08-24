@@ -41,7 +41,7 @@
             </div>
             <%--Password Forgot--%>
 
-            <p class="forgot"><a href="<%=Params.PAGE_SIGN_UP%>">No account? Create one!</a></p>
+            <p class="forgot"><a href="/signup-page">No account? Create one!</a></p>
             <%--<p class="forgot"><a href="#">Forgot Password?</a></p>--%>
 
             <button class="button button-block" name="logInButton">Log In</button>

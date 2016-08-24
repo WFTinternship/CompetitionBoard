@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 public class LogOutContoller {
 
     @RequestMapping("/logout-page")
-    public String logOut(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String toLogOut(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         if (session != null) {
             session.invalidate();
