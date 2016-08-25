@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +6,12 @@
     <title>Add tournament form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="css/custom/bootstrap.min.css" rel="stylesheet">
-    <%--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">--%>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/custom/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
-    <script src="js/custom.js"></script>
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="<c:url value="/resources/js/custom.js" />"></script>
+    <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 </head>
 
 <%--Gets error message from SignInServlet--%>
@@ -25,7 +25,7 @@
 <body class="backgroundTournament">
 <div class="container">
 
-    <form action="add" class="form-horizontal" role="form" method="get">
+    <form action="addTournamentForm" class="form-horizontal" role="form" method="get">
         <h2>New Tournament</h2>
         <hr>
 

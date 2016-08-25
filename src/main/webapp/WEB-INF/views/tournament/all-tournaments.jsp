@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="java.util.List" %>
@@ -31,6 +32,31 @@
     <![endif]-->
 </head>
 
+<%--Gets specific atributes from http session--%>
+<%
+    String userName = "";
+    String welcomeStr = "";
+    String hrefToSpecificTournamentPage = "all-tournaments-page";
+
+    String addTournamentMenuItem = null;
+    String classStr = null;
+
+    Manager sessionContext = (Manager) session.getAttribute("manager");
+    if (sessionContext != null) {
+        userName = sessionContext.getLogin();
+        welcomeStr = "Hi, ";
+        hrefToSpecificTournamentPage = "tournament-page";
+
+        addTournamentMenuItem = "Add Tournament";
+        classStr = "visible-element";
+    }
+
+    if (userName.equals("")) {
+        addTournamentMenuItem = "";
+        classStr = "hidden-element";
+    }
+%>
+
 <body class="backgroundTournament">
 
 <!-- Navigation -->
@@ -41,19 +67,24 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="../../../index.jsp">Home</a>
+            <a class="navbar-brand page-scroll" href="#page-top">Home</a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+            </a>
+        </div>
+        <input type="hidden" id="login-status" value="<%=userName%>" />
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <!--<li><a class="page-scroll" href="#about">About</a></li>-->
-                <li><a class="page-scroll" href="../../../tournament.jsp">Tournaments</a></li>
-                <li><a class="page-scroll" href="../../../match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="../../../media.jsp">Media</a></li>
-                <li><a class="page-scroll" href="../../../contact.jsp">Contact Us</a></li>
-                <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="signUpMenuBtn">Sign Up</a></li>
-                <li><a href="WEB-INF/views/page/registration/log-in.jsp" name="logInMenuBtn">Log In</a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li type="hide"><a class="page-scroll" href="../../match.jsp">Matches</a></li>
+                <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
+                <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
+                <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
+                <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
+                <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>
             </ul>
         </div>
     </div>

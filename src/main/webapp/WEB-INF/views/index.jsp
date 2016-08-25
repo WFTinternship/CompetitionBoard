@@ -42,7 +42,7 @@
 <%
     String userName = "";
     String welcomeStr = "";
-    String hrefToSpecificTournamentPage = "all-tournaments";
+    String hrefToSpecificTournamentPage = "all-tournaments-page";
 
     String addTournamentMenuItem = null;
     String classStr = null;
@@ -51,7 +51,7 @@
     if (sessionContext != null) {
         userName = sessionContext.getLogin();
         welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = Params.PAGE_TOURNAMENT;
+        hrefToSpecificTournamentPage = "tournament-page";
 
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
@@ -77,11 +77,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="add-tournament.jsp" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
-                <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
+                <li type="hide"><a class="page-scroll" href="../../match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
-                <li><a class="page-scroll" href="#contact>">Contact Us</a></li>
+                <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
                 <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
                 <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
                 <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>
@@ -127,7 +127,7 @@
         <div class="row no-gutter popup-gallery">
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="resources/img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
+                    <img src="../../resources/img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -143,7 +143,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="resources/img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
+                    <img src="../../resources/img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -159,7 +159,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="i<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="resources/img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
+                    <img src="../../resources/img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -175,7 +175,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="resources/img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
+                    <img src="../../resources/img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -191,7 +191,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="resources/img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
+                    <img src="../../resources/img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">
@@ -207,7 +207,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <a href="<%=Params.PAGE_MEDIA%>" class="portfolio-box">
-                    <img src="resources/img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
+                    <img src="../../resources/img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
 
                     <div class="portfolio-box-caption">
                         <div class="portfolio-box-caption-content">

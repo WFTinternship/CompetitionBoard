@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @Controller
 public class LogInController extends HttpServlet {
@@ -25,10 +23,9 @@ public class LogInController extends HttpServlet {
     private ManagerService managerService;
 
     @RequestMapping("/login-page")
-    public String toLogIin() {
+    public String toLogIinPage() {
         return Params.PAGE_LOG_IN;
     }
-
 
     @RequestMapping(value = "/login-form", method = RequestMethod.POST)
     public String logInReg(Model model,
@@ -55,12 +52,11 @@ public class LogInController extends HttpServlet {
                 }
             } catch (RuntimeException ex) {
                 session.setAttribute("userNameErr", "Sorry, username or password error");
-                return "redirect:" + Params.PAGE_LOG_IN;
+                return "redirect:login-page";
             }
         }
 
-
-        return "redirect:" + Params.PAGE_INDEX;
+        return "redirect:/";
     }
 
 }

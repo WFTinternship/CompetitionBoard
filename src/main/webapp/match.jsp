@@ -31,7 +31,7 @@
 <%
     String userName = "";
     String welcomeStr = "";
-    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
+    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;
 
     String addTournamentMenuItem = null;
     String signUpMenuItem = null;
@@ -72,7 +72,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="index.jsp">Home</a>
+            <a class="navbar-brand page-scroll" href="WEB-INF/views/index.jsp">Home</a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
 
         </div>
@@ -80,7 +80,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="page-scroll" href="add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="page-scroll" href="WEB-INF/views/tournament/add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
                 <li><a class="page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="<%=Params.PAGE_MATCH%>">Matches</a></li>
                 <li><a class="page-scroll" href="<%=Params.PAGE_MEDIA%>">Media</a></li>

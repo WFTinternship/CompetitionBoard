@@ -3,18 +3,18 @@ package com.workfront.intern.cb.web.util;
 public class Params {
 
     // Pages
-    public static final String PAGE_INDEX = "/index.jsp";
-    public static final String PAGE_SIGN_UP = "WEB-INF/views/page/secure/sign-up";
-    public static final String PAGE_LOG_IN = "WEB-INF/views/page/secure/log-in";
-    public static final String PAGE_SEARCH_TOURNAMENT_BY_NAME_RESULT = "WEB-INF/views/tournament/search-result";
-    public static final String PAGE_ALL_AVALABLE_TOURNAMENTS = "WEB-INF/views/tournament/all-tournaments";
+    public static final String PAGE_INDEX = "index";
+    public static final String PAGE_SIGN_UP = "secure/sign-up";
+    public static final String PAGE_LOG_IN = "secure/log-in";
+    public static final String PAGE_SEARCH_TOURNAMENT_BY_NAME = "tournament/search-result";
+    public static final String PAGE_ALL_AVAILABLE_TOURNAMENTS = "tournament/all-tournaments";
+    public static final String PAGE_CONTACT = "contact/contact-us";
+    public static final String PAGE_TOURNAMENT = "tournament/tournament";
+    public static final String PAGE_ADD_TOURNAMENT = "tournament/add-tournament";
 
 
-
-    public static final String PAGE_TOURNAMENT = "tournament.jsp";
     public static final String PAGE_MATCH = "/match.jsp";
     public static final String PAGE_MEDIA = "/media.jsp";
-    public static final String PAGE_CONTACT = "/contact.jsp";
     public static final String PAGE_ERROR_401 = "/error401.jsp";
     public static final String PAGE_ERROR_404 = "/error404.jsp";
     public static final String PAGE_ERROR_500 = "/error500.jsp";

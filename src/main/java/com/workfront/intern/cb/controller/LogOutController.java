@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class LogOutContoller {
+public class LogOutController {
 
     @RequestMapping("/logout-page")
-    public String toLogOut(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String toLogOutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         if (session != null) {
             session.invalidate();
         }
 
-        return "redirect:index.jsp";
+        return "redirect:/";
     }
 }

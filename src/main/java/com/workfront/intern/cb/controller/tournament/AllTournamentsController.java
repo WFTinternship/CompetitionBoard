@@ -19,14 +19,15 @@ public class AllTournamentsController {
     @Autowired
     TournamentService tournamentService;
 
-    @RequestMapping("/all-tournaments")
-    public String allTournamentPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping("/all-tournaments-page")
+    public String allTournament(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         List<Tournament> allTournamentList = tournamentService.getTournamentList();
         session.setAttribute("allTournamentList", allTournamentList);
 
-        return "redirect:" + Params.PAGE_ALL_AVALABLE_TOURNAMENTS;
+        return Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;
     }
+
 }
 

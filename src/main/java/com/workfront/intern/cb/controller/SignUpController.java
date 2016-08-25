@@ -17,16 +17,15 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
-public class SignUpContoller {
+public class SignUpController {
 
     @Autowired
     private ManagerService managerService;
 
     @RequestMapping("/signup-page")
-    public String toSignUp() {
+    public String toSignUpPage() {
         return Params.PAGE_SIGN_UP;
     }
-
 
     @RequestMapping(value = "/signup-form", method = RequestMethod.POST)
     public String logInReg(Model model,
@@ -45,14 +44,12 @@ public class SignUpContoller {
             // Gets added manager id and set in session
             Manager manager = managerService.getManagerByLogin(signInLoginInput);
             session.setAttribute("manager", manager);
-
-//            request.getRequestDispatcher(Params.PAGE_INDEX).forward(request, response);
         } catch (RuntimeException ex) {
             // Checking duplicate of manager name during registration
-            request.setAttribute("existsManager", "Sorry, but user with this name exists");
-            request.getRequestDispatcher(Params.PAGE_SIGN_UP).include(request, response);
+            session.setAttribute("errMessage", "Sorry, but user with this name exists");
+            return "redirect:signup-page";
         }
 
-        return "redirect:index.jsp";
+        return "redirect:/";
     }
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -8,19 +9,18 @@
     <title>SignUp/Login Form</title>
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="resources/css/normalize.css">
-    <link rel="stylesheet" href="resources/css/style.css">
-    <link rel="stylesheet" href="resources/css/custom.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/normalize.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
-
-    <script src="resources/js/custom.js"></script>
+    <script src="<c:url value="/resources/js/custom.js" />"></script>
 </head>
 
 <body class="backgroundLogin">
 <div class="form">
     <%--Gets error message from SignInServlet--%>
     <%
-        String errMessage = (String) request.getAttribute("existsManager");
+        String errMessage = (String) session.getAttribute("errMessage");
         if (errMessage == null) {
             errMessage = "";
         }
@@ -60,7 +60,7 @@
     </div>
 </div>
 
-<script src="resources/js/jquery-3.1.0.js"></script>
-<script src="resources/js/login.js"></script>
+<script src="<c:url value="/resources/js/jquery-3.1.0.js" />"></script>
+<script src="<c:url value="/resources/js/login.js" />"></script>
 </body>
 </html>
