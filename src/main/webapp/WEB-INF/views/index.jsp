@@ -69,8 +69,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand page-scroll" href="#page-top">Home</a>
-            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
-            </a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%></a>
         </div>
         <input type="hidden" id="login-status" value="<%=userName%>" />
 
@@ -79,9 +78,9 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
-                <li type="hide"><a class="page-scroll" href="../../match.jsp">Matches</a></li>
+                <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
-                <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
+                <li><a class="page-scroll" href="#contact">Contact Us</a></li>
                 <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
                 <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
                 <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>

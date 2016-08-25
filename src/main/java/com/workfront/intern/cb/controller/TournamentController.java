@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.controller.tournament;
+package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
@@ -27,9 +27,18 @@ public class TournamentController {
     TournamentService tournamentService;
 
     @RequestMapping("/tournament-page")
-    public String toTournamentPage(Model model) {
+    public String toTournamentPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+        int managerId = manager.getId();
+
+        List<Tournament> tournamentList = tournamentService.getTournamentListByManager(managerId);
+        model.addAttribute("tournamentListByManager", tournamentList);
+
         return Params.PAGE_TOURNAMENT;
     }
+
 
     @RequestMapping("/search-result")
     public String toSearchResultPage(Model model) {
@@ -57,22 +66,33 @@ public class TournamentController {
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
     }
 
+    @RequestMapping("/all-tournaments-page")
+    public String allTournament(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession session = request.getSession();
+        List<Tournament> allTournamentList = tournamentService.getTournamentList();
+        session.setAttribute("allTournamentList", allTournamentList);
+
+        return Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;
+    }
+
     // region <ADD TOURNAMENT CASES>
 
     @RequestMapping("/addTournament-page")
     public String toAddTournamentPage(Model model) {
-        return Params.PAGE_ADD_TOURNAMENT;   }
+        return Params.PAGE_ADD_TOURNAMENT;
+    }
 
 
     @RequestMapping("/addTournamentForm")
     public String addTournaments(Model model,
-                                          @RequestParam("name") String name,
-                                          @RequestParam("startDate") String startDate,
-                                          @RequestParam("endDate") String endDate,
-                                          @RequestParam("location") String location,
-                                          @RequestParam("tournament_description") String description,
-                                          @RequestParam("format") int format,
-                                          HttpServletRequest request, HttpServletResponse response) {
+                                 @RequestParam("name") String name,
+                                 @RequestParam("startDate") String startDate,
+                                 @RequestParam("endDate") String endDate,
+                                 @RequestParam("location") String location,
+                                 @RequestParam("tournament_description") String description,
+                                 @RequestParam("format") int format,
+                                 HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
@@ -89,7 +109,7 @@ public class TournamentController {
 
             tournamentService.addTournament(tournament);
 
-            List<Tournament> tournamentListByManager =  tournamentService.getTournamentListByManager(managerId);
+            List<Tournament> tournamentListByManager = tournamentService.getTournamentListByManager(managerId);
             session.setAttribute("tournamentListByManager", tournamentListByManager);
 
         } catch (RuntimeException ex) {

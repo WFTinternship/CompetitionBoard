@@ -1,4 +1,4 @@
-<%@ page import="com.workfront.intern.cb.web.util.Params" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,15 +13,15 @@
     <title>Your Matches</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
-    <link href="css/creative.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/resources/css/blog-home.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/creative.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
 
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/jquery.js" />"></script>
+    <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -31,33 +31,24 @@
 <%
     String userName = "";
     String welcomeStr = "";
-    String hrefToSpecificTournamentPage = Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;
+    String hrefToSpecificTournamentPage = "all-tournaments-page";
 
     String addTournamentMenuItem = null;
-    String signUpMenuItem = null;
-    String logInMenuBtnItem = null;
-    String logOutMenuBtnItem = null;
-    String hideStr = null;
+    String classStr = null;
 
     Manager sessionContext = (Manager) session.getAttribute("manager");
     if (sessionContext != null) {
         userName = sessionContext.getLogin();
         welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = Params.PAGE_TOURNAMENT;
+        hrefToSpecificTournamentPage = "tournament-page";
 
         addTournamentMenuItem = "Add Tournament";
-        signUpMenuItem = "";
-        logInMenuBtnItem = "";
-        logOutMenuBtnItem = "Log Out";
-        hideStr = "unHide";
+        classStr = "visible-element";
     }
 
     if (userName.equals("")) {
         addTournamentMenuItem = "";
-        signUpMenuItem = "Sign Up";
-        logInMenuBtnItem = "Log In";
-        logOutMenuBtnItem = "";
-        hideStr = "hide";
+        classStr = "hidden-element";
     }
 %>
 
@@ -72,7 +63,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="WEB-INF/views/index.jsp">Home</a>
+            <a class="navbar-brand page-scroll" href="../index.jsp">Home</a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
 
         </div>
@@ -80,14 +71,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="page-scroll" href="WEB-INF/views/tournament/add-tournament.jsp" id="<%=hideStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
-                <li><a class="page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
-                <li type="hide"><a class="page-scroll" href="<%=Params.PAGE_MATCH%>">Matches</a></li>
-                <li><a class="page-scroll" href="<%=Params.PAGE_MEDIA%>">Media</a></li>
-                <li><a class="page-scroll" href="<%=Params.PAGE_CONTACT%>">Contact Us</a></li>
-                <li><a href="<%=Params.PAGE_SIGN_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=signUpMenuItem%> </a></li>
-                <li><a href="<%=Params.PAGE_LOG_IN%>" id="<%=hideStr%>" onload="showMenuItemReverse()"><%=logInMenuBtnItem%> </a></li>
-                <li><a href="logout" id="<%=hideStr%>" onload="showMenuItem()"><%=logOutMenuBtnItem%> </a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
+                <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
+                <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
+                <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
+                <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
+                <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>
             </ul>
         </div>
     </div>

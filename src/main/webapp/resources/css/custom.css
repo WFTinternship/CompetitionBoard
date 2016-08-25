@@ -33,3 +33,21 @@ h1{
 .container-fluid .navbar-collapse {
     padding-right: 20px;
 }
+
+.tournamentTable {
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: 1px;
+    height: 50px;
+    width: 160%;
+    margin-top: -35px;
+    border: 1px solid black;
+    padding-top: 3px;
+}
+
+.searchTblResultTh, tr, td, th {
+    text-align: center;
+    border: 1px solid black;
+    padding-top: 3px;
+}
+

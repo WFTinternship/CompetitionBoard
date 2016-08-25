@@ -34,7 +34,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="<%=Params.PAGE_INDEX%>">Home</a>
+            <a class="navbar-brand page-scroll" href="/">Home</a>
         </div>
 
         <!-- Page Content -->
@@ -129,10 +129,12 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/validator.js" />"></script>
     <script src="<c:url value="/resources/js/contact.js" />"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </nav>
 </body>
 </html>

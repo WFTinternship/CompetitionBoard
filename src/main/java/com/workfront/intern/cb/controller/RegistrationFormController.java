@@ -11,16 +11,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class LogInController extends HttpServlet {
+public class RegistrationFormController  {
 
     @Autowired
     private ManagerService managerService;
+
+    // region <SIGN-UP CASES>
+
+    @RequestMapping("/signup-page")
+    public String toSignUpPage() {
+        return Params.PAGE_SIGN_UP;
+    }
+
+    @RequestMapping(value = "/signup-form", method = RequestMethod.POST)
+    public String signUp(Model model,
+                         @RequestParam("userNameSignIn") String signInLoginInput,
+                         @RequestParam("passwordSignIn") String passwordSignInInput,
+                         HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession session = request.getSession();
+        try {
+            Manager signInUser = new Manager();
+            signInUser.setLogin(signInLoginInput);
+            signInUser.setPassword(passwordSignInInput);
+
+            managerService.addManager(signInUser);
+
+            // Gets added manager id and set in session
+            Manager manager = managerService.getManagerByLogin(signInLoginInput);
+            session.setAttribute("manager", manager);
+        } catch (RuntimeException ex) {
+            // Checking duplicate of manager name during registration
+            session.setAttribute("errMessage", "Sorry, but user with this name exists");
+            return "redirect:signup-page";
+        }
+
+        return "redirect:/";
+    }
+    // endregion
+
+
+    // region <LOG-IN CASES>
 
     @RequestMapping("/login-page")
     public String toLogIinPage() {
@@ -28,10 +64,10 @@ public class LogInController extends HttpServlet {
     }
 
     @RequestMapping(value = "/login-form", method = RequestMethod.POST)
-    public String logInReg(Model model,
-                           @RequestParam("usernameLogin") String loginInput,
-                           @RequestParam("passwordLogin") String passwordInput,
-                           HttpServletRequest request, HttpServletResponse response)  {
+    public String logIn(Model model,
+                        @RequestParam("usernameLogin") String loginInput,
+                        @RequestParam("passwordLogin") String passwordInput,
+                        HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
 
@@ -58,5 +94,19 @@ public class LogInController extends HttpServlet {
 
         return "redirect:/";
     }
+    // endregion
 
+    // region <LOG-OUT CASES>
+
+    @RequestMapping("/logout-page")
+    public String toLogOutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return "redirect:/";
+    }
+
+// endregion
 }
