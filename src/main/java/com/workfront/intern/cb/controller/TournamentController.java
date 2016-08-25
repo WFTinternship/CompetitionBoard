@@ -39,7 +39,6 @@ public class TournamentController {
         return Params.PAGE_TOURNAMENT;
     }
 
-
     @RequestMapping("/search-result")
     public String toSearchResultPage(Model model) {
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
@@ -58,11 +57,9 @@ public class TournamentController {
             model.addAttribute("searchResultList", tournamentList);
             model.addAttribute("searchResultListManager", managerList);
         } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("noSearchResultMsg", "No tournament/s found");
-            return "redirect" + Params.PAGE_INDEX;
+            model.addAttribute("noSearchResultMsg", "No found of tournaments");
+            return "index";
         }
-
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
     }
 
@@ -114,8 +111,9 @@ public class TournamentController {
 
         } catch (RuntimeException ex) {
             // Checking duplicate of manager name during registration
-            request.setAttribute("existsTournament", "Sorry, but tournament with this name exists");
-//            request.getRequestDispatcher(Params.PAGE_ADD_TOURNAMENT).include(request, response);
+            session.setAttribute("existsTournament", "Sorry, but tournament with this name exists");
+
+            return "redirect:addTournament-page";
         }
 
         return "redirect:tournament-page";

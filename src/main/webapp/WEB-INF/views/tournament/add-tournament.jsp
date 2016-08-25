@@ -16,7 +16,7 @@
 
 <%--Gets error message from SignInServlet--%>
 <%
-    String existsTournament = (String) request.getAttribute("existsTournament");
+    String existsTournament = (String) session.getAttribute("existsTournament");
     if (existsTournament == null) {
         existsTournament = "";
     }

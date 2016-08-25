@@ -114,9 +114,9 @@
 
         <%--Write error message in jsp --%>
         <%
-            String searchResultMsg = (String) session.getAttribute("noSearchResultMsg");
+            String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");
             if (searchResultMsg != null)
-                out.println("<font color=red size=4px>" + searchResultMsg + "</font>");
+                out.println("<font color=red size=5px>" + searchResultMsg + "</font>");
         %>
     </div>
 </header>
