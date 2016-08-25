@@ -23,7 +23,7 @@
         <javax.servlet.jstl>1.2</javax.servlet.jstl>
         <mysql.connector.version>5.0.8</mysql.connector.version>
         <c3p0.version>0.9.5.1</c3p0.version>
-        <junit.version>4.4</junit.version>
+        <junit.version>4.12</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <mockito.version>1.10.19</mockito.version>
         <selenium.version>2.53.0</selenium.version>
@@ -94,6 +94,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring-mvc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.3.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
