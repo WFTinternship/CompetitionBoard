@@ -15,28 +15,12 @@ function submitDateNameInForm() {
     endDate = document.getElementById("endDate").value;
 }
 
-
-// Hide/unhide button by specific element id
-var hidden = false;
-function hiddenBtn() {
-    hidden = !hidden;
-    if (hidden) {
-        // document.getElementById("hide").style.visibility = 'hidden';
-        // document.getElementById("hide").style.display = 'none';
-    } else {
-        // document.getElementById("unhide").style.visibility = 'visible';
-        // document.getElementById("unhide").style.display = 'block';
-    }
-}
-
-function selectElement() {
+// Select element by specific value
+function selectElementValue() {
     var x = document.getElementById("formatId");
-    // if (x != 0){
-    //     alert(x.options[x.selectedIndex].value);    
-    // }
 }
 
-$(document).ready(function() {     
+$(document).ready(function() {
     showMenuItem();
 });
 
@@ -56,17 +40,25 @@ function showMenuItem() {
             $(this).removeClass('hidden-element');
         });
     }
-    
-    
 }
 
 function showMenuItemReverse() {
-    // document.getElementById("unHide").style.display = "none";
-    // document.getElementById("hide").style.display = "block";
-    
-    // document.querySelectorAll(".unHide2").style.display = "none";
-    // document.querySelectorAll(".hide2").style.display = "block";
     $('.visible-element').each(function() {
         $(this).removeClass('visible-element').addClass('hidden-element');
     });
 }
+
+// Table edit activates
+function editTableActivity() {
+    var x;
+    x = document.getElementById("edit-td").value;
+    return x=true;
+
+}
+
+function editContent(){
+    var editable_elements = document.querySelectorAll("[contenteditable=false]");
+    document.getElementById("edit-td").setAttribute("contentEditable", true);
+}
+
+

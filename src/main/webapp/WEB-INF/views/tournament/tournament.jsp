@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
@@ -103,7 +104,7 @@
                             </li>
                             <BR>
                             <li>
-                                <button class="btn btn-danger"><B>EDIT A TOURNAMENT</B></button>
+                                <button class="btn btn-danger" onclick="editContent()"><B>EDIT A TOURNAMENT</B></button>
                             </li>
                             <BR>
                             <li>
@@ -146,8 +147,9 @@
                             <td><%=tournamentList.get(i).getTournamentId()%>
                             </td>
 
+                                <%--ToDo--%>
                             <%--TournamentName--%>
-                            <td><%=tournamentList.get(i).getTournamentName()%>
+                            <td contenteditable="false" id="edit-td"><%=tournamentList.get(i).getTournamentName()%>
                             </td>
 
                             <%--StartDate--%>

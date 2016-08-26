@@ -162,9 +162,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     @Test
     public void deleteAll() throws Exception {
         managerDao.deleteAll();
-
         List<Manager> managerList = managerDao.getManagerList();
-
         assertEquals(0, managerList.size());
     }
 
