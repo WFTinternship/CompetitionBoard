@@ -51,3 +51,8 @@ h1{
     padding-top: 3px;
 }
 
+tr:nth-child(even) {background: #838383
+}
+tr:nth-child(odd) {background: #5e5e5e
+}
+

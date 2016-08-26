@@ -5,6 +5,6 @@
     <title>Error 404</title>
 </head>
 <body>
-<img src="<c:url value="/resources/img/notifications/error404.jpg"/>" style="width: 100%; height: 100%">
+<img src="<c:url value="/resources/img/notifications/error_404.jpg"/>" style="width: 100%; height: 100%">
 </body>
 </html>
