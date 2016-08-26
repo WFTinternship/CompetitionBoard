@@ -116,7 +116,6 @@
 
 
                     <div class="col-sm-9">
-                        <div class="col-sm-9">
                             <h2>My tournaments</h2>
                             <hr>
                             <%
@@ -196,7 +195,6 @@
                             </div>
                             </footer>
 
-                            </div>
                         </div>
 
 

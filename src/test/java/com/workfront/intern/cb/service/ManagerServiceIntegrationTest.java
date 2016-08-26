@@ -1,38 +1,42 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.ServiceSpringConfigTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.DBManager;
-import com.workfront.intern.cb.dao.ManagerDao;
-import com.workfront.intern.cb.dao.ManagerDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.internal.util.reflection.Whitebox;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.sql.DataSource;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ServiceSpringConfigTest.class)
 public class ManagerServiceIntegrationTest extends BaseTest {
+
+    @Autowired
     private ManagerService managerService;
-    private ManagerDao managerDao;
+
+//     private ManagerDao managerDao;
 
     // Test helper objects
     private Manager testManager;
 
     @Before
     public void beforeTest() throws Exception {
-        DataSource dataSource = DBManager.getDataSource();
-        managerDao = new ManagerDaoImpl(dataSource);
-        Whitebox.setInternalState(managerDao, "dataSource", dataSource);
+//        DataSource dataSource = DBManager.getDataSource();
+//        managerService = new ManagerServiceImpl();
+//        Whitebox.setInternalState(managerService, "dataSource", dataSource);
 
         managerService = new ManagerServiceImpl();
-        Whitebox.setInternalState(managerService, "managerDao", managerDao);
+        Whitebox.setInternalState(testManager, "managerService", managerService);
 
         // Delete all remaining objects
         cleanUp();

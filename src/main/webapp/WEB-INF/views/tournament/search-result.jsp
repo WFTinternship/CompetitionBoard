@@ -3,6 +3,8 @@
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
+<%@ page import="com.workfront.intern.cb.service.ManagerService" %>
+<%@ page import="java.security.SecureRandom" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +26,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
-   <%--JS--%>
+    <%--JS--%>
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -69,15 +71,18 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="/">Home</a>
-            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%></a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+            </a>
         </div>
-        <input type="hidden" id="login-status" value="<%=userName%>" />
+        <input type="hidden" id="login-status" value="<%=userName%>"/>
 
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                       onload="showMenuItem()"><%=addTournamentMenuItem%>
+                </a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
@@ -105,8 +110,10 @@
                     <div class="col-sm-9">
                         <h2>Search result</h2>
                         <hr>
+                        <BR>
                         <%
                             List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("searchResultList");
+
                             int sizeList = tournamentList.size();
                         %>
                         <table class="tournamentTable">
@@ -173,11 +180,14 @@
                                 </td>
 
                                 <%--Tournament creator--%>
-                                    <% int id = tournamentList.get(i).getManagerId();
-                                    %>
-                                    <td>
-                                        <%=id%>
-                                    </td>
+                                <% int id = tournamentList.get(i).getManagerId();
+                                    ManagerService managerService = (ManagerService) request.getAttribute("managerService");
+                                    Manager manager = managerService.getManagerById(id);
+                                    String loginManager = manager.getLogin();
+                                %>
+                                <td>
+                                    <%=loginManager%>
+                                </td>
                             </tr>
                             <br>
                             <%}%>

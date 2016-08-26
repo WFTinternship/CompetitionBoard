@@ -39,6 +39,8 @@ public class TournamentController {
         return Params.PAGE_TOURNAMENT;
     }
 
+    // region <SEARCH TOURNAMENT CASES>
+
     @RequestMapping("/search-result")
     public String toSearchResultPage(Model model) {
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
@@ -46,22 +48,22 @@ public class TournamentController {
 
     @RequestMapping("/searchTournamentByNameForm")
     public String searchTournamentsByName(Model model,
-                                          @RequestParam("searchStr") String searchTournamentStr,
-                                          HttpServletRequest request, HttpServletResponse response) {
+                                          @RequestParam("searchStr") String searchTournamentStr) {
 
         List<Tournament> tournamentList = tournamentService.getTournamentListByName(searchTournamentStr);
 
         int listSize = tournamentList.size();
         if (listSize != 0) {
-            List<Manager> managerList = managerService.getManagerList();
+//            List<Manager> managerList = managerService.getManagerList();
             model.addAttribute("searchResultList", tournamentList);
-            model.addAttribute("searchResultListManager", managerList);
+            model.addAttribute("managerService", managerService);
         } else {
             model.addAttribute("noSearchResultMsg", "No found of tournaments");
             return "index";
         }
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
     }
+    // endregion
 
     @RequestMapping("/all-tournaments-page")
     public String allTournament(Model model, HttpServletRequest request, HttpServletResponse response) {
