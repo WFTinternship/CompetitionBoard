@@ -1,9 +1,12 @@
-package com.workfront.intern.cb.dao;
+package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
+import com.workfront.intern.cb.dao.DBManager;
+import com.workfront.intern.cb.dao.ManagerDao;
+import com.workfront.intern.cb.dao.ManagerDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

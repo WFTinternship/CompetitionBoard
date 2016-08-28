@@ -55,7 +55,8 @@ public class TournamentServiceImpl implements TournamentService {
             throw new RuntimeException(String.format("Tournament instance with name=%s not found", tournamentName));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
-        }    }
+        }
+    }
 
     /**
      * Returns all tournament by manager id

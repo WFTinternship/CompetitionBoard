@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.dao;
+package com.workfront.intern.cb.service.integration;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
@@ -6,33 +6,32 @@ import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.TournamentFormat;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class TournamentDaoIntegrationTest extends BaseTest {
+public class TournamentServiceIntegrationTest extends BaseTest {
 
-    // DAO instances
-    private ManagerDao managerDao;
-    private TournamentDao tournamentDao;
+    @Autowired
+    private ManagerService managerService;
+
+    @Autowired
+    private TournamentService tournamentService;
 
     // Test helper objects
     private Manager testManager;
     private Tournament testTournament;
 
-    DataSource dataSource = DBManager.getDataSource();
-
     @Before
-    public void beforeTest() throws FailedOperationException, ObjectNotFoundException {
-        managerDao = new ManagerDaoImpl(dataSource);
-        tournamentDao = new TournamentDaoImpl(dataSource);
-
+    public void beforeTest() throws Exception {
         // Delete all remaining objects
         cleanUp();
 
@@ -41,7 +40,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(0, testManager.getId());
 
         // Save to DB
-        managerDao.addManager(testManager);
+        managerService.addManager(testManager);
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
@@ -50,7 +49,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(0, testTournament.getTournamentId());
 
         // Save to DB
-        tournamentDao.addTournament(testTournament);
+        tournamentService.addTournament(testTournament);
         assertTrue(testTournament.getTournamentId() > 0);
     }
 
@@ -60,16 +59,16 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     }
 
     private void cleanUp() throws FailedOperationException {
-        tournamentDao.deleteAll();
-        managerDao.deleteAll();
+        tournamentService.deleteAll();
+        managerService.deleteAll();
     }
 
     // region <TEST CASES>
 
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void getTournamentById_notFound() throws Exception {
         // Testing method
-        Tournament tournament = tournamentDao.getTournamentById(NON_EXISTING_ID);
+        Tournament tournament = tournamentService.getTournamentById(NON_EXISTING_ID);
 
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, tournament);
     }
@@ -79,7 +78,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         int targetId = testTournament.getTournamentId();
 
         // Testing method
-        Tournament tournament = tournamentDao.getTournamentById(targetId);
+        Tournament tournament = tournamentService.getTournamentById(targetId);
 
         assertNotNull(tournament);
         assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
@@ -94,27 +93,26 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTournamentListByName_emptyList() throws Exception {
+        tournamentService.deleteTournamentById(testTournament.getTournamentId());
+
         // Testing method
-        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
+        List<Tournament> tournamentListByName = tournamentService.getTournamentListByName(TOURNAMENT_NAME);
 
-        String tournamentNameStr = testTournament.getTournamentName();
-        List<Tournament> tournamentList = tournamentDao.getTournamentListByName(tournamentNameStr);
-
-        assertNotNull(tournamentList);
-        assertEquals(0, tournamentList.size());
+        assertNotNull(tournamentListByName);
+        assertEquals(0, tournamentListByName.size());
     }
 
     @Test
     public void getTournamentListByName_found() throws Exception {
-        String tournamentNameStr = testTournament.getTournamentName();
+        String tournamentName = testTournament.getTournamentName();
 
         // Testing method
-        List<Tournament> tournamentList = tournamentDao.getTournamentListByName(tournamentNameStr);
+        List<Tournament> tournamentListByName = tournamentService.getTournamentListByName(tournamentName);
 
-        assertNotNull(tournamentList);
-        assertEquals(1, tournamentList.size());
+        assertNotNull(tournamentListByName);
+        assertEquals(1, tournamentListByName.size());
 
-        Tournament tournament = tournamentList.get(0);
+        Tournament tournament = tournamentListByName.get(0);
 
         assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
         assertEquals(testTournament.getTournamentName(), tournament.getTournamentName());
@@ -128,10 +126,10 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTournamentList_emptyList() throws Exception {
-        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
+        tournamentService.deleteTournamentById(testTournament.getTournamentId());
 
         // Testing method
-        List<Tournament> tournamentList = tournamentDao.getTournamentList();
+        List<Tournament> tournamentList = tournamentService.getTournamentList();
 
         assertNotNull(tournamentList);
         assertEquals(0, tournamentList.size());
@@ -140,7 +138,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     @Test
     public void getTournamentList_found() throws Exception {
         // Testing method
-        List<Tournament> tournamentList = tournamentDao.getTournamentList();
+        List<Tournament> tournamentList = tournamentService.getTournamentList();
 
         assertNotNull(tournamentList);
         assertEquals(1, tournamentList.size());
@@ -160,10 +158,10 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     @Test
     public void getTournamentListByManager_emptyList() throws Exception {
         // Testing method
-        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
+        tournamentService.deleteTournamentById(testTournament.getTournamentId());
 
         int targetId = testManager.getId();
-        List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
+        List<Tournament> tournamentList = tournamentService.getTournamentListByManager(targetId);
 
         assertNotNull(tournamentList);
         assertEquals(0, tournamentList.size());
@@ -174,7 +172,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         int targetId = testManager.getId();
 
         // Testing method
-        List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
+        List<Tournament> tournamentList = tournamentService.getTournamentListByManager(targetId);
 
         assertNotNull(tournamentList);
         assertEquals(1, tournamentList.size());
@@ -202,10 +200,10 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(0, tournament.getTournamentId());
 
         // Testing method
-        tournamentDao.addTournament(tournament);
+        tournamentService.addTournament(tournament);
         assertTrue(tournament.getTournamentId() > 0);
 
-        tournamentDao.deleteTournamentById(tournament.getTournamentId());
+        tournamentService.deleteTournamentById(tournament.getTournamentId());
     }
 
     @Test
@@ -233,8 +231,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         tournament.setManagerId(targetId);
 
         // Updates specific tournament in db
-        tournamentDao.updateTournament(tournamentId, tournament);
-        testTournament = tournamentDao.getTournamentById(tournamentId);
+        tournamentService.updateTournament(tournamentId, tournament);
+        testTournament = tournamentService.getTournamentById(tournamentId);
 
         assertEquals(testTournament.getTournamentId(), tournament.getTournamentId());
         assertEquals(testTournament.getTournamentName(), tournament.getTournamentName());
@@ -246,21 +244,23 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertEquals(testTournament.getManagerId(), tournament.getManagerId());
     }
 
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void deleteTournamentById_notFound() throws Exception {
-        tournamentDao.deleteTournamentById(NON_EXISTING_ID);
+        tournamentService.deleteTournamentById(NON_EXISTING_ID);
+
     }
 
     @Test
     public void deleteTournamentById_found() throws Exception {
-        tournamentDao.deleteTournamentById(testTournament.getTournamentId());
+        tournamentService.deleteTournamentById(testTournament.getTournamentId());
+
     }
 
     @Test
     public void deleteAll() throws Exception {
-        tournamentDao.deleteAll();
+        tournamentService.deleteAll();
 
-        List<Tournament> tournamentList = tournamentDao.getTournamentList();
+        List<Tournament> tournamentList = tournamentService.getTournamentList();
 
         assertEquals(0, tournamentList.size());
     }

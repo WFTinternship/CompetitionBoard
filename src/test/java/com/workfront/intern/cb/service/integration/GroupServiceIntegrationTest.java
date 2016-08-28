@@ -1,10 +1,11 @@
-package com.workfront.intern.cb.service;
+package com.workfront.intern.cb.service.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.service.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -13,29 +14,26 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class MediaServiceIntegrationTest extends BaseTest {
+public class GroupServiceIntegrationTest extends BaseTest {
 
-    // DAO instances
     private ManagerService managerService;
     private TournamentService tournamentService;
-    private MediaService mediaService;
+    private GroupService groupService;
 
-    // Test helper objects
-    private Manager testManager;
     private Tournament testTournament;
-    private Media testMedia;
+    private Group testGroup;
 
     @Before
     public void beforeTest() throws Exception {
         managerService = new ManagerServiceImpl();
         tournamentService = new TournamentServiceImpl();
-        mediaService = new MediaServiceImpl();
+        groupService = new GroupServiceImpl();
 
         // Delete all remaining objects
         cleanUp();
 
         // Initialize random manager instance
-        testManager = createRandomManager();
+        Manager testManager = createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
@@ -51,15 +49,14 @@ public class MediaServiceIntegrationTest extends BaseTest {
         tournamentService.addTournament(testTournament);
         assertTrue(testTournament.getTournamentId() > 0);
 
-        // Initialize random media instance
-        testMedia = createRandomPhotoMedia();
-        testMedia.setManagerId(testManager.getId());
-        testMedia.setTournamentId(testTournament.getTournamentId());
-        assertEquals(0, testMedia.getMediaId());
+        // Initialize random group instance
+        testGroup = createRandomGroup();
+        testGroup.setTournamentId(testTournament.getTournamentId());
+        assertEquals(0, testGroup.getGroupId());
 
         // Save to DB
-        mediaService.addPhoto(testMedia);
-        assertTrue(testTournament.getTournamentId() > 0);
+        groupService.addGroup(testGroup);
+        assertTrue(testGroup.getGroupId() > 0);
     }
 
     @After
@@ -68,7 +65,7 @@ public class MediaServiceIntegrationTest extends BaseTest {
     }
 
     private void cleanUp() throws Exception {
-        mediaService.deleteAll();
+        groupService.deleteAll();
         tournamentService.deleteAll();
         managerService.deleteAll();
     }
@@ -76,63 +73,53 @@ public class MediaServiceIntegrationTest extends BaseTest {
     // region <TEST CASES>
 
     @Ignore
-    @Test(expected = ObjectNotFoundException.class)
-    public void getMediaById_notFound() throws Exception {
-    }
-
-    @Ignore
     @Test
-    public void getMediaById_found() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void addPhoto_created() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void addVideo_created() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getMediaByManagerList_emptyList() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getMediaByManagerList_found() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getMediaByTournamentList_emptyList() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getMediaByTournamentList_found() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void updatePhoto() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void updateVideo() throws Exception {
+    public void addGroup_created() throws Exception {
     }
 
     @Ignore
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteMediaById_notFound() throws Exception {
+    public void getGroupById_notFound() throws Exception {
     }
 
     @Ignore
     @Test
-    public void deleteMedia_deleted() throws Exception {
+    public void getGroupById_found() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void getGroupByTournamentList_emptyList() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void getGroupByTournamentList_found() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void getAllGroups_emptyList() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void getAllGroups_found() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void updateGroup() throws Exception {
+    }
+
+    @Ignore
+    @Test(expected = ObjectNotFoundException.class)
+    public void deleteGroup_notFound() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void deleteGroup_found() throws Exception {
     }
 
     @Ignore

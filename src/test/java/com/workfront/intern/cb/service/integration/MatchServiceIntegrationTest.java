@@ -1,10 +1,13 @@
-package com.workfront.intern.cb.service;
+package com.workfront.intern.cb.service.integration;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.service.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -13,20 +16,22 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class GroupServiceIntegrationTest extends BaseTest {
+public class MatchServiceIntegrationTest extends BaseTest {
 
     private ManagerService managerService;
     private TournamentService tournamentService;
     private GroupService groupService;
+    private MatchService matchService;
 
-    private Tournament testTournament;
     private Group testGroup;
+    private Match testMatch;
 
     @Before
     public void beforeTest() throws Exception {
         managerService = new ManagerServiceImpl();
         tournamentService = new TournamentServiceImpl();
         groupService = new GroupServiceImpl();
+        matchService = new MatchServiceImpl();
 
         // Delete all remaining objects
         cleanUp();
@@ -40,7 +45,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
-        testTournament = createRandomTournament();
+        Tournament testTournament = createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
 
@@ -56,6 +61,15 @@ public class GroupServiceIntegrationTest extends BaseTest {
         // Save to DB
         groupService.addGroup(testGroup);
         assertTrue(testGroup.getGroupId() > 0);
+
+        // Initialize random match instance
+        testMatch = createRandomMatch();
+        testMatch.setGroupId(testGroup.getGroupId());
+        assertEquals(0, testMatch.getMatchId());
+
+        // Save to DB
+        matchService.addMatch(testMatch);
+        assertTrue(testMatch.getMatchId() > 0);
     }
 
     @After
@@ -64,6 +78,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
     }
 
     private void cleanUp() throws Exception {
+        matchService.deleteAll();
         groupService.deleteAll();
         tournamentService.deleteAll();
         managerService.deleteAll();
@@ -73,52 +88,52 @@ public class GroupServiceIntegrationTest extends BaseTest {
 
     @Ignore
     @Test
-    public void addGroup_created() throws Exception {
+    public void addMatch_created() throws Exception {
     }
 
     @Ignore
     @Test(expected = ObjectNotFoundException.class)
-    public void getGroupById_notFound() throws Exception {
+    public void getMatchId_notFound() throws Exception {
     }
 
     @Ignore
     @Test
-    public void getGroupById_found() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getGroupByTournamentList_emptyList() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getGroupByTournamentList_found() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getAllGroups_emptyList() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void getAllGroups_found() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void updateGroup() throws Exception {
+    public void getMatchById_found() throws ObjectNotFoundException, FailedOperationException {
     }
 
     @Ignore
     @Test(expected = ObjectNotFoundException.class)
-    public void deleteGroup_notFound() throws Exception {
+    public void getMatchByGroupId_notFound() throws Exception {
     }
 
     @Ignore
     @Test
-    public void deleteGroup_found() throws Exception {
+    public void getMatchByGroupId_found() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void getMatchList_emptyList() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void getMatchList_found() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void updateMatch() throws Exception {
+    }
+
+    @Ignore
+    @Test(expected = ObjectNotFoundException.class)
+    public void deleteMatch_notFound() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void deleteMatch_found() throws Exception {
     }
 
     @Ignore

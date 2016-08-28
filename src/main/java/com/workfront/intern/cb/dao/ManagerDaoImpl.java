@@ -22,7 +22,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     }
 
     /**
-     * Returns manager by id
+     * Gets manager by id
      */
     @Override
     public Manager getManagerById(int id) throws ObjectNotFoundException, FailedOperationException {
@@ -57,7 +57,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     }
 
     /**
-     * Returns manager by login
+     * Gets manager by login
      */
     @Override
     public Manager getManagerByLogin(String login) throws ObjectNotFoundException, FailedOperationException {
@@ -92,7 +92,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
     }
 
     /**
-     * Returns all managers in db
+     * Gets all managers in db
      */
     @Override
     public List<Manager> getManagerList() throws FailedOperationException {

@@ -1,9 +1,11 @@
-package com.workfront.intern.cb.dao;
+package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
-import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.dao.MediaDao;
+import com.workfront.intern.cb.dao.MediaDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +19,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
-public class TournamentDaoUnitTest extends BaseTest {
+public class MediaDaoUnitTest extends BaseTest {
     DataSource dataSource;
-    TournamentDao tournamentDao;
+    MediaDao mediaDao;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -31,7 +33,7 @@ public class TournamentDaoUnitTest extends BaseTest {
         when(conn.prepareStatement(any(String.class))).thenThrow(SQLException.class);
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
-        tournamentDao = new TournamentDaoImpl(dataSource);
+        mediaDao = new MediaDaoImpl(dataSource);
     }
 
     @After
@@ -39,44 +41,47 @@ public class TournamentDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
-    public void add_dbError() throws Exception {
-        // Test method
-        tournamentDao.addTournament(new Tournament());
+    public void addPhoto_dbError() throws Exception {
+        mediaDao.addPhoto(new Media());
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getTournamentById_dbError() throws Exception {
-        tournamentDao.getTournamentById(NON_EXISTING_ID);
+    public void addVideo_dbError() throws Exception {
+        mediaDao.addVideo(new Media());
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getTournamentByName_dbError() throws Exception {
-        tournamentDao.getTournamentListByName(TOURNAMENT_NAME);
+    public void getMedia_dbError() throws Exception {
+        mediaDao.getMediaById(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getTournamentListByManager_dbError() throws Exception {
-        tournamentDao.getTournamentListByManager(NON_EXISTING_ID);
+    public void getMediaListByManager_dbError() throws Exception {
+        mediaDao.getMediaListByManager(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getTournamentList_dbError() throws Exception {
-        tournamentDao.getTournamentList();
+    public void getMediaListByTournament_dbError() throws Exception {
+        mediaDao.getMediaListByTournament(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void updateTournament_dbError() throws Exception {
-        Tournament testTournament = createRandomTournament();
-        tournamentDao.updateTournament(NON_EXISTING_ID, testTournament);
+    public void updatePhoto_dbError() throws Exception {
+        mediaDao.updatePhoto(NON_EXISTING_ID, new Media());
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteTournamentById_dbError() throws Exception {
-        tournamentDao.deleteTournamentById(NON_EXISTING_ID);
+    public void updateVideo_dbError() throws Exception {
+        mediaDao.updateVideo(NON_EXISTING_ID, new Media());
+    }
+
+    @Test(expected = FailedOperationException.class)
+    public void deleteMedia() throws Exception {
+        mediaDao.deleteMediaById(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
     public void deleteAll_dbError() throws Exception {
-        tournamentDao.deleteAll();
+        mediaDao.deleteAll();
     }
 }

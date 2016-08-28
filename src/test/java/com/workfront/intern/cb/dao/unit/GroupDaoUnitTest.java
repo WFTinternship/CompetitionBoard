@@ -1,9 +1,11 @@
-package com.workfront.intern.cb.dao;
+package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
-import com.workfront.intern.cb.common.Match;
+import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.dao.GroupDao;
+import com.workfront.intern.cb.dao.GroupDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +19,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
-public class MatchDaoUnitTest extends BaseTest{
+public class GroupDaoUnitTest extends BaseTest {
     DataSource dataSource;
-    MatchDao matchDao;
+    GroupDao groupDao;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -30,7 +32,7 @@ public class MatchDaoUnitTest extends BaseTest{
         when(conn.prepareStatement(any(String.class))).thenThrow(SQLException.class);
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
-        matchDao = new MatchDaoImpl(dataSource);
+        groupDao = new GroupDaoImpl(dataSource);
     }
 
     @After
@@ -39,37 +41,32 @@ public class MatchDaoUnitTest extends BaseTest{
 
     @Test(expected = FailedOperationException.class)
     public void add_dbError() throws Exception {
-        matchDao.addMatch(new Match());
+        groupDao.addGroup(new Group());
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getMatchById_dbError() throws Exception {
-        matchDao.getMatchById(NON_EXISTING_ID);
+    public void getGroupByTournamentList_dbError() throws Exception {
+        groupDao.getTournamentGroups(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getMatchByGroupId_dbError() throws Exception {
-        matchDao.getMatchByGroupId(NON_EXISTING_ID);
-    }
-
-    @Test
-    public void getMatchListByGroup_dbError() {
+    public void getAllGroups_dbError() throws Exception {
+        groupDao.getTournamentGroups(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void updateMatch_dbError() throws Exception {
-        Match testMatch = createRandomMatch();
-        matchDao.updateMatch(NON_EXISTING_ID, testMatch);
+    public void updateGroup_dbError() throws Exception {
+        Group testGroup = createRandomGroup();
+        groupDao.updateGroup(NON_EXISTING_ID, testGroup);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteMatch() throws Exception {
-        matchDao.deleteMatch(NON_EXISTING_ID);
+    public void deleteGroup_dbError() throws Exception {
+        groupDao.deleteGroup(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteAll() throws Exception {
-        matchDao.deleteAll();
+    public void deleteAll_dbError() throws Exception {
+        groupDao.deleteAll();
     }
 }
-

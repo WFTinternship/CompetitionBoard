@@ -1,10 +1,12 @@
-package com.workfront.intern.cb.dao;
+package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.dao.ParticipantDao;
+import com.workfront.intern.cb.dao.ParticipantDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

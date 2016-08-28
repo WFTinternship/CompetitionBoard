@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class TournamentDaoImpl extends GenericDao implements TournamentDao {
     private static final Logger LOG = Logger.getLogger(TournamentDaoImpl.class);
@@ -54,6 +55,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournament;
     }
 
+    /**
+     * Gets tournament by tournament name
+     */
     @Override
     public List<Tournament> getTournamentListByName(String inputStr) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;

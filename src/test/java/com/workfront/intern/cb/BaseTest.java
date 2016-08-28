@@ -1,10 +1,15 @@
 package com.workfront.intern.cb;
 
 import com.workfront.intern.cb.common.*;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.Random;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ServiceSpringConfigTest.class)
 public class BaseTest {
 
     protected final int NON_EXISTING_ID = 9999;

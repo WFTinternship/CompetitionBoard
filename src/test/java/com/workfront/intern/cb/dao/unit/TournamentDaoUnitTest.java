@@ -1,9 +1,11 @@
-package com.workfront.intern.cb.dao;
+package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
-import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.dao.TournamentDao;
+import com.workfront.intern.cb.dao.TournamentDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,10 +19,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
-public class ManagerDaoUnitTest extends BaseTest {
+public class TournamentDaoUnitTest extends BaseTest {
     DataSource dataSource;
-    private ManagerDao managerDao;
-    private Manager testManager;
+    TournamentDao tournamentDao;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -32,8 +33,7 @@ public class ManagerDaoUnitTest extends BaseTest {
         when(conn.prepareStatement(any(String.class))).thenThrow(SQLException.class);
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
-        managerDao = new ManagerDaoImpl(dataSource);
-        testManager = createRandomManager();
+        tournamentDao = new TournamentDaoImpl(dataSource);
     }
 
     @After
@@ -41,37 +41,44 @@ public class ManagerDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
-    public void addManager_dbError() throws Exception {
-        managerDao.addManager(testManager);
+    public void add_dbError() throws Exception {
+        // Test method
+        tournamentDao.addTournament(new Tournament());
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getManagerById_dbError() throws Exception {
-        managerDao.getManagerById(NON_EXISTING_ID);
+    public void getTournamentById_dbError() throws Exception {
+        tournamentDao.getTournamentById(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getManagerByLogin_dbError() throws Exception {
-        managerDao.getManagerByLogin(NON_EXISTING_LOGIN);
+    public void getTournamentByName_dbError() throws Exception {
+        tournamentDao.getTournamentListByName(TOURNAMENT_NAME);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getManagerList_dbError() throws Exception {
-        managerDao.getManagerList();
+    public void getTournamentListByManager_dbError() throws Exception {
+        tournamentDao.getTournamentListByManager(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
-    public void updateManager_dbError() throws Exception {
-        managerDao.updateManager(NON_EXISTING_ID, testManager);
+    public void getTournamentList_dbError() throws Exception {
+        tournamentDao.getTournamentList();
     }
 
     @Test(expected = FailedOperationException.class)
-    public void deleteManagerById_dbError() throws Exception {
-        managerDao.deleteManagerById(NON_EXISTING_ID);
+    public void updateTournament_dbError() throws Exception {
+        Tournament testTournament = createRandomTournament();
+        tournamentDao.updateTournament(NON_EXISTING_ID, testTournament);
+    }
+
+    @Test(expected = FailedOperationException.class)
+    public void deleteTournamentById_dbError() throws Exception {
+        tournamentDao.deleteTournamentById(NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
     public void deleteAll_dbError() throws Exception {
-        managerDao.deleteAll();
+        tournamentDao.deleteAll();
     }
 }

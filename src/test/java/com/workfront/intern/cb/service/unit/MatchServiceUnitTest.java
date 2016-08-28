@@ -1,10 +1,12 @@
-package com.workfront.intern.cb.service;
+package com.workfront.intern.cb.service.unit;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.MatchDao;
 import com.workfront.intern.cb.dao.MatchDaoImpl;
+import com.workfront.intern.cb.service.MatchService;
+import com.workfront.intern.cb.service.MatchServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

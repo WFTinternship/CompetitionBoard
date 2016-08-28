@@ -1,10 +1,12 @@
-package com.workfront.intern.cb.service;
+package com.workfront.intern.cb.service.unit;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.TournamentDao;
 import com.workfront.intern.cb.dao.TournamentDaoImpl;
+import com.workfront.intern.cb.service.TournamentService;
+import com.workfront.intern.cb.service.TournamentServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

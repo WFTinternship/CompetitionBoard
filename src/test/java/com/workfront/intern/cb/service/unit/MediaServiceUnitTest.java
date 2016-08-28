@@ -1,10 +1,12 @@
-package com.workfront.intern.cb.service;
+package com.workfront.intern.cb.service.unit;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.MediaDao;
 import com.workfront.intern.cb.dao.MediaDaoImpl;
+import com.workfront.intern.cb.service.MediaService;
+import com.workfront.intern.cb.service.MediaServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

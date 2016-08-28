@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.dao;
+package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Group;
@@ -7,6 +7,7 @@ import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
+import com.workfront.intern.cb.dao.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
