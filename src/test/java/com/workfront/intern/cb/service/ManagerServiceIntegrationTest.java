@@ -7,7 +7,6 @@ import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +54,7 @@ public class ManagerServiceIntegrationTest extends BaseTest {
 
     // region <TEST CASES>
 
-    @Ignore
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void getManagerById_notFound() throws Exception {
         // Testing method
         Manager manager = managerService.getManagerById(NON_EXISTING_ID);
@@ -72,7 +70,7 @@ public class ManagerServiceIntegrationTest extends BaseTest {
         assertNotNull(manager);
     }
 
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void getManagerByLogin_notFound() throws Exception {
         // Testing method
         Manager manager = managerService.getManagerByLogin(NON_EXISTING_LOGIN);
@@ -89,12 +87,19 @@ public class ManagerServiceIntegrationTest extends BaseTest {
 
         assertNotNull(manager);
         assertEquals(testManager.getId(), manager.getId());
+        assertEquals(testManager.getLogin(), manager.getLogin());
         assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
     }
 
-    @Ignore
-    @Test
     public void getManagerList_emptyList() throws Exception {
+        int targetId = testManager.getId();
+        managerService.deleteManagerById(targetId);
+
+        // Testing method
+        List<Manager> managerList = managerService.getManagerList();
+
+        assertNotNull(managerList);
+        assertEquals(0, managerList.size());
     }
 
     @Test
@@ -109,12 +114,19 @@ public class ManagerServiceIntegrationTest extends BaseTest {
         assertEquals(testManager.getId(), manager.getId());
         assertEquals(testManager.getLogin(), manager.getLogin());
         assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
-
     }
 
-    @Ignore
     @Test
     public void addManager_created() throws Exception {
+        // Initialize random manager instance
+        Manager manager = createRandomManager();
+
+        assertEquals(0, manager.getId());
+
+        // Testing method
+        managerService.addManager(manager);
+        assertTrue(manager.getId() > 0);
+
     }
 
     @Test
@@ -134,7 +146,7 @@ public class ManagerServiceIntegrationTest extends BaseTest {
         assertEquals(testManager.getPassword(), manager.getPassword());
     }
 
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void deleteManagerById_notFound() throws Exception {
         managerService.deleteManagerById(NON_EXISTING_ID);
     }
