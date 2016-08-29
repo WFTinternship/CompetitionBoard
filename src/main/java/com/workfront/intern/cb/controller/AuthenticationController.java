@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
-public class RegistrationFormController {
+public class AuthenticationController {
 
     @Autowired
     private ManagerService managerService;
