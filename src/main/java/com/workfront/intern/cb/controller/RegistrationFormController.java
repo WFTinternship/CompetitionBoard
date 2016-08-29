@@ -55,24 +55,6 @@ public class RegistrationFormController {
             // set password
             signInUser.setPassword(passwordSignInInput);
 
-            //ToDo
-            // set avatar
-            int scaledWidth = 40;
-            int scaledHeight = 40;
-            final String SAVE_DIR = "resources/img/users_avatar/inputImage";
-
-//            String appPath = request.getServletContext().getRealPath("");
-            String appPath = request.getContextPath();
-
-//            String savePath = appPath + File.separator + SAVE_DIR;
-
-
-            String outputImagePath = signInLoginInput + "_" + "resources/img/users_avatar/outputImage/resize.jpg";
-            Util.inputFileResize(appPath, outputImagePath, scaledWidth, scaledHeight);
-
-
-            //....................................
-
             managerService.addManager(signInUser);
 
             // Gets added manager id and set in session
@@ -83,8 +65,6 @@ public class RegistrationFormController {
             // Checking duplicate of manager name during registration
             session.setAttribute("errMessage", "Sorry, but user with this name exists");
             return "redirect:signup-page";
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return "redirect:/";
@@ -122,7 +102,7 @@ public class RegistrationFormController {
                 if (loginInput.equals(loginFromDb) && passwordEncrypt.equals(passwordFromDb)) {
                     session.setAttribute("manager", manager);
                 }
-            } catch (RuntimeException ex) {
+            } catch (Exception ex) {
                 session.setAttribute("userNameErr", "Sorry, username or password error");
                 return "redirect:login-page";
             }

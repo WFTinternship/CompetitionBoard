@@ -13,74 +13,10 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-
-
-        <!--&lt;!&ndash;SignIn&ndash;&gt;-->
-    <!--<servlet>-->
-        <!--<servlet-name>SignInServlet</servlet-name>-->
-        <!--<servlet-class>com.workfront.intern.cb.web.servlets.SignInServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>SignInServlet</servlet-name>-->
-        <!--<url-pattern>/sign-in</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--&lt;!&ndash;LogInServlet&ndash;&gt;-->
-    <!--<servlet>-->
-        <!--<servlet-name>LogInServlet</servlet-name>-->
-        <!--<servlet-class>com.workfront.intern.cb.web.servlets.LogInServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>LogInServlet</servlet-name>-->
-        <!--<url-pattern>/login</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--&lt;!&ndash;LogOutServlet&ndash;&gt;-->
-    <!--<servlet>-->
-        <!--<servlet-name>LogOutServlet</servlet-name>-->
-        <!--<servlet-class>com.workfront.intern.cb.web.servlets.LogOutServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>LogOutServlet</servlet-name>-->
-        <!--<url-pattern>/logout</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--&lt;!&ndash;SearchTournamentsByNameServlet&ndash;&gt;-->
-    <!--<servlet>-->
-        <!--<servlet-name>TournamentSearchServlet</servlet-name>-->
-        <!--<servlet-class>com.workfront.intern.cb.web.servlets.tournament.SearchTournamentsByNameServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>TournamentSearchServlet</servlet-name>-->
-        <!--<url-pattern>/search</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--&lt;!&ndash;AddTournamentServlet&ndash;&gt;-->
-    <!--<servlet>-->
-        <!--<servlet-name>AddTournamentServlet</servlet-name>-->
-        <!--<servlet-class>com.workfront.intern.cb.web.servlets.tournament.AddTournamentServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>AddTournamentServlet</servlet-name>-->
-        <!--<url-pattern>/add</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--&lt;!&ndash;AddTournamentServlet&ndash;&gt;-->
-    <!--<servlet>-->
-        <!--<servlet-name>AllTournamentsServlet</servlet-name>-->
-        <!--<servlet-class>com.workfront.intern.cb.web.servlets.tournament.AllTournamentsServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>AllTournamentsServlet</servlet-name>-->
-        <!--<url-pattern>/allTournamentsServlet/*</url-pattern>-->
-    <!--</servlet-mapping>-->
-
 
     <!--Errors handling-->
     <error-page>
@@ -96,8 +32,15 @@
         <location>/WEB-INF/views/error/error500.jsp</location>
     </error-page>
 
-    <!--&lt;!&ndash;Listener&ndash;&gt;-->
-    <!--<listener>-->
-        <!--<listener-class>com.workfront.intern.cb.spring.SpringContextListener</listener-class>-->
-    <!--</listener>-->
+    <!--spring test profile-->
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>development</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>spring.profiles.testDb</param-name>
+        <param-value>testDb</param-value>
+    </context-param>
+
 </web-app>
