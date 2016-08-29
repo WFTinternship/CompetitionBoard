@@ -74,7 +74,8 @@ public class ManagerServiceIntegrationTest extends BaseTest {
 
     @Test
     public void getManagerByLogin_found() throws Exception {
-        String targetLogin = testManager.getLogin();
+        String targetLogin;
+        targetLogin = testManager.getLogin();
 
         // Testing method
         Manager manager = managerService.getManagerByLogin(targetLogin);
@@ -86,7 +87,8 @@ public class ManagerServiceIntegrationTest extends BaseTest {
     }
 
     public void getManagerList_emptyList() throws Exception {
-        int targetId = testManager.getId();
+        int targetId;
+        targetId = testManager.getId();
         managerService.deleteManagerById(targetId);
 
         // Testing method
@@ -99,7 +101,8 @@ public class ManagerServiceIntegrationTest extends BaseTest {
     @Test
     public void getManagerList_found() throws Exception {
         // Testing method
-        List<Manager> managerList = managerService.getManagerList();
+        List<Manager> managerList;
+        managerList = managerService.getManagerList();
 
         assertNotNull(managerList);
         assertEquals(1, managerList.size());
@@ -120,13 +123,13 @@ public class ManagerServiceIntegrationTest extends BaseTest {
         // Testing method
         managerService.addManager(manager);
         assertTrue(manager.getId() > 0);
-
     }
 
     @Test
     public void updateManager() throws Exception {
+        int targetId;
+        targetId = testManager.getId();
         String passwordUpdate = StringHelper.passToEncrypt("updatedPassword");
-        int targetId = testManager.getId();
         testManager.setPassword(passwordUpdate);
 
         // Testing method
@@ -149,7 +152,6 @@ public class ManagerServiceIntegrationTest extends BaseTest {
     public void deleteManagerById_deleted() throws Exception {
         int targetId = testManager.getId();
         managerService.deleteManagerById(targetId);
-
     }
 
     @Test
