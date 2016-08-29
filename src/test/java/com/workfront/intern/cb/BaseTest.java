@@ -32,10 +32,12 @@ public class BaseTest {
     protected static Manager createRandomManager() {
         String managerLoginRandom = generateRandomString();
         String managerPassword = generateRandomString(10);
+        String avatarPath = "resources/img/test/" + generateRandomString();
 
         Manager testManager = new Manager();
         testManager.setLogin(managerLoginRandom);
         testManager.setPassword(managerPassword);
+        testManager.setAvatar(avatarPath);
 
         return testManager;
     }

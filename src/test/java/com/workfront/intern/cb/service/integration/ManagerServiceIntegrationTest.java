@@ -84,6 +84,8 @@ public class ManagerServiceIntegrationTest extends BaseTest {
         assertEquals(testManager.getId(), manager.getId());
         assertEquals(testManager.getLogin(), manager.getLogin());
         assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
+        assertEquals(testManager.getAvatar(), manager.getAvatar());
+
     }
 
     public void getManagerList_emptyList() throws Exception {
