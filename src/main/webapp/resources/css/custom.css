@@ -56,3 +56,8 @@ tr:nth-child(even) {background: #838383
 tr:nth-child(odd) {background: #5e5e5e
 }
 
+.errMsgStyle{
+    color: red;
+    font-size: 5px;
+}
+

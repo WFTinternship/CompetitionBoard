@@ -47,7 +47,7 @@
     String addTournamentMenuItem = null;
     String classStr = null;
 
-     Manager sessionContext = (Manager) session.getAttribute("manager");
+    Manager sessionContext = (Manager) session.getAttribute("manager");
     if (sessionContext != null) {
         userName = sessionContext.getLogin();
         welcomeStr = "Hi, ";
@@ -69,14 +69,17 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand page-scroll" href="#page-top">Home</a>
-            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%></a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+            </a>
         </div>
-        <input type="hidden" id="login-status" value="<%=userName%>" />
+        <input type="hidden" id="login-status" value="<%=userName%>"/>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                       onload="showMenuItem()"><%=addTournamentMenuItem%>
+                </a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
@@ -92,13 +95,14 @@
 <header>
 
     <%--Search tournament---%>
-        <div class="header-content">
+    <div class="header-content">
         <form action="searchTournamentByNameForm" method="get" class="container">
             <div class="container">
                 <div class="row">
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                            <input type="text" class="  search-query form-control" name="searchStr" placeholder="Search tournaments" required/>
+                            <input type="text" class="  search-query form-control" name="searchStr"
+                                   placeholder="Search tournaments" required/>
                             <span class="input-group-btn">
                     <button class="btn btn-danger" type="submit" onclick="submitSearchNameInForm()">
                         <span class=" glyphicon glyphicon-search"></span>
@@ -112,12 +116,14 @@
 
         <br>
 
-        <%--Write error message in jsp --%>
-        <%
-            String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");
-            if (searchResultMsg != null)
-                out.println("<font color=red size=5px>" + searchResultMsg + "</font>");
-        %>
+        <%--Write error message, when not found with provided search criteria  --%>
+        <p class="err-msg">
+            <%
+                String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");
+                if (searchResultMsg != null)
+                    out.println(searchResultMsg);
+            %>
+        </p>
     </div>
 </header>
 

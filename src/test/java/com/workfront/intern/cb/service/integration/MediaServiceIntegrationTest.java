@@ -9,7 +9,6 @@ import com.workfront.intern.cb.service.MediaService;
 import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -255,7 +254,6 @@ public class MediaServiceIntegrationTest extends BaseTest {
         assertEquals(testMedia.getManagerId(), media.getManagerId());
     }
 
-    @Ignore
     @Test(expected = RuntimeException.class)
     public void deleteMediaById_notFound() throws Exception {
         mediaService.deleteMediaById(NON_EXISTING_ID);

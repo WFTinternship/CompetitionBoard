@@ -58,7 +58,7 @@ public class TournamentController {
             model.addAttribute("searchResultList", tournamentList);
             model.addAttribute("managerService", managerService);
         } else {
-            model.addAttribute("noSearchResultMsg", "No found of tournaments");
+            model.addAttribute("noSearchResultMsg", "No tournament(s) found with provided search criteria");
             return "index";
         }
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;

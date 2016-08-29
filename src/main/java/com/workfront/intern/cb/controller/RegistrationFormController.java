@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class RegistrationFormController  {
+public class RegistrationFormController {
 
     @Autowired
     private ManagerService managerService;
@@ -32,9 +32,16 @@ public class RegistrationFormController  {
     public String signUp(Model model,
                          @RequestParam("userNameSignIn") String signInLoginInput,
                          @RequestParam("passwordSignIn") String passwordSignInInput,
+                         @RequestParam("passwordConfirmSignIn") String passwordConfirmSignIn,
                          HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
+        if (!passwordSignInInput.equals(passwordConfirmSignIn)) {
+            String passErr = "Password does not match";
+            model.addAttribute("passwordNotMatchErr", passErr);
+            return "secure/sign-up";
+        }
+
         try {
             Manager signInUser = new Manager();
             signInUser.setLogin(signInLoginInput);
