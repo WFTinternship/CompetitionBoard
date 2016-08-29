@@ -70,7 +70,7 @@
         <div class="navbar-header">
             <a class="navbar-brand page-scroll" href="#page-top">Home</a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
-            </a>
+            <a ><img class="avatar" src="resources/img/users_avatar/output/testResize.jpg" > </a>
         </div>
         <input type="hidden" id="login-status" value="<%=userName%>"/>
 

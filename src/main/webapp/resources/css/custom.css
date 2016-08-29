@@ -56,8 +56,22 @@ tr:nth-child(even) {background: #838383
 tr:nth-child(odd) {background: #5e5e5e
 }
 
+/* Error messages style */
 .errMsgStyle{
     color: red;
     font-size: 5px;
 }
+
+/* Users avatar style */
+.avatar {
+    float: left;
+    /*margin-top: 1em;*/
+    margin-right: 1em;
+    position: relative;
+
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
 

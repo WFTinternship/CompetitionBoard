@@ -12,7 +12,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String toHomePage(Model model, HttpServletRequest request, HttpServletResponse response) {
-
         return "index";
     }
 

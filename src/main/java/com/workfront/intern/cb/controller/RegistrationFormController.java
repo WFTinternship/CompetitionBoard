@@ -4,6 +4,7 @@ import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.util.StringHelper;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.web.util.Params;
+import com.workfront.intern.cb.web.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class RegistrationFormController {
@@ -31,31 +33,58 @@ public class RegistrationFormController {
     @RequestMapping(value = "/signup-form", method = RequestMethod.POST)
     public String signUp(Model model,
                          @RequestParam("userNameSignIn") String signInLoginInput,
+                         @RequestParam("user_avatar") String userAvatar,
                          @RequestParam("passwordSignIn") String passwordSignInInput,
                          @RequestParam("passwordConfirmSignIn") String passwordConfirmSignIn,
                          HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
+
+        // Checking valid passwords in two fields
         if (!passwordSignInInput.equals(passwordConfirmSignIn)) {
             String passErr = "Password does not match";
             model.addAttribute("passwordNotMatchErr", passErr);
+
             return "secure/sign-up";
         }
-
         try {
             Manager signInUser = new Manager();
+            // set login
             signInUser.setLogin(signInLoginInput);
+
+            // set password
             signInUser.setPassword(passwordSignInInput);
+
+            //ToDo
+            // set avatar
+            int scaledWidth = 40;
+            int scaledHeight = 40;
+            final String SAVE_DIR = "resources/img/users_avatar/inputImage";
+
+//            String appPath = request.getServletContext().getRealPath("");
+            String appPath = request.getContextPath();
+
+//            String savePath = appPath + File.separator + SAVE_DIR;
+
+
+            String outputImagePath = signInLoginInput + "_" + "resources/img/users_avatar/outputImage/resize.jpg";
+            Util.inputFileResize(appPath, outputImagePath, scaledWidth, scaledHeight);
+
+
+            //....................................
 
             managerService.addManager(signInUser);
 
             // Gets added manager id and set in session
             Manager manager = managerService.getManagerByLogin(signInLoginInput);
             session.setAttribute("manager", manager);
+
         } catch (RuntimeException ex) {
             // Checking duplicate of manager name during registration
             session.setAttribute("errMessage", "Sorry, but user with this name exists");
             return "redirect:signup-page";
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return "redirect:/";

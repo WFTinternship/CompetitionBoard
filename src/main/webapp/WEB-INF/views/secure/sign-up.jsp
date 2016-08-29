@@ -40,7 +40,7 @@
             <div id="avatar" class="field-wrap">
                 <%--<div class="field f_100">--%>
                 <label></label>
-                <input type="file" size="48" name="avatar" multiple accept="image/*,image/jpeg">
+                <input type="file" size="48" name="user_avatar" multiple accept="image/*,image/jpg">
                 <%--</div>--%>
             </div>
 
