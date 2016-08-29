@@ -7,20 +7,31 @@ import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.service.*;
+import com.workfront.intern.cb.service.GroupService;
+import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.service.MatchService;
+import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class MatchServiceIntegrationTest extends BaseTest {
 
+    @Autowired
     private ManagerService managerService;
+
+    @Autowired
     private TournamentService tournamentService;
+
+    @Autowired
     private GroupService groupService;
+
+    @Autowired
     private MatchService matchService;
 
     private Group testGroup;
@@ -28,11 +39,6 @@ public class MatchServiceIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() throws Exception {
-        managerService = new ManagerServiceImpl();
-        tournamentService = new TournamentServiceImpl();
-        groupService = new GroupServiceImpl();
-        matchService = new MatchServiceImpl();
-
         // Delete all remaining objects
         cleanUp();
 
@@ -86,59 +92,167 @@ public class MatchServiceIntegrationTest extends BaseTest {
 
     // region <TEST CASES>
 
-    @Ignore
     @Test
     public void addMatch_created() throws Exception {
+        int groupId;
+        groupId = testGroup.getGroupId();
+
+        // Initialize random match instance
+        Match match = createRandomMatch();
+        match.setGroupId(groupId);
+
+        assertEquals(0, match.getMatchId());
+
+        // Testing method
+        matchService.addMatch(match);
+        assertTrue(match.getMatchId() > 0);
+
+        matchService.deleteMatch(match.getMatchId());
     }
 
-    @Ignore
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void getMatchId_notFound() throws Exception {
+        // Testing method
+        Match match = matchService.getMatchById(NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, match);
     }
 
-    @Ignore
     @Test
     public void getMatchById_found() throws ObjectNotFoundException, FailedOperationException {
+        int matchId;
+        matchId = testMatch.getMatchId();
+
+        // Testing method
+        Match match = matchService.getMatchById(matchId);
+
+        assertNotNull(match);
+        assertEquals(testMatch.getMatchId(), match.getMatchId());
+        assertEquals(testMatch.getGroupId(), match.getGroupId());
+        assertEquals(testMatch.getParticipantOneId(), match.getParticipantOneId());
+        assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
+        assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
+        assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
-    @Ignore
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void getMatchByGroupId_notFound() throws Exception {
+        // Testing method
+        Match match = matchService.getMatchByGroupId(NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, match);
     }
 
-    @Ignore
     @Test
     public void getMatchByGroupId_found() throws Exception {
+        int groupId;
+        groupId = testGroup.getGroupId();
+
+        // Testing method
+        Match match = matchService.getMatchByGroupId(groupId);
+
+        assertNotNull(match);
+        assertEquals(testMatch.getMatchId(), match.getMatchId());
+        assertEquals(testMatch.getGroupId(), match.getGroupId());
+        assertEquals(testMatch.getParticipantOneId(), match.getParticipantOneId());
+        assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
+        assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
+        assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
-    @Ignore
     @Test
     public void getMatchList_emptyList() throws Exception {
+        int matchId;
+        matchId = testMatch.getMatchId();
+        int groupId = testGroup.getGroupId();
+
+        // Testing method
+        matchService.deleteMatch(matchId);
+
+        // Testing method
+        List<Match> matchList = matchService.getMatchListByGroup(groupId);
+
+        assertNotNull(matchList);
+        assertEquals(0, matchList.size());
     }
 
-    @Ignore
     @Test
     public void getMatchList_found() throws Exception {
+        int groupId;
+        groupId = testGroup.getGroupId();
+
+        // Testing method
+        List<Match> matchList = matchService.getMatchListByGroup(groupId);
+
+        assertNotNull(matchList);
+        assertEquals(1, matchList.size());
+
+        Match match = matchList.get(0);
+        assertEquals(testMatch.getMatchId(), match.getMatchId());
+        assertEquals(testMatch.getGroupId(), match.getGroupId());
+        assertEquals(testMatch.getParticipantOneId(), match.getParticipantOneId());
+        assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
+        assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
+        assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
     }
 
-    @Ignore
     @Test
     public void updateMatch() throws Exception {
+        int matchId;
+        matchId = testMatch.getMatchId();
+        int groupId = testGroup.getGroupId();
+        int participantOneId = 10;
+        int participantTwoId = 15;
+        int scoreParticipantOne = 20;
+        int scoreParticipantTwo = 30;
+
+        // Testing method
+        Match match = createRandomMatch();
+        match.setMatchId(matchId);
+        match.setGroupId(groupId);
+        match.setParticipantOneId(participantOneId);
+        match.setParticipantTwoId(participantTwoId);
+        match.setScoreParticipantOne(scoreParticipantOne);
+        match.setScoreParticipantTwo(scoreParticipantTwo);
+
+        // Testing method
+        matchService.updateMatch(matchId, match);
+        testMatch = matchService.getMatchById(matchId);
+
+        assertEquals(testMatch.getMatchId(), match.getMatchId());
+        assertEquals(testMatch.getGroupId(), match.getGroupId());
+        assertEquals(testMatch.getParticipantOneId(), match.getParticipantOneId());
+        assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
+        assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
+        assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+
     }
 
-    @Ignore
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void deleteMatch_notFound() throws Exception {
+        // Testing method
+        matchService.deleteMatch(NON_EXISTING_ID);
     }
 
-    @Ignore
+
     @Test
     public void deleteMatch_found() throws Exception {
+        int matchId = testMatch.getMatchId();
+
+        // Testing method
+        matchService.deleteMatch(matchId);
     }
 
-    @Ignore
     @Test
     public void deleteAll() throws Exception {
+        int groupId = testGroup.getGroupId();
+
+        // Testing method
+        matchService.deleteAll();
+
+        List<Match> matchList = matchService.getMatchListByGroup(groupId);
+
+       assertEquals(0, matchList.size());
     }
 
     // endregion

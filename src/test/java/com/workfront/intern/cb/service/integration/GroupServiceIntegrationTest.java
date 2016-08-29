@@ -4,20 +4,27 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.service.*;
+import com.workfront.intern.cb.service.GroupService;
+import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class GroupServiceIntegrationTest extends BaseTest {
 
+    @Autowired
     private ManagerService managerService;
+
+    @Autowired
     private TournamentService tournamentService;
+
+    @Autowired
     private GroupService groupService;
 
     private Tournament testTournament;
@@ -25,10 +32,6 @@ public class GroupServiceIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() throws Exception {
-        managerService = new ManagerServiceImpl();
-        tournamentService = new TournamentServiceImpl();
-        groupService = new GroupServiceImpl();
-
         // Delete all remaining objects
         cleanUp();
 
@@ -72,59 +75,160 @@ public class GroupServiceIntegrationTest extends BaseTest {
 
     // region <TEST CASES>
 
-    @Ignore
     @Test
     public void addGroup_created() throws Exception {
+        // Initialize random tournament instance
+        int tournamentId;
+        tournamentId = testTournament.getTournamentId();
+
+        // Testing method
+        Group group = createRandomGroup();
+        group.setTournamentId(tournamentId);
+        assertEquals(0, group.getGroupId());
+
+        // Testing method
+        groupService.addGroup(group);
+        assertTrue(group.getTournamentId() > 0);
+
+        groupService.deleteGroup(group.getGroupId());
     }
 
-    @Ignore
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void getGroupById_notFound() throws Exception {
+        // Testing method
+        Group group = groupService.getGroupById(NON_EXISTING_ID);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, group);
     }
 
-    @Ignore
     @Test
     public void getGroupById_found() throws Exception {
+        int groupId;
+        groupId = testGroup.getGroupId();
+
+        // Testing method
+        Group group = groupService.getGroupById(groupId);
+
+        assertNotNull(group);
+        assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testGroup.getRound(), group.getRound());
+        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
     }
 
-    @Ignore
     @Test
     public void getGroupByTournamentList_emptyList() throws Exception {
+        int groupId;
+        groupId = testGroup.getGroupId();
+        int tournamentId = testTournament.getTournamentId();
+
+        groupService.deleteGroup(groupId);
+
+        // Testing method
+        List<Group> groupList = groupService.getTournamentGroups(tournamentId);
+
+        assertNotNull(groupList);
+        assertEquals(0, groupList.size());
     }
 
-    @Ignore
     @Test
     public void getGroupByTournamentList_found() throws Exception {
+        // Testing method
+        int tournamentId;
+        tournamentId = testTournament.getTournamentId();
+        List<Group> groupList = groupService.getTournamentGroups(tournamentId);
+
+        assertNotNull(groupList);
+        assertEquals(1, groupList.size());
+
+        Group group = groupList.get(0);
+
+        assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testGroup.getRound(), group.getRound());
+        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
     }
 
-    @Ignore
     @Test
     public void getAllGroups_emptyList() throws Exception {
+        int groupId;
+        groupId = testGroup.getGroupId();
+        groupService.deleteGroup(groupId);
+
+        // Testing method
+        List<Group> groupList = groupService.getAllGroups();
+
+        assertNotNull(groupList);
+        assertEquals(0, groupList.size());
     }
 
-    @Ignore
     @Test
     public void getAllGroups_found() throws Exception {
+        // Testing method
+        List<Group> groupList;
+        groupList = groupService.getAllGroups();
+
+        assertNotNull(groupList);
+        assertEquals(1, groupList.size());
+
+        Group group = groupList.get(0);
+
+        assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testGroup.getRound(), group.getRound());
+        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
     }
 
-    @Ignore
     @Test
     public void updateGroup() throws Exception {
+        int groupId;
+        groupId = testGroup.getGroupId();
+        int tournamentId = testTournament.getTournamentId();
+
+        // Group new data
+        int participantsCount = 10;
+        int round = 20;
+        int nextRoundParticipants = 30;
+
+        // Testing method
+        Group group = createRandomGroup();
+        group.setGroupId(groupId);
+        group.setParticipantsCount(participantsCount);
+        group.setTournamentId(tournamentId);
+        group.setRound(round);
+        group.setNextRoundParticipnats(nextRoundParticipants);
+
+        // Updates specific tournament in db
+        groupService.updateGroup(groupId, group);
+        testGroup = groupService.getGroupById(groupId);
+
+        assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testGroup.getRound(), group.getRound());
+        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
     }
 
-    @Ignore
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void deleteGroup_notFound() throws Exception {
+        groupService.deleteGroup(NON_EXISTING_ID);
     }
 
-    @Ignore
     @Test
     public void deleteGroup_found() throws Exception {
+        groupService.deleteGroup(testGroup.getGroupId());
     }
 
-    @Ignore
     @Test
     public void deleteAll() throws Exception {
+        groupService.deleteAll();
+
+        List<Group> groupList = groupService.getAllGroups();
+
+        assertEquals(0, groupList.size());
     }
 
     // endregion
