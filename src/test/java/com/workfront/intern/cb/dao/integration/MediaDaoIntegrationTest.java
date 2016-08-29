@@ -88,10 +88,10 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMediaById_found() throws Exception {
-        int targetId = testMedia.getMediaId();
+        int id = testMedia.getMediaId();
 
         // Testing method
-        Media media = mediaDao.getMediaById(targetId);
+        Media media = mediaDao.getMediaById(id);
 
         assertNotNull(media);
         assertEquals(testMedia.getMediaId(), media.getMediaId());
@@ -183,7 +183,8 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMediaByTournamentList_found() throws Exception {
-        int tournamentId = testTournament.getTournamentId();
+        int tournamentId;
+        tournamentId = testTournament.getTournamentId();
         List<Media> mediaList = mediaDao.getMediaListByTournament(tournamentId);
 
         assertNotNull(mediaList);
@@ -201,7 +202,8 @@ public class MediaDaoIntegrationTest extends BaseTest {
     @Test
     public void updatePhoto() throws Exception {
         // Testing method
-        int managerId = testManager.getId();
+        int managerId;
+        managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
         int mediaId = testMedia.getMediaId();
 
@@ -223,7 +225,8 @@ public class MediaDaoIntegrationTest extends BaseTest {
 
     @Test
     public void updateVideo() throws Exception {
-        int managerId = testManager.getId();
+        int managerId;
+        managerId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
         int mediaId = testMedia.getMediaId();
 

@@ -4,17 +4,18 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.service.*;
+import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.service.MediaService;
+import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class MediaServiceIntegrationTest extends BaseTest {
 
@@ -35,9 +36,9 @@ public class MediaServiceIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() throws Exception {
-        managerService = new ManagerServiceImpl();
-        tournamentService = new TournamentServiceImpl();
-        mediaService = new MediaServiceImpl();
+//        managerService = new ManagerServiceImpl();
+//        tournamentService = new TournamentServiceImpl();
+//        mediaService = new MediaServiceImpl();
 
         // Delete all remaining objects
         cleanUp();
@@ -90,64 +91,189 @@ public class MediaServiceIntegrationTest extends BaseTest {
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, media);
     }
 
-    @Ignore
     @Test
     public void getMediaById_found() throws Exception {
+        int targetId;
+        targetId = testMedia.getMediaId();
+
+        // Testing method
+        Media media = mediaService.getMediaById(targetId);
+
+        assertNotNull(media);
+        assertEquals(testMedia.getMediaId(), media.getMediaId());
+        assertEquals(testMedia.getPhoto(), media.getPhoto());
+        assertEquals(testMedia.getTournamentId(), media.getTournamentId());
+        assertEquals(testMedia.getManagerId(), media.getManagerId());
     }
 
-    @Ignore
     @Test
     public void addPhoto_created() throws Exception {
+        // Initialize random tournament instance
+        int managerId;
+        managerId = testManager.getId();
+        int tournamentId = testTournament.getTournamentId();
+
+        // Testing method
+        Media media = createRandomPhotoMedia();
+        media.setTournamentId(tournamentId);
+        media.setManagerId(managerId);
+        assertEquals(0, media.getMediaId());
+
+        // Testing method
+        mediaService.addPhoto(media);
+        assertTrue(media.getMediaId() > 0);
+
+        mediaService.deleteMediaById(media.getMediaId());
     }
 
-    @Ignore
     @Test
     public void addVideo_created() throws Exception {
+        // Initialize random tournament instance
+        int managerId;
+        managerId = testManager.getId();
+        int tournamentId = testTournament.getTournamentId();
+
+        // Testing method
+        Media media = createRandomVideoMedia();
+        media.setTournamentId(tournamentId);
+        media.setManagerId(managerId);
+        assertEquals(0, media.getMediaId());
+
+        // Testing method
+        mediaService.addVideo(media);
+        assertTrue(media.getMediaId() > 0);
+
+        mediaService.deleteMediaById(media.getMediaId());
     }
 
-    @Ignore
     @Test
     public void getMediaByManagerList_emptyList() throws Exception {
+        int managerId;
+        managerId = testManager.getId();
+
+        mediaService.deleteMediaById(testMedia.getMediaId());
+
+        // Testing method
+        List<Media> mediaList = mediaService.getMediaListByManager(managerId);
+
+        assertNotNull(mediaList);
+        assertEquals(0, mediaList.size());
     }
 
-    @Ignore
     @Test
     public void getMediaByManagerList_found() throws Exception {
+        int managerId;
+        managerId = testManager.getId();
+
+        // Testing method
+        List<Media> mediaList = mediaService.getMediaListByManager(managerId);
+
+        assertNotNull(mediaList);
+        assertEquals(1, mediaList.size());
+
+        Media media = mediaList.get(0);
+
+        assertEquals(testMedia.getMediaId(), media.getMediaId());
+        assertEquals(testMedia.getPhoto(), media.getPhoto());
+        assertEquals(testMedia.getVideo(), media.getVideo());
+        assertEquals(testMedia.getTournamentId(), media.getTournamentId());
     }
 
-    @Ignore
     @Test
     public void getMediaByTournamentList_emptyList() throws Exception {
+        mediaService.deleteMediaById(testMedia.getMediaId());
+
+        // Testing method
+        int tournamentId;
+        tournamentId = testTournament.getTournamentId();
+        List<Media> mediaList = mediaService.getMediaListByTournament(tournamentId);
+
+        assertNotNull(mediaList);
+        assertEquals(0, mediaList.size());
     }
 
-    @Ignore
     @Test
     public void getMediaByTournamentList_found() throws Exception {
+        int tournamentId = testTournament.getTournamentId();
+        List<Media> mediaList = mediaService.getMediaListByTournament(tournamentId);
+
+        assertNotNull(mediaList);
+        assertEquals(1, mediaList.size());
+
+        Media media = mediaList.get(0);
+
+        assertEquals(testMedia.getMediaId(), media.getMediaId());
+        assertEquals(testMedia.getPhoto(), media.getPhoto());
+        assertEquals(testMedia.getVideo(), media.getVideo());
+        assertEquals(testMedia.getTournamentId(), media.getTournamentId());
+        assertEquals(testMedia.getMediaId(), media.getMediaId());
     }
 
-    @Ignore
     @Test
     public void updatePhoto() throws Exception {
+        // Testing method
+        int managerId = testManager.getId();
+        int tournamentId = testTournament.getTournamentId();
+        int mediaId = testMedia.getMediaId();
+
+        Media media = createRandomPhotoMedia();
+        media.setPhoto("photo_updated");
+        media.setTournamentId(tournamentId);
+        media.setManagerId(managerId);
+
+        // Updates specific tournament in db
+        mediaService.updatePhoto(mediaId, media);
+        List<Media> mediaList = mediaService.getMediaListByManager(managerId);
+        testMedia = mediaList.get(0);
+
+        assertEquals(testMedia.getPhoto(), media.getPhoto());
+        assertEquals(testMedia.getVideo(), media.getVideo());
+        assertEquals(testMedia.getTournamentId(), media.getTournamentId());
+        assertEquals(testMedia.getManagerId(), media.getManagerId());
     }
 
-    @Ignore
     @Test
     public void updateVideo() throws Exception {
+        int managerId = testManager.getId();
+        int tournamentId = testTournament.getTournamentId();
+        int mediaId = testMedia.getMediaId();
+
+        Media media = createRandomVideoMedia();
+        media.setVideo("video_updated");
+        media.setTournamentId(tournamentId);
+        media.setManagerId(managerId);
+
+        // Updates specific tournament in db
+        mediaService.updateVideo(mediaId, media);
+
+        List<Media> mediaList = mediaService.getMediaListByManager(managerId);
+        testMedia = mediaList.get(0);
+
+        assertEquals(testMedia.getPhoto(), media.getPhoto());
+        assertEquals(testMedia.getVideo(), media.getVideo());
+        assertEquals(testMedia.getTournamentId(), media.getTournamentId());
+        assertEquals(testMedia.getManagerId(), media.getManagerId());
     }
 
     @Ignore
-    @Test(expected = ObjectNotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void deleteMediaById_notFound() throws Exception {
+        mediaService.deleteMediaById(NON_EXISTING_ID);
     }
 
-    @Ignore
     @Test
     public void deleteMedia_deleted() throws Exception {
+        mediaService.deleteMediaById(testMedia.getMediaId());
     }
 
-    @Ignore
     @Test
     public void deleteAll() throws Exception {
+        mediaService.deleteAll();
+
+        int managerId = testManager.getId();
+        List<Media> mediaList = mediaService.getMediaListByManager(managerId);
+
+        assertEquals(0, mediaList.size());
     }
 
     // endregion
