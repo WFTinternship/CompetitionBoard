@@ -234,7 +234,6 @@ public class MatchServiceIntegrationTest extends BaseTest {
         matchService.deleteMatch(NON_EXISTING_ID);
     }
 
-
     @Test
     public void deleteMatch_found() throws Exception {
         int matchId = testMatch.getMatchId();
