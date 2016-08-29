@@ -161,7 +161,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "INSERT INTO manager(login, password) VALUES (?, ?)";
+        String sql = "INSERT INTO manager(login, password, avatar) VALUES (?, ?, ?)";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -170,6 +170,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, manager.getLogin());
             ps.setString(2, StringHelper.passToEncrypt(manager.getPassword()));
+            ps.setString(3, manager.getAvatar());
 
             // insert base participant info
             ps.executeUpdate();

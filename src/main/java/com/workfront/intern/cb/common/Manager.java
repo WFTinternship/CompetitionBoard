@@ -4,6 +4,7 @@ public class Manager {
     private int id;
     private String login;
     private String password;
+    private String avatar;
 
     public Manager() {
     }
@@ -32,6 +33,13 @@ public class Manager {
         this.password = password;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     @Override
     public String toString() {
@@ -40,6 +48,7 @@ public class Manager {
         sb.append("id: ").append(id).append("\n");
         sb.append("login: ").append(login).append("\n");
         sb.append("password: ").append(password).append("\n");
+        sb.append("avatar: ").append(avatar).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 
