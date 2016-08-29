@@ -162,7 +162,6 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         // Testing method
         participantDao.deleteAll(Member.class);
     }
-
     // endregion
 
     // region <TEAM>
