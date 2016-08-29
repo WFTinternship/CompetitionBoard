@@ -27,6 +27,13 @@ public class Util {
         return new Timestamp(time);
     }
 
+	/**
+	 * Image resize
+	 */
+	public static void inputFileResize(String imagePath, int scaledWidth, int scaledHeight) throws IOException {
+		inputFileResize(imagePath, imagePath, scaledWidth, scaledHeight);
+	}
+
     /**
      * Image resize
      */
