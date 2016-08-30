@@ -30,14 +30,14 @@ public class Util {
 	/**
 	 * Image resize
 	 */
-	public static void inputFileResize(String imagePath, int scaledWidth, int scaledHeight) throws IOException {
-		inputFileResize(imagePath, imagePath, scaledWidth, scaledHeight);
+	public static void fileResizeAndWriteToSpecificFolder(String imagePath, int scaledWidth, int scaledHeight) throws IOException {
+		fileResizeAndWriteToSpecificFolder(imagePath, imagePath, scaledWidth, scaledHeight);
 	}
 
     /**
      * Image resize
      */
-    public static void inputFileResize(String inputImagePath, String outputImagePath, int scaledWidth, int scaledHeight) throws IOException {
+    private static void fileResizeAndWriteToSpecificFolder(String inputImagePath, String outputImagePath, int scaledWidth, int scaledHeight) throws IOException {
         // reads input image
         File inputFile = new File(inputImagePath);
         BufferedImage inputImage = ImageIO.read(inputFile);

@@ -28,5 +28,4 @@ public class FileHelper {
 
 		return imageFile.getAbsolutePath();
 	}
-
 }
