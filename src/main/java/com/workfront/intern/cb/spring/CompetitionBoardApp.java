@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 
 @Configuration
 public class CompetitionBoardApp {
-
     @Bean
     public DataSource getDataSource() {
         return DBManager.getDataSource();

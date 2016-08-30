@@ -6,16 +6,19 @@ import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     private static final Logger LOG = Logger.getLogger(ParticipantDaoImpl.class);
 
-    public ParticipantDaoImpl(DataSource dataSource) {
+    public ParticipantDaoImpl(@Autowired DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

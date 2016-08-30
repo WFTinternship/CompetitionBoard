@@ -37,10 +37,4 @@
         <param-name>spring.profiles.active</param-name>
         <param-value>development</param-value>
     </context-param>
-
-    <context-param>
-        <param-name>spring.profiles.testDb</param-name>
-        <param-value>testDb</param-value>
-    </context-param>
-
 </web-app>

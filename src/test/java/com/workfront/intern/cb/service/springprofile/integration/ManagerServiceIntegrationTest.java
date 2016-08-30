@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.service.integration;
+package com.workfront.intern.cb.service.springprofile.integration;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
@@ -85,7 +85,6 @@ public class ManagerServiceIntegrationTest extends BaseTest {
         assertEquals(testManager.getLogin(), manager.getLogin());
         assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
         assertEquals(testManager.getAvatar(), manager.getAvatar());
-
     }
 
     public void getManagerList_emptyList() throws Exception {
@@ -143,6 +142,7 @@ public class ManagerServiceIntegrationTest extends BaseTest {
         assertEquals(testManager.getId(), manager.getId());
         assertEquals(testManager.getLogin(), manager.getLogin());
         assertEquals(testManager.getPassword(), manager.getPassword());
+        assertEquals(testManager.getAvatar(), manager.getAvatar());
     }
 
     @Test(expected = RuntimeException.class)

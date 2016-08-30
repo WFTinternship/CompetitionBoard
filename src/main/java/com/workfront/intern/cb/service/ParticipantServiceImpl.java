@@ -5,10 +5,9 @@ import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.ParticipantDao;
-import com.workfront.intern.cb.dao.ParticipantDaoImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +16,8 @@ import java.util.List;
 public class ParticipantServiceImpl implements ParticipantService {
     private static final Logger LOG = Logger.getLogger(ParticipantServiceImpl.class);
 
-    private ParticipantDao participantDao = new ParticipantDaoImpl(DBManager.getDataSource());
+    @Autowired
+    private ParticipantDao participantDao;
 
     /**
      * Adds specific participant: member or team

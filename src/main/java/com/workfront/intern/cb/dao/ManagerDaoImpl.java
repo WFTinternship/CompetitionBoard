@@ -133,14 +133,13 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "UPDATE manager SET password=?, avatar=? WHERE manager_id=?";
+        String sql = "UPDATE manager SET password=? WHERE manager_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, manager.getPassword());
-            ps.setString(2, manager.getAvatar());
-            ps.setInt(3, id);
+            ps.setInt(2, id);
 
             // Execute statement
             int rows = ps.executeUpdate();
@@ -215,6 +214,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         manager.setId(rs.getInt("manager_id"));
         manager.setLogin(rs.getString("login"));
         manager.setPassword(rs.getString("password"));
+        manager.setAvatar(rs.getString("avatar"));
 
         return manager;
     }

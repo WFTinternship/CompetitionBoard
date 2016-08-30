@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.service.integration;
+package com.workfront.intern.cb.service.springprofile.integration;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;
@@ -14,7 +14,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-@SuppressWarnings("unchecked")
 public class ParticipantServiceIntegrationTest extends BaseTest {
 
     @Autowired
@@ -164,7 +163,6 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
     // endregion
 
     // region <TEAM>
-
     @Test(expected = RuntimeException.class)
     public void getTeamId_notFound() throws Exception {
         // Testing method

@@ -11,7 +11,7 @@ import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceSpringConfigTest.class)
-@ActiveProfiles("testDb")
+@ActiveProfiles("test")
 public class BaseTest {
 
     protected final int NON_EXISTING_ID = 9999;

@@ -1,6 +1,5 @@
 package com.workfront.intern.cb.dao;
 
-import com.workfront.intern.cb.common.TournamentFormat;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
@@ -126,12 +125,5 @@ abstract class GenericDao {
         if (id == null)
             throw new RuntimeException("Generated ID was NULL");
         return id;
-    }
-
-    String parseTournamentFormatIdToString(int inputId) {
-
-
-
-        return null;
     }
 }

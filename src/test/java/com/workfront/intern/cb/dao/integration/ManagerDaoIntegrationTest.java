@@ -73,6 +73,8 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         assertEquals(testManager.getId(), manager.getId());
         assertEquals(testManager.getLogin(), manager.getLogin());
         assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
+        assertEquals(testManager.getAvatar(), manager.getAvatar());
+
     }
 
     @Test(expected = ObjectNotFoundException.class)
@@ -120,6 +122,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         assertEquals(testManager.getId(), manager.getId());
         assertEquals(testManager.getLogin(), manager.getLogin());
         assertEquals(StringHelper.passToEncrypt(testManager.getPassword()), manager.getPassword());
+        assertEquals(testManager.getAvatar(), manager.getAvatar());
     }
 
     @Test
