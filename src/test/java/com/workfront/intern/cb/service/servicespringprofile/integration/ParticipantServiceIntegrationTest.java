@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.service.springprofile.integration;
+package com.workfront.intern.cb.service.servicespringprofile.integration;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;

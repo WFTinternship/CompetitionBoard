@@ -1,4 +1,4 @@
-package com.workfront.intern.cb.service.springprofile.unit;
+package com.workfront.intern.cb.service.servicespringprofile.unit;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Tournament;

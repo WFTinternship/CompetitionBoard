@@ -30,14 +30,14 @@ public class Util {
 	/**
 	 * Image resize
 	 */
-	public static void fileResizeAndWriteToSpecificFolder(String imagePath, int scaledWidth, int scaledHeight) throws IOException {
-		fileResizeAndWriteToSpecificFolder(imagePath, imagePath, scaledWidth, scaledHeight);
+	public static void imageResizeAndWriteToSpecificFolder(String imagePath, int scaledWidth, int scaledHeight) throws IOException {
+		imageResizeAndWriteToSpecificFolder(imagePath, imagePath, scaledWidth, scaledHeight);
 	}
 
     /**
      * Image resize
      */
-    private static void fileResizeAndWriteToSpecificFolder(String inputImagePath, String outputImagePath, int scaledWidth, int scaledHeight) throws IOException {
+    private static void imageResizeAndWriteToSpecificFolder(String inputImagePath, String outputImagePath, int scaledWidth, int scaledHeight) throws IOException {
         // reads input image
         File inputFile = new File(inputImagePath);
         BufferedImage inputImage = ImageIO.read(inputFile);
@@ -55,5 +55,10 @@ public class Util {
 
         // writes to output file
         ImageIO.write(outputImage, formatName, new File(outputImagePath));
+    }
+
+    public static void main(String[] args) throws IOException {
+        String path = "/home/artbabayan/Desktop/Projects/dev/Learning/CompetitionBoard/CompetitionBoard/src/main/webapp/resources/img/test/avatar.jpg";
+        imageResizeAndWriteToSpecificFolder(path, 40, 40);
     }
 }

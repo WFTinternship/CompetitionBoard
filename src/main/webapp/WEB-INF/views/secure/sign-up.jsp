@@ -28,9 +28,10 @@
     <div id="signup">
         <h1>Create account</h1>
         <div class="err-msg"><%=errMessage%>
+
         </div>
         <%--SignUp Form--%>
-        <form action="signup-form" name="signUpForm" method="post">
+        <form action="signup-form" name="signUpForm" enctype="multipart/form-data" method="post">
             <%--Login Label--%>
             <div class="field-wrap">
                 <label>Login<span class="req"></span></label>
