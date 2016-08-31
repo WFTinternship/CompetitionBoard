@@ -4,9 +4,11 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 @Component
 public class DBManager {
@@ -15,7 +17,7 @@ public class DBManager {
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME = "competition_board";
-    private static final String DB_CONNECTION_PROPERTIES = "?useUnicode=true&characterEncoding=utf-8";
+    private static final String DB_CONNECTION_OPTIONS = "?useUnicode=true&characterEncoding=utf-8";
 
     private static ComboPooledDataSource poolDataSource;
 
@@ -25,11 +27,28 @@ public class DBManager {
 
     private static void init() {
         try {
+            // Load DB properties
+            ClassLoader classLoader = DBManager.class.getClassLoader();
+            InputStream in = classLoader.getResourceAsStream("db.properties");
+            Properties dbProps = new Properties();
+            dbProps.load(in);
+            in.close();
+
+            // Initialize connection pool
             poolDataSource = new ComboPooledDataSource();
-            poolDataSource.setDriverClass(DB_DRIVER);
-            poolDataSource.setJdbcUrl(DB_URL + DB_NAME + DB_CONNECTION_PROPERTIES);
-            poolDataSource.setUser(DB_LOGIN);
-            poolDataSource.setPassword(DB_PASS);
+            if (!dbProps.isEmpty()) {
+                poolDataSource.setDriverClass(dbProps.getProperty("db.driver"));
+                poolDataSource.setJdbcUrl(dbProps.getProperty("db.url") + dbProps.getProperty("db.name") + "?" + dbProps.getProperty("db.connection.options"));
+                poolDataSource.setUser(dbProps.getProperty("db.login"));
+                poolDataSource.setPassword(dbProps.getProperty("db.pass"));
+            } else {
+                poolDataSource.setDriverClass(DB_DRIVER);
+                poolDataSource.setJdbcUrl(DB_URL + DB_NAME + "?" + DB_CONNECTION_OPTIONS);
+                poolDataSource.setUser(DB_LOGIN);
+                poolDataSource.setPassword(DB_PASS);
+            }
+
+            // Set pool options
             poolDataSource.setInitialPoolSize(50);
             poolDataSource.setMinPoolSize(10);
             poolDataSource.setAcquireIncrement(50);
@@ -68,7 +87,7 @@ public class DBManager {
         try {
             Class.forName(DB_DRIVER);
             dbConnection = DriverManager.getConnection(
-                    DB_URL + DB_NAME + DB_CONNECTION_PROPERTIES, DB_LOGIN, DB_PASS);
+                    DB_URL + DB_NAME + DB_CONNECTION_OPTIONS, DB_LOGIN, DB_PASS);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
