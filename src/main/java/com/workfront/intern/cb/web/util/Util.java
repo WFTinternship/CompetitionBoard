@@ -1,7 +1,5 @@
 package com.workfront.intern.cb.web.util;
 
-import org.apache.log4j.Logger;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,8 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Util {
-    private static Logger LOG = Logger.getLogger(Util.class);
-
     /**
      * Parse input string to timestamp format
      */
@@ -61,8 +57,8 @@ public class Util {
 
             // writes to output file
             ImageIO.write(outputImage, formatName, new File(outputImagePath));
-        } catch (IOException ex) {
-            LOG.error(ex.getMessage(), ex);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

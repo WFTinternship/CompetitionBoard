@@ -2,9 +2,6 @@ package com.workfront.intern.cb.web.util;
 
 import java.io.File;
 
-/**
- *
- */
 public class ImageHelper {
 	public static final String[] IMG_EXTS = new String[] {".jpg", ".jpeg", ".png", ".bmp"};
 
@@ -24,5 +21,4 @@ public class ImageHelper {
 			throw new IllegalArgumentException("unknown image format");
 		return filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
 	}
-
 }

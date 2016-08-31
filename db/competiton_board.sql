@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS `competition_board`.`manager` (
   `manager_id` INT(11) NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
-  `avatar` VARCHAR(255) NULL DEFAULT NULL,
+  `avatar` VARCHAR(255) NULL,
   PRIMARY KEY (`manager_id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 403
+AUTO_INCREMENT = 559
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `competition_board`.`tournament` (
   CONSTRAINT `FK_manager_id`
     FOREIGN KEY (`manager_id`)
     REFERENCES `competition_board`.`manager` (`manager_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tournament_1`
     FOREIGN KEY (`tournament_format_id`)
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `competition_board`.`tournament` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 268
+AUTO_INCREMENT = 435
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `competition_board`.`group` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 47
+AUTO_INCREMENT = 238
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `competition_board`.`participant` (
   `participant_info` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`participant_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 77
+AUTO_INCREMENT = 55
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `competition_board`.`match` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 25
+AUTO_INCREMENT = 96
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `competition_board`.`media` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 31
+AUTO_INCREMENT = 130
 DEFAULT CHARACTER SET = utf8;
 
 

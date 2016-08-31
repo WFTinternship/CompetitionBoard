@@ -2,11 +2,7 @@ package com.workfront.intern.cb.web.util;
 
 import java.io.File;
 
-/**
- *
- */
 public class FileHelper {
-
 	public static String generateFileName(File existingFile) {
 		String filePath = existingFile.getAbsolutePath();
 		String fileName = filePath.substring(0, filePath.lastIndexOf("."));
