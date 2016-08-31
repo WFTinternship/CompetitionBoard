@@ -10,10 +10,10 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "com.workfront")
-@Profile("test")
 public class ServiceSpringConfigTest {
 
     @Bean
+    @Profile("test")
     public DataSource getDataSource() {
         return DBManager.getDataSource();
     }

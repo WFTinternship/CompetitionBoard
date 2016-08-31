@@ -2,12 +2,12 @@ package com.workfront.intern.cb.service.contollers.unit;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.controller.AuthenticationController;
+import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.controller.TournamentController;
 import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.springframework.ui.Model;
 
@@ -15,15 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-public class AuthenticationControllerUnitTest extends BaseTest {
+public class TournamentControllerUnitTest extends BaseTest{
 
-    private static AuthenticationController controller;
+    private static TournamentController controller;
 
     private ManagerService managerService;
+    private TournamentService tournamentService;
+
     private Manager testManager;
+    private Tournament testTournament;
+
     private HttpServletRequest testRequest;
     private HttpServletResponse testResponse;
     private HttpSession testSession;
@@ -32,7 +36,7 @@ public class AuthenticationControllerUnitTest extends BaseTest {
 
     @Before
     public void beforeTest() {
-        controller = new AuthenticationController();
+        controller = new TournamentController();
 
         testManager = createRandomManager();
         managerService = mock(ManagerService.class);
@@ -54,23 +58,4 @@ public class AuthenticationControllerUnitTest extends BaseTest {
         managerService = null;
     }
 
-    @Test(expected = FailedOperationException.class)
-    public void login_fail() throws Exception {
-        when(managerService.addManager(testManager)).thenThrow(FailedOperationException.class);
-        managerService.addManager(testManager);
-    }
-
-    @Test()
-    public void login_success() throws Exception {
-        managerService.addManager(testManager);
-        verify(managerService).addManager(testManager);
-    }
-
-    @Test
-    public void logout_success() {
-        String redirectPage = controller.toLogOutPage(model, testRequest, testResponse);
-        assertEquals(redirectPage, "redirect:/");
-        verify(testSession).setAttribute("manager", null);
-        verify(testSession).invalidate();
-    }
 }
