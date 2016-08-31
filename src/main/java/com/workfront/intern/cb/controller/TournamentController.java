@@ -82,7 +82,6 @@ public class TournamentController {
         return Params.PAGE_ADD_TOURNAMENT;
     }
 
-
     @RequestMapping("/addTournamentForm")
     public String addTournaments(Model model,
                                  @RequestParam("name") String name,
@@ -123,4 +122,3 @@ public class TournamentController {
 
     // endregion
 }
-
