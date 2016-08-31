@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,7 +29,6 @@ import java.io.File;
 import java.util.List;
 
 @Controller
-@MultipartConfig
 public class AuthenticationController {
     private static Logger LOG = Logger.getLogger(AuthenticationController.class);
 
@@ -225,6 +223,7 @@ public class AuthenticationController {
     public String toLogOutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         if (session != null) {
+            session.setAttribute("manager", null);
             session.invalidate();
         }
         return "redirect:/";
