@@ -119,6 +119,5 @@ public class TournamentController {
 
         return "redirect:tournament-page";
     }
-
     // endregion
 }

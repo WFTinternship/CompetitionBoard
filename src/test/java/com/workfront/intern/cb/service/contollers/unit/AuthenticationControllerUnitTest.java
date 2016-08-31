@@ -24,6 +24,7 @@ public class AuthenticationControllerUnitTest extends BaseTest {
 
     private ManagerService managerService;
     private Manager testManager;
+
     private HttpServletRequest testRequest;
     private HttpServletResponse testResponse;
     private HttpSession testSession;
@@ -44,7 +45,8 @@ public class AuthenticationControllerUnitTest extends BaseTest {
         response = mock(HttpServletResponse.class);
         model = mock(Model.class);
 
-        when(testRequest.getSession()).thenReturn(testSession);
+        when(testRequest.getParameter("usernameLogin")).thenReturn(testManager.getLogin());
+        when(testRequest.getParameter("passwordLogin")).thenReturn(testManager.getPassword());
     }
 
     @After()
@@ -54,16 +56,17 @@ public class AuthenticationControllerUnitTest extends BaseTest {
         managerService = null;
     }
 
-    @Test(expected = FailedOperationException.class)
-    public void login_fail() throws Exception {
-        when(managerService.addManager(testManager)).thenThrow(FailedOperationException.class);
-        managerService.addManager(testManager);
-    }
-
-    @Test()
     public void login_success() throws Exception {
-        managerService.addManager(testManager);
-        verify(managerService).addManager(testManager);
+        when(managerService.getManagerByLogin(testManager.getLogin())).thenReturn(testManager);
+
+        String result = controller.logIn(model, testRequest.getParameter("usernameLogin"),
+                                                testRequest.getParameter("passwordLogin"),
+                                                testRequest, testResponse);
+
+        verify(testSession).setAttribute("testManager", testManager);
+        assertEquals(result, "/");
+
+
     }
 
     @Test
