@@ -20,7 +20,7 @@
 <div class="form">
     <%--Gets error message from SignInServlet--%>
     <%
-        String errMessage = (String) session.getAttribute("errMessage");
+        String errMessage = (String) session.getAttribute("duplicateUserErrMsg");
         if (errMessage == null) {
             errMessage = "";
         }
@@ -41,7 +41,7 @@
             <div id="avatar" class="field-wrap">
                 <%--<div class="field f_100">--%>
                 <label></label>
-                <input type="file" size="48" name="user_avatar" multiple accept="image/*,image/jpg">
+                <input type="file" size="48" name="user_avatar" multiple required accept="image/*,image/jpg">
                 <%--</div>--%>
             </div>
 

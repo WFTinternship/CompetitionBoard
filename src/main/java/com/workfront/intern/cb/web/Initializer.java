@@ -31,7 +31,7 @@ public class Initializer implements ServletContextListener {
                 ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         SERVER_ROOT_PATH = SERVLET_CONTEXT.getRealPath("/");
 
-        RESOURCES_PATH = SERVER_ROOT_PATH + File.separator + "WEB-INF/resources";
+        RESOURCES_PATH = SERVER_ROOT_PATH + File.separator + "resources";
         FILES_PATH = RESOURCES_PATH + File.separator + "files";
         File filesDir = new File(FILES_PATH);
         if (!filesDir.exists())

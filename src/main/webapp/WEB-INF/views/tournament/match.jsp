@@ -32,13 +32,15 @@
     String userName = "";
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
+    String avatar = "";
 
     String addTournamentMenuItem = null;
     String classStr = null;
 
-    Manager sessionContext = (Manager) session.getAttribute("manager");
-    if (sessionContext != null) {
-        userName = sessionContext.getLogin();
+    Manager manager  = (Manager) session.getAttribute("manager");
+    if (manager  != null) {
+        avatar = "resources/img/user_avatar/" + manager .getAvatar();
+        userName = manager .getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
 
@@ -63,7 +65,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="../index.jsp">Home</a>
+            <a class="navbar-brand page-scroll" href="/">Home</a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
 
         </div>

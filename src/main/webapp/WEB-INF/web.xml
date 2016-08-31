@@ -18,6 +18,10 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <listener>
+        <listener-class>com.workfront.intern.cb.web.Initializer</listener-class>
+    </listener>
+
     <!--Errors handling-->
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>

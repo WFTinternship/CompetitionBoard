@@ -6,7 +6,7 @@ import java.io.File;
  *
  */
 public class ImageHelper {
-	public static final String[] IMG_EXTS = new String[] {".jpg", ".jpeg", ".png", ".gif", ".bmp"};
+	public static final String[] IMG_EXTS = new String[] {".jpg", ".jpeg", ".png", ".bmp"};
 
 	public static synchronized boolean isImage(String filePath) {
 		if (!filePath.contains(".") || filePath.endsWith(".") || filePath.length() < 5) return false;

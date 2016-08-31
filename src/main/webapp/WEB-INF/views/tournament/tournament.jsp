@@ -37,13 +37,15 @@
     String userName = "";
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
+    String avatar = "";
 
     String addTournamentMenuItem = null;
     String classStr = null;
 
-    Manager sessionContext = (Manager) session.getAttribute("manager");
-    if (sessionContext != null) {
-        userName = sessionContext.getLogin();
+    Manager managerSession  = (Manager) session.getAttribute("manager");
+    if (managerSession  != null) {
+        avatar = "resources/img/user_avatar/" + managerSession .getAvatar();
+        userName = managerSession .getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
 
@@ -69,6 +71,7 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="/">Home</a>
+            <a ><img class="avatar" src="<%=avatar%>" > </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%></a>
         </div>
         <input type="hidden" id="login-status" value="<%=userName%>" />
@@ -178,7 +181,7 @@
 
                             <%--Tournament creator--%>
                             <%
-                            String managerName = sessionContext.getLogin();
+                            String managerName = managerSession.getLogin();
                             %>
                             <td>
                             <%= managerName%>
