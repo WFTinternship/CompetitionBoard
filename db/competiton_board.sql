@@ -11,7 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema competition_board
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `competition_board` DEFAULT CHARACTER SET latin1 ;
+CREATE SCHEMA IF NOT EXISTS `competition_board` DEFAULT CHARACTER SET utf8 ;
 USE `competition_board` ;
 
 -- -----------------------------------------------------

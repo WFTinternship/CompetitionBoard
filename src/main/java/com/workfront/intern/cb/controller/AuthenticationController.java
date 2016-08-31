@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -148,26 +149,32 @@ public class AuthenticationController {
             if (avatar != null) {
                 manager.setAvatar(avatar.getName());
             }
-
             // set avatar size
             int scaledWidth = 40;
             int scaledHeight = 40;
-
             if (avatar != null) {
                 Util.imageResizeAndWriteToSpecificFolder(avatar.getAbsolutePath(), scaledWidth, scaledHeight);
             }
             // save manager instance to DB
             managerService.addManager(manager);
+
             // get added manager and set in session
             manager = managerService.getManagerByLogin(username);
             session.setAttribute("manager", manager);
+
+        } catch (IOException ex) {
+            LOG.error(ex.getMessage(), ex);
+
         } catch (Exception ex) {
             LOG.error(ex.getMessage(), ex);
+
             // Checking duplicate of manager name during registration
             String duplicateUserErrMsg = "Sorry, but user with this name exists";
             session.setAttribute("duplicateUserErrMsg", duplicateUserErrMsg);
+
             return "redirect:signup-page";
         }
+
         return "redirect:/";
     }
     // endregion

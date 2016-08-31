@@ -64,6 +64,11 @@ public class AuthenticationControllerUnitTest extends BaseTest {
 
 
 
+//        assertEquals("status is incorrect", response.getStatus(), ACTION_SUCCESS);
+//        verify(testSession).setAttribute("user", testUser);
+
+
+
     }
 
     @Test
