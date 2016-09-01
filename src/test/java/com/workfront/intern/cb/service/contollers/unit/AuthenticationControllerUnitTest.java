@@ -54,12 +54,28 @@ public class AuthenticationControllerUnitTest extends BaseTest {
     public void login_success() throws Exception {
         String encrPass = StringHelper.passToEncrypt(testManager.getPassword());
         testManager.setPassword(encrPass);
+
         when(managerService.getManagerByLogin(testManager.getLogin())).thenReturn(testManager);
         String result = controller.logIn(testRequest.getParameter("usernameLogin"),
                                          testRequest.getParameter("passwordLogin"), testRequest);
         verify(testSession).setAttribute("manager", testManager);
 
         assertEquals(result, "redirect:/");
+    }
+
+    @Test
+    public void login_failed() {
+        String encrPass = StringHelper.passToEncrypt(testManager.getPassword());
+        testManager.setPassword(encrPass);
+
+        when(managerService.getManagerByLogin(testManager.getLogin())).thenReturn(null);
+        String userNameErrMsg = "Sorry, username or password error";
+
+        String result = controller.logIn(testRequest.getParameter("usernameLogin"),
+                                         testRequest.getParameter("passwordLogin"), testRequest);
+
+        verify(testRequest).setAttribute("userNameErr", userNameErrMsg);
+        assertEquals(result, "redirect:/login-page");
     }
 
     @Test

@@ -15,13 +15,12 @@ import org.springframework.ui.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static com.workfront.intern.cb.web.util.Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class TournamentControllerUnitTest extends BaseTest {
 
@@ -60,22 +59,24 @@ public class TournamentControllerUnitTest extends BaseTest {
         model = mock(Model.class);
 
         when(testRequest.getSession()).thenReturn(testSession);
+        testManager = createRandomManager();
+        testTournament = createRandomTournament();
+        when(testRequest.getParameter("usernameLogin")).thenReturn(testManager.getLogin());
+        when(testRequest.getParameter("passwordLogin")).thenReturn(testManager.getPassword());
     }
 
     @After()
     public void afterTest() {
-        controller = null;
-        testManager = null;
-        managerService = null;
     }
 
     @Test
     public void getAllTournaments() {
-        List<Tournament> list = new ArrayList<>();
-        list.add(testTournament);
+        List<Tournament> allTournamentList = new ArrayList<>();
+        allTournamentList.add(testTournament);
+        when(tournamentService.getTournamentList()).thenReturn(allTournamentList);
+        String result = controller.allTournament(model, testRequest, testResponse);
+        verify(testSession).setAttribute("allTournamentList", allTournamentList);
 
-        when(tournamentService.getTournamentList()).thenReturn(list);
-        verify(tournamentService).getTournamentList();
-
+        assertEquals(result, PAGE_ALL_AVAILABLE_TOURNAMENTS);
     }
 }

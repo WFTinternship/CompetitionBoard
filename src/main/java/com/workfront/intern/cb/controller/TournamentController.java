@@ -39,7 +39,7 @@ public class TournamentController {
         return Params.PAGE_TOURNAMENT;
     }
 
-    // region <SEARCH TOURNAMENT CASE>
+    // region <SEARCH TOURNAMENT>
 
     @RequestMapping("/search-result")
     public String toSearchResultPage(Model model) {
@@ -75,7 +75,7 @@ public class TournamentController {
         return Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;
     }
 
-    // region <ADD TOURNAMENT CASE>
+    // region <ADD TOURNAMENT>
 
     @RequestMapping("/addTournament-page")
     public String toAddTournamentPage(Model model) {
