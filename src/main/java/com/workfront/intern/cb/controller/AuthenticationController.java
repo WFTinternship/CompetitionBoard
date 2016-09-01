@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -186,16 +187,11 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/login-form", method = RequestMethod.POST)
-    public String logIn(
-//                        @RequestParam("usernameLogin") String loginInput,
-//                        @RequestParam("passwordLogin") String passwordInput,
+    public String logIn(@RequestParam("usernameLogin") String loginInput,
+                        @RequestParam("passwordLogin") String passwordInput,
                         HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        String loginInput = request.getParameter("usernameLogin");
-        String passwordInput = request.getParameter("passwordLogin");
-
-
         if (loginInput != null && passwordInput != null) {
             String userNameErrMsg = "Sorry, username or password error";
             // Encrypted input password

@@ -2,6 +2,7 @@ package com.workfront.intern.cb.service.contollers.unit;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.util.StringHelper;
 import com.workfront.intern.cb.controller.AuthenticationController;
 import com.workfront.intern.cb.service.ManagerService;
 import org.junit.After;
@@ -38,7 +39,6 @@ public class AuthenticationControllerUnitTest extends BaseTest {
 
         testRequest = mock(HttpServletRequest.class);
         testSession = mock(HttpSession.class);
-
         when(testRequest.getSession()).thenReturn(testSession);
 
         testManager = createRandomManager();
@@ -52,11 +52,14 @@ public class AuthenticationControllerUnitTest extends BaseTest {
 
     @Test
     public void login_success() throws Exception {
+        String encrPass = StringHelper.passToEncrypt(testManager.getPassword());
+        testManager.setPassword(encrPass);
         when(managerService.getManagerByLogin(testManager.getLogin())).thenReturn(testManager);
-        String result = controller.logIn(testRequest);
+        String result = controller.logIn(testRequest.getParameter("usernameLogin"),
+                                         testRequest.getParameter("passwordLogin"), testRequest);
         verify(testSession).setAttribute("manager", testManager);
 
-        assertEquals(result, "/");
+        assertEquals(result, "redirect:/");
     }
 
     @Test

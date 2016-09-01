@@ -17,7 +17,7 @@ public class DBManager {
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME = "competition_board";
-    private static final String DB_CONNECTION_OPTIONS = "?useUnicode=true&characterEncoding=utf-8";
+    private static final String DB_CONNECTION_OPTIONS = "useUnicode=true&characterEncoding=utf-8";
 
     private static ComboPooledDataSource poolDataSource;
 
