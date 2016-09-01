@@ -44,7 +44,7 @@
                     <BR><BR>
                     <h1 style="color: #080808">Contact Us</h1>
 
-                    <form id="contact-form" method="post" action="/" role="form">
+                    <form action="send-mail" id="contact-form" method="post" role="form">
                         <div class="messages"></div>
                         <div class="controls">
                             <div class="row">

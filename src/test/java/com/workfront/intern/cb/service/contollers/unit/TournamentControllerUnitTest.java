@@ -8,6 +8,7 @@ import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.springframework.ui.Model;
 
@@ -15,10 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TournamentControllerUnitTest extends BaseTest{
+public class TournamentControllerUnitTest extends BaseTest {
 
     private static TournamentController controller;
 
@@ -39,8 +44,14 @@ public class TournamentControllerUnitTest extends BaseTest{
         controller = new TournamentController();
 
         testManager = createRandomManager();
+        testTournament = createRandomTournament();
+
         managerService = mock(ManagerService.class);
+        tournamentService = mock(TournamentService.class);
+
         Whitebox.setInternalState(controller, "managerService", managerService);
+        Whitebox.setInternalState(controller, "tournamentService", tournamentService);
+
 
         testRequest = mock(HttpServletRequest.class);
         testResponse = mock(HttpServletResponse.class);
@@ -58,4 +69,13 @@ public class TournamentControllerUnitTest extends BaseTest{
         managerService = null;
     }
 
+    @Test
+    public void getAllTournaments() {
+        List<Tournament> list = new ArrayList<>();
+        list.add(testTournament);
+
+        when(tournamentService.getTournamentList()).thenReturn(list);
+        verify(tournamentService).getTournamentList();
+
+    }
 }

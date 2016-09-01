@@ -20,6 +20,10 @@
     if (existsTournament == null) {
         existsTournament = "";
     }
+
+    java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+    String today = df.format(new java.util.Date());
+
 %>
 
 <body class="backgroundTournament">
@@ -44,7 +48,7 @@
         <div class="form-group">
             <label for="startDate" class="col-sm-3 control-label">Start Time</label>
             <div class="col-sm-9">
-                <input type="datetime-local" id="startDate" name="startDate" class="form-control" value="2016-08-21T00:00" onload="submitDateNameInForm()" />
+                <input type="datetime-local" id="startDate" name="startDate" class="form-control" value="<%=today%>" onload="submitDateNameInForm()" />
             </div>
         </div>
 
@@ -52,7 +56,7 @@
         <div class="form-group">
             <label for="endDate" class="col-sm-3 control-label">End time</label>
             <div class="col-sm-9">
-                <input type="datetime-local" id="endDate" name="endDate" class="form-control" value="2016-08-21T00:00" onload="submitDateNameInForm()" />
+                <input type="datetime-local" id="endDate" name="endDate" class="form-control" value="<%=today%>" onload="submitDateNameInForm()" />
             </div>
         </div>
 
