@@ -194,8 +194,8 @@ public class AuthenticationController {
         HttpSession session = request.getSession();
         if (loginInput != null && passwordInput != null) {
             String userNameErrMsg = "Sorry, username or password error";
-            // Encrypted input password
 
+            // Encrypted input password
             String passwordEncrypt = StringHelper.passToEncrypt(passwordInput);
 
             // Check valid login and password.

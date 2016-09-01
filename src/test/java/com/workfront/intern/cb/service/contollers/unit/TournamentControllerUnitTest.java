@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.workfront.intern.cb.web.util.Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class TournamentControllerUnitTest extends BaseTest {
@@ -70,13 +71,26 @@ public class TournamentControllerUnitTest extends BaseTest {
     }
 
     @Test
-    public void getAllTournaments() {
+    public void getAllTournaments_found() {
         List<Tournament> allTournamentList = new ArrayList<>();
         allTournamentList.add(testTournament);
+
         when(tournamentService.getTournamentList()).thenReturn(allTournamentList);
+
         String result = controller.allTournament(model, testRequest, testResponse);
         verify(testSession).setAttribute("allTournamentList", allTournamentList);
 
+        assertEquals(result, PAGE_ALL_AVAILABLE_TOURNAMENTS);
+    }
+
+    @Test
+    public void getAllTournaments_notFound() {
+       // Testing method
+        List<Tournament> tournamentList = tournamentService.getTournamentList();
+        assertNotNull(tournamentList);
+        assertEquals(0, tournamentList.size());
+
+        String result = controller.allTournament(model, testRequest, testResponse);
         assertEquals(result, PAGE_ALL_AVAILABLE_TOURNAMENTS);
     }
 }

@@ -32,6 +32,7 @@
         <spring-context.version>4.3.2.RELEASE</spring-context.version>
         <spring-mvc.version>4.3.2.RELEASE</spring-mvc.version>
         <JSTL.version>1.2</JSTL.version>
+        <javax.mail>1.5.5</javax.mail>
     </properties>
 
     <dependencies>
@@ -110,6 +111,11 @@
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>${JSTL.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail}</version>
         </dependency>
     </dependencies>
 

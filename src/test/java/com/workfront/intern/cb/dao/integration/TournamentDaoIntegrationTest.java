@@ -77,7 +77,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTournamentById_found() throws Exception {
-        int targetId = testTournament.getTournamentId();
+        int targetId;
+        targetId = testTournament.getTournamentId();
 
         // Testing method
         Tournament tournament = tournamentDao.getTournamentById(targetId);
@@ -107,7 +108,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTournamentListByName_found() throws Exception {
-        String tournamentNameStr = testTournament.getTournamentName();
+        String tournamentNameStr;
+        tournamentNameStr = testTournament.getTournamentName();
 
         // Testing method
         List<Tournament> tournamentList = tournamentDao.getTournamentListByName(tournamentNameStr);
@@ -141,7 +143,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     @Test
     public void getTournamentList_found() throws Exception {
         // Testing method
-        List<Tournament> tournamentList = tournamentDao.getTournamentList();
+        List<Tournament> tournamentList;
+        tournamentList = tournamentDao.getTournamentList();
 
         assertNotNull(tournamentList);
         assertEquals(1, tournamentList.size());
@@ -163,7 +166,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         // Testing method
         tournamentDao.deleteTournamentById(testTournament.getTournamentId());
 
-        int targetId = testManager.getId();
+        int targetId;
+        targetId = testManager.getId();
         List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
 
         assertNotNull(tournamentList);
@@ -172,7 +176,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getTournamentListByManager_found() throws Exception {
-        int targetId = testManager.getId();
+        int targetId;
+        targetId = testManager.getId();
 
         // Testing method
         List<Tournament> tournamentList = tournamentDao.getTournamentListByManager(targetId);
@@ -195,7 +200,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     @Test
     public void addTournament_created() throws Exception {
         // Initialize random tournament instance
-        int targetId = testManager.getId();
+        int targetId;
+        targetId = testManager.getId();
 
         // Testing method
         Tournament tournament = createRandomTournament();
@@ -212,7 +218,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     @Test
     public void updateTournament() throws Exception {
         // Testing method
-        Tournament tournament = createRandomTournament();
+        Tournament tournament;
+        tournament = createRandomTournament();
 
         // Tournament new data
         String nameUpdate = "UPDATED, THE BEST OF IF THE BEST";

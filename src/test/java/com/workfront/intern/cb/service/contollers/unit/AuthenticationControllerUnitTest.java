@@ -2,6 +2,7 @@ package com.workfront.intern.cb.service.contollers.unit;
 
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import com.workfront.intern.cb.controller.AuthenticationController;
 import com.workfront.intern.cb.service.ManagerService;
@@ -51,6 +52,18 @@ public class AuthenticationControllerUnitTest extends BaseTest {
     }
 
     @Test
+    public void login_failed() {
+        String encrPass = StringHelper.passToEncrypt(testManager.getPassword());
+        testManager.setPassword(encrPass);
+
+        doThrow(ObjectNotFoundException.class).when(managerService).getManagerByLogin(testManager.getLogin());
+        String result = controller.logIn(testRequest.getParameter("usernameLogin"),
+                testRequest.getParameter("passwordLogin"), testRequest);
+
+        assertEquals(result, "redirect:/login-page");
+    }
+
+    @Test
     public void login_success() throws Exception {
         String encrPass = StringHelper.passToEncrypt(testManager.getPassword());
         testManager.setPassword(encrPass);
@@ -61,21 +74,6 @@ public class AuthenticationControllerUnitTest extends BaseTest {
         verify(testSession).setAttribute("manager", testManager);
 
         assertEquals(result, "redirect:/");
-    }
-
-    @Test
-    public void login_failed() {
-        String encrPass = StringHelper.passToEncrypt(testManager.getPassword());
-        testManager.setPassword(encrPass);
-
-        when(managerService.getManagerByLogin(testManager.getLogin())).thenReturn(null);
-        String userNameErrMsg = "Sorry, username or password error";
-
-        String result = controller.logIn(testRequest.getParameter("usernameLogin"),
-                                         testRequest.getParameter("passwordLogin"), testRequest);
-
-        verify(testRequest).setAttribute("userNameErr", userNameErrMsg);
-        assertEquals(result, "redirect:/login-page");
     }
 
     @Test
