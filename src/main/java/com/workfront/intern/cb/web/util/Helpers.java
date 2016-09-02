@@ -1,16 +1,24 @@
 package com.workfront.intern.cb.web.util;
 
 import javax.imageio.ImageIO;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
-public class Util {
+public class Helpers {
     /**
      * Parse input string to timestamp format
      */
@@ -58,4 +66,34 @@ public class Util {
         ImageIO.write(outputImage, formatName, new File(outputImagePath));
     }
 
+    public static void sendEmail(String inputMsg) {
+        try {
+            // Load SMTP properties
+            ClassLoader classLoader = Helpers.class.getClassLoader();
+            InputStream in = classLoader.getResourceAsStream("smtp.properties");
+            final Properties props = new Properties();
+            props.load(in);
+            in.close();
+
+            // Initialize email authenticator
+            Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(props.getProperty("mail.smtp.user"), props.getProperty("mail.smtp.pass"));
+                }
+            });
+
+            // Compose message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(props.getProperty("mail.from")));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(props.getProperty("mail.to")));
+            message.setSubject("From form");
+            message.setText(inputMsg);
+
+            // Send email
+            Transport.send(message);
+            System.out.println("Done");
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
 }

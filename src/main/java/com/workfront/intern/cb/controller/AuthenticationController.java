@@ -7,7 +7,7 @@ import com.workfront.intern.cb.web.Initializer;
 import com.workfront.intern.cb.web.util.FileHelper;
 import com.workfront.intern.cb.web.util.ImageHelper;
 import com.workfront.intern.cb.web.util.Params;
-import com.workfront.intern.cb.web.util.Util;
+import com.workfront.intern.cb.web.util.Helpers;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -153,7 +153,7 @@ public class AuthenticationController {
             int scaledWidth = 40;
             int scaledHeight = 40;
             if (avatar != null) {
-                Util.imageResizeAndWriteToSpecificFolder(avatar.getAbsolutePath(), scaledWidth, scaledHeight);
+                Helpers.imageResizeAndWriteToSpecificFolder(avatar.getAbsolutePath(), scaledWidth, scaledHeight);
             }
             // save manager instance to DB
             managerService.addManager(manager);

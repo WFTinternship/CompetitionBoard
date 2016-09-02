@@ -5,7 +5,7 @@ import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Params;
-import com.workfront.intern.cb.web.util.Util;
+import com.workfront.intern.cb.web.util.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -98,8 +98,8 @@ public class TournamentController {
         try {
             Tournament tournament = new Tournament();
             tournament.setTournamentName(name);
-            tournament.setStartDate(Util.stringParseToTimeStamp(startDate));
-            tournament.setEndDate(Util.stringParseToTimeStamp(endDate));
+            tournament.setStartDate(Helpers.stringParseToTimeStamp(startDate));
+            tournament.setEndDate(Helpers.stringParseToTimeStamp(endDate));
             tournament.setLocation(location);
             tournament.setTournamentDescription(description);
             tournament.setTournamentFormatId(format);
