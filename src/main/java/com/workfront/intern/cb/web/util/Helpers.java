@@ -49,7 +49,7 @@ public class Helpers {
     private static void imageResizeAndWriteToSpecificFolder(String inputImagePath, String outputImagePath, int scaledWidth, int scaledHeight) throws IOException {
         // reads input image
         File inputFile = new File(inputImagePath);
-        BufferedImage inputImage = null;
+        BufferedImage inputImage;
         inputImage = ImageIO.read(inputFile);
         // creates output image
         BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, inputImage.getType());
@@ -66,6 +66,9 @@ public class Helpers {
         ImageIO.write(outputImage, formatName, new File(outputImagePath));
     }
 
+    /**
+     * Sending email
+     */
     public static void sendEmail(String inputMsg) {
         try {
             // Load SMTP properties
@@ -95,5 +98,52 @@ public class Helpers {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * File helpers
+     * Generates specific file name
+     */
+    public static String generateFileName(File existingFile) {
+        String filePath = existingFile.getAbsolutePath();
+        String fileName = filePath.substring(0, filePath.lastIndexOf("."));
+        String fileExt = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
+
+        File imageFile = existingFile;
+        if (!existingFile.getName().endsWith(String.format(").%s", fileExt))) {
+            imageFile = new File(fileName + " (1)." + fileExt);
+        }
+
+        int index = 2;
+        while (imageFile.exists()) {
+            fileName = imageFile.getAbsolutePath();
+            String next = fileName.substring(0, fileName.lastIndexOf("(") + 1);
+            String name = next + index + ")." + fileExt;
+            imageFile = new File(name);
+            index++;
+        }
+        return imageFile.getAbsolutePath();
+    }
+
+    /**
+     * Image helpers
+     */
+    private static final String[] IMG_EXTS = new String[]{".jpg", ".jpeg", ".png", ".bmp"};
+
+    private static synchronized boolean isImage(String filePath) {
+        if (!filePath.contains(".") || filePath.endsWith(".") || filePath.length() < 5) return false;
+        int index = filePath.lastIndexOf(".");
+        String ext = filePath.substring(index, filePath.length());
+        for (String imgExt : IMG_EXTS) {
+            if (ext.equalsIgnoreCase(imgExt)) return true;
+        }
+        return false;
+    }
+
+    public static synchronized String getFileExtension(File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        if (!isImage(filePath))
+            throw new IllegalArgumentException("unknown image format");
+        return filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
     }
 }

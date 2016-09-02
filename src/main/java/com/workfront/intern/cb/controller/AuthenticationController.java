@@ -4,10 +4,8 @@ import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.util.StringHelper;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.web.Initializer;
-import com.workfront.intern.cb.web.util.FileHelper;
-import com.workfront.intern.cb.web.util.ImageHelper;
-import com.workfront.intern.cb.web.util.Params;
 import com.workfront.intern.cb.web.util.Helpers;
+import com.workfront.intern.cb.web.util.Params;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -99,11 +97,11 @@ public class AuthenticationController {
 
                     // setting original file name as image name and generating unique file name
                     String fileName = path + "/image_" + System.currentTimeMillis() +
-                            "." + ImageHelper.getFileExtension(new File(item.getName()));
+                            "." + Helpers.getFileExtension(new File(item.getName()));
 
                     imageFile = new File(fileName);
                     if (imageFile.exists() && imageFile.isFile()) {
-                        String newFileName = FileHelper.generateFileName(imageFile);
+                        String newFileName = Helpers.generateFileName(imageFile);
                         imageFile = new File(newFileName);
                     }
 
