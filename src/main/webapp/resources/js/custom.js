@@ -19,11 +19,11 @@ function submitDateNameInForm() {
 function selectElementValue() {
     var x = document.getElementById("formatId");
 }
-
 $(document).ready(function() {
     showMenuItem();
 });
 
+// Show/hidden menu items
 function showMenuItem() {
     if($('#login-status').val() !== '') {
         $('.visible-when-logged-in').each(function() {
@@ -41,7 +41,7 @@ function showMenuItem() {
         });
     }
 }
-
+// Show/hidden menu items
 function showMenuItemReverse() {
     $('.visible-element').each(function() {
         $(this).removeClass('visible-element').addClass('hidden-element');
@@ -55,10 +55,12 @@ function editTableActivity() {
     return x=true;
 
 }
-
 function editContent(){
     var editable_elements = document.querySelectorAll("[contenteditable=false]");
     document.getElementById("edit-td").setAttribute("contentEditable", true);
 }
 
 
+function myFunction() {
+    confirm("Press a button!");
+}

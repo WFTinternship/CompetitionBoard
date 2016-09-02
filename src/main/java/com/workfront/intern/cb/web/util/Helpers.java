@@ -28,7 +28,6 @@ public class Helpers {
 
         try {
             date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(input);
-
             time = date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -49,7 +48,7 @@ public class Helpers {
     private static void imageResizeAndWriteToSpecificFolder(String inputImagePath, String outputImagePath, int scaledWidth, int scaledHeight) throws IOException {
         // reads input image
         File inputFile = new File(inputImagePath);
-        BufferedImage inputImage;
+        BufferedImage inputImage = null;
         inputImage = ImageIO.read(inputFile);
         // creates output image
         BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, inputImage.getType());
@@ -122,6 +121,7 @@ public class Helpers {
             imageFile = new File(name);
             index++;
         }
+
         return imageFile.getAbsolutePath();
     }
 

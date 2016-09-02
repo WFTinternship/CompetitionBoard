@@ -20,6 +20,10 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
+    <%--Custom JS--%>
+    <script src="<c:url value="/resources/js/custom.js" />"></script>
+
+
     <![endif]-->
 </head>
 
@@ -44,7 +48,11 @@
                     <BR><BR>
                     <h1 style="color: #080808">Contact Us</h1>
 
-                    <form action="send-mail" id="contact-form" method="post" role="form">
+                    <form action="send-mail" id="contact-form" method="post" role="form"
+                          onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-1']);">
+
+
+
                         <div class="messages"></div>
                         <div class="controls">
                             <div class="row">

@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.web.util.Helpers;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ContactUsController {
+    private static Logger LOG = Logger.getLogger(ContactUsController.class);
+
     @RequestMapping("/contact-page")
     public String toContactUsPage(Model model) {
         return "contact/contact-us";
