@@ -57,4 +57,5 @@ public class Util {
         // writes to output file
         ImageIO.write(outputImage, formatName, new File(outputImagePath));
     }
+
 }
