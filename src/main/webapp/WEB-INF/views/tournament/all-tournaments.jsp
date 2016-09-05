@@ -38,21 +38,17 @@
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
     String avatar = "";
-
     String addTournamentMenuItem = null;
     String classStr = null;
-
     Manager manager  = (Manager) session.getAttribute("manager");
     if (manager  != null) {
         avatar = "resources/img/user_avatar/" + manager .getAvatar();
         userName = manager .getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
-
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
     }
-
     if (userName.equals("")) {
         addTournamentMenuItem = "";
         classStr = "hidden-element";
@@ -103,7 +99,7 @@
                     <div class="col-sm-3 sidenav">
                         <ul class="nav nav-pills nav-stacked">
 
-                    <%--LEFT BLOCK--%>
+                            <%--LEFT BLOCK--%>
 
                         </ul>
                         <br>
@@ -112,22 +108,22 @@
                     <div class="col-sm-9">
                         <h2>All available tournaments</h2>
                         <hr>
+                        <br>
 
                         <%
                             List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("allTournamentList");
                             int sizeList = tournamentList.size();
                         %>
                         <table class="tournamentTable">
-                            <tr class="searchTblResultTr">
                                 <th>No</th>
-                                <th>TournamentId</th>
-                                <th>TournamentName</th>
+                                <th>Id</th>
+                                <th>Name</th>
                                 <th>StartDate</th>
                                 <th>EndDate</th>
                                 <th>Location</th>
-                                <th>TournamentDescription</th>
-                                <th>TournamentFormat</th>
-                                <th>Tournament creator</th>
+                                <th>Description</th>
+                                <th>Format</th>
+                                <th>Creator</th>
                             </tr>
                             <%
                                 for (int i = 0; i < sizeList; i++) {

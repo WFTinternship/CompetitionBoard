@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
@@ -8,7 +7,7 @@
 <html lang="en">
 
 <head>
-    <title>All available tournaments</title>
+    <title>Add participant</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +24,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
+
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -38,21 +38,17 @@
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
     String avatar = "";
-
     String addTournamentMenuItem = null;
     String classStr = null;
-
-    Manager managerSession  = (Manager) session.getAttribute("manager");
-    if (managerSession  != null) {
-        avatar = "resources/img/user_avatar/" + managerSession .getAvatar();
-        userName = managerSession .getLogin();
+    Manager manager  = (Manager) session.getAttribute("manager");
+    if (manager  != null) {
+        avatar = "resources/img/user_avatar/" + manager .getAvatar();
+        userName = manager .getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
-
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
     }
-
     if (userName.equals("")) {
         addTournamentMenuItem = "";
         classStr = "hidden-element";
@@ -76,13 +72,14 @@
         </div>
         <input type="hidden" id="login-status" value="<%=userName%>" />
 
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
-                <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#portfolio">Media</a></li>
+                <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
+                <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
                 <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
                 <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
@@ -100,35 +97,24 @@
             <div class="container-fluid">
                 <div class="row content">
                     <div class="col-sm-3 sidenav">
-
                         <ul class="nav nav-pills nav-stacked">
-                            <%--<li>--%>
-                                <%--<button class="btn btn-danger"><B>CREATE A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
-                            <%--<BR>--%>
-                            <%--<li>--%>
-                                <%--<button class="btn btn-danger" onclick="editContent()"><B>EDIT A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
-                            <%--<BR>--%>
-                            <%--<li>--%>
-                                <%--<button class="btn btn-danger"><B>DELETE A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
+
+                            <%--LEFT BLOCK--%>
 
                         </ul>
                         <br>
                     </div>
 
-
                     <div class="col-sm-9">
-                            <h2>My tournaments</h2>
-                            <hr>
-                            <br>
-                            <%
-                                List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
+                        <h2>All available tournaments</h2>
+                        <hr>
+                        <br>
+
+                        <%
+                            List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("allTournamentList");
                             int sizeList = tournamentList.size();
-                            %>
-                            <table class="tournamentTable">
-                            <tr class="searchTblResultTr">
+                        %>
+                        <table class="tournamentTable">
                             <th>No</th>
                             <th>Id</th>
                             <th>Name</th>
@@ -140,74 +126,66 @@
                             <th>Creator</th>
                             </tr>
                             <%
-                            for (int i = 0; i < sizeList; i++) {
+                                for (int i = 0; i < sizeList; i++) {
                             %>
                             <tr>
-                            <%--No--%>
-                            <td><%=i%>
-                            </td>
+                                <%--No--%>
+                                <td>
+                                    <%=i%>
+                                </td>
 
-                            <%--TournamentId--%>
-                            <td><%=tournamentList.get(i).getTournamentId()%>
-                            </td>
+                                <%--TournamentId--%>
+                                <td>
+                                    <%--<%=request.getAttribute("tournamentId"+i)%>--%>
+                                    <%=tournamentList.get(i).getTournamentId()%>
+                                </td>
 
-                                <%--ToDo--%>
-                            <%--TournamentName--%>
-                            <td id="edit-td">
-                                <a href="">
-                                <%=tournamentList.get(i).getTournamentName()%>
-                            </td>
+                                <%--TournamentName--%>
+                                <td>
+                                    <%--<%=request.getAttribute("tournamentName")%>--%>
+                                    <%=tournamentList.get(i).getTournamentName()%>
 
-                            <%--StartDate--%>
-                            <td><%=tournamentList.get(i).getStartDate()%>
-                            </td>
+                                </td>
 
-                            <%--EndDate--%>
-                            <td><%=tournamentList.get(i).getEndDate()%>
-                            </td>
+                                <%--StartDate--%>
+                                <td>
+                                    <%=tournamentList.get(i).getStartDate()%>
+                                </td>
 
-                            <%--Location--%>
-                            <td><%=tournamentList.get(i).getLocation()%>
-                            </td>
+                                <%--EndDate--%>
+                                <td>
+                                    <%=tournamentList.get(i).getEndDate()%>
+                                </td>
 
-                            <%--TournamentDescription--%>
-                            <td><%=tournamentList.get(i).getTournamentDescription()%>
-                            </td>
+                                <%--Location--%>
+                                <td>
+                                    <%=tournamentList.get(i).getLocation()%>
+                                </td>
 
-                            <%--TournamentFormatId--%>
-                            <%
-                            int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                            String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
-                            %>
-                            <td><%=formatStr%>
-                            </td>
+                                <%--TournamentDescription--%>
+                                <td>
+                                    <%=tournamentList.get(i).getTournamentDescription()%>
+                                </td>
 
-                            <%--Tournament creator--%>
-                            <%
-                            String managerName = managerSession.getLogin();
-                            %>
-                            <td>
-                            <%= managerName%>
-                            </td>
+                                <%--TournamentFormatId--%>
+                                <%
+                                    int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                    String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                %>
+                                <td>
+                                    <%=formatStr%>
+                                </td>
+
+                                <%--Tournament creator--%>
+                                <% int id = tournamentList.get(i).getManagerId();
+                                %>
+                                <td>
+                                    <%=id%>
+                                </td>
                             </tr>
                             <br>
                             <%}%>
-                            </table>
-
-                            <!-- Footer -->
-                            <footer>
-                            <div class="row">
-                            <div class="col-lg-12">
-                            <p>Copyright &copy; Artur Babayan 2016</p>
-                            </div>
-                            </div>
-                            </footer>
-
-                        </div>
-
-
-
-
+                        </table>
 
 
 
@@ -234,14 +212,8 @@
 <!-- jQuery -->
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 
-<%--<!-- Plugin JavaScript -->--%>
-<%--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>--%>
-<%--<script src="<c:url value="/resources/vendor/scrollreveal/scrollreveal.min.js" />"></script>--%>
-
-<%--<!-- Theme JavaScript -->--%>
-<%--<script src="<c:url value="/resources/js/creative.min.js" />"></script>--%>
-
 <%--Custom JS--%>
 <script src="<c:url value="/resources/js/custom.js" />"></script>
+
 </body>
 </html>
