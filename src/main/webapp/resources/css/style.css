@@ -301,3 +301,40 @@ textarea {
     margin-top: -20px;
     text-align: right;
 }
+
+.table-remove {
+    color: #b00000;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.table-remove:hover {
+    color: red;
+    font-size: 20px;
+}
+.table-add {
+    color: #a1402b;
+    cursor: pointer;
+    position: absolute;
+    top: 107px;
+    right: -288px;
+    font-size: 20px;
+}
+
+.table-add:hover{
+    color: #F05F40;
+
+}
+
+.table-editable .glyphicon {
+    font-size: 20px;
+}
+
+.table-up, .table-down {
+    color: #F05F40;
+    cursor: pointer;
+}
+
+.table-up:hover, .table-down:hover {
+    color: #ff8841;
+}

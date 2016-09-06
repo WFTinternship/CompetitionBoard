@@ -74,4 +74,7 @@ tr:nth-child(odd) {background: #5e5e5e
     border-radius: 50%;
 }
 
+.container {
+    width: 1250px;
+}
 

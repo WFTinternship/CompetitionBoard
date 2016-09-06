@@ -22,7 +22,7 @@
 
     <%--Custom JS--%>
     <script src="<c:url value="/resources/js/custom.js" />"></script>
-
+    <script src="<c:url value="/resources/js/warning_messages.js" />"></script>
 
     <![endif]-->
 </head>

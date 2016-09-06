@@ -42,10 +42,10 @@
     String addTournamentMenuItem = null;
     String classStr = null;
 
-    Manager managerSession  = (Manager) session.getAttribute("manager");
-    if (managerSession  != null) {
-        avatar = "resources/img/user_avatar/" + managerSession .getAvatar();
-        userName = managerSession .getLogin();
+    Manager managerSession = (Manager) session.getAttribute("manager");
+    if (managerSession != null) {
+        avatar = "resources/img/user_avatar/" + managerSession.getAvatar();
+        userName = managerSession.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
 
@@ -71,15 +71,18 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="/">Home</a>
-            <a ><img class="avatar" src="<%=avatar%>" > </a>
-            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%></a>
+            <a><img class="avatar" src="<%=avatar%>"> </a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+            </a>
         </div>
-        <input type="hidden" id="login-status" value="<%=userName%>" />
+        <input type="hidden" id="login-status" value="<%=userName%>"/>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                       onload="showMenuItem()"><%=addTournamentMenuItem%>
+                </a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Media</a></li>
@@ -92,7 +95,6 @@
     </div>
 </nav>
 
-
 <div class="row">
     <!-- Blog Entries Column -->
     <div class="col-md-8">
@@ -102,146 +104,150 @@
                     <div class="col-sm-3 sidenav">
 
                         <ul class="nav nav-pills nav-stacked">
-                            <%--<li>--%>
-                                <%--<button class="btn btn-danger"><B>CREATE A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
-                            <%--<BR>--%>
-                            <%--<li>--%>
-                                <%--<button class="btn btn-danger" onclick="editContent()"><B>EDIT A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
-                            <%--<BR>--%>
-                            <%--<li>--%>
-                                <%--<button class="btn btn-danger"><B>DELETE A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
-
+                            <%--Left Side--%>
                         </ul>
                         <br>
                     </div>
 
-
                     <div class="col-sm-9">
-                            <h2>My tournaments</h2>
-                            <hr>
-                            <br>
-                            <%
-                                List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
-                            int sizeList = tournamentList.size();
-                            %>
-                            <table class="tournamentTable">
-                            <tr class="searchTblResultTr">
-                            <th>No</th>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>StartDate</th>
-                            <th>EndDate</th>
-                            <th>Location</th>
-                            <th>Description</th>
-                            <th>Format</th>
-                            <th>Creator</th>
-                            </tr>
-                            <%
-                            for (int i = 0; i < sizeList; i++) {
-                            %>
-                            <tr>
-                            <%--No--%>
-                            <td><%=i%>
-                            </td>
+                        <h2>My tournaments</h2>
+                        <hr>
+                        <br>
 
-                            <%--TournamentId--%>
-                            <td><%=tournamentList.get(i).getTournamentId()%>
-                            </td>
+                        <div class="container">
+                            <div id="table" class="table-editable">
+                                <%--<span class="table-add glyphicon glyphicon-plus"></span>--%>
+                                <%
+                                    List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
+                                    int sizeList = tournamentList.size();
+                                %>
+                                <table class="table">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>Location</th>
+                                        <th>Description</th>
+                                        <th>Format</th>
+                                        <th>Owner</th>
+                                    </tr>
+                                    <%
+                                        for (int i = 0; i < sizeList; i++) {
+                                    %>
+                                    <tr>
+                                        <%--No--%>
+                                        <td contenteditable="false">
+                                            <%=i%>
+                                        </td>
 
-                                <%--ToDo--%>
-                            <%--TournamentName--%>
-                            <td id="edit-td">
-                                <a href="">
-                                <%=tournamentList.get(i).getTournamentName()%>
-                            </td>
+                                        <%--TournamentId--%>
+                                        <td contenteditable="false">
+                                            <%=tournamentList.get(i).getTournamentId()%>
+                                        </td>
 
-                            <%--StartDate--%>
-                            <td><%=tournamentList.get(i).getStartDate()%>
-                            </td>
+                                        <%--TournamentName--%>
+                                        <td contenteditable="true">
+                                            <%=tournamentList.get(i).getTournamentName()%>
+                                        </td>
 
-                            <%--EndDate--%>
-                            <td><%=tournamentList.get(i).getEndDate()%>
-                            </td>
+                                        <%--StartDate--%>
+                                        <td contenteditable="true">
+                                            <%=tournamentList.get(i).getStartDate()%>
+                                        </td>
 
-                            <%--Location--%>
-                            <td><%=tournamentList.get(i).getLocation()%>
-                            </td>
+                                        <%--EndDate--%>
+                                        <td contenteditable="true">
+                                            <%=tournamentList.get(i).getEndDate()%>
+                                        </td>
 
-                            <%--TournamentDescription--%>
-                            <td><%=tournamentList.get(i).getTournamentDescription()%>
-                            </td>
+                                        <%--Location--%>
+                                        <td contenteditable="true">
+                                            <%=tournamentList.get(i).getLocation()%>
+                                        </td>
 
-                            <%--TournamentFormatId--%>
-                            <%
-                            int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                            String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
-                            %>
-                            <td><%=formatStr%>
-                            </td>
+                                        <%--TournamentDescription--%>
+                                        <td contenteditable="true">
+                                            <%=tournamentList.get(i).getTournamentDescription()%>
+                                        </td>
 
-                            <%--Tournament creator--%>
-                            <%
-                            String managerName = managerSession.getLogin();
-                            %>
-                            <td>
-                            <%= managerName%>
-                            </td>
-                            </tr>
-                            <br>
-                            <%}%>
-                            </table>
+                                        <%--TournamentFormatId--%>
+                                        <%
+                                            int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                            String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                        %>
+                                        <td contenteditable="false">
+                                            <%=formatStr%>
+                                        </td>
 
-                            <!-- Footer -->
-                            <footer>
-                            <div class="row">
-                            <div class="col-lg-12">
-                            <p>Copyright &copy; Artur Babayan 2016</p>
+                                            <%--Tournament creator--%>
+                                            <%
+                                                String managerName = managerSession.getLogin();
+                                            %>
+                                            <td contenteditable="false">
+                                                <%= managerName%>
+                                        </td>
+
+                                        <td>
+                                            <span class="table-remove glyphicon glyphicon-remove"></span>
+                                        </td>
+
+                                        <td>
+                                            <span class="table-up glyphicon glyphicon-arrow-up"></span>
+                                            <span class="table-down glyphicon glyphicon-arrow-down"></span>
+                                        </td>
+                                    </tr>
+
+                                    <!-- This is our clonable table line -->
+                                    <tr class="hide">
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td>
+                                            <span class="table-remove glyphicon glyphicon-remove"></span>
+                                        </td>
+
+                                        <td>
+                                            <span class="table-up glyphicon glyphicon-arrow-up"></span>
+                                            <span class="table-down glyphicon glyphicon-arrow-down"></span>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </table>
                             </div>
-                            </div>
-                            </footer>
-
                         </div>
 
 
-
-
-
-
-
-
-
+                        <!-- Footer -->
+                        <%--<footer id="footer">--%>
+                        <%--<div class="row">--%>
+                        <%--<div class="col-lg-12">--%>
+                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--</footer>--%>
 
                     </div>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <%--<footer id="footer">--%>
-            <%--<div class="row">--%>
-            <%--<div class="col-lg-12">--%>
-            <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--</footer>--%>
-
         </div>
-    </div>
-</div>
 
-<!-- jQuery -->
-<script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
+        <!-- jQuery -->
+        <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 
-<%--<!-- Plugin JavaScript -->--%>
-<%--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>--%>
-<%--<script src="<c:url value="/resources/vendor/scrollreveal/scrollreveal.min.js" />"></script>--%>
+        <%--Custom JS--%>
+        <script src="<c:url value="/resources/js/custom.js" />"></script>
+        <script src="<c:url value="/resources/js/tableView.js" />"></script>
 
-<%--<!-- Theme JavaScript -->--%>
-<%--<script src="<c:url value="/resources/js/creative.min.js" />"></script>--%>
-
-<%--Custom JS--%>
-<script src="<c:url value="/resources/js/custom.js" />"></script>
+        <script src='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js'></script>
 </body>
 </html>
