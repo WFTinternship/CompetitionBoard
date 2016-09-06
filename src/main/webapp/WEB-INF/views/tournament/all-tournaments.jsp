@@ -10,10 +10,10 @@
     <title>All available tournaments</title>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
@@ -43,6 +43,7 @@
     String allTournaments = "All Tournaments";
 
     Manager manager = (Manager) session.getAttribute("manager");
+
     if (manager != null) {
         avatar = "resources/img/user_avatar/" + manager.getAvatar();
         userName = manager.getLogin();
@@ -84,8 +85,8 @@
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
                 </a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%></a></li>
-                <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
+                <li type="hide"><a class="page-scroll" href="#">Matches</a></li>
+                <li><a class="page-scroll" href="#">Gallery</a></li>
                 <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
                 <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
                 <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>

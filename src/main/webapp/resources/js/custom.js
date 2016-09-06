@@ -48,15 +48,15 @@ function showMenuItemReverse() {
     });
 }
 
-// Table edit activates
-function editTableActivity() {
-    var x;
-    x = document.getElementById("edit-td").value;
-    return x=true;
 
-}
-function editContent(){
-    var editable_elements = document.querySelectorAll("[contenteditable=false]");
-    document.getElementById("edit-td").setAttribute("contentEditable", true);
-}
+//Edit table row
+$('button').click(function(){
+    var $div=$('div'), isEditable=$div.is('.edit-td');
+    $('div').prop('contenteditable',!isEditable).toggleClass('edit-td')
+})
 
+
+//Checkbox select one
+$('.myCheckbox').click(function() {
+    $(this).siblings('input:checkbox').prop('checked', false);
+});

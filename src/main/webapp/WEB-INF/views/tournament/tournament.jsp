@@ -82,9 +82,10 @@
                 <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
                 </a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%></a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
+                </a></li>
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#portfolio">Media</a></li>
+                <li><a class="page-scroll" href="#">Media</a></li>
                 <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
                 <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
                 <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
@@ -115,13 +116,27 @@
 
                         <div class="container">
                             <div id="table" class="table-editable">
-                                <%--<span class="table-add glyphicon glyphicon-plus"></span>--%>
+
+                                <%--Remove Button--%>
+                                    <span><button class="btn btn-danger" type="button">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                        </span>
+
+                                <%--Remove Button--%>
+                                    <span><button class="btn btn-danger" type="submit">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                        </span>
+                                <br>
+                                <br>
                                 <%
                                     List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
                                     int sizeList = tournamentList.size();
                                 %>
                                 <table class="table">
                                     <tr class="thCustom">
+                                        <th>Check</th>
                                         <th>No</th>
                                         <th>Id</th>
                                         <th>Name</th>
@@ -136,6 +151,15 @@
                                         for (int i = 0; i < sizeList; i++) {
                                     %>
                                     <tr>
+                                        <%--CheckBox--%>
+                                        <%--ToDo--%>
+                                        <td>
+                                            <div class="checkbox-inline">
+                                                <label><input type="checkbox" value=""></label>
+                                            </div>
+
+                                        </td>
+
                                         <%--No--%>
                                         <td contenteditable="false">
                                             <%=i%>
@@ -147,28 +171,38 @@
                                         </td>
 
                                         <%--TournamentName--%>
-                                        <td contenteditable="true">
-                                            <%=tournamentList.get(i).getTournamentName()%>
+                                        <td contenteditable="false">
+                                            <div>
+                                                <%=tournamentList.get(i).getTournamentName()%>
+                                            </div>
                                         </td>
 
                                         <%--StartDate--%>
-                                        <td contenteditable="true">
-                                            <%=tournamentList.get(i).getStartDate()%>
+                                        <td contenteditable="false" id="edit-td">
+                                            <div>
+                                                <%=tournamentList.get(i).getStartDate()%>
+                                            </div>
                                         </td>
 
                                         <%--EndDate--%>
-                                        <td contenteditable="true">
-                                            <%=tournamentList.get(i).getEndDate()%>
+                                        <td contenteditable="false" id="edit-td">
+                                            <div>
+                                                <%=tournamentList.get(i).getEndDate()%>
+                                            </div>
                                         </td>
 
                                         <%--Location--%>
-                                        <td contenteditable="true">
-                                            <%=tournamentList.get(i).getLocation()%>
+                                        <td contenteditable="false" id="edit-td">
+                                            <div>
+                                                <%=tournamentList.get(i).getLocation()%>
+                                            </div>
                                         </td>
 
                                         <%--TournamentDescription--%>
-                                        <td contenteditable="true">
-                                            <%=tournamentList.get(i).getTournamentDescription()%>
+                                        <td contenteditable="false" id="edit-td">
+                                            <div>
+                                                <%=tournamentList.get(i).getTournamentDescription()%>
+                                            </div>
                                         </td>
 
                                         <%--TournamentFormatId--%>
@@ -182,47 +216,11 @@
 
                                         <%--Tournament creator--%>
                                         <%
+                                            assert manager != null;
                                             String managerName = manager.getLogin();
                                         %>
                                         <td contenteditable="false">
                                             <%= managerName%>
-                                        </td>
-
-                                        <td>
-                                            <span>
-                                                <button class="btn btn-danger" type="submit">
-                                            <span class="glyphicon glyphicon-edit">
-                                                </span>
-                                                </button>
-                                                </span>
-                                        </td>
-                                        <td>
-                                            <span>
-                                                <button class="btn btn-danger" type="submit">
-                                            <span class="glyphicon glyphicon-remove">
-                                                </span>
-                                                </button>
-                                                </span>
-                                        </td>
-                                    </tr>
-
-                                    <!-- This is our clonable table line -->
-                                    <tr class="hide">
-                                        <td contenteditable="true"></td>
-                                        <td contenteditable="true"></td>
-                                        <td contenteditable="true"></td>
-                                        <td contenteditable="true"></td>
-                                        <td contenteditable="true"></td>
-                                        <td contenteditable="true"></td>
-                                        <td contenteditable="true"></td>
-                                        <td contenteditable="true"></td>
-                                        <td>
-                                            <span class="table-remove glyphicon glyphicon-remove"></span>
-                                        </td>
-
-                                        <td>
-                                            <span class="table-up glyphicon glyphicon-arrow-up"></span>
-                                            <span class="table-down glyphicon glyphicon-arrow-down"></span>
                                         </td>
                                     </tr>
                                     <%}%>
