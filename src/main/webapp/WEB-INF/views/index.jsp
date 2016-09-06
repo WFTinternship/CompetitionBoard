@@ -44,21 +44,20 @@
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
     String avatar = "";
-
     String addTournamentMenuItem = null;
     String classStr = null;
+    String allTournaments = "All Tournaments";
 
-    Manager managerSession  = (Manager) session.getAttribute("manager");
-    if (managerSession  != null) {
-        avatar = "resources/img/user_avatar/" + managerSession .getAvatar();
-        userName = managerSession .getLogin();
+    Manager manager = (Manager) session.getAttribute("manager");
+    if (manager != null) {
+        avatar = "resources/img/user_avatar/" + manager.getAvatar();
+        userName = manager.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
-
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
+        allTournaments = "Tournaments";
     }
-
     if (userName.equals("")) {
         addTournamentMenuItem = "";
         classStr = "hidden-element";
@@ -82,7 +81,7 @@
                 <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
                 </a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%></a></li>
                 <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact">Contact Us</a></li>

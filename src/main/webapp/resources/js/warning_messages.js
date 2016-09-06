@@ -1,3 +1,4 @@
+// Dangerous messages
 function dangerMsg() {
     var type = BootstrapDialog.TYPE_DANGER;
     BootstrapDialog.show({
@@ -22,5 +23,12 @@ function dangerMsg() {
                 dialogItself.close();
             }
         }]
+    });
+}
+
+// Info messages
+function infoMsg() {
+    BootstrapDialog.show({
+        message: 'Our message has been sent successfully!'
     });
 }

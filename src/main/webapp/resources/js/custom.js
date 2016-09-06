@@ -60,7 +60,3 @@ function editContent(){
     document.getElementById("edit-td").setAttribute("contentEditable", true);
 }
 
-
-function myFunction() {
-    confirm("Press a button!");
-}

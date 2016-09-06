@@ -38,21 +38,20 @@
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
     String avatar = "";
-
     String addTournamentMenuItem = null;
     String classStr = null;
+    String allTournaments = "All Tournaments";
 
-    Manager managerSession = (Manager) session.getAttribute("manager");
-    if (managerSession != null) {
-        avatar = "resources/img/user_avatar/" + managerSession.getAvatar();
-        userName = managerSession.getLogin();
+    Manager manager = (Manager) session.getAttribute("manager");
+    if (manager != null) {
+        avatar = "resources/img/user_avatar/" + manager.getAvatar();
+        userName = manager.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
-
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
+        allTournaments = "Tournaments";
     }
-
     if (userName.equals("")) {
         addTournamentMenuItem = "";
         classStr = "hidden-element";
@@ -83,7 +82,7 @@
                 <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
                 </a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%></a></li>
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Media</a></li>
                 <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
@@ -122,7 +121,7 @@
                                     int sizeList = tournamentList.size();
                                 %>
                                 <table class="table">
-                                    <tr>
+                                    <tr class="thCustom">
                                         <th>No</th>
                                         <th>Id</th>
                                         <th>Name</th>
@@ -181,21 +180,29 @@
                                             <%=formatStr%>
                                         </td>
 
-                                            <%--Tournament creator--%>
-                                            <%
-                                                String managerName = managerSession.getLogin();
-                                            %>
-                                            <td contenteditable="false">
-                                                <%= managerName%>
+                                        <%--Tournament creator--%>
+                                        <%
+                                            String managerName = manager.getLogin();
+                                        %>
+                                        <td contenteditable="false">
+                                            <%= managerName%>
                                         </td>
 
                                         <td>
-                                            <span class="table-remove glyphicon glyphicon-remove"></span>
+                                            <span>
+                                                <button class="btn btn-danger" type="submit">
+                                            <span class="glyphicon glyphicon-edit">
+                                                </span>
+                                                </button>
+                                                </span>
                                         </td>
-
                                         <td>
-                                            <span class="table-up glyphicon glyphicon-arrow-up"></span>
-                                            <span class="table-down glyphicon glyphicon-arrow-down"></span>
+                                            <span>
+                                                <button class="btn btn-danger" type="submit">
+                                            <span class="glyphicon glyphicon-remove">
+                                                </span>
+                                                </button>
+                                                </span>
                                         </td>
                                     </tr>
 

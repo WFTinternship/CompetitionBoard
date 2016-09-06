@@ -70,6 +70,10 @@ public class TournamentController {
 
         HttpSession session = request.getSession();
         List<Tournament> allTournamentList = tournamentService.getTournamentList();
+
+
+
+        session.setAttribute("managerService", managerService);
         session.setAttribute("allTournamentList", allTournamentList);
 
         return Params.PAGE_ALL_AVAILABLE_TOURNAMENTS;

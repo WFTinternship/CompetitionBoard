@@ -1,5 +1,9 @@
 package com.workfront.intern.cb.web.util;
 
+import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.service.TournamentService;
+import com.workfront.intern.cb.service.TournamentServiceImpl;
+
 import javax.imageio.ImageIO;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -146,4 +150,5 @@ public class Helpers {
             throw new IllegalArgumentException("unknown image format");
         return filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
     }
+
 }

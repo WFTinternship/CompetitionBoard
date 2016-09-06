@@ -40,14 +40,17 @@
     String avatar = "";
     String addTournamentMenuItem = null;
     String classStr = null;
-    Manager manager  = (Manager) session.getAttribute("manager");
-    if (manager  != null) {
-        avatar = "resources/img/user_avatar/" + manager .getAvatar();
-        userName = manager .getLogin();
+    String allTournaments = "All Tournaments";
+
+    Manager manager = (Manager) session.getAttribute("manager");
+    if (manager != null) {
+        avatar = "resources/img/user_avatar/" + manager.getAvatar();
+        userName = manager.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
+        allTournaments = "Tournaments";
     }
     if (userName.equals("")) {
         addTournamentMenuItem = "";
@@ -67,17 +70,20 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="/">Home</a>
-            <a ><img class="avatar" src="<%=avatar%>" > </a>
-            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%></a>
+            <a><img class="avatar" src="<%=avatar%>"> </a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+            </a>
         </div>
-        <input type="hidden" id="login-status" value="<%=userName%>" />
+        <input type="hidden" id="login-status" value="<%=userName%>"/>
 
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                       onload="showMenuItem()"><%=addTournamentMenuItem%>
+                </a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%></a></li>
                 <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
@@ -97,10 +103,9 @@
             <div class="container-fluid">
                 <div class="row content">
                     <div class="col-sm-3 sidenav">
+
                         <ul class="nav nav-pills nav-stacked">
-
-                            <%--LEFT BLOCK--%>
-
+                            <%--Left Side--%>
                         </ul>
                         <br>
                     </div>
@@ -110,110 +115,108 @@
                         <hr>
                         <br>
 
-                        <%
-                            List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("allTournamentList");
-                            int sizeList = tournamentList.size();
-                        %>
-                        <table class="tournamentTable">
-                                <th>No</th>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>StartDate</th>
-                                <th>EndDate</th>
-                                <th>Location</th>
-                                <th>Description</th>
-                                <th>Format</th>
-                                <th>Creator</th>
-                            </tr>
-                            <%
-                                for (int i = 0; i < sizeList; i++) {
-                            %>
-                            <tr>
-                                <%--No--%>
-                                <td>
-                                    <%=i%>
-                                </td>
-
-                                <%--TournamentId--%>
-                                <td>
-                                    <%--<%=request.getAttribute("tournamentId"+i)%>--%>
-                                    <%=tournamentList.get(i).getTournamentId()%>
-                                </td>
-
-                                <%--TournamentName--%>
-                                <td>
-                                    <%--<%=request.getAttribute("tournamentName")%>--%>
-                                    <%=tournamentList.get(i).getTournamentName()%>
-
-                                </td>
-
-                                <%--StartDate--%>
-                                <td>
-                                    <%=tournamentList.get(i).getStartDate()%>
-                                </td>
-
-                                <%--EndDate--%>
-                                <td>
-                                    <%=tournamentList.get(i).getEndDate()%>
-                                </td>
-
-                                <%--Location--%>
-                                <td>
-                                    <%=tournamentList.get(i).getLocation()%>
-                                </td>
-
-                                <%--TournamentDescription--%>
-                                <td>
-                                    <%=tournamentList.get(i).getTournamentDescription()%>
-                                </td>
-
-                                <%--TournamentFormatId--%>
+                        <div class="container">
+                            <div id="table" class="table-editable">
                                 <%
-                                    int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                                    String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                    List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("allTournamentList");
+                                    int sizeList = tournamentList.size();
                                 %>
-                                <td>
-                                    <%=formatStr%>
-                                </td>
+                                <table class="table">
+                                    <tr class="thCustom">
+                                        <th>No</th>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>Location</th>
+                                        <th>Description</th>
+                                        <th>Format</th>
+                                        <th>Owner</th>
+                                    </tr>
+                                    <%
+                                        for (int i = 0; i < sizeList; i++) {
+                                    %>
+                                    <tr>
+                                        <%--No--%>
+                                        <td contenteditable="false">
+                                            <%=i%>
+                                        </td>
 
-                                <%--Tournament creator--%>
-                                <% int id = tournamentList.get(i).getManagerId();
-                                %>
-                                <td>
-                                    <%=id%>
-                                </td>
-                            </tr>
-                            <br>
-                            <%}%>
-                        </table>
+                                        <%--TournamentId--%>
+                                        <td contenteditable="false">
+                                            <%=tournamentList.get(i).getTournamentId()%>
+                                        </td>
+
+                                        <%--TournamentName--%>
+                                        <td contenteditable="true">
+                                            <%=tournamentList.get(i).getTournamentName()%>
+                                        </td>
+
+                                        <%--StartDate--%>
+                                            <td contenteditable="false">
+                                            <%=tournamentList.get(i).getStartDate()%>
+                                        </td>
+
+                                        <%--EndDate--%>
+                                            <td contenteditable="false">
+                                            <%=tournamentList.get(i).getEndDate()%>
+                                        </td>
+
+                                        <%--Location--%>
+                                            <td contenteditable="false">
+                                            <%=tournamentList.get(i).getLocation()%>
+                                        </td>
+
+                                        <%--TournamentDescription--%>
+                                            <td contenteditable="false">
+                                            <%=tournamentList.get(i).getTournamentDescription()%>
+                                        </td>
+
+                                        <%--TournamentFormatId--%>
+                                            <%
+                                                int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                                String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                            %>
+                                        <td contenteditable="false">
+                                            <%=formatStr%>
+                                        </td>
+
+                                        <%--Tournament creator--%>
+                                            <% int id = tournamentList.get(i).getManagerId();%>
+                                        <td contenteditable="false">
+                                            <%=id%>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </table>
+                            </div>
+                        </div>
 
 
-
-
-
+                        <!-- Footer -->
+                        <%--<footer id="footer">--%>
+                        <%--<div class="row">--%>
+                        <%--<div class="col-lg-12">--%>
+                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--</footer>--%>
 
                     </div>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <%--<footer id="footer">--%>
-            <%--<div class="row">--%>
-            <%--<div class="col-lg-12">--%>
-            <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--</footer>--%>
-
         </div>
-    </div>
-</div>
 
-<!-- jQuery -->
-<script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
+        <!-- jQuery -->
+        <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 
-<%--Custom JS--%>
-<script src="<c:url value="/resources/js/custom.js" />"></script>
+        <%--Custom JS--%>
+        <script src="<c:url value="/resources/js/custom.js" />"></script>
+        <script src="<c:url value="/resources/js/tableView.js" />"></script>
 
+        <script src='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js'></script>
 </body>
 </html>

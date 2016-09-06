@@ -51,10 +51,11 @@ h1{
     padding-top: 3px;
 }
 
-tr:nth-child(even) {background: #838383
-}
-tr:nth-child(odd) {background: #5e5e5e
-}
+/*tr:nth-child(even) {background: #838383*/
+/*}*/
+
+/*tr:nth-child(odd) {background: #5e5e5e*/
+/*}*/
 
 /* Error messages style */
 .errMsgStyle{
@@ -75,6 +76,21 @@ tr:nth-child(odd) {background: #5e5e5e
 }
 
 .container {
-    width: 1250px;
+    width: 1390px;
 }
 
+
+.thCustom {
+    border: thin solid black;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
