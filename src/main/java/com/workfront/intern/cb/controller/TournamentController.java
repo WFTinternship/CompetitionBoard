@@ -27,7 +27,7 @@ public class TournamentController {
     @Autowired
     TournamentService tournamentService;
 
-    @RequestMapping("/tournament-page")
+    @RequestMapping(value = {"/tournament-page"})
     public String toTournamentPage(Model model,
                                    HttpServletRequest request, HttpServletResponse response) {
 
@@ -43,12 +43,12 @@ public class TournamentController {
 
     // region <SEARCH TOURNAMENT>
 
-    @RequestMapping("/search-result")
+    @RequestMapping(value = {"/search-result"})
     public String toSearchResultPage(Model model) {
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
     }
 
-    @RequestMapping("/searchTournamentByName-form")
+    @RequestMapping(value = {"/searchTournamentByName-form"})
     public String searchTournamentsByName(Model model,
                                           @RequestParam("searchStr") String searchTournamentStr) {
 
@@ -67,7 +67,7 @@ public class TournamentController {
     }
     // endregion
 
-    @RequestMapping("/all-tournaments-page")
+    @RequestMapping(value = {"/all-tournaments-page"})
     public String allTournament(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
@@ -82,12 +82,12 @@ public class TournamentController {
 
     // region <ADD TOURNAMENT>
 
-    @RequestMapping("/addTournament-page")
+    @RequestMapping(value = {"/addTournament-page"})
     public String toAddTournamentPage(Model model) {
         return Params.PAGE_ADD_TOURNAMENT;
     }
 
-    @RequestMapping("/addTournamentForm")
+    @RequestMapping(value = {"/addTournamentForm"})
     public String addTournaments(Model model,
                                  @RequestParam("name") String name,
                                  @RequestParam("startDate") String startDate,

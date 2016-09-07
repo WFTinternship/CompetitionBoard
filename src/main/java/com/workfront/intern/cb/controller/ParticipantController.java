@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ParticipantController {
     private static Logger LOG = Logger.getLogger(ParticipantController.class);
 
-    @RequestMapping("/participant-page")
+    @RequestMapping(value = {"/participant-page"})
     public String toContactUsPage(Model model) {
         return "participant/participants";
     }

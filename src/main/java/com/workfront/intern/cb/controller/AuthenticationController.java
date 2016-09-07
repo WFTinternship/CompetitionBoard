@@ -36,7 +36,7 @@ public class AuthenticationController {
 
     // region <SIGN-UP>
 
-    @RequestMapping("/signup-page")
+    @RequestMapping(value = {"/signup-page"})
     public String toSignUpPage() {
         return Params.PAGE_SIGN_UP;
     }
@@ -179,7 +179,7 @@ public class AuthenticationController {
 
     // region <LOG-IN>
 
-    @RequestMapping("/login-page")
+    @RequestMapping(value = {"/login-page"})
     public String toLogIinPage() {
         return Params.PAGE_LOG_IN;
     }
@@ -222,7 +222,7 @@ public class AuthenticationController {
 
     // region <LOG-OUT>
 
-    @RequestMapping("/logout-page")
+    @RequestMapping(value = {"/logout-page"})
     public String toLogOutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 

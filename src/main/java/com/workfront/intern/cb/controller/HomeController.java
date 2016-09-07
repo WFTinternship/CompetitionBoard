@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class HomeController {
 
-    @RequestMapping("/")
+    @RequestMapping(value = {"/"})
     public String toHomePage(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "index";
     }
