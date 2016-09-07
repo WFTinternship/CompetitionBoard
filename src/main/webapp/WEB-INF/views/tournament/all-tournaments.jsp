@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
+<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">

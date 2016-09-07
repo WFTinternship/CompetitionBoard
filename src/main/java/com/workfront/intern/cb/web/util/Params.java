@@ -2,29 +2,26 @@ package com.workfront.intern.cb.web.util;
 
 public class Params {
 
-    // Pages
+    // Main Pages
     public static final String PAGE_INDEX = "index";
     public static final String PAGE_SIGN_UP = "secure/sign-up";
     public static final String PAGE_LOG_IN = "secure/log-in";
     public static final String PAGE_CONTACT = "contact/contact-us";
 
+    //Tournaments pages
     public static final String PAGE_TOURNAMENT = "tournament/tournament";
     public static final String PAGE_ADD_TOURNAMENT = "tournament/add-tournament";
     public static final String PAGE_ALL_AVAILABLE_TOURNAMENTS = "tournament/all-tournaments";
     public static final String PAGE_SEARCH_TOURNAMENT_BY_NAME = "tournament/search-result";
 
-
+    //Medias pages
     public static final String PAGE_MEDIA = "/media.jsp";
-    public static final String PAGE_ERROR_401 = "/error401.jsp";
-    public static final String PAGE_ERROR_404 = "/error404.jsp";
-    public static final String PAGE_ERROR_500 = "/error500.jsp";
 
+    //Errors pages
+    public static final String PAGE_ERROR_401 = "error/error401";
+    public static final String PAGE_ERROR_404 = "error/error404";
+    public static final String PAGE_ERROR_500 = "error/error500";
 
-
-
-
-    // Scope parameters
-    public static final String SESSION_CONTEXT_PARAM = "user_session_context";
 
     // Forms parameters, new manager
     public static final String FORM_PARAM_SIGN_IN = "userNameSignIn";

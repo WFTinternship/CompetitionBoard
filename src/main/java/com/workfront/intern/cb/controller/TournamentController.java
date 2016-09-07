@@ -4,12 +4,13 @@ import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
-import com.workfront.intern.cb.web.util.Params;
 import com.workfront.intern.cb.web.util.Helpers;
+import com.workfront.intern.cb.web.util.Params;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,8 @@ public class TournamentController {
     TournamentService tournamentService;
 
     @RequestMapping("/tournament-page")
-    public String toTournamentPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String toTournamentPage(Model model,
+                                   HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
@@ -46,7 +48,7 @@ public class TournamentController {
         return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
     }
 
-    @RequestMapping("/searchTournamentByNameForm")
+    @RequestMapping("/searchTournamentByName-form")
     public String searchTournamentsByName(Model model,
                                           @RequestParam("searchStr") String searchTournamentStr) {
 
@@ -70,7 +72,6 @@ public class TournamentController {
 
         HttpSession session = request.getSession();
         List<Tournament> allTournamentList = tournamentService.getTournamentList();
-
 
 
         session.setAttribute("managerService", managerService);
@@ -123,5 +124,29 @@ public class TournamentController {
 
         return "redirect:tournament-page";
     }
+    // endregion
+
+    // region <EDIT(UPDATE) TOURNAMENT>
+
+    @RequestMapping(value = "editTournament-form", method = RequestMethod.POST)
+    public String updateTournament(Model model, @RequestParam("tournament") int tournamentId) {
+
+//        tournamentService.updateTournament(tournamentId, );
+
+        return "redirect:tournament-page";
+    }
+
+    // endregion
+
+    // region <DELETE TOURNAMENT>
+
+    @RequestMapping(value = "deleteTournament-form", method = RequestMethod.POST)
+    public String deleteTournament(Model model, @RequestParam("tournament") int tournamentId) {
+
+        tournamentService.deleteTournamentById(tournamentId);
+
+        return "redirect:tournament-page";
+    }
+
     // endregion
 }

@@ -225,6 +225,7 @@ public class AuthenticationController {
     @RequestMapping("/logout-page")
     public String toLogOutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+
         if (session != null) {
             session.setAttribute("manager", null);
             session.invalidate();

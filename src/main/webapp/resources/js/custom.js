@@ -1,10 +1,6 @@
-// JS submit for tournament search button
 var searchStr;
 function submitSearchNameInForm() {
-     searchStr = document.getElementById("searchStr").value;
-    if (searchStr != null) {
-        document.forms["loginForm"].submit();
-    }
+    searchStr = document.getElementById("searchStr").value;
 }
 
 // return date value from calendar
@@ -19,17 +15,17 @@ function submitDateNameInForm() {
 function selectElementValue() {
     var x = document.getElementById("formatId");
 }
-$(document).ready(function() {
+$(document).ready(function () {
     showMenuItem();
 });
 
 // Show/hidden menu items
 function showMenuItem() {
-    if($('#login-status').val() !== '') {
-        $('.visible-when-logged-in').each(function() {
+    if ($('#login-status').val() !== '') {
+        $('.visible-when-logged-in').each(function () {
             $(this).removeClass('hidden-element');
         });
-        $('.hidden-when-logged-in').each(function() {
+        $('.hidden-when-logged-in').each(function () {
             $(this).addClass('hidden-element');
         });
     } else {
@@ -43,20 +39,24 @@ function showMenuItem() {
 }
 // Show/hidden menu items
 function showMenuItemReverse() {
-    $('.visible-element').each(function() {
+    $('.visible-element').each(function () {
         $(this).removeClass('visible-element').addClass('hidden-element');
     });
 }
-
+//Gets radioBtn value
+var deletedElementValue;
+function getCheckedElementValue() {
+    deletedElementValue = document.getElementsByName("tournament").value;
+    return deletedElementValue;
+}
 
 //Edit table row
-$('button').click(function(){
-    var $div=$('div'), isEditable=$div.is('.edit-td');
-    $('div').prop('contenteditable',!isEditable).toggleClass('edit-td')
+$('button').click(function () {
+    var $div = $('div'), isEditable = $div.is('.edit-td');
+    $('div').prop('contenteditable', !isEditable).toggleClass('edit-td')
 })
 
 
-//Checkbox select one
-$('.myCheckbox').click(function() {
-    $(this).siblings('input:checkbox').prop('checked', false);
-});
+
+
+

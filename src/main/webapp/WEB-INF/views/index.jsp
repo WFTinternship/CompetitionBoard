@@ -3,13 +3,12 @@
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
 <head>
     <title>Competition Board Home Page</title>
 
     <meta charset="utf-8">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -41,6 +40,7 @@
 
 <%--Gets specific atributes from http session--%>
 <%
+
     String userName = "";
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
@@ -58,7 +58,11 @@
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
         allTournaments = "Tournaments";
+    } else {
+        System.out.println("Manager is null");
     }
+
+
     if (userName.equals("")) {
         addTournamentMenuItem = "";
         classStr = "hidden-element";
@@ -98,7 +102,7 @@
 
     <%--Search tournament---%>
     <div class="header-content">
-        <form action="searchTournamentByNameForm" method="get" class="container">
+        <form action="searchTournamentByName-form" method="get" class="container">
             <div class="container">
                 <div class="row">
                     <div id="custom-search-input">
@@ -117,7 +121,6 @@
         </form>
 
         <br>
-
         <%--Write error message, when not found with provided search criteria  --%>
         <p class="err-msg">
             <%

@@ -1,14 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>All available tournaments</title>
+    <title>My tournaments</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,7 +57,6 @@
         classStr = "hidden-element";
     }
 %>
-
 
 <body class="backgroundTournament">
 
@@ -117,114 +116,113 @@
                         <div class="container">
                             <div id="table" class="table-editable">
 
-                                <%--Remove Button--%>
-                                    <span><button class="btn btn-danger" type="button">
+                                <%--Edit Button--%>
+                                        <span><button class="btn btn-warning" type="submit">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                         </span>
 
                                 <%--Remove Button--%>
-                                    <span><button class="btn btn-danger" type="submit">
+                                <form action="deleteTournament-form" method="post">
+                                    <span><button class="btn btn-danger" type="submit" onclick="getCheckedElementValue()" >
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                         </span>
-                                <br>
-                                <br>
-                                <%
+                                    <br>
+                                    <br>
+                                        <%
                                     List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
                                     int sizeList = tournamentList.size();
                                 %>
-                                <table class="table">
-                                    <tr class="thCustom">
-                                        <th>Check</th>
-                                        <th>No</th>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>StartDate</th>
-                                        <th>EndDate</th>
-                                        <th>Location</th>
-                                        <th>Description</th>
-                                        <th>Format</th>
-                                        <th>Owner</th>
-                                    </tr>
-                                    <%
-                                        for (int i = 0; i < sizeList; i++) {
-                                    %>
-                                    <tr>
-                                        <%--CheckBox--%>
-                                        <%--ToDo--%>
-                                        <td>
-                                            <div class="checkbox-inline">
-                                                <label><input type="checkbox" value=""></label>
-                                            </div>
-
-                                        </td>
-
-                                        <%--No--%>
-                                        <td contenteditable="false">
-                                            <%=i%>
-                                        </td>
-
-                                        <%--TournamentId--%>
-                                        <td contenteditable="false">
-                                            <%=tournamentList.get(i).getTournamentId()%>
-                                        </td>
-
-                                        <%--TournamentName--%>
-                                        <td contenteditable="false">
-                                            <div>
-                                                <%=tournamentList.get(i).getTournamentName()%>
-                                            </div>
-                                        </td>
-
-                                        <%--StartDate--%>
-                                        <td contenteditable="false" id="edit-td">
-                                            <div>
-                                                <%=tournamentList.get(i).getStartDate()%>
-                                            </div>
-                                        </td>
-
-                                        <%--EndDate--%>
-                                        <td contenteditable="false" id="edit-td">
-                                            <div>
-                                                <%=tournamentList.get(i).getEndDate()%>
-                                            </div>
-                                        </td>
-
-                                        <%--Location--%>
-                                        <td contenteditable="false" id="edit-td">
-                                            <div>
-                                                <%=tournamentList.get(i).getLocation()%>
-                                            </div>
-                                        </td>
-
-                                        <%--TournamentDescription--%>
-                                        <td contenteditable="false" id="edit-td">
-                                            <div>
-                                                <%=tournamentList.get(i).getTournamentDescription()%>
-                                            </div>
-                                        </td>
-
-                                        <%--TournamentFormatId--%>
+                                    <table class="table">
+                                        <tr class="thCustom">
+                                            <th>Check</th>
+                                            <th>No</th>
+                                            <%--<th>Id</th>--%>
+                                            <th>Name</th>
+                                            <th>StartDate</th>
+                                            <th>EndDate</th>
+                                            <th>Location</th>
+                                            <th>Description</th>
+                                            <th>Format</th>
+                                            <th>Owner</th>
+                                        </tr>
                                         <%
-                                            int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                                            String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                            for (int i = 0; i < sizeList; i++) {
+                                                int tournamentId = tournamentList.get(i).getTournamentId();
                                         %>
-                                        <td contenteditable="false">
-                                            <%=formatStr%>
-                                        </td>
+                                        <tr>
+                                            <%--CheckBox--%>
+                                            <td>
+                                                <input type="radio" class="checkbox-custom" name="tournament"
+                                                       id="<%=i%>" value="<%=tournamentId%>" required/>
+                                            </td>
 
-                                        <%--Tournament creator--%>
-                                        <%
-                                            assert manager != null;
-                                            String managerName = manager.getLogin();
-                                        %>
-                                        <td contenteditable="false">
-                                            <%= managerName%>
-                                        </td>
-                                    </tr>
-                                    <%}%>
-                                </table>
+                                            <%--No--%>
+                                            <td contenteditable="false">
+                                                <%=i%>
+                                            </td>
+
+                                            <%--TournamentId--%>
+                                            <%--<td contenteditable="false">--%>
+                                                <%--<%=tournamentList.get(i).getTournamentId()%>--%>
+                                            <%--</td>--%>
+
+                                            <%--TournamentName--%>
+                                            <td contenteditable="false">
+                                                <div>
+                                                    <%=tournamentList.get(i).getTournamentName()%>
+                                                </div>
+                                            </td>
+
+                                            <%--StartDate--%>
+                                            <td contenteditable="false" id="edit-td">
+                                                <div>
+                                                    <%=tournamentList.get(i).getStartDate()%>
+                                                </div>
+                                            </td>
+
+                                            <%--EndDate--%>
+                                            <td contenteditable="false" id="edit-td">
+                                                <div>
+                                                    <%=tournamentList.get(i).getEndDate()%>
+                                                </div>
+                                            </td>
+
+                                            <%--Location--%>
+                                            <td contenteditable="false" id="edit-td">
+                                                <div>
+                                                    <%=tournamentList.get(i).getLocation()%>
+                                                </div>
+                                            </td>
+
+                                            <%--TournamentDescription--%>
+                                            <td contenteditable="false" id="edit-td">
+                                                <div>
+                                                    <%=tournamentList.get(i).getTournamentDescription()%>
+                                                </div>
+                                            </td>
+
+                                            <%--TournamentFormatId--%>
+                                            <%
+                                                int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                                String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                            %>
+                                            <td contenteditable="false">
+                                                <%=formatStr%>
+                                            </td>
+
+                                            <%--Tournament creator--%>
+                                            <%
+                                                assert manager != null;
+                                                String managerName = manager.getLogin();
+                                            %>
+                                            <td contenteditable="false">
+                                                <%= managerName%>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+                                    </table>
                             </div>
                         </div>
 
