@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ContactUsController {
     private static Logger LOG = Logger.getLogger(ContactUsController.class);
 
-    @RequestMapping("/contact-page")
+    @RequestMapping(value = {"/contact-page"})
     public String toContactUsPage(Model model) {
         return "contact/contact-us";
     }

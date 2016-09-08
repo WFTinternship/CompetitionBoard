@@ -37,7 +37,8 @@ public class AuthenticationController {
     // region <SIGN-UP>
 
     @RequestMapping(value = {"/signup-page"})
-    public String toSignUpPage() {
+    public String toSignUpPage(Model model, HttpServletResponse response) {
+
         return Params.PAGE_SIGN_UP;
     }
 
@@ -224,6 +225,8 @@ public class AuthenticationController {
 
     @RequestMapping(value = {"/logout-page"})
     public String toLogOutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache");
+
         HttpSession session = request.getSession();
 
         if (session != null) {

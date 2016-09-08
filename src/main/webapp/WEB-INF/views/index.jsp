@@ -3,7 +3,7 @@
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
 <head>
     <title>Competition Board Home Page</title>
@@ -50,6 +50,7 @@
     String allTournaments = "All Tournaments";
 
     Manager manager = (Manager) session.getAttribute("manager");
+
     if (manager != null) {
         avatar = "resources/img/user_avatar/" + manager.getAvatar();
         userName = manager.getLogin();
@@ -58,10 +59,7 @@
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
         allTournaments = "Tournaments";
-    } else {
-        System.out.println("Manager is null");
     }
-
 
     if (userName.equals("")) {
         addTournamentMenuItem = "";
@@ -75,7 +73,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <a class="navbar-brand page-scroll" href="#page-top">Home</a>
-                <a ><img class="avatar" src="<%=avatar%>" > </a>
+            <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
         </div>
         <input type="hidden" id="login-status" value="<%=userName%>"/>
@@ -86,7 +84,8 @@
                 <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
                 </a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%></a></li>
+                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
+                </a></li>
                 <li type="hide"><a class="page-scroll" href="tournament/match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Gallery</a></li>
                 <li><a class="page-scroll" href="#contact">Contact Us</a></li>
