@@ -25,10 +25,9 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
-    <script src="<c:url value="/resources/js/jquery.js" />"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 </head>
 
@@ -43,6 +42,7 @@
     String allTournaments = "All Tournaments";
 
     Manager manager = (Manager) session.getAttribute("manager");
+
     if (manager != null) {
         avatar = "resources/img/user_avatar/" + manager.getAvatar();
         userName = manager.getLogin();
@@ -52,6 +52,7 @@
         classStr = "visible-element";
         allTournaments = "Tournaments";
     }
+
     if (userName.equals("")) {
         addTournamentMenuItem = "";
         classStr = "hidden-element";
@@ -124,21 +125,24 @@
 
                                 <%--Remove Button--%>
                                 <form action="deleteTournament-form" method="post">
-                                    <span><button class="btn btn-danger" type="submit" onclick="getCheckedElementValue()" >
+                                    <span><button class="btn btn-danger" type="submit"
+                                                  onclick="getCheckedElementValue()">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                         </span>
+                                </form>
+
                                     <br>
                                     <br>
-                                        <%
-                                    List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
-                                    int sizeList = tournamentList.size();
-                                %>
-                                    <table class="table">
+                                    <%
+                                        List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
+                                        int sizeList = tournamentList.size();
+                                    %>
+                                    <table class="table" id="updateTournamentTable">
                                         <tr class="thCustom">
                                             <th>Check</th>
                                             <th>No</th>
-                                            <%--<th>Id</th>--%>
+                                            <th>Id</th>
                                             <th>Name</th>
                                             <th>StartDate</th>
                                             <th>EndDate</th>
@@ -163,44 +167,36 @@
                                                 <%=i%>
                                             </td>
 
-                                            <%--TournamentId--%>
-                                            <%--<td contenteditable="false">--%>
-                                                <%--<%=tournamentList.get(i).getTournamentId()%>--%>
-                                            <%--</td>--%>
+                                                <%--id--%>
+                                                <td contenteditable="false" id="idNotUpdated">
+                                                    <%=tournamentList.get(i).getTournamentId()%>
+                                                </td>
 
                                             <%--TournamentName--%>
-                                            <td contenteditable="false">
-                                                <div>
-                                                    <%=tournamentList.get(i).getTournamentName()%>
-                                                </div>
+                                            <td contenteditable="true" id="nameUpdate">
+                                                <%=tournamentList.get(i).getTournamentName()%>
                                             </td>
 
                                             <%--StartDate--%>
-                                            <td contenteditable="false" id="edit-td">
-                                                <div>
-                                                    <%=tournamentList.get(i).getStartDate()%>
-                                                </div>
+                                            <td contenteditable="false" id="startDateUpdate">
+                                                <%=tournamentList.get(i).getStartDate()%>
                                             </td>
 
                                             <%--EndDate--%>
-                                            <td contenteditable="false" id="edit-td">
-                                                <div>
-                                                    <%=tournamentList.get(i).getEndDate()%>
-                                                </div>
+                                            <td contenteditable="false" id="endDateUpdate">
+                                                <%=tournamentList.get(i).getEndDate()%>
                                             </td>
 
                                             <%--Location--%>
-                                            <td contenteditable="false" id="edit-td">
-                                                <div>
-                                                    <%=tournamentList.get(i).getLocation()%>
-                                                </div>
+                                            <td contenteditable="false" id="locationUpdate">
+
+                                                <%=tournamentList.get(i).getLocation()%>
+
                                             </td>
 
                                             <%--TournamentDescription--%>
-                                            <td contenteditable="false" id="edit-td">
-                                                <div>
-                                                    <%=tournamentList.get(i).getTournamentDescription()%>
-                                                </div>
+                                            <td contenteditable="true" id="descriptionUpdate">
+                                                <%=tournamentList.get(i).getTournamentDescription()%>
                                             </td>
 
                                             <%--TournamentFormatId--%>
@@ -208,7 +204,7 @@
                                                 int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
                                                 String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
                                             %>
-                                            <td contenteditable="false">
+                                            <td contenteditable="false" id="formatNotUpdate">
                                                 <%=formatStr%>
                                             </td>
 
@@ -217,12 +213,13 @@
                                                 assert manager != null;
                                                 String managerName = manager.getLogin();
                                             %>
-                                            <td contenteditable="false">
+                                            <td contenteditable="false" id="managerNotUpdate">
                                                 <%= managerName%>
                                             </td>
                                         </tr>
                                         <%}%>
                                     </table>
+
                             </div>
                         </div>
 
@@ -241,16 +238,17 @@
             </div>
         </div>
 
+
         <!-- jQuery -->
-        <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
+        <script src="<c:url value="/resources/js/jquery-3.1.0.js" />"></script>
+        <%--<script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>--%>
 
         <%--Custom JS--%>
         <script src="<c:url value="/resources/js/custom.js" />"></script>
-        <script src="<c:url value="/resources/js/tableView.js" />"></script>
 
         <script src='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-        <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+        <%--<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>--%>
+
         <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js'></script>
 </body>
 </html>

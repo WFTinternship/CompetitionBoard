@@ -51,11 +51,37 @@ function getCheckedElementValue() {
 }
 
 //Edit table row
-$('button').click(function () {
-    var $div = $('div'), isEditable = $div.is('.edit-td');
-    $('div').prop('contenteditable', !isEditable).toggleClass('edit-td')
-})
+// $('button').click(function () {
+//     var $div = $('div'), isEditable = $div.is('.edit-td');
+//     $('div').prop('contenteditable', !isEditable).toggleClass('edit-td')
+// })
 
+
+// UpdateTableCell
+$(document).ready(function() {
+    $('#updateTournamentTable td').blur(function() {
+        $.ajax({
+            url : '/updateTournament',
+            type: 'POST',
+            data : {
+                nameUpdate : $('#nameUpdate').text().trim(),
+                startDateUpdate : $('#startDateUpdate').text().trim(),
+                endDateUpdate : $('#endDateUpdate').text().trim(),
+                locationUpdate : $('#locationUpdate').text().trim(),
+                formatNotUpdate : $('#formatNotUpdate').text().trim(),
+                managerNotUpdate : $('#managerNotUpdate').text().trim(),
+                idNotUpdated : $('#idNotUpdated').text().trim()
+            },
+            success : function(tournament) {
+                $('#updateTableElement').text(tournament);
+            },
+            error: function (error) {
+                // throw new Error(error);
+                console.error(error);
+            }
+        });
+    });
+});
 
 
 

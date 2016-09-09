@@ -21,6 +21,7 @@ public class Initializer implements ServletContextListener {
     private static String SERVER_ROOT_PATH;
     private static String RESOURCES_PATH;
     private static String FILES_PATH;
+    private static boolean REDIRECT_UNAUTHORIZED_REQUESTS_TO_HOME;
 
     public static final File tempDir = new File(System.getProperty("java.io.tmpdir"));
 
@@ -34,10 +35,15 @@ public class Initializer implements ServletContextListener {
         RESOURCES_PATH = SERVER_ROOT_PATH + File.separator + "resources";
         FILES_PATH = RESOURCES_PATH + File.separator + "files";
         File filesDir = new File(FILES_PATH);
-        if (!filesDir.exists())
+        if (!filesDir.exists()) {
             if (!filesDir.mkdirs()) {
                 LOG.error("-- could not create files directory");
             }
+        }
+
+        REDIRECT_UNAUTHORIZED_REQUESTS_TO_HOME = Boolean.valueOf(
+                SERVLET_CONTEXT.getInitParameter("redirectToHomeOnUnauthorizedRequest")
+        );
 
         LOG.info("-- context initialized");
     }
@@ -67,5 +73,9 @@ public class Initializer implements ServletContextListener {
 
     public static String getFilesPath() {
         return FILES_PATH;
+    }
+
+    public static boolean isRedirectUnauthorizedRequestsToHome() {
+        return REDIRECT_UNAUTHORIZED_REQUESTS_TO_HOME;
     }
 }

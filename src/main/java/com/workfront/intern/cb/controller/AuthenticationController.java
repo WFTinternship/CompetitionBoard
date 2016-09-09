@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.web.Initializer;
@@ -225,14 +226,9 @@ public class AuthenticationController {
 
     @RequestMapping(value = {"/logout-page"})
     public String toLogOutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Cache-Control", "no-cache");
 
         HttpSession session = request.getSession();
-
         if (session != null) {
-//            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-//            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-//            response.setDateHeader("Expires", 0);
             session.setAttribute("manager", null);
             session.invalidate();
         }

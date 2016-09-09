@@ -4,6 +4,16 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <context-param>
+        <description>
+            Shows if any (unauthorized) request to pages that requires authorization
+            should be redirected to home page. The other option is to show a
+            standard error page.
+        </description>
+        <param-name>redirectToHomeOnUnauthorizedRequest</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
@@ -22,10 +32,24 @@
         <listener-class>com.workfront.intern.cb.web.Initializer</listener-class>
     </listener>
 
+    <!--Request Filtering-->
+    <filter>
+        <filter-name>RequestFilter</filter-name>
+        <filter-class>com.workfront.intern.cb.web.RequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!--Errors handling-->
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
         <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/views/error/error401.jsp</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>

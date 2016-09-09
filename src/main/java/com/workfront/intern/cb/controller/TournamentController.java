@@ -87,7 +87,7 @@ public class TournamentController {
         return Params.PAGE_ADD_TOURNAMENT;
     }
 
-    @RequestMapping(value = {"/addTournamentForm"})
+    @RequestMapping(value = {"/addTournamentForm"}, method = RequestMethod.POST)
     public String addTournaments(Model model,
                                  @RequestParam("name") String name,
                                  @RequestParam("startDate") String startDate,
@@ -128,10 +128,25 @@ public class TournamentController {
 
     // region <EDIT(UPDATE) TOURNAMENT>
 
-    @RequestMapping(value = "editTournament-form", method = RequestMethod.POST)
-    public String updateTournament(Model model, @RequestParam("tournament") int tournamentId) {
+    @RequestMapping(value = "/updateTournament", method = RequestMethod.POST)
+    public String updateTournament(Model model, HttpServletRequest request) {
+        int tournamentId = 544;
 
-//        tournamentService.updateTournament(tournamentId, );
+        String nameUpdate = request.getParameter("nameUpdate");
+        String startDateUpdate = request.getParameter("startDateUpdate");
+        String endDateUpdate = request.getParameter("endDateUpdate");
+        String locationUpdate = request.getParameter("locationUpdate");
+        String descriptionUpdate = request.getParameter("descriptionUpdate");
+
+        Tournament tournament = tournamentService.getTournamentById(tournamentId);
+        tournament.setTournamentName(nameUpdate);
+        //TODO: update timestamps based on User input
+//        tournament.setStartDate(startDateUpdate);
+//        tournament.setEndDate(endDateUpdate);
+        tournament.setLocation(locationUpdate);
+        tournament.setTournamentDescription(descriptionUpdate);
+
+        tournamentService.updateTournament(tournamentId, tournament);
 
         return "redirect:tournament-page";
     }
