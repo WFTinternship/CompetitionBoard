@@ -2,7 +2,7 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-h1{
+h1 {
     margin-bottom: 40px;
 }
 
@@ -13,12 +13,13 @@ h1{
     margin-bottom: 20px;
 }
 
-.err-msg{
+.err-msg {
     color: #e87b6e;
     text-align: center;
     font-size: 17px;
     letter-spacing: 1px;
 }
+
 .hidden-element {
     display: none !important;
 }
@@ -27,9 +28,11 @@ h1{
     padding-left: 0px;
     padding-right: 0px;
 }
+
 .container-fluid .navbar-header {
     padding-left: 20px;
 }
+
 .container-fluid .navbar-collapse {
     padding-right: 20px;
 }
@@ -58,7 +61,7 @@ h1{
 /*}*/
 
 /* Error messages style */
-.errMsgStyle{
+.errMsgStyle {
     color: red;
     font-size: 5px;
 }
@@ -79,7 +82,6 @@ h1{
     width: 1300px;
 }
 
-
 .thCustom {
     border: thin solid black;
     text-align: center;
@@ -97,4 +99,26 @@ h1{
 
 .checkbox-custom {
     height: auto;
+}
+
+.a-custom {
+    color: white;
+    font-size: 14px;
+}
+
+.a-custom:link {
+    text-decoration: underline;
+}
+
+.a-custom:visited {
+    /*color: #E89980;*/
+}
+
+.button-custom{
+    background-color: #006dcc;
+    border-color: #0044cc;
+}
+
+.button-custom:hover{
+    background-color: #0044cc;
 }

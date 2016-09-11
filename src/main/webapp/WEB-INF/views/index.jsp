@@ -40,7 +40,6 @@
 
 <%--Gets specific atributes from http session--%>
 <%
-
     String userName = "";
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";

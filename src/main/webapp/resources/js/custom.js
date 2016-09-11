@@ -39,8 +39,12 @@ function showMenuItemReverse() {
     });
 }
 
-//Deletes selected tournament
+function submitTournamentName() {
+    document.getElementById("hrefTournamentName").submit();
+}
 
+
+//Deletes selected tournament
 function deleteCheckedElement() {
     var elements;
     var current;
@@ -74,32 +78,13 @@ function updateCheckedElement(x) {
             alert(current.parent);
 
 
-                //document.getElementById("deleteBtnId").submit();
-            } else {
-                //alert(elements[i].value);
-            }
+            //document.getElementById("deleteBtnId").submit();
+        } else {
+            //alert(elements[i].value);
         }
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

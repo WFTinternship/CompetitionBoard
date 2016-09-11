@@ -92,7 +92,9 @@
         <!-- /.form-group -->
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-                <input type="submit" class="btn btn-danger" value="Save and continue">
+                <input type="reset" class="btn btn-danger " value="Reset">
+                <br><br>
+                <input type="submit" class="btn btn-primary button-custom" value="Save and continue">
             </div>
         </div>
     </form>

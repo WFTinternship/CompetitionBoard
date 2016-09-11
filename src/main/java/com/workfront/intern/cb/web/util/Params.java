@@ -14,8 +14,13 @@ public class Params {
     public static final String PAGE_ALL_AVAILABLE_TOURNAMENTS = "tournament/all-tournaments";
     public static final String PAGE_SEARCH_TOURNAMENT_BY_NAME = "tournament/search-result";
 
+    //Participants pages
+    public static final String PAGE_PARTICIPANTS = "participant/participants";
+    public static final String PAGE_ADD_MEMBER = "participant/add-member";
+
     //Medias pages
     public static final String PAGE_MEDIA = "/media.jsp";
+
 
     //Errors pages
     public static final String PAGE_ERROR_401 = "error/error401";

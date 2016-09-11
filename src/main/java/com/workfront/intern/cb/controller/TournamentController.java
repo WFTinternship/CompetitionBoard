@@ -1,13 +1,12 @@
 package com.workfront.intern.cb.controller;
 
-import com.mchange.v2.cfg.PropertiesConfigSource;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Helpers;
 import com.workfront.intern.cb.web.util.Params;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +22,7 @@ import java.util.List;
 
 @Controller
 public class TournamentController {
+    private static Logger LOG = Logger.getLogger(TournamentController.class);
 
     @Autowired
     ManagerService managerService;
@@ -31,8 +31,7 @@ public class TournamentController {
     TournamentService tournamentService;
 
     @RequestMapping(value = {"/tournament-page"})
-    public String toTournamentPage(Model model,
-                                   HttpServletRequest request, HttpServletResponse response) {
+    public String toTournamentPage(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
@@ -91,14 +90,14 @@ public class TournamentController {
     }
 
     @RequestMapping(value = {"/addTournamentForm"}, method = RequestMethod.GET)
-    public String addTournaments(Model model,
-                                 @RequestParam("name") String name,
-                                 @RequestParam("startDate") String startDate,
-                                 @RequestParam("endDate") String endDate,
-                                 @RequestParam("location") String location,
-                                 @RequestParam("tournament_description") String description,
-                                 @RequestParam("format") int format,
-                                 HttpServletRequest request, HttpServletResponse response) {
+    public String addTournament(Model model,
+                                @RequestParam("name") String name,
+                                @RequestParam("startDate") String startDate,
+                                @RequestParam("endDate") String endDate,
+                                @RequestParam("location") String location,
+                                @RequestParam("tournament_description") String description,
+                                @RequestParam("format") int format,
+                                HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
@@ -120,6 +119,7 @@ public class TournamentController {
             session.setAttribute("tournamentListByManager", tournamentListByManager);
 
         } catch (Exception ex) {
+            LOG.error(ex.getMessage(), ex);
             // Checking duplicate of manager name during registration
             request.setAttribute("existsTournament", "Sorry, but tournament with this name exists");
 

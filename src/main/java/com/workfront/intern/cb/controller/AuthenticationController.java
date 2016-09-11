@@ -1,7 +1,6 @@
 package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.util.StringHelper;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.web.Initializer;
@@ -50,7 +49,7 @@ public class AuthenticationController {
         String username = null;
         String password = null;
         String confirmPassword = null;
-        File imageFile = null;
+        File imageFile;
         File avatar = null;
 
         HttpSession session = request.getSession();

@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +37,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="/">Home</a>
+            <a class="navbar-brand page-scroll" href="home">Home</a>
         </div>
 
         <!-- Page Content -->
@@ -110,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="submit" class="btn btn-success btn-send" value="Send message">
+                                    <input type="submit" class="btn btn-success btn-send" value="Send message" >
                                 </div>
                             </div>
                         </div>

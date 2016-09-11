@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
-<%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.common.Participant" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.common.Member" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,11 +19,14 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 
-    <!-- Custom CSS -->
+    <!-- Main CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/blog-home.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/creative.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
+
 
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
@@ -38,17 +41,17 @@
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
     String avatar = "";
-
     String addTournamentMenuItem = null;
     String classStr = null;
+    String allTournaments = "All Tournaments";
 
-    Manager managerSession  = (Manager) session.getAttribute("manager");
-    if (managerSession  != null) {
-        avatar = "resources/img/user_avatar/" + managerSession .getAvatar();
-        userName = managerSession .getLogin();
+    Manager manager = (Manager) session.getAttribute("manager");
+
+    if (manager != null) {
+        avatar = "resources/img/user_avatar/" + manager.getAvatar();
+        userName = manager.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
-
         addTournamentMenuItem = "Add Tournament";
         classStr = "visible-element";
     }
@@ -58,7 +61,6 @@
         classStr = "hidden-element";
     }
 %>
-
 
 <body class="backgroundTournament">
 
@@ -71,15 +73,18 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" href="/">Home</a>
-            <a ><img class="avatar" src="<%=avatar%>" > </a>
-            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%></a>
+            <a><img class="avatar" src="<%=avatar%>"> </a>
+            <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
+            </a>
         </div>
-        <input type="hidden" id="login-status" value="<%=userName%>" />
+        <input type="hidden" id="login-status" value="<%=userName%>"/>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>" onload="showMenuItem()"><%=addTournamentMenuItem%></a></li>
+                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                       onload="showMenuItem()"><%=addTournamentMenuItem%>
+                </a></li>
                 <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
                 <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
                 <li><a class="page-scroll" href="#portfolio">Media</a></li>
@@ -92,7 +97,6 @@
     </div>
 </nav>
 
-
 <div class="row">
     <!-- Blog Entries Column -->
     <div class="col-md-8">
@@ -102,17 +106,17 @@
                     <div class="col-sm-3 sidenav">
 
                         <ul class="nav nav-pills nav-stacked">
-                            <%--<li>--%>
-                            <%--<button class="btn btn-danger"><B>CREATE A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
-                            <%--<BR>--%>
-                            <%--<li>--%>
-                            <%--<button class="btn btn-danger" onclick="editContent()"><B>EDIT A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
-                            <%--<BR>--%>
-                            <%--<li>--%>
-                            <%--<button class="btn btn-danger"><B>DELETE A TOURNAMENT</B></button>--%>
-                            <%--</li>--%>
+                            <li>
+                                <button class="btn btn-primary button-custom"><B>Create Team</B></button>
+                            </li>
+                            <BR>
+
+                            <li>
+                                <form action="add-members-page" method="get">
+                                    <button type="submit" class="btn btn-primary button-custom"><B>ADD A MEMBER</B>
+                                    </button>
+                                </form>
+                            </li>
 
                         </ul>
                         <br>
@@ -120,58 +124,108 @@
 
 
                     <div class="col-sm-9">
-                        <h2>Participant</h2>
+                        <h2>Participants</h2>
                         <hr>
                         <br>
 
 
+                        <h2>Team</h2>
+                        <hr>
+                        <br>
 
-                        <!-- Footer -->
-                        <footer>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <p>Copyright &copy; Artur Babayan 2016</p>
+                        <h2>Members</h2>
+                        <hr>
+                        <br>
+
+                        <div class="container">
+                            <%
+                                List<Member> membersList = (List<Member>) request.getAttribute("membersList");
+                                int size = membersList.size();
+
+                            %>
+
+                            <table class="table">
+                                <tr>
+                                    <th width="1%">Check</th>
+                                    <th width="3%">No</th>
+                                    <th width="3%">Id</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Position</th>
+                                    <th>TournamentName</th>
+                                </tr>
+                                <%for (int i = 0; i < size; i++) {%>
+                                <tr>
+                                    <%--Radio--%>
+                                    <td>
+                                        <input type="radio" id="" class="checkbox-custom" name="" value="" required/>
+                                    </td>
+                                    <%--No--%>
+                                    <td>
+                                        <%=i%>
+                                    </td>
+
+                                    <%--Id--%>
+                                    <td>
+                                        <%=membersList.get(i).getId()%>
+                                    </td>
+
+                                    <%--Name--%>
+                                    <td>
+                                        <%=membersList.get(i).getName()%>
+                                    </td>
+
+                                    <%--Surname--%>
+                                    <td>
+                                        <%=membersList.get(i).getSurName()%>
+                                    </td>
+
+                                    <%--Position--%>
+                                    <td>
+                                        <%=membersList.get(i).getPosition()%>
+                                    </td>
+                                    <%--TournamentName--%>
+                                    <td>
+                                        <%=membersList.get(i).getPosition()%>
+                                    </td>
+                                </tr>
+                                <%}%>
+
+
+                            </table>
+
+
+                            <!-- Footer -->
+                            <footer>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>Copyright &copy; Artur Babayan 2016</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </footer>
+                            </footer>
+
+                        </div>
+
 
                     </div>
-
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
+
+            <!-- Footer -->
+            <%--<footer id="footer">--%>
+            <%--<div class="row">--%>
+            <%--<div class="col-lg-12">--%>
+            <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
+            <%--</div>--%>
+            <%--</div>--%>
+            <%--</footer>--%>
+
         </div>
-
-        <!-- Footer -->
-        <%--<footer id="footer">--%>
-        <%--<div class="row">--%>
-        <%--<div class="col-lg-12">--%>
-        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-        <%--</div>--%>
-        <%--</div>--%>
-        <%--</footer>--%>
-
     </div>
-</div>
 </div>
 
 <!-- jQuery -->
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
-
-<%--<!-- Plugin JavaScript -->--%>
-<%--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>--%>
-<%--<script src="<c:url value="/resources/vendor/scrollreveal/scrollreveal.min.js" />"></script>--%>
-
-<%--<!-- Theme JavaScript -->--%>
-<%--<script src="<c:url value="/resources/js/creative.min.js" />"></script>--%>
 
 <%--Custom JS--%>
 <script src="<c:url value="/resources/js/custom.js" />"></script>

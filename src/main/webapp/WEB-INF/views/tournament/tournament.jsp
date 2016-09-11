@@ -129,7 +129,7 @@
                                 <%--Remove Button--%>
 
                                 <form action="deleteTournament" method="get" id="deleteBtnId">
-                                    <button class="btn btn-danger" type="button" onclick="deleteCheckedElement()" >
+                                    <button class="btn btn-danger" type="button" onclick="deleteCheckedElement()">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
 
@@ -152,14 +152,15 @@
                                             <th>Format</th>
                                             <th>Owner</th>
                                         </tr>
-                                        <%
-                                            for (int i = 0; i < sizeList; i++) {
-                                                int tournamentId = tournamentList.get(i).getTournamentId();
+                                        <% for (int i = 0; i < sizeList; i++) {
+                                            int tournamentId = tournamentList.get(i).getTournamentId();
                                         %>
+
                                         <tr>
-                                            <%--CheckBox--%>
+                                            <%--Radio--%>
                                             <td>
-                                                <input type="radio" id="<%=tournamentId%>" class="checkbox-custom" name="tournamentNameId"
+                                                <input type="radio" id="<%=tournamentId%>" class="checkbox-custom"
+                                                       name="tournamentNameId"
                                                        value="<%=tournamentId%>" required/>
                                             </td>
 
@@ -175,7 +176,9 @@
 
                                             <%--TournamentName--%>
                                             <td contenteditable="false" id="nameUpdate">
-                                                <%=tournamentList.get(i).getTournamentName()%>
+                                                <a class="a-custom" name="hrefTournamentName" href="participant-page">
+                                                    <%=tournamentList.get(i).getTournamentName()%>
+                                                </a>
                                             </td>
 
                                             <%--StartDate--%>

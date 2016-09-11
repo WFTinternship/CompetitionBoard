@@ -33,6 +33,7 @@ public class ContactUsController {
                 "MESSAGE: " + "\n" + message;
 
         Helpers.sendEmail(msg);
-        return "redirect:/";
+
+        return "redirect:/home";
     }
 }
