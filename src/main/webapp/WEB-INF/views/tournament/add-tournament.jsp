@@ -16,14 +16,16 @@
 
 <%--Gets error message from SignInServlet--%>
 <%
-    String existsTournament = (String) session.getAttribute("existsTournament");
+    String existsTournament = (String) request.getAttribute("existsTournament");
     if (existsTournament == null) {
         existsTournament = "";
     }
+%>
 
+<%--Return local time--%>
+<%
     java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
     String today = df.format(new java.util.Date());
-
 %>
 
 <body class="backgroundTournament">

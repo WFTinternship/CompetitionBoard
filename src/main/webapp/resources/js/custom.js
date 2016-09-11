@@ -1,8 +1,3 @@
-var searchStr;
-function submitSearchNameInForm() {
-    searchStr = document.getElementById("searchStr").value;
-}
-
 // return date value from calendar
 var startDate;
 var endDate;
@@ -43,46 +38,98 @@ function showMenuItemReverse() {
         $(this).removeClass('visible-element').addClass('hidden-element');
     });
 }
-//Gets radioBtn value
-var deletedElementValue;
-function getCheckedElementValue() {
-    deletedElementValue = document.getElementsByName("tournament").value;
-    return deletedElementValue;
+
+//Deletes selected tournament
+
+function deleteCheckedElement() {
+    var elements;
+    var current;
+
+    elements = document.getElementsByName("tournamentNameId");
+    for (var i = 0, len = elements.length; i < len; ++i) {
+        if (elements[i].checked) {
+            current = elements[i].value;
+            if (confirm("Are you sure you want to delete tournament ? ") == true) {
+                //alert(elements[i].value);
+                document.getElementById("deleteBtnId").submit();
+            } else {
+                //alert(elements[i].value);
+            }
+        }
+    }
 }
 
-//Edit table row
-// $('button').click(function () {
-//     var $div = $('div'), isEditable = $div.is('.edit-td');
-//     $('div').prop('contenteditable', !isEditable).toggleClass('edit-td')
-// })
+
+//ToDo
+//Updates selected tournament
+function updateCheckedElement(x) {
+    var elements;
+    var current;
+
+    elements = document.getElementsByName("tournamentNameId");
+    for (var i = 0, len = elements.length; i < len; ++i) {
+        if (elements[i].checked) {
+            current = elements[i].value;
+            //alert(current.getElementById("nameUpdate"));
+            alert(current.parent);
 
 
-// UpdateTableCell
-$(document).ready(function() {
-    $('#updateTournamentTable td').blur(function() {
+                //document.getElementById("deleteBtnId").submit();
+            } else {
+                //alert(elements[i].value);
+            }
+        }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function editCustom() {
+    $('button').click(function () {
+        var $div = $('div'), isEditable = $div.is('.edit-td');
+        $('div').prop('contenteditable', !isEditable).toggleClass('edit-td')
+    })
+}
+
+
+$(document).ready(function () {
+    $('#updateTournamentTable').find('td').blur(function () {
         $.ajax({
-            url : '/updateTournament',
-            type: 'POST',
-            data : {
-                nameUpdate : $('#nameUpdate').text().trim(),
-                startDateUpdate : $('#startDateUpdate').text().trim(),
-                endDateUpdate : $('#endDateUpdate').text().trim(),
-                locationUpdate : $('#locationUpdate').text().trim(),
-                formatNotUpdate : $('#formatNotUpdate').text().trim(),
-                managerNotUpdate : $('#managerNotUpdate').text().trim(),
-                idNotUpdated : $('#idNotUpdated').text().trim()
+            url: '/updateTournament',
+            type: 'GET',
+            data: {
+                nameUpdate: $('#nameUpdate').text().trim(),
+                startDateUpdate: $('#startDateUpdate').text().trim(),
+                endDateUpdate: $('#endDateUpdate').text().trim(),
+                locationUpdate: $('#locationUpdate').text().trim(),
+                formatNotUpdate: $('#formatNotUpdate').text().trim(),
+                managerNotUpdate: $('#managerNotUpdate').text().trim(),
+                idNotUpdated: $('#idNotUpdated').text().trim()
             },
-            success : function(tournament) {
+            success: function (tournament) {
                 $('#updateTableElement').text(tournament);
-            },
-            error: function (error) {
-                // throw new Error(error);
-                console.error(error);
             }
         });
     });
 });
-
-
-
-

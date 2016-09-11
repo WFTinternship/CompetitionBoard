@@ -23,10 +23,11 @@ import java.util.Date;
 import java.util.Properties;
 
 public class Helpers {
+
     /**
      * Parse input string to timestamp format
      */
-    public static Timestamp stringParseToTimeStamp(String input) {
+    public static Timestamp parseStringToTimeStamp(String input) {
         Date date;
         long time = 0;
 
@@ -37,6 +38,16 @@ public class Helpers {
             e.printStackTrace();
         }
         return new Timestamp(time);
+    }
+
+    /**
+     * Parse input timestamp to String format
+     */
+    public static String parseTimeStampToString(Timestamp timestamp) {
+        Date date = new Date((timestamp).getTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+
+        return simpleDateFormat.format(date);
     }
 
     /**

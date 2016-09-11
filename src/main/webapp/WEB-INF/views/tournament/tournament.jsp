@@ -4,6 +4,10 @@
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.web.util.Helpers" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -117,20 +121,17 @@
                         <div class="container">
                             <div id="table" class="table-editable">
 
-                                <%--Edit Button--%>
-                                        <span><button class="btn btn-warning" type="submit">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </button>
-                                        </span>
+                                <%--Update Button--%>
+                                <button class="btn btn-warning" type="button" onclick="updateCheckedElement()">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
 
                                 <%--Remove Button--%>
-                                <form action="deleteTournament-form" method="post">
-                                    <span><button class="btn btn-danger" type="submit"
-                                                  onclick="getCheckedElementValue()">
+
+                                <form action="deleteTournament" method="get" id="deleteBtnId">
+                                    <button class="btn btn-danger" type="button" onclick="deleteCheckedElement()" >
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
-                                        </span>
-                                </form>
 
                                     <br>
                                     <br>
@@ -158,44 +159,42 @@
                                         <tr>
                                             <%--CheckBox--%>
                                             <td>
-                                                <input type="radio" class="checkbox-custom" name="tournament"
-                                                       id="<%=i%>" value="<%=tournamentId%>" required/>
+                                                <input type="radio" id="<%=tournamentId%>" class="checkbox-custom" name="tournamentNameId"
+                                                       value="<%=tournamentId%>" required/>
                                             </td>
 
                                             <%--No--%>
-                                            <td contenteditable="false">
+                                            <td contenteditable="false" id="idNotUpdated">
                                                 <%=i%>
                                             </td>
 
-                                                <%--id--%>
-                                                <td contenteditable="false" id="idNotUpdated">
-                                                    <%=tournamentList.get(i).getTournamentId()%>
-                                                </td>
+                                            <%--id--%>
+                                            <td contenteditable="false" id="tournamentIdNotUpdated">
+                                                <%=tournamentList.get(i).getTournamentId()%>
+                                            </td>
 
                                             <%--TournamentName--%>
-                                            <td contenteditable="true" id="nameUpdate">
+                                            <td contenteditable="false" id="nameUpdate">
                                                 <%=tournamentList.get(i).getTournamentName()%>
                                             </td>
 
                                             <%--StartDate--%>
                                             <td contenteditable="false" id="startDateUpdate">
-                                                <%=tournamentList.get(i).getStartDate()%>
+                                                <%=Helpers.parseTimeStampToString(tournamentList.get(i).getStartDate())%>
                                             </td>
 
                                             <%--EndDate--%>
                                             <td contenteditable="false" id="endDateUpdate">
-                                                <%=tournamentList.get(i).getEndDate()%>
+                                                <%=Helpers.parseTimeStampToString(tournamentList.get(i).getEndDate())%>
                                             </td>
 
                                             <%--Location--%>
                                             <td contenteditable="false" id="locationUpdate">
-
                                                 <%=tournamentList.get(i).getLocation()%>
-
                                             </td>
 
                                             <%--TournamentDescription--%>
-                                            <td contenteditable="true" id="descriptionUpdate">
+                                            <td contenteditable="false" id="descriptionUpdate">
                                                 <%=tournamentList.get(i).getTournamentDescription()%>
                                             </td>
 
@@ -219,7 +218,7 @@
                                         </tr>
                                         <%}%>
                                     </table>
-
+                                </form>
                             </div>
                         </div>
 

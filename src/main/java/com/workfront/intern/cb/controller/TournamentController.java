@@ -1,7 +1,9 @@
 package com.workfront.intern.cb.controller;
 
+import com.mchange.v2.cfg.PropertiesConfigSource;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Helpers;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
@@ -87,7 +90,7 @@ public class TournamentController {
         return Params.PAGE_ADD_TOURNAMENT;
     }
 
-    @RequestMapping(value = {"/addTournamentForm"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/addTournamentForm"}, method = RequestMethod.GET)
     public String addTournaments(Model model,
                                  @RequestParam("name") String name,
                                  @RequestParam("startDate") String startDate,
@@ -99,12 +102,13 @@ public class TournamentController {
 
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+
         int managerId = manager.getId();
         try {
             Tournament tournament = new Tournament();
             tournament.setTournamentName(name);
-            tournament.setStartDate(Helpers.stringParseToTimeStamp(startDate));
-            tournament.setEndDate(Helpers.stringParseToTimeStamp(endDate));
+            tournament.setStartDate(Helpers.parseStringToTimeStamp(startDate));
+            tournament.setEndDate(Helpers.parseStringToTimeStamp(endDate));
             tournament.setLocation(location);
             tournament.setTournamentDescription(description);
             tournament.setTournamentFormatId(format);
@@ -115,11 +119,11 @@ public class TournamentController {
             List<Tournament> tournamentListByManager = tournamentService.getTournamentListByManager(managerId);
             session.setAttribute("tournamentListByManager", tournamentListByManager);
 
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             // Checking duplicate of manager name during registration
-            session.setAttribute("existsTournament", "Sorry, but tournament with this name exists");
+            request.setAttribute("existsTournament", "Sorry, but tournament with this name exists");
 
-            return "redirect:addTournament-page";
+            return "forward:addTournament-page";
         }
 
         return "redirect:tournament-page";
@@ -128,21 +132,21 @@ public class TournamentController {
 
     // region <EDIT(UPDATE) TOURNAMENT>
 
-    @RequestMapping(value = "/updateTournament", method = RequestMethod.POST)
-    public String updateTournament(Model model, HttpServletRequest request) {
-        int tournamentId = 544;
+    @RequestMapping(value = "/updateTournament", method = RequestMethod.GET)
+    public String updateTournament(Model model,
+                                   @RequestParam("tournamentNameId") int tournamentId,
+                                   HttpServletRequest request) {
 
         String nameUpdate = request.getParameter("nameUpdate");
-        String startDateUpdate = request.getParameter("startDateUpdate");
-        String endDateUpdate = request.getParameter("endDateUpdate");
+        Timestamp startDateUpdate = Timestamp.valueOf(request.getParameter("startDateUpdate"));
+        Timestamp endDateUpdate = Timestamp.valueOf(request.getParameter("endDateUpdate"));
         String locationUpdate = request.getParameter("locationUpdate");
         String descriptionUpdate = request.getParameter("descriptionUpdate");
 
         Tournament tournament = tournamentService.getTournamentById(tournamentId);
         tournament.setTournamentName(nameUpdate);
-        //TODO: update timestamps based on User input
-//        tournament.setStartDate(startDateUpdate);
-//        tournament.setEndDate(endDateUpdate);
+        tournament.setStartDate(startDateUpdate);
+        tournament.setEndDate(endDateUpdate);
         tournament.setLocation(locationUpdate);
         tournament.setTournamentDescription(descriptionUpdate);
 
@@ -155,10 +159,15 @@ public class TournamentController {
 
     // region <DELETE TOURNAMENT>
 
-    @RequestMapping(value = "deleteTournament-form", method = RequestMethod.POST)
-    public String deleteTournament(Model model, @RequestParam("tournament") int tournamentId) {
+    @RequestMapping(value = "/deleteTournament", method = RequestMethod.GET)
+    public String deleteTournament(Model model,
+                                   @RequestParam("tournamentNameId") String tournamentId) {
 
-        tournamentService.deleteTournamentById(tournamentId);
+        try {
+            tournamentService.deleteTournamentById(Integer.parseInt(tournamentId));
+        } catch (Exception ex) {
+            return "redirect:tournament-page";
+        }
 
         return "redirect:tournament-page";
     }
