@@ -148,8 +148,6 @@
                         </ul>
                         <br>
                     </div>
-
-
                     <div class="col-sm-9">
                         <h2>Group</h2>
                         <hr>
