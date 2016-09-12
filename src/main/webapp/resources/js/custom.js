@@ -8,8 +8,10 @@ function submitDateNameInForm() {
 
 // Select element by specific value
 function selectElementValue() {
-    var x = document.getElementById("formatId");
+    var x;
+    x = document.getElementById("formatId");
 }
+
 $(document).ready(function () {
     showMenuItem();
 });
@@ -39,11 +41,6 @@ function showMenuItemReverse() {
     });
 }
 
-function submitTournamentName() {
-    document.getElementById("hrefTournamentName").submit();
-}
-
-
 //Deletes selected tournament
 function deleteCheckedElement() {
     var elements;
@@ -68,7 +65,10 @@ function deleteCheckedElement() {
 
 //Updates selected tournament
 function updateCheckedElement() {
-    $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
+    $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);  
+    // if (noneChecked) {
+    //     alert("Axbers nshi mi ban")
+    // }
 }
 
 $(document).ready(function () {
@@ -83,6 +83,7 @@ $(document).ready(function () {
                 startDateUpdate: $('[data-name="startDateUpdate"]', tr).text().trim(),
                 endDateUpdate: $('[data-name="endDateUpdate"]', tr).text().trim(),
                 locationUpdate: $('[data-name="locationUpdate"]', tr).text().trim(),
+                descriptionUpdate: $('[data-name="descriptionUpdate"]', tr).text().trim(),
                 formatNotUpdate: $('[data-name="formatUpdateNot"]', tr).text().trim(),
                 managerNotUpdate: $('[data-name="managerUpdateNot"]', tr).text().trim()
             },

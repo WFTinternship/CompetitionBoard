@@ -82,16 +82,48 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                <%--Add Tournament--%>
+                <li>
+                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
-                </a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
-                <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#portfolio">Media</a></li>
-                <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
-                <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
-                <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
-                <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>
+                    </a>
+                </li>
+
+                <%--All Tournament--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
+                    </a>
+                </li>
+
+                <%--Group--%>
+                <li>
+                    <a class="#" href="group-page">Group</a>
+                </li>
+
+                <%--Gallery--%>
+                <li>
+                    <a class="page-scroll" href="#portfolio">Gallery</a>
+                </li>
+
+                <%--Contact Us--%>
+                <li>
+                    <a class="page-scroll" href="#contact">Contact Us</a>
+                </li>
+
+                <%--Sign Up--%>
+                <li>
+                    <a href="signup-page" class="hidden-when-logged-in">Sign Up</a>
+                </li>
+
+                <%--Log In--%>
+                <li>
+                    <a href="login-page" class="hidden-when-logged-in">Log In </a>
+                </li>
+
+                <%--Log Out--%>
+                <li>
+                    <a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -107,13 +139,8 @@
 
                         <ul class="nav nav-pills nav-stacked">
                             <li>
-                                <button class="btn btn-primary button-custom"><B>Create Team</B></button>
-                            </li>
-                            <BR>
-
-                            <li>
-                                <form action="add-members-page" method="get">
-                                    <button type="submit" class="btn btn-primary button-custom"><B>ADD A MEMBER</B>
+                                <form action="add-group-page" method="get">
+                                    <button type="submit" class="btn btn-primary button-custom visible-when-logged-in page-scroll"><B>Create Group</B>
                                     </button>
                                 </form>
                             </li>
@@ -124,88 +151,13 @@
 
 
                     <div class="col-sm-9">
-                        <h2>Participants</h2>
-                        <hr>
-                        <br>
-
-
-                        <h2>Team</h2>
-                        <hr>
-                        <br>
-
-                        <h2>Members</h2>
+                        <h2>Group</h2>
                         <hr>
                         <br>
 
                         <div class="container">
-                            <%
-                                String tournamentName = (String) request.getAttribute("tournamentName");
-                                List<Member> membersList = (List<Member>) request.getAttribute("membersList");
-                                int size = membersList.size();
-                            %>
-
-                            <table class="table">
-                                <tr>
-                                    <th width="1%">Check</th>
-                                    <th width="3%">No</th>
-                                    <th width="3%">Id</th>
-                                    <th>Name</th>
-                                    <th>Surname</th>
-                                    <th>Position</th>
-                                    <th>Email</th>
-                                    <th>Participant Info</th>
-                                    <th>Tournament Name</th>
-                                </tr>
-                                <%for (int i = 0; i < size; i++) {%>
-                                <tr>
-                                    <%--Radio--%>
-                                    <td>
-                                        <input type="radio" id="" class="checkbox-custom" name="" value="" required/>
-                                    </td>
-                                    <%--No--%>
-                                    <td>
-                                        <%=i%>
-                                    </td>
-
-                                    <%--Id--%>
-                                    <td>
-                                        <%=membersList.get(i).getId()%>
-                                    </td>
-
-                                    <%--Name--%>
-                                    <td>
-                                        <%=membersList.get(i).getName()%>
-                                    </td>
-
-                                    <%--Surname--%>
-                                    <td>
-                                        <%=membersList.get(i).getSurName()%>
-                                    </td>
-
-                                    <%--Position--%>
-                                    <td>
-                                        <%=membersList.get(i).getPosition()%>
-                                    </td>
-
-                                    <%--Email--%>
-                                    <td>
-                                        <%=membersList.get(i).getEmail()%>
-                                    </td>
-
-                                    <%--Participant info--%>
-                                    <td>
-                                        <%=membersList.get(i).getParticipantInfo()%>
-                                    </td>
-
-                                    <%--TournamentName--%>
-                                    <td>
-                                        <%=tournamentName%>
-                                    </td>
-                                </tr>
-                                <%}%>
 
 
-                            </table>
 
 
                             <!-- Footer -->
@@ -218,21 +170,9 @@
                             </footer>
 
                         </div>
-
-
                     </div>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <%--<footer id="footer">--%>
-            <%--<div class="row">--%>
-            <%--<div class="col-lg-12">--%>
-            <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--</footer>--%>
-
         </div>
     </div>
 </div>

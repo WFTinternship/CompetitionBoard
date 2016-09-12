@@ -36,14 +36,14 @@
             <h2>Add Member</h2>
             <hr>
 
-            <form action="/addMemberForm" class="form-horizontal" method="post" >
+            <form action="addMemberForm" class="form-horizontal" method="post" >
                 <%--Name--%>
                 <div class="form-group">
-                    <label for="nameMember" class="cols-sm-2 control-label">Name</label>
+                    <label for="memberId" class="cols-sm-2 control-label">Name</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="nameMember" id="nameMember"
+                            <input type="text" class="form-control" name="nameMember" id="memberId"
                                    placeholder="Name" />
                         </div>
                     </div>
@@ -51,11 +51,11 @@
 
                 <%--SurName--%>
                 <div class="form-group">
-                    <label for="surNameMember" class="cols-sm-2 control-label">Surname</label>
+                    <label for="surNameId" class="cols-sm-2 control-label">Surname</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="surNameMember" id="surNameMember"
+                            <input type="text" class="form-control" name="surNameMember" id="surNameId"
                                    placeholder="Surname"/>
                         </div>
                     </div>
@@ -63,15 +63,39 @@
 
                 <%--Position--%>
                 <div class="form-group">
-                    <label for="positionMember" class="cols-sm-2 control-label">Position</label>
+                    <label for="positionId" class="cols-sm-2 control-label">Position</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-wrench fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="positionMember" id="positionMember"
+                            <input type="text" class="form-control" name="positionMember" id="positionId"
                                    placeholder="Position"/>
                         </div>
                     </div>
                 </div>
+
+                    <%--Email--%>
+                    <div class="form-group">
+                        <label for="emailId" class="cols-sm-2 control-label">Email</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input type="email" class="form-control" name="emailMember" id="emailId"
+                                       placeholder="Email"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <%--Participant info--%>
+                    <div class="form-group">
+                        <label for="infoId" class="cols-sm-2 control-label">Info</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-info fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="infoMember" id="infoId"
+                                       placeholder="Info"/>
+                            </div>
+                        </div>
+                    </div>
 
                 <%--Avatar--%>
                 <%--<div class="form-group">--%>

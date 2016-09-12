@@ -134,7 +134,6 @@ public class TournamentController {
 
     @RequestMapping(value = "/updateTournament", method = RequestMethod.GET)
     public String updateTournament(Model model,
-//                                   @RequestParam("tournamentNameId") int tournamentId,
                                    HttpServletRequest request) {
 
         String nameUpdate = request.getParameter("nameUpdate");

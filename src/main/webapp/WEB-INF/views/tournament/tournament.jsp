@@ -83,17 +83,49 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                <%--Add Tournament--%>
+                <li>
+                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
-                </a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
-                </a></li>
-                <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#">Media</a></li>
-                <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
-                <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
-                <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
-                <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>
+                    </a>
+                </li>
+
+                <%--All Tournament--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
+                    </a>
+                </li>
+
+                <%--Group--%>
+                <li>
+                    <a class="#" href="group-page">Group</a>
+                </li>
+
+                <%--Gallery--%>
+                <li>
+                    <a class="page-scroll" href="#portfolio">Gallery</a>
+                </li>
+
+                <%--Contact Us--%>
+                <li>
+                    <a class="page-scroll" href="#contact">Contact Us</a>
+                </li>
+
+                <%--Sign Up--%>
+                <li>
+                    <a href="signup-page" class="hidden-when-logged-in">Sign Up</a>
+                </li>
+
+                <%--Log In--%>
+                <li>
+                    <a href="login-page" class="hidden-when-logged-in">Log In </a>
+                </li>
+
+                <%--Log Out--%>
+                <li>
+                    <a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a>
+                </li>
+            </ul>
             </ul>
         </div>
     </div>
@@ -127,7 +159,6 @@
                                 </button>
 
                                 <%--Remove Button--%>
-
                                 <form action="deleteTournament" method="get" id="deleteBtnId">
                                     <button class="btn btn-danger" type="button" onclick="deleteCheckedElement()">
                                         <span class="glyphicon glyphicon-remove"></span>
@@ -176,8 +207,8 @@
 
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
-                                                <a href="participant-page?page=<%=tournamentList.get(i).getTournamentName()%>"
-                                                   class="a-custom" name="hrefTournamentName">
+                                                <%--<a href="participant-page?page=<%=tournamentList.get(i).getTournamentName()%>"--%>
+                                                <a href="participant-page" class="a-custom" name="hrefTournamentName">
                                                     <%=tournamentList.get(i).getTournamentName()%>
                                                 </a>
                                             </td>

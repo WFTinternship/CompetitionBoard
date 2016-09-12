@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,11 +22,10 @@ public class ParticipantController {
     ParticipantService participantService;
 
     @RequestMapping(value = {"/participant-page"})
-    public String toContactUsPage(Model model,
-                                  @RequestParam("page")String page,
-                                  HttpServletRequest request) {
-        System.out.println(page);
+    public String toContactUsPage(Model model) {
+
         List<Member> membersList = (List<Member>) participantService.getAll(Member.class);
+
         model.addAttribute("membersList", membersList);
 
         return Params.PAGE_PARTICIPANTS;
@@ -46,20 +44,21 @@ public class ParticipantController {
                             @RequestParam("nameMember") String nameMember,
                             @RequestParam("surNameMember") String surNameMember,
                             @RequestParam("positionMember") String positionMember,
+                            @RequestParam("emailMember") String email,
+                            @RequestParam("infoMember") String info,
                             HttpServletRequest request) {
 
-        HttpSession session = request.getSession();
         Member member = new Member();
         member.setName(nameMember);
         member.setSurName(surNameMember);
         member.setPosition(positionMember);
+        member.setEmail(email);
+        member.setParticipantInfo(info);
 
         participantService.addParticipant(member);
 
-
-        return "participant/participants";
+        return "redirect:participant-page";
     }
 
     // endregion
-
 }
