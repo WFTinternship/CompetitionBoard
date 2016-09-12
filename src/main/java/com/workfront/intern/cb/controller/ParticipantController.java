@@ -23,9 +23,10 @@ public class ParticipantController {
     ParticipantService participantService;
 
     @RequestMapping(value = {"/participant-page"})
-    public String toContactUsPage(Model model, HttpServletRequest request) {
-
-
+    public String toContactUsPage(Model model,
+                                  @RequestParam("page")String page,
+                                  HttpServletRequest request) {
+        System.out.println(page);
         List<Member> membersList = (List<Member>) participantService.getAll(Member.class);
         model.addAttribute("membersList", membersList);
 

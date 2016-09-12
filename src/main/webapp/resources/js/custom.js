@@ -48,69 +48,43 @@ function submitTournamentName() {
 function deleteCheckedElement() {
     var elements;
     var current;
+    var noneChecked = true;
 
     elements = document.getElementsByName("tournamentNameId");
     for (var i = 0, len = elements.length; i < len; ++i) {
         if (elements[i].checked) {
+            noneChecked = false;
             current = elements[i].value;
             if (confirm("Are you sure you want to delete tournament ? ") == true) {
-                //alert(elements[i].value);
                 document.getElementById("deleteBtnId").submit();
-            } else {
-                //alert(elements[i].value);
             }
+            break;
         }
+    }
+    if (noneChecked) {
+        alert("Axbers nshi mi ban")
     }
 }
 
-
-//ToDo
 //Updates selected tournament
-function updateCheckedElement(x) {
-    var elements;
-    var current;
-
-    elements = document.getElementsByName("tournamentNameId");
-    for (var i = 0, len = elements.length; i < len; ++i) {
-        if (elements[i].checked) {
-            current = elements[i].value;
-            //alert(current.getElementById("nameUpdate"));
-            alert(current.parent);
-
-
-            //document.getElementById("deleteBtnId").submit();
-        } else {
-            //alert(elements[i].value);
-        }
-    }
-
+function updateCheckedElement() {
+    $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
 }
-
-
-
-
-
-function editCustom() {
-    $('button').click(function () {
-        var $div = $('div'), isEditable = $div.is('.edit-td');
-        $('div').prop('contenteditable', !isEditable).toggleClass('edit-td')
-    })
-}
-
 
 $(document).ready(function () {
     $('#updateTournamentTable').find('td').blur(function () {
+        var tr = $(this).parent();
         $.ajax({
             url: '/updateTournament',
             type: 'GET',
             data: {
-                nameUpdate: $('#nameUpdate').text().trim(),
-                startDateUpdate: $('#startDateUpdate').text().trim(),
-                endDateUpdate: $('#endDateUpdate').text().trim(),
-                locationUpdate: $('#locationUpdate').text().trim(),
-                formatNotUpdate: $('#formatNotUpdate').text().trim(),
-                managerNotUpdate: $('#managerNotUpdate').text().trim(),
-                idNotUpdated: $('#idNotUpdated').text().trim()
+                nameUpdate: $('[data-name="nameUpdate"]', tr).text().trim(),
+                tournamentNameId: $('[data-name="tournamentNameId"]', tr).text().trim(),
+                startDateUpdate: $('[data-name="startDateUpdate"]', tr).text().trim(),
+                endDateUpdate: $('[data-name="endDateUpdate"]', tr).text().trim(),
+                locationUpdate: $('[data-name="locationUpdate"]', tr).text().trim(),
+                formatNotUpdate: $('[data-name="formatUpdateNot"]', tr).text().trim(),
+                managerNotUpdate: $('[data-name="managerUpdateNot"]', tr).text().trim()
             },
             success: function (tournament) {
                 $('#updateTableElement').text(tournament);

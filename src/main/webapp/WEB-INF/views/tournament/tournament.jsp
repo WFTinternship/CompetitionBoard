@@ -165,39 +165,40 @@
                                             </td>
 
                                             <%--No--%>
-                                            <td contenteditable="false" id="idNotUpdated">
+                                            <td contenteditable="false">
                                                 <%=i%>
                                             </td>
 
-                                            <%--id--%>
-                                            <td contenteditable="false" id="tournamentIdNotUpdated">
-                                                <%=tournamentList.get(i).getTournamentId()%>
+                                            <%--Id--%>
+                                            <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
+                                                <%=tournamentId%>
                                             </td>
 
                                             <%--TournamentName--%>
-                                            <td contenteditable="false" id="nameUpdate">
-                                                <a class="a-custom" name="hrefTournamentName" href="participant-page">
+                                            <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
+                                                <a href="participant-page?page=<%=tournamentList.get(i).getTournamentName()%>"
+                                                   class="a-custom" name="hrefTournamentName">
                                                     <%=tournamentList.get(i).getTournamentName()%>
                                                 </a>
                                             </td>
 
                                             <%--StartDate--%>
-                                            <td contenteditable="false" id="startDateUpdate">
+                                            <td contenteditable="false" data-name="startDateUpdate" data-updatable="true">
                                                 <%=Helpers.parseTimeStampToString(tournamentList.get(i).getStartDate())%>
                                             </td>
 
                                             <%--EndDate--%>
-                                            <td contenteditable="false" id="endDateUpdate">
+                                            <td contenteditable="false" data-name="endDateUpdate" data-updatable="true">
                                                 <%=Helpers.parseTimeStampToString(tournamentList.get(i).getEndDate())%>
                                             </td>
 
                                             <%--Location--%>
-                                            <td contenteditable="false" id="locationUpdate">
+                                            <td contenteditable="false" data-name="locationUpdate" data-updatable="true">
                                                 <%=tournamentList.get(i).getLocation()%>
                                             </td>
 
                                             <%--TournamentDescription--%>
-                                            <td contenteditable="false" id="descriptionUpdate">
+                                            <td contenteditable="false" data-name="descriptionUpdate" data-updatable="true">
                                                 <%=tournamentList.get(i).getTournamentDescription()%>
                                             </td>
 
@@ -206,7 +207,7 @@
                                                 int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
                                                 String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
                                             %>
-                                            <td contenteditable="false" id="formatNotUpdate">
+                                            <td contenteditable="false" data-name="formatUpdateNot" data-updatable="false" >
                                                 <%=formatStr%>
                                             </td>
 
@@ -215,7 +216,7 @@
                                                 assert manager != null;
                                                 String managerName = manager.getLogin();
                                             %>
-                                            <td contenteditable="false" id="managerNotUpdate">
+                                            <td contenteditable="false" data-name="managerUpdateNot" data-updatable="false">
                                                 <%= managerName%>
                                             </td>
                                         </tr>

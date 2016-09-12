@@ -134,10 +134,11 @@ public class TournamentController {
 
     @RequestMapping(value = "/updateTournament", method = RequestMethod.GET)
     public String updateTournament(Model model,
-                                   @RequestParam("tournamentNameId") int tournamentId,
+//                                   @RequestParam("tournamentNameId") int tournamentId,
                                    HttpServletRequest request) {
 
         String nameUpdate = request.getParameter("nameUpdate");
+        int tournamentId = Integer.parseInt(request.getParameter("tournamentNameId"));
         Timestamp startDateUpdate = Timestamp.valueOf(request.getParameter("startDateUpdate"));
         Timestamp endDateUpdate = Timestamp.valueOf(request.getParameter("endDateUpdate"));
         String locationUpdate = request.getParameter("locationUpdate");
