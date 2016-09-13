@@ -144,6 +144,7 @@ public class BaseTest {
         int nextRoundParticipants = randomIntGenerate();
 
         Group group = new Group();
+        group.setGroupName(generateRandomString(10));
         group.setParticipantsCount(participantsCount);
         group.setRound(round);
         group.setNextRoundParticipants(nextRoundParticipants);

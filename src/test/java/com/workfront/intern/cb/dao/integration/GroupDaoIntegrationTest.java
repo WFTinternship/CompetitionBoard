@@ -112,11 +112,29 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
         assertNotNull(group);
         assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getGroupName(), group.getGroupName());
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
+
+    @Test
+    public void getGroupByName_found() throws Exception {
+        String groupName = testGroup.getGroupName();
+
+        // Testing method
+        Group group = groupDao.getGroupByName(groupName);
+
+        assertNotNull(group);
+        assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getGroupName(), group.getGroupName());
+        assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testGroup.getRound(), group.getRound());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
+    }
+
 
     @Test
     public void getGroupByTournamentList_emptyList() throws Exception {
@@ -144,6 +162,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         Group group = groupList.get(0);
 
         assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getGroupName(), group.getGroupName());
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
@@ -173,6 +192,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         Group group = groupList.get(0);
 
         assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getGroupName(), group.getGroupName());
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
@@ -185,6 +205,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
 
         // Group new data
+        String groupName = "GroupName";
         int participantsCount = 10;
         int round = 20;
         int nextRoundParticipants = 30;
@@ -192,6 +213,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         // Testing method
         Group group = createRandomGroup();
         group.setGroupId(groupId);
+        group.setGroupName(groupName);
         group.setParticipantsCount(participantsCount);
         group.setTournamentId(tournamentId);
         group.setRound(round);
@@ -202,6 +224,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         testGroup = groupDao.getGroupById(groupId);
 
         assertEquals(testGroup.getGroupId(), group.getGroupId());
+        assertEquals(testGroup.getGroupName(), group.getGroupName());
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
