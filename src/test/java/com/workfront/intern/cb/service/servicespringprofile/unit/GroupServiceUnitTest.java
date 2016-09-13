@@ -66,6 +66,18 @@ public class GroupServiceUnitTest extends BaseTest {
     }
 
     @Test(expected = RuntimeException.class)
+    public void getGroupByName_DAOError() throws Exception {
+        when(groupDao.getGroupByName(NON_EXISTING_GROUP)).thenThrow(FailedOperationException.class);
+        groupService.getGroupByName(NON_EXISTING_GROUP);
+    }
+
+    @Test()
+    public void getGroupByName_DAOSuccess() throws Exception {
+        groupService.getGroupByName(NON_EXISTING_GROUP);
+        verify(groupDao).getGroupByName(NON_EXISTING_GROUP);
+    }
+
+    @Test(expected = RuntimeException.class)
     public void getGroupByTournamentList_DAOError() throws Exception {
         when(groupDao.getTournamentGroups(NON_EXISTING_ID)).thenThrow(FailedOperationException.class);
         groupService.getTournamentGroups(NON_EXISTING_ID);
