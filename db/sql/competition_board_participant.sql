@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.13, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: competition_board
 -- ------------------------------------------------------
--- Server version	5.7.13-0ubuntu0.16.04.2
+-- Server version	5.7.13-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `participant` (
   `avatar` varchar(255) DEFAULT NULL,
   `participant_info` text,
   PRIMARY KEY (`participant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,6 @@ CREATE TABLE `participant` (
 
 LOCK TABLES `participant` WRITE;
 /*!40000 ALTER TABLE `participant` DISABLE KEYS */;
-INSERT INTO `participant` VALUES (4,0,NULL,NULL),(5,0,NULL,NULL),(6,0,NULL,NULL);
 /*!40000 ALTER TABLE `participant` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-11 23:28:22
+-- Dump completed on 2016-09-13 12:14:59

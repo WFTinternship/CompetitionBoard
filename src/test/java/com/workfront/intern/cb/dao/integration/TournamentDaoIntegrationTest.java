@@ -27,7 +27,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
     private Manager testManager;
     private Tournament testTournament;
 
-    DataSource dataSource = DBManager.getDataSource();
+    private DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() throws FailedOperationException, ObjectNotFoundException {

@@ -26,18 +26,19 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "INSERT INTO `group`(participants_count, round, next_round_participants, tournament_id)" +
-                "VALUES(?,?,?,?) ";
+        String sql = "INSERT INTO `group`(group_name, participants_count, round, next_round_participants, tournament_id)" +
+                "VALUES(?,?,?,?,?) ";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
 
             // prepare base participant insert query
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, group.getParticipantsCount());
-            ps.setInt(2, group.getRound());
-            ps.setInt(3, group.getNextRoundParticipnats());
-            ps.setInt(4, group.getTournamentId());
+            ps.setString(1, group.getGroupName());
+            ps.setInt(2, group.getParticipantsCount());
+            ps.setInt(3, group.getRound());
+            ps.setInt(4, group.getNextRoundParticipants());
+            ps.setInt(5, group.getTournamentId());
 
             // insert base participant info
             ps.executeUpdate();
@@ -172,18 +173,19 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "UPDATE `group` SET participants_count=?, round=?, next_round_participants=?, tournament_id=? WHERE group_id=?";
+        String sql = "UPDATE `group` SET group_name=?, participants_count=?, round=?, next_round_participants=?, tournament_id=? WHERE group_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, group.getParticipantsCount());
-            ps.setInt(2, group.getRound());
-            ps.setInt(3, group.getNextRoundParticipnats());
-            ps.setInt(4, group.getTournamentId());
-            ps.setInt(5, id);
+            ps.setString(1, group.getGroupName());
+            ps.setInt(2, group.getParticipantsCount());
+            ps.setInt(3, group.getRound());
+            ps.setInt(4, group.getNextRoundParticipants());
+            ps.setInt(5, group.getTournamentId());
+            ps.setInt(6, id);
 
             // Execute statement
             int rows = ps.executeUpdate();
@@ -223,9 +225,10 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         Group group = new Group();
         try {
             group.setGroupId(rs.getInt("group_id"));
+            group.setGroupName(rs.getString("group_name"));
             group.setParticipantsCount(rs.getInt("participants_count"));
             group.setRound(rs.getInt("round"));
-            group.setNextRoundParticipnats(rs.getInt("next_round_participants"));
+            group.setNextRoundParticipants(rs.getInt("next_round_participants"));
             group.setTournamentId(rs.getInt("tournament_id"));
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);

@@ -114,7 +114,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test
@@ -179,7 +179,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test
@@ -199,7 +199,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         group.setParticipantsCount(participantsCount);
         group.setTournamentId(tournamentId);
         group.setRound(round);
-        group.setNextRoundParticipnats(nextRoundParticipants);
+        group.setNextRoundParticipants(nextRoundParticipants);
 
         // Updates specific tournament in db
         groupService.updateGroup(groupId, group);
@@ -209,7 +209,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test(expected = RuntimeException.class)

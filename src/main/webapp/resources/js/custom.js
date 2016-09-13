@@ -6,11 +6,16 @@ function submitDateNameInForm() {
     endDate = document.getElementById("endDate").value;
 }
 
+// Select tournament element by specific value
+// function selecFormatIdValue() {
+//     document.getElementById("formatId");
+// }
+
 // Select element by specific value
-function selectElementValue() {
-    var x;
-    x = document.getElementById("formatId");
+function tournamentSelectIdValue() {
+    document.getElementById("tournamentSelectId");
 }
+
 
 $(document).ready(function () {
     showMenuItem();

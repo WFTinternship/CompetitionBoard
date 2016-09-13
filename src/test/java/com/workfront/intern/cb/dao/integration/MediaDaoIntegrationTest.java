@@ -27,7 +27,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
     private Tournament testTournament;
     private Media testMedia;
 
-    DataSource dataSource = DBManager.getDataSource();
+    private DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() throws Exception {

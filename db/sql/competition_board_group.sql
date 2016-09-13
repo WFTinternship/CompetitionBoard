@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.13, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: competition_board
 -- ------------------------------------------------------
--- Server version	5.7.13-0ubuntu0.16.04.2
+-- Server version	5.7.13-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,14 +24,16 @@ DROP TABLE IF EXISTS `group`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `group` (
   `group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(45) NOT NULL,
   `participants_count` int(11) DEFAULT NULL,
   `round` int(11) DEFAULT NULL,
   `next_round_participants` int(11) DEFAULT NULL,
   `tournament_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`group_id`),
+  UNIQUE KEY `group_name_UNIQUE` (`group_name`),
   KEY `tournam_id_idx` (`tournament_id`),
   CONSTRAINT `tournam_id` FOREIGN KEY (`tournament_id`) REFERENCES `tournament` (`tournament_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-11 23:28:22
+-- Dump completed on 2016-09-13 12:14:58

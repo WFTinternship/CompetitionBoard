@@ -24,7 +24,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     // Test helper objects
     private Manager testManager;
 
-    DataSource dataSource = DBManager.getDataSource();
+    private DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() throws Exception {

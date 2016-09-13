@@ -26,7 +26,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     private Member testMember;
     private Team testTeam;
 
-    DataSource dataSource = DBManager.getDataSource();
+    private DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() throws Exception {

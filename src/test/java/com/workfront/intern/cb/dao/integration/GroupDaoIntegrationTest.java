@@ -25,7 +25,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     private Tournament testTournament;
     private Group testGroup;
 
-    DataSource dataSource = DBManager.getDataSource();
+    private DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() throws Exception {
@@ -115,7 +115,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test
@@ -147,7 +147,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test
@@ -176,7 +176,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         group.setParticipantsCount(participantsCount);
         group.setTournamentId(tournamentId);
         group.setRound(round);
-        group.setNextRoundParticipnats(nextRoundParticipants);
+        group.setNextRoundParticipants(nextRoundParticipants);
 
         // Updates specific tournament in db
         groupDao.updateGroup(groupId, group);
@@ -205,7 +205,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipnats(), group.getNextRoundParticipnats());
+        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
     @Test(expected = ObjectNotFoundException.class)

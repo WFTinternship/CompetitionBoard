@@ -146,7 +146,7 @@ public class BaseTest {
         Group group = new Group();
         group.setParticipantsCount(participantsCount);
         group.setRound(round);
-        group.setNextRoundParticipnats(nextRoundParticipants);
+        group.setNextRoundParticipants(nextRoundParticipants);
 
         return group;
     }
