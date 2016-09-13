@@ -20,8 +20,8 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 public class GroupDaoUnitTest extends BaseTest {
-    DataSource dataSource;
-    GroupDao groupDao;
+    private DataSource dataSource;
+    private GroupDao groupDao;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -41,6 +41,16 @@ public class GroupDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void add_dbError() throws Exception {
+        groupDao.addGroup(new Group());
+    }
+
+    @Test(expected = FailedOperationException.class)
+    public void getGroupById_dbError() throws Exception {
+        groupDao.addGroup(new Group());
+    }
+
+    @Test(expected = FailedOperationException.class)
+    public void getGroupByName_dbError() throws Exception {
         groupDao.addGroup(new Group());
     }
 
