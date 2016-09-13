@@ -91,41 +91,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
     }
 
     /**
-     * Gets group by group name
-     */
-    @Override
-    public Group getGroupByName(String name) throws ObjectNotFoundException, FailedOperationException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Group group = null;
-
-        String sql = "SELECT * FROM `group` WHERE group_name=?";
-        try {
-            // Acquire connection
-            conn = dataSource.getConnection();
-
-            // Initialize statement
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, name);
-
-            // update member data
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                group = extractGroupFromResultSet(rs);
-            } else {
-                throw new ObjectNotFoundException(String.format("Group with name[%s] not found", name));
-            }
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            throw new FailedOperationException(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return group;
-    }
-
-    /**
      * Gets group list by specific tournament id
      */
     @Override

@@ -46,20 +46,6 @@ public class GroupServiceImpl implements GroupService {
     }
 
     /**
-     * Returns group by name
-     */
-    @Override
-    public Group getGroupByName(String name) {
-        try {
-            return groupDao.getGroupByName(name);
-        } catch (ObjectNotFoundException e) {
-            throw new RuntimeException(String.format("Group instance with iname%s not found", name));
-        } catch (FailedOperationException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    /**
      * Returns all groups by tournament id
      */
     @Override

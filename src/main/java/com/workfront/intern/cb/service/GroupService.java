@@ -12,7 +12,6 @@ public interface GroupService {
 
     // READ
     Group getGroupById(int id);
-    Group getGroupByName(String name);
     List<Group> getTournamentGroups(int tournamentId);
     List<Group> getAllGroups();
 

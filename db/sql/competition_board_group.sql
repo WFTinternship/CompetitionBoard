@@ -30,10 +30,9 @@ CREATE TABLE `group` (
   `next_round_participants` int(11) DEFAULT NULL,
   `tournament_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`group_id`),
-  UNIQUE KEY `group_name_UNIQUE` (`group_name`),
   KEY `tournam_id_idx` (`tournament_id`),
   CONSTRAINT `tournam_id` FOREIGN KEY (`tournament_id`) REFERENCES `tournament` (`tournament_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-13 12:14:58
+-- Dump completed on 2016-09-13 13:19:22

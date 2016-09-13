@@ -119,31 +119,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
-    @Test(expected = ObjectNotFoundException.class)
-    public void getGroupByName_notFound() throws Exception {
-        // Testing method
-        Group group = groupDao.getGroupByName(NON_EXISTING_GROUP);
-
-        assertNull(MESSAGE_TEST_COMPLETED_ERROR, group);
-    }
-
-    @Test
-    public void getGroupByName_found() throws Exception {
-        String groupName = testGroup.getGroupName();
-
-        // Testing method
-        Group group = groupDao.getGroupByName(groupName);
-
-        assertNotNull(group);
-        assertEquals(testGroup.getGroupId(), group.getGroupId());
-        assertEquals(testGroup.getGroupName(), group.getGroupName());
-        assertEquals(testGroup.getParticipantsCount(), group.getParticipantsCount());
-        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
-        assertEquals(testGroup.getRound(), group.getRound());
-        assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
-    }
-
-
     @Test
     public void getGroupByTournamentList_emptyList() throws Exception {
         int groupId = testGroup.getGroupId();
