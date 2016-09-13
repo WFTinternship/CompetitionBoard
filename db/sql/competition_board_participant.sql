@@ -28,7 +28,7 @@ CREATE TABLE `participant` (
   `avatar` varchar(255) DEFAULT NULL,
   `participant_info` text,
   PRIMARY KEY (`participant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

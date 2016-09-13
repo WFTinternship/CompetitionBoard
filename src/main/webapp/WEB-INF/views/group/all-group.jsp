@@ -1,10 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.common.Group" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.service.GroupService" %>
-<%@ page import="com.workfront.intern.cb.service.TournamentService" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.common.*" %>
+<%@ page import="com.workfront.intern.cb.service.TournamentService" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +25,6 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
-
 
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
@@ -149,7 +146,8 @@
                             <li>
                                 <form action="add-group-page" method="get">
                                     <button type="submit"
-                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll"><B>Create Group</B>
+                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll"><B>Create
+                                        Group</B>
                                     </button>
                                 </form>
                             </li>
@@ -158,12 +156,16 @@
                         <br>
                     </div>
                     <div class="col-sm-9">
-                        <h2>Groups</h2>
+                        <h2>All Groups</h2>
                         <hr>
                         <br>
 
                         <div class="container">
-
+                            <%
+                                TournamentService tournamentService = (TournamentService) request.getAttribute("tournamentService");
+                                List<Group> tournamentGroupsList = (List<Group>) request.getAttribute("allGroups");
+                                int size = tournamentGroupsList.size();
+                            %>
                             <table class="table">
                                 <tr>
                                     <th width="1%">Check</th>
@@ -176,7 +178,10 @@
                                     <th>Tournament Id</th>
                                     <th>Tournament Name</th>
                                 </tr>
-
+                                <%
+                                    for (int i = 0; i < size; i++) {
+                                        int tournamentId = tournamentGroupsList.get(i).getTournamentId();
+                                %>
                                 <tr>
                                     <%--Radio--%>
                                     <td>
@@ -184,40 +189,49 @@
                                     </td>
                                     <%--No--%>
                                     <td>
+                                        <%=i%>
                                     </td>
 
                                     <%--Id--%>
                                     <td>
+                                        <%=tournamentGroupsList.get(i).getGroupId()%>
                                     </td>
 
                                     <%--Name--%>
                                     <td>
+                                        <%=tournamentGroupsList.get(i).getGroupName()%>
                                     </td>
 
                                     <%--Participant count--%>
                                     <td>
+                                        <%=tournamentGroupsList.get(i).getParticipantsCount()%>
                                     </td>
 
                                     <%--Round--%>
                                     <td>
+                                        <%--<%=tournamentGroupsList.get(i).getRound()%>--%>
                                     </td>
 
                                     <%--Next Round Participants--%>
                                     <td>
+                                        <%=tournamentGroupsList.get(i).getNextRoundParticipants()%>
                                     </td>
 
                                     <%--Tournament Id--%>
                                     <td>
+                                        <%=tournamentId%>
                                     </td>
 
                                     <%--Tournament Name--%>
                                     <td>
-
-                                        <%--<%=request.getAttribute("tournamentName")%>--%>
+                                        <%
+                                            Tournament tournament = tournamentService.getTournamentById(tournamentId);
+                                        %>
+                                        <%=tournament.getTournamentName()%>
                                     </td>
                                 </tr>
+                                <%}%>
                             </table>
-
 
                             <!-- Footer -->
                             <footer>

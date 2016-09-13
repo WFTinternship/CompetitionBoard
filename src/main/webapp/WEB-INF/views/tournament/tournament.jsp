@@ -3,11 +3,8 @@
 <%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.web.util.Helpers" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,10 +37,12 @@
     String userName = "";
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
+    String hrefToSpecificGroupPage = "all-group-page";
     String avatar = "";
     String addTournamentMenuItem = null;
     String classStr = null;
     String allTournaments = "All Tournaments";
+    String allGroups = "All Groups";
 
     Manager manager = (Manager) session.getAttribute("manager");
 
@@ -52,7 +51,9 @@
         userName = manager.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
+        hrefToSpecificGroupPage = "all-group-page";
         addTournamentMenuItem = "Add Tournament";
+        allGroups = "Groups";
         classStr = "visible-element";
         allTournaments = "Tournaments";
     }
@@ -73,7 +74,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="/">Home</a>
+            <a class="navbar-brand page-scroll" href="home">Home</a>
             <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
             </a>
@@ -83,6 +84,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+
                 <%--Add Tournament--%>
                 <li>
                     <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
@@ -98,7 +100,8 @@
 
                 <%--Group--%>
                 <li>
-                    <a class="#" href="group-page">Group</a>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
                 </li>
 
                 <%--Gallery--%>
@@ -201,7 +204,8 @@
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
+                                            <td contenteditable="false" data-name="tournamentNameId"
+                                                data-updatable="false">
                                                 <%=tournamentId%>
                                             </td>
 
@@ -214,7 +218,8 @@
                                             </td>
 
                                             <%--StartDate--%>
-                                            <td contenteditable="false" data-name="startDateUpdate" data-updatable="true">
+                                            <td contenteditable="false" data-name="startDateUpdate"
+                                                data-updatable="true">
                                                 <%=Helpers.parseTimeStampToString(tournamentList.get(i).getStartDate())%>
                                             </td>
 
@@ -224,12 +229,14 @@
                                             </td>
 
                                             <%--Location--%>
-                                            <td contenteditable="false" data-name="locationUpdate" data-updatable="true">
+                                            <td contenteditable="false" data-name="locationUpdate"
+                                                data-updatable="true">
                                                 <%=tournamentList.get(i).getLocation()%>
                                             </td>
 
                                             <%--TournamentDescription--%>
-                                            <td contenteditable="false" data-name="descriptionUpdate" data-updatable="true">
+                                            <td contenteditable="false" data-name="descriptionUpdate"
+                                                data-updatable="true">
                                                 <%=tournamentList.get(i).getTournamentDescription()%>
                                             </td>
 
@@ -238,7 +245,8 @@
                                                 int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
                                                 String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
                                             %>
-                                            <td contenteditable="false" data-name="formatUpdateNot" data-updatable="false" >
+                                            <td contenteditable="false" data-name="formatUpdateNot"
+                                                data-updatable="false">
                                                 <%=formatStr%>
                                             </td>
 
@@ -247,7 +255,8 @@
                                                 assert manager != null;
                                                 String managerName = manager.getLogin();
                                             %>
-                                            <td contenteditable="false" data-name="managerUpdateNot" data-updatable="false">
+                                            <td contenteditable="false" data-name="managerUpdateNot"
+                                                data-updatable="false">
                                                 <%= managerName%>
                                             </td>
                                         </tr>

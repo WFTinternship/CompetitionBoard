@@ -32,16 +32,25 @@ public class GroupController {
     @Autowired
     GroupService groupService;
 
+    @RequestMapping(value = {"/all-group-page"})
+    public String toAllGroupPage(Model model,
+                                 HttpServletRequest request) {
+
+        List<Group> allGroups = groupService.getAllGroups();
+        request.setAttribute("allGroups", allGroups);
+        request.setAttribute("tournamentService", tournamentService);
+
+        return Params.PAGE_ALL_GROUPS;
+    }
+
     @RequestMapping(value = {"/group-page"})
-    public String toGroupPage(Model model) {
+    public String toGroupPage(Model model, HttpServletRequest request) {
 
         return Params.PAGE_GROUPS;
     }
 
-
     @RequestMapping(value = {"/add-group-page"})
-    public String toAddPage(Model model,
-                            HttpServletRequest request) {
+    public String toAddPage(Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
@@ -55,15 +64,19 @@ public class GroupController {
 
     @RequestMapping(value = {"/addGroup-form"})
     public String addGroup(Model model,
-//                           @RequestParam("tournamentName") String tournamentName,
-                           @RequestParam("tournamentName") int tournamentSelectId) {
+                           @RequestParam("nameGroup") String nameGroup,
+                           @RequestParam("tournamentNameId") int tournamentNameId,
+                           HttpServletRequest request) {
 
         Group group = new Group();
-        group.setTournamentId(tournamentSelectId);
-
+        group.setGroupName(nameGroup);
+        group.setTournamentId(tournamentNameId);
 
         groupService.addGroup(group);
 
-        return Params.PAGE_GROUPS;
+        HttpSession session = request.getSession();
+        session.setAttribute("tournamentNameId", tournamentNameId);
+
+        return "redirect:group/group";
     }
 }

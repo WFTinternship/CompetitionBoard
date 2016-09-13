@@ -37,7 +37,7 @@ CREATE TABLE `tournament` (
   KEY `fk_tournament_1_idx` (`tournament_format_id`),
   CONSTRAINT `FK_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`manager_id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `fk_tournament_1` FOREIGN KEY (`tournament_format_id`) REFERENCES `tournament_format` (`format_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

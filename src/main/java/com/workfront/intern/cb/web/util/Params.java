@@ -19,6 +19,7 @@ public class Params {
     public static final String PAGE_ADD_MEMBER = "participant/add-member";
 
     //Participants pages
+    public static final String PAGE_ALL_GROUPS = "group/all-group";
     public static final String PAGE_GROUPS = "group/group";
     public static final String PAGE_ADD_GROUP = "group/add-group";
 

@@ -66,7 +66,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="tournamentSelectId" name="tournamentName" class="form-control" required>
+                            <select id="tournamentSelectId" name="tournamentNameId" class="form-control" required>
                                 <option value="0" selected="selected">Select tournament</option>
                                 <%
                                     for (int i = 0; i < size; i++) {

@@ -38,10 +38,13 @@
     String userName = "";
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
+    String hrefToSpecificGroupPage = "all-group-page";
     String avatar = "";
     String addTournamentMenuItem = null;
     String classStr = null;
     String allTournaments = "All Tournaments";
+    String allGroups = "All Groups";
+
 
     Manager manager = (Manager) session.getAttribute("manager");
 
@@ -50,10 +53,13 @@
         userName = manager.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
+        hrefToSpecificGroupPage = "group-page";
         addTournamentMenuItem = "Add Tournament";
+        allGroups = "Groups";
         classStr = "visible-element";
         allTournaments = "Tournaments";
     }
+
     if (userName.equals("")) {
         addTournamentMenuItem = "";
         classStr = "hidden-element";
@@ -71,7 +77,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="/">Home</a>
+            <a class="navbar-brand page-scroll" href="home">Home</a>
             <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
             </a>
@@ -97,7 +103,8 @@
 
                 <%--Group--%>
                 <li>
-                    <a class="#" href="group-page">Group</a>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
                 </li>
 
                 <%--Gallery--%>
@@ -187,36 +194,36 @@
                                         </td>
 
                                         <%--StartDate--%>
-                                            <td contenteditable="false">
+                                        <td contenteditable="false">
                                             <%=tournamentList.get(i).getStartDate()%>
                                         </td>
 
                                         <%--EndDate--%>
-                                            <td contenteditable="false">
+                                        <td contenteditable="false">
                                             <%=tournamentList.get(i).getEndDate()%>
                                         </td>
 
                                         <%--Location--%>
-                                            <td contenteditable="false">
+                                        <td contenteditable="false">
                                             <%=tournamentList.get(i).getLocation()%>
                                         </td>
 
                                         <%--TournamentDescription--%>
-                                            <td contenteditable="false">
+                                        <td contenteditable="false">
                                             <%=tournamentList.get(i).getTournamentDescription()%>
                                         </td>
 
                                         <%--TournamentFormatId--%>
-                                            <%
-                                                int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                                                String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
-                                            %>
+                                        <%
+                                            int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                            String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                        %>
                                         <td contenteditable="false">
                                             <%=formatStr%>
                                         </td>
 
                                         <%--Tournament creator--%>
-                                            <% int id = tournamentList.get(i).getManagerId();%>
+                                        <% int id = tournamentList.get(i).getManagerId();%>
                                         <td contenteditable="false">
                                             <%=id%>
                                         </td>

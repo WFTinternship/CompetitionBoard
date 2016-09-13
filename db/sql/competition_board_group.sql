@@ -32,7 +32,7 @@ CREATE TABLE `group` (
   PRIMARY KEY (`group_id`),
   KEY `tournam_id_idx` (`tournament_id`),
   CONSTRAINT `tournam_id` FOREIGN KEY (`tournament_id`) REFERENCES `tournament` (`tournament_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
