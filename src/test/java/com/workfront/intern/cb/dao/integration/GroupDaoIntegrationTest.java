@@ -119,6 +119,14 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
+    @Test(expected = ObjectNotFoundException.class)
+    public void getGroupByName_notFound() throws Exception {
+        // Testing method
+        Group group = groupDao.getGroupByName(NON_EXISTING_GROUP);
+
+        assertNull(MESSAGE_TEST_COMPLETED_ERROR, group);
+    }
+
     @Test
     public void getGroupByName_found() throws Exception {
         String groupName = testGroup.getGroupName();
@@ -205,7 +213,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
 
         // Group new data
-        String groupName = "GroupName";
         int participantsCount = 10;
         int round = 20;
         int nextRoundParticipants = 30;
@@ -213,7 +220,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         // Testing method
         Group group = createRandomGroup();
         group.setGroupId(groupId);
-        group.setGroupName(groupName);
+        group.setGroupName(GROUP_NAME);
         group.setParticipantsCount(participantsCount);
         group.setTournamentId(tournamentId);
         group.setRound(round);
