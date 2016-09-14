@@ -28,35 +28,9 @@
 </head>
 
 <%--Gets specific atributes from http session--%>
-<%
-    String userName = "";
-    String welcomeStr = "";
-    String hrefToSpecificTournamentPage = "all-tournaments-page";
-    String avatar = "";
-
-    String addTournamentMenuItem = null;
-    String classStr = null;
-
-    Manager manager  = (Manager) session.getAttribute("manager");
-    if (manager  != null) {
-        avatar = "resources/img/user_avatar/" + manager .getAvatar();
-        userName = manager .getLogin();
-        welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = "tournament-page";
-
-        addTournamentMenuItem = "Add Tournament";
-        classStr = "visible-element";
-    }
-
-    if (userName.equals("")) {
-        addTournamentMenuItem = "";
-        classStr = "hidden-element";
-    }
-%>
-
+<%@ include file="../layout/layout.jsp" %>
 
 <body class="backgroundTournament">
-
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">

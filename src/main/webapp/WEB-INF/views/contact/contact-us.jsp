@@ -37,7 +37,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="home">Home</a>
+            <a class="navbar-brand page-scroll" href="home">HOME</a>
         </div>
 
         <!-- Page Content -->

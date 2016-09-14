@@ -34,38 +34,7 @@
 </head>
 
 <%--Gets specific atributes from http session--%>
-<%
-    String userName = "";
-    String welcomeStr = "";
-    String hrefToSpecificTournamentPage = "all-tournaments-page";
-    String hrefToSpecificGroupPage = "all-group-page";
-    String avatar = "";
-    String addTournamentMenuItem = null;
-    String classStr = null;
-    String allTournaments = "All Tournaments";
-    String allGroups = "All Groups";
-
-
-    Manager manager = (Manager) session.getAttribute("manager");
-
-    if (manager != null) {
-        avatar = "resources/img/user_avatar/" + manager.getAvatar();
-        userName = manager.getLogin();
-        welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = "tournament-page";
-        hrefToSpecificGroupPage = "group-page";
-        addTournamentMenuItem = "Add Tournament";
-        allGroups = "Groups";
-        classStr = "visible-element";
-        allTournaments = "Tournaments";
-    }
-
-    if (userName.equals("")) {
-        addTournamentMenuItem = "";
-        classStr = "hidden-element";
-    }
-%>
-
+<%@ include file="../layout/layout.jsp" %>
 
 <body class="backgroundTournament">
 
@@ -77,7 +46,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="home">Home</a>
+            <a class="navbar-brand page-scroll" href="home">HOME</a>
             <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
             </a>

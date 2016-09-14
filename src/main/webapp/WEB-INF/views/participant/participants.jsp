@@ -8,7 +8,7 @@
 <html lang="en">
 
 <head>
-    <title>All available tournaments</title>
+    <title>Participant</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,34 +36,9 @@
 </head>
 
 <%--Gets specific atributes from http session--%>
-<%
-    String userName = "";
-    String welcomeStr = "";
-    String hrefToSpecificTournamentPage = "all-tournaments-page";
-    String avatar = "";
-    String addTournamentMenuItem = null;
-    String classStr = null;
-    String allTournaments = "All Tournaments";
-
-    Manager manager = (Manager) session.getAttribute("manager");
-
-    if (manager != null) {
-        avatar = "resources/img/user_avatar/" + manager.getAvatar();
-        userName = manager.getLogin();
-        welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = "tournament-page";
-        addTournamentMenuItem = "Add Tournament";
-        classStr = "visible-element";
-    }
-
-    if (userName.equals("")) {
-        addTournamentMenuItem = "";
-        classStr = "hidden-element";
-    }
-%>
+<%@ include file="../layout/layout.jsp" %>
 
 <body class="backgroundTournament">
-
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -72,7 +47,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="/">Home</a>
+            <a class="navbar-brand page-scroll" href="home">HOME</a>
             <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
             </a>
@@ -82,16 +57,49 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
+                <%--Add Tournament--%>
+                <li>
+                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
                        onload="showMenuItem()"><%=addTournamentMenuItem%>
-                </a></li>
-                <li><a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>">Tournaments</a></li>
-                <li type="hide"><a class="page-scroll" href="match.jsp">Matches</a></li>
-                <li><a class="page-scroll" href="#portfolio">Media</a></li>
-                <li><a class="page-scroll" href="contact-page">Contact Us</a></li>
-                <li><a href="signup-page" class="hidden-when-logged-in">Sign Up</a></li>
-                <li><a href="login-page" class="hidden-when-logged-in">Log In </a></li>
-                <li><a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a></li>
+                    </a>
+                </li>
+
+                <%--All Tournament--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
+                    </a>
+                </li>
+
+                <%--Group--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
+                </li>
+
+                <%--Gallery--%>
+                <li>
+                    <a class="page-scroll" href="#portfolio">Gallery</a>
+                </li>
+
+                <%--Contact Us--%>
+                <li>
+                    <a class="page-scroll" href="contact-page">Contact Us</a>
+                </li>
+
+                <%--Sign Up--%>
+                <li>
+                    <a href="signup-page" class="hidden-when-logged-in">Sign Up</a>
+                </li>
+
+                <%--Log In--%>
+                <li>
+                    <a href="login-page" class="hidden-when-logged-in">Log In </a>
+                </li>
+
+                <%--Log Out--%>
+                <li>
+                    <a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -122,18 +130,12 @@
                         <br>
                     </div>
 
-
                     <div class="col-sm-9">
-                        <h2>Participants</h2>
+                        <h2><%=userName%>'s team</h2>
                         <hr>
                         <br>
 
-
-                        <h2>Team</h2>
-                        <hr>
-                        <br>
-
-                        <h2>Members</h2>
+                        <h2><%=userName%>'s '<%=request.getParameter("groupName")%>' members</h2>
                         <hr>
                         <br>
 
@@ -142,6 +144,10 @@
                                 String tournamentName = (String) request.getAttribute("tournamentName");
                                 List<Member> membersList = (List<Member>) request.getAttribute("membersList");
                                 int size = membersList.size();
+
+                                //Todo
+                                int groupNameId = request.getParameter("groupNameId");
+//                                session.setAttribute("groupNameId", groupNameId);
                             %>
 
                             <table class="table">
@@ -199,7 +205,7 @@
 
                                     <%--TournamentName--%>
                                     <td>
-                                        <%=tournamentName%>
+                                        <%=request.getParameter("tournamentName")%>
                                     </td>
                                 </tr>
                                 <%}%>

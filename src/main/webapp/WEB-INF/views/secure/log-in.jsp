@@ -15,7 +15,6 @@
 
 <body class="backgroundLogin">
 <div class="form">
-
     <%--Gets error message from LogInServlet--%>
     <%
         String userNameErrStr = (String) session.getAttribute("userNameErr");

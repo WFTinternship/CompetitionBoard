@@ -38,44 +38,46 @@
     <![endif]-->
 </head>
 
-<%--Gets specific atributes from http session--%>
-<%
-    String userName = "";
-    String welcomeStr = "";
-    String hrefToSpecificTournamentPage = "all-tournaments-page";
-    String hrefToSpecificGroupPage = "all-group-page";
-    String avatar = "";
-    String addTournamentMenuItem = null;
-    String classStr = null;
-    String allTournaments = "All Tournaments";
-    String allGroups = "All Groups";
+<%@ include file="layout/layout.jsp" %>
 
-    Manager manager = (Manager) session.getAttribute("manager");
+<%--&lt;%&ndash;Gets specific atributes from http session&ndash;%&gt;--%>
+<%--<%--%>
+    <%--String userName = "";--%>
+    <%--String welcomeStr = "";--%>
+    <%--String hrefToSpecificTournamentPage = "all-tournaments-page";--%>
+    <%--String hrefToSpecificGroupPage = "all-group-page";--%>
+    <%--String avatar = "";--%>
+    <%--String addTournamentMenuItem = null;--%>
+    <%--String classStr = null;--%>
+    <%--String allTournaments = "All Tournaments";--%>
+    <%--String allGroups = "All Groups";--%>
 
-    if (manager != null) {
-        avatar = "resources/img/user_avatar/" + manager.getAvatar();
-        userName = manager.getLogin();
-        welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = "tournament-page";
-        hrefToSpecificGroupPage = "group-page";
-        addTournamentMenuItem = "Add Tournament";
-        allTournaments = "Tournaments";
-        allGroups = "Groups";
-        classStr = "visible-element";
-    }
+    <%--Manager manager = (Manager) session.getAttribute("manager");--%>
 
-    if (userName.equals("")) {
-        addTournamentMenuItem = "";
-        classStr = "hidden-element";
-    }
-%>
+    <%--if (manager != null) {--%>
+        <%--avatar = "resources/img/user_avatar/" + manager.getAvatar();--%>
+        <%--userName = manager.getLogin();--%>
+        <%--welcomeStr = "Hi, ";--%>
+        <%--hrefToSpecificTournamentPage = "tournament-page";--%>
+        <%--hrefToSpecificGroupPage = "group-page";--%>
+        <%--addTournamentMenuItem = "Add Tournament";--%>
+        <%--allTournaments = "Tournaments";--%>
+        <%--allGroups = "Groups";--%>
+        <%--classStr = "visible-element";--%>
+    <%--}--%>
+
+    <%--if (userName.equals("")) {--%>
+        <%--addTournamentMenuItem = "";--%>
+        <%--classStr = "hidden-element";--%>
+    <%--}--%>
+<%--%>--%>
 
 <body id="page-top">
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand page-scroll" href="#page-top">Home</a>
+            <a class="navbar-brand page-scroll" href="#page-top">HOME</a>
             <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
         </div>

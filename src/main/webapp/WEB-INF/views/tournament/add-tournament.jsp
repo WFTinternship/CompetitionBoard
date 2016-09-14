@@ -15,18 +15,7 @@
 </head>
 
 <%--Gets error message from SignInServlet--%>
-<%
-    String existsTournament = (String) request.getAttribute("existsTournament");
-    if (existsTournament == null) {
-        existsTournament = "";
-    }
-%>
-
-<%--Return local time--%>
-<%
-    java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-    String today = df.format(new java.util.Date());
-%>
+<%@ include file="../layout/add-tournament-layout.jsp" %>
 
 <body class="backgroundTournament">
 <div class="container">

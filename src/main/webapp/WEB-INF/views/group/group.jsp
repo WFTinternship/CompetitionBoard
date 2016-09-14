@@ -1,15 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Group" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.service.GroupService" %>
+<%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.service.TournamentService" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>All available tournaments</title>
+    <title>User's groups</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,36 +36,8 @@
 </head>
 
 <%--Gets specific atributes from http session--%>
-<%
-    String userName = "";
-    String welcomeStr = "";
-    String hrefToSpecificTournamentPage = "all-tournaments-page";
-    String hrefToSpecificGroupPage = "all-group-page";
-    String avatar = "";
-    String addTournamentMenuItem = null;
-    String classStr = null;
-    String allTournaments = "All Tournaments";
-    String allGroups = "All Groups";
 
-    Manager manager = (Manager) session.getAttribute("manager");
-
-    if (manager != null) {
-        avatar = "resources/img/user_avatar/" + manager.getAvatar();
-        userName = manager.getLogin();
-        welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = "tournament-page";
-        hrefToSpecificGroupPage = "group-page";
-        addTournamentMenuItem = "Add Tournament";
-        allTournaments = "Tournaments";
-        allGroups = "Groups";
-        classStr = "visible-element";
-    }
-
-    if (userName.equals("")) {
-        addTournamentMenuItem = "";
-        classStr = "hidden-element";
-    }
-%>
+<%@ include file="../layout/layout.jsp" %>
 
 <body class="backgroundTournament">
 
@@ -78,7 +49,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="home">Home</a>
+            <a class="navbar-brand page-scroll" href="home">HOME</a>
             <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
             </a>
@@ -88,7 +59,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-
                 <%--Add Tournament--%>
                 <li>
                     <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
@@ -149,7 +119,8 @@
                             <li>
                                 <form action="add-group-page" method="get">
                                     <button type="submit"
-                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll"><B>Create Group</B>
+                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll"><B>Create
+                                        Group</B>
                                     </button>
                                 </form>
                             </li>
@@ -158,12 +129,16 @@
                         <br>
                     </div>
                     <div class="col-sm-9">
-                        <h2>Groups</h2>
+                        <h2><%=userName%> groups</h2>
                         <hr>
                         <br>
 
                         <div class="container">
-
+                            <%
+                                TournamentService tournamentService = (TournamentService) request.getAttribute("tournamentService");
+                                List<Group> tournamentGroupsList = (List<Group>) request.getAttribute("groupsByManager");
+                                int size = tournamentGroupsList.size();
+                            %>
                             <table class="table">
                                 <tr>
                                     <th width="1%">Check</th>
@@ -174,9 +149,12 @@
                                     <th>Round</th>
                                     <th>Next round participants</th>
                                     <th>Tournament Id</th>
-                                    <th>Tournament Name</th>
+                                    <th>Tournament name</th>
                                 </tr>
-
+                                <%
+                                    for (int i = 0; i < size; i++) {
+                                        int tournamentId = tournamentGroupsList.get(i).getTournamentId();
+                                %>
                                 <tr>
                                     <%--Radio--%>
                                     <td>
@@ -184,40 +162,51 @@
                                     </td>
                                     <%--No--%>
                                     <td>
+                                        <%=i%>
                                     </td>
 
                                     <%--Id--%>
                                     <td>
+                                        <%=tournamentGroupsList.get(i).getGroupId()%>
                                     </td>
 
                                     <%--Name--%>
                                     <td>
+                                        <a href="participant-page?groupNameId=<%=tournamentGroupsList.get(i).getGroupId()%>"
+                                           class="a-custom" name="hrefTournamentName">
+                                            <%=tournamentGroupsList.get(i).getGroupName()%>
+                                        </a>
                                     </td>
 
                                     <%--Participant count--%>
                                     <td>
+                                        <%=tournamentGroupsList.get(i).getParticipantsCount()%>
                                     </td>
 
                                     <%--Round--%>
                                     <td>
+                                        <%--<%=tournamentGroupsList.get(i).getRound()%>--%>
                                     </td>
 
                                     <%--Next Round Participants--%>
                                     <td>
+                                        <%=tournamentGroupsList.get(i).getNextRoundParticipants()%>
                                     </td>
 
                                     <%--Tournament Id--%>
                                     <td>
+                                        <%=tournamentId%>
                                     </td>
 
                                     <%--Tournament Name--%>
                                     <td>
-
-                                        <%--<%=request.getAttribute("tournamentName")%>--%>
+                                        <%--<a class="a-custom" href="tournament-page">--%>
+                                        <%=tournamentService.getTournamentById(tournamentId).getTournamentName()%>
+                                        <%--</a>--%>
                                     </td>
                                 </tr>
+                                <%}%>
                             </table>
-
 
                             <!-- Footer -->
                             <footer>

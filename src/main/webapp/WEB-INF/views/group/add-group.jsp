@@ -44,7 +44,7 @@
     <div class="row main">
         <div class="main-login main-center">
 
-            <h2>Add Member</h2>
+            <h2>Add Group</h2>
             <hr>
 
             <form action="addGroup-form" class="form-horizontal" method="get">
@@ -66,12 +66,12 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="tournamentSelectId" name="tournamentNameId" class="form-control" required>
-                                <option value="0" selected="selected">Select tournament</option>
+                            <select id="tournamentSelectId" name="tournamentNameId" class="form-control" required >
+                                <option value="notSelected" selected="selected">Select tournament</option>
                                 <%
-                                    for (int i = 0; i < size; i++) {
-                                        name = tournamentList.get(i).getTournamentName();
-                                        tournamentId = tournamentList.get(i).getTournamentId();
+                                    for (Tournament aTournamentList : tournamentList) {
+                                        name = aTournamentList.getTournamentName();
+                                        tournamentId = aTournamentList.getTournamentId();
                                 %>
                                 <option value="<%=tournamentId%>"><%=name%>
                                     <%}%>
@@ -81,8 +81,11 @@
                     </div>
                 </div>
                 <div class="form-group ">
+                    <br>
+                    <br>
                     <input type="reset" class="btn btn-danger btn-lg btn-block login-button" value="Reset"/>
-                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Submit"/>
+                    <br>
+                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Submit" />
                 </div>
 
             </form>

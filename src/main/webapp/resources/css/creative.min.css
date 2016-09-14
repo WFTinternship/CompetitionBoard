@@ -93,7 +93,7 @@ aside {
 .navbar-default .navbar-header .navbar-brand {
     color: #F05F40;
     font-weight: 700;
-    text-transform: uppercase
+    /*text-transform: uppercase*/
 }
 
 .navbar-default .navbar-header .navbar-brand:focus, .navbar-default .navbar-header .navbar-brand:hover {

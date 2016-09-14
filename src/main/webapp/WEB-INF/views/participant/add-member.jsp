@@ -1,3 +1,5 @@
+<%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +29,12 @@
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 </head>
 
+<%
+    List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListParticipantFrom");
+    String name;
+    int tournamentId;
+    int size = tournamentList.size();
+%>
 
 <body>
 <div class="container">
@@ -37,6 +45,39 @@
             <hr>
 
             <form action="addMemberForm" class="form-horizontal" method="post" >
+                <%--Groups--%>
+                <div class="group">
+                    <label for="groupId" class="cols-sm-2 control-label">Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="nameGroup" id="groupId"
+                                   placeholder="<%=session.getAttribute("groupNameId")%>" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <%--Tournament Name--%>
+                <div class="form-group">
+                    <label for="tournamentSelectId" class="cols-sm-2 control-label">Name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                            <select id="tournamentSelectId" name="tournamentNameId" class="form-control" required >
+                                <option value="notSelected" selected="selected">Select tournament</option>
+                                <%
+                                    for (Tournament aTournamentList : tournamentList) {
+                                        name = aTournamentList.getTournamentName();
+                                        tournamentId = aTournamentList.getTournamentId();
+                                %>
+                                <option value="<%=tournamentId%>"><%=name%>
+                                    <%}%>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <%--Name--%>
                 <div class="form-group">
                     <label for="memberId" class="cols-sm-2 control-label">Name</label>

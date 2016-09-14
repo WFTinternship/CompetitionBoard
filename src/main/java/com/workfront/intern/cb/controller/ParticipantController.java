@@ -1,8 +1,13 @@
 package com.workfront.intern.cb.controller;
 
 
+import com.workfront.intern.cb.common.Group;
+import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Member;
+import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.service.GroupService;
 import com.workfront.intern.cb.service.ParticipantService;
+import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Params;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -21,8 +27,16 @@ public class ParticipantController {
     @Autowired
     ParticipantService participantService;
 
+    @Autowired
+    TournamentService tournamentService;
+
+    @Autowired
+    GroupService groupService;
+
+
     @RequestMapping(value = {"/participant-page"})
-    public String toContactUsPage(Model model) {
+    public String toParticipantPage(Model model,
+                                    HttpServletRequest request) {
 
         List<Member> membersList = (List<Member>) participantService.getAll(Member.class);
 
@@ -34,7 +48,14 @@ public class ParticipantController {
     // region <ADD MEMBER>
 
     @RequestMapping(value = {"/add-members-page"})
-    public String toAddMembersPage(Model model) {
+    public String toAddMembersPage(Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+        int managerId = manager.getId();
+
+        List<Tournament> tournamentListParticipantFrom = tournamentService.getTournamentListByManager(managerId);
+        request.setAttribute("tournamentListParticipantFrom", tournamentListParticipantFrom);
 
         return Params.PAGE_ADD_MEMBER;
     }
@@ -46,7 +67,15 @@ public class ParticipantController {
                             @RequestParam("positionMember") String positionMember,
                             @RequestParam("emailMember") String email,
                             @RequestParam("infoMember") String info,
+                            @RequestParam("tournamentNameId") int tournamentNameId,
                             HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        int groupID = (int) session.getAttribute("groupNameId");
+        Group group = groupService.getGroupById(groupID);
+        group.setTournamentId(tournamentNameId);
+        groupService.updateGroup(groupID, group);
+
 
         Member member = new Member();
         member.setName(nameMember);

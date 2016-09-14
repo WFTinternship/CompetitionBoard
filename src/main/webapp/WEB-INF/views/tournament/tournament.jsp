@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="com.workfront.intern.cb.web.util.Helpers" %>
@@ -9,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My tournaments</title>
+    <title>User's tournaments</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,40 +31,9 @@
     <![endif]-->
 </head>
 
-<%--Gets specific atributes from http session--%>
-<%
-    String userName = "";
-    String welcomeStr = "";
-    String hrefToSpecificTournamentPage = "all-tournaments-page";
-    String hrefToSpecificGroupPage = "all-group-page";
-    String avatar = "";
-    String addTournamentMenuItem = null;
-    String classStr = null;
-    String allTournaments = "All Tournaments";
-    String allGroups = "All Groups";
-
-    Manager manager = (Manager) session.getAttribute("manager");
-
-    if (manager != null) {
-        avatar = "resources/img/user_avatar/" + manager.getAvatar();
-        userName = manager.getLogin();
-        welcomeStr = "Hi, ";
-        hrefToSpecificTournamentPage = "tournament-page";
-        hrefToSpecificGroupPage = "all-group-page";
-        addTournamentMenuItem = "Add Tournament";
-        allGroups = "Groups";
-        classStr = "visible-element";
-        allTournaments = "Tournaments";
-    }
-
-    if (userName.equals("")) {
-        addTournamentMenuItem = "";
-        classStr = "hidden-element";
-    }
-%>
+<%@ include file="../layout/layout.jsp" %>
 
 <body class="backgroundTournament">
-
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -74,7 +42,7 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="home">Home</a>
+            <a class="navbar-brand page-scroll" href="home">HOME</a>
             <a><img class="avatar" src="<%=avatar%>"> </a>
             <a class="navbar-brand page-scroll"><%=welcomeStr + "" + userName%>
             </a>
@@ -149,7 +117,7 @@
                     </div>
 
                     <div class="col-sm-9">
-                        <h2>My tournaments</h2>
+                        <h2><%=userName%> tournaments</h2>
                         <hr>
                         <br>
 
@@ -211,10 +179,11 @@
 
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
-                                                <%--<a href="participant-page?page=<%=tournamentList.get(i).getTournamentName()%>"--%>
-                                                <a href="participant-page" class="a-custom" name="hrefTournamentName">
+                                                <%--<a href="participant-page?tournamentName=<%=tournamentList.get(i).getTournamentName()%>"--%>
+                                                   <%--class="a-custom" name="hrefTournamentName">--%>
+                                                <%--<a href="participant-page" class="a-custom" name="hrefTournamentName">--%>
                                                     <%=tournamentList.get(i).getTournamentName()%>
-                                                </a>
+                                                <%--</a>--%>
                                             </td>
 
                                             <%--StartDate--%>

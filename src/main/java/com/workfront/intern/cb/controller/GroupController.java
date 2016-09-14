@@ -1,6 +1,5 @@
 package com.workfront.intern.cb.controller;
 
-
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,6 +46,30 @@ public class GroupController {
     @RequestMapping(value = {"/group-page"})
     public String toGroupPage(Model model, HttpServletRequest request) {
 
+        // Selected groups list of manager tournaments
+        List<Group> groupsByManager = new ArrayList<>();
+
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+
+        // All groups list
+        List<Group> allGroups = groupService.getAllGroups();
+        int allGroupsSize = allGroups.size();
+
+        // Tournaments list of manager
+        List<Tournament> tournamentListByManager = tournamentService.getTournamentListByManager(manager.getId());
+        int tournamentListSize = tournamentListByManager.size();
+        for (int i = 0; i < tournamentListSize; i++) {
+            for (int j = 0; j < allGroupsSize; j++) {
+                if ((tournamentListByManager.get(i).getTournamentId()) == allGroups.get(j).getTournamentId()) {
+                    groupsByManager.add(allGroups.get(j));
+                }
+            }
+        }
+
+        request.setAttribute("tournamentService", tournamentService);
+        request.setAttribute("groupsByManager", groupsByManager);
+
         return Params.PAGE_GROUPS;
     }
 
@@ -65,18 +89,21 @@ public class GroupController {
     @RequestMapping(value = {"/addGroup-form"})
     public String addGroup(Model model,
                            @RequestParam("nameGroup") String nameGroup,
-                           @RequestParam("tournamentNameId") int tournamentNameId,
-                           HttpServletRequest request) {
+                           @RequestParam("tournamentNameId") String tournamentNameId) {
 
-        Group group = new Group();
-        group.setGroupName(nameGroup);
-        group.setTournamentId(tournamentNameId);
+        String notSelected = "notSelected";
 
-        groupService.addGroup(group);
+        if (!tournamentNameId.equals(notSelected)) {
+            Group group = new Group();
+            group.setGroupName(nameGroup);
+            group.setTournamentId(Integer.parseInt(tournamentNameId));
 
-        HttpSession session = request.getSession();
-        session.setAttribute("tournamentNameId", tournamentNameId);
+            groupService.addGroup(group);
+        } else {
 
-        return "redirect:group/group";
+            return "redirect:add-group-page";
+        }
+
+        return "redirect:all-group-page";
     }
 }
