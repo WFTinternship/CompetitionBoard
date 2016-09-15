@@ -48,13 +48,14 @@
             <hr>
 
             <form action="addGroup-form" class="form-horizontal" method="get">
+
                 <%--Name--%>
                 <div class="form-group">
-                    <label for="groupId" class="cols-sm-2 control-label">Group name</label>
+                    <label for="groupNameID" class="cols-sm-2 control-label">Group name</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="nameGroup" id="groupId"
+                            <input type="text" class="form-control" name="nameGroup" id="groupNameID"
                                    placeholder="Group name" required/>
                         </div>
                     </div>
@@ -62,7 +63,6 @@
 
                 <%--Tournament name--%>
                 <div class="form-group">
-                    <label for="groupId" class="cols-sm-2 control-label">Tournament name</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>

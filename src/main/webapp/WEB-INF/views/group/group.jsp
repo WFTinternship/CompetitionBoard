@@ -4,6 +4,7 @@
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.service.TournamentService" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.web.util.Helpers" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -134,95 +135,118 @@
                         <br>
 
                         <div class="container">
-                            <%
-                                TournamentService tournamentService = (TournamentService) request.getAttribute("tournamentService");
-                                List<Group> tournamentGroupsList = (List<Group>) request.getAttribute("groupsByManager");
-                                int size = tournamentGroupsList.size();
-                            %>
-                            <table class="table">
-                                <tr>
-                                    <th width="1%">Check</th>
-                                    <th width="3%">No</th>
-                                    <th width="3%">Id</th>
-                                    <th>Name</th>
-                                    <th>Participant count</th>
-                                    <th>Round</th>
-                                    <th>Next round participants</th>
-                                    <th>Tournament Id</th>
-                                    <th>Tournament name</th>
-                                </tr>
-                                <%
-                                    for (int i = 0; i < size; i++) {
-                                        int tournamentId = tournamentGroupsList.get(i).getTournamentId();
-                                %>
-                                <tr>
-                                    <%--Radio--%>
-                                    <td>
-                                        <input type="radio" id="" class="checkbox-custom" name="" value="" required/>
-                                    </td>
-                                    <%--No--%>
-                                    <td>
-                                        <%=i%>
-                                    </td>
+                            <div id="table" class="table-editable">
 
-                                    <%--Id--%>
-                                    <td>
-                                        <%=tournamentGroupsList.get(i).getGroupId()%>
-                                    </td>
+                                <%--Update Button--%>
+                                <button class="btn btn-warning" type="button" onclick="#">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
 
-                                    <%--Name--%>
-                                    <td>
-                                        <a href="participant-page?groupNameId=<%=tournamentGroupsList.get(i).getGroupId()%>"
-                                           class="a-custom" name="hrefTournamentName">
-                                            <%=tournamentGroupsList.get(i).getGroupName()%>
-                                        </a>
-                                    </td>
+                                <%--Remove Button--%>
+                                <form action="deleteGroup" method="get" id="deleteGroupBtnId">
+                                    <button class="btn btn-danger" type="button" onclick="deleteSelectedGroup()">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
 
-                                    <%--Participant count--%>
-                                    <td>
-                                        <%=tournamentGroupsList.get(i).getParticipantsCount()%>
-                                    </td>
+                                    <br>
+                                    <br>
+                                    <%
+                                        TournamentService tournamentService = (TournamentService) request.getAttribute("tournamentService");
+                                        List<Group> groups = (List<Group>) request.getAttribute("groupsByManager");
+                                        int size = groups.size();
+                                    %>
+                                    <table class="table" id="updateTournamentTable">
+                                        <tr>
+                                            <th width="1%">Check</th>
+                                            <th width="3%">No</th>
+                                            <th width="3%">Id</th>
+                                            <th>Name</th>
+                                            <th>Participant count</th>
+                                            <th>Round</th>
+                                            <th>Next round participants</th>
+                                            <th>Tournament Id</th>
+                                            <th>Tournament name</th>
+                                        </tr>
+                                        <%
+                                            for (int i = 0; i < size; i++) {
+                                                int groupIDSelected = groups.get(i).getGroupId();
+                                                session.setAttribute("groupIDSelected", groupIDSelected);
+                                        %>
 
-                                    <%--Round--%>
-                                    <td>
-                                        <%--<%=tournamentGroupsList.get(i).getRound()%>--%>
-                                    </td>
+                                        <tr>
+                                            <%--Radio--%>
+                                            <td>
+                                                <input type="radio" id="<%=groupIDSelected%>" class="checkbox-custom" name="groupId"
+                                                       value="<%=groupIDSelected%>" required/>
+                                            </td>
 
-                                    <%--Next Round Participants--%>
-                                    <td>
-                                        <%=tournamentGroupsList.get(i).getNextRoundParticipants()%>
-                                    </td>
+                                                <td>
+                                                    <%=i%>
+                                                </td>
 
-                                    <%--Tournament Id--%>
-                                    <td>
-                                        <%=tournamentId%>
-                                    </td>
+                                                <%--Id--%>
+                                                <td>
+                                                    <%=groupIDSelected%>
+                                                </td>
 
-                                    <%--Tournament Name--%>
-                                    <td>
-                                        <%--<a class="a-custom" href="tournament-page">--%>
-                                        <%=tournamentService.getTournamentById(tournamentId).getTournamentName()%>
-                                        <%--</a>--%>
-                                    </td>
-                                </tr>
-                                <%}%>
-                            </table>
+                                                <%--Name--%>
+                                                <td>
+                                                    <a href="participant-page" class="a-custom" name="hrefTournamentName">
+                                                        <%=groups.get(i).getGroupName()%>
 
-                            <!-- Footer -->
-                            <footer>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>Copyright &copy; Artur Babayan 2016</p>
-                                    </div>
-                                </div>
-                            </footer>
+                                                    </a>
+                                                </td>
 
+                                                <%--Participant count--%>
+                                                <td>
+                                                    <%=groups.get(i).getParticipantsCount()%>
+                                                </td>
+
+                                                <%--Round--%>
+                                                <td>
+                                                    <%--<%=groups.get(i).getRound()%>--%>
+                                                </td>
+
+                                                <%--Next Round Participants--%>
+                                                <td>
+                                                    <%=groups.get(i).getNextRoundParticipants()%>
+                                                </td>
+
+                                                <%--Tournament Id--%>
+                                                <td>
+                                                    <%=groups.get(i).getTournamentId()%>
+                                                </td>
+
+                                                <%--Tournament Name--%>
+                                                <td>
+                                                    <%=tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName()%>
+                                                </td>
+                                        </tr>
+                                        <%}%>
+                                    </table>
+                                </form>
+                            </div>
                         </div>
+
+
+                        <!-- Footer -->
+                        <%--<footer id="footer">--%>
+                        <%--<div class="row">--%>
+                        <%--<div class="col-lg-12">--%>
+                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--</footer>--%>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <!-- jQuery -->

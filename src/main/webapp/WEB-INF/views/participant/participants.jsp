@@ -1,9 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
-<%@ page import="com.workfront.intern.cb.common.Participant" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.common.Member" %>
+<%@ page import="com.workfront.intern.cb.service.GroupService" %>
+<%@ page import="com.workfront.intern.cb.common.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,94 +134,101 @@
                         <hr>
                         <br>
 
-                        <h2><%=userName%>'s '<%=request.getParameter("groupName")%>' members</h2>
+                        <h2> members</h2>
                         <hr>
                         <br>
 
+
                         <div class="container">
-                            <%
-                                String tournamentName = (String) request.getAttribute("tournamentName");
-                                List<Member> membersList = (List<Member>) request.getAttribute("membersList");
-                                int size = membersList.size();
+                            <div id="table" class="table-editable">
 
-                                //Todo
-                                int groupNameId = request.getParameter("groupNameId");
-//                                session.setAttribute("groupNameId", groupNameId);
-                            %>
+                                <%--Update Button--%>
+                                <button class="btn btn-warning" type="button" onclick="">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
 
-                            <table class="table">
-                                <tr>
-                                    <th width="1%">Check</th>
-                                    <th width="3%">No</th>
-                                    <th width="3%">Id</th>
-                                    <th>Name</th>
-                                    <th>Surname</th>
-                                    <th>Position</th>
-                                    <th>Email</th>
-                                    <th>Participant Info</th>
-                                    <th>Tournament Name</th>
-                                </tr>
-                                <%for (int i = 0; i < size; i++) {%>
-                                <tr>
-                                    <%--Radio--%>
-                                    <td>
-                                        <input type="radio" id="" class="checkbox-custom" name="" value="" required/>
-                                    </td>
-                                    <%--No--%>
-                                    <td>
-                                        <%=i%>
-                                    </td>
+                                <%--Remove Button--%>
+                                <form action="#" method="get" id="deleteMemberBtnId">
+                                    <button class="btn btn-danger" type="button" onclick="deleteSelectedMember()">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
 
-                                    <%--Id--%>
-                                    <td>
-                                        <%=membersList.get(i).getId()%>
-                                    </td>
+                                    <br>
+                                    <br>
+                                    <%
+                                        List<Member> membersList = (List<Member>) session.getAttribute("membersList");
+                                        int listSize = membersList.size();
+                                    %>
 
-                                    <%--Name--%>
-                                    <td>
-                                        <%=membersList.get(i).getName()%>
-                                    </td>
+                                    <table class="table" id="updateTournamentTable">
+                                        <tr>
+                                            <th width="1%">Check</th>
+                                            <th width="3%">No</th>
+                                            <th width="3%">Id</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Position</th>
+                                            <th>Email</th>
+                                            <th>Participant Info</th>
+                                            <th>Tournament Name</th>
+                                        </tr>
+                                        <%
+                                            for (int i = 0; i < listSize; i++) {
+                                                int memberIDSelected = membersList.get(i).getId();
+                                        %>
 
-                                    <%--Surname--%>
-                                    <td>
-                                        <%=membersList.get(i).getSurName()%>
-                                    </td>
+                                        <tr>
+                                            <%--Radio--%>
+                                            <td>
+                                                <input type="radio" id="<%=memberIDSelected%>" class="checkbox-custom"
+                                                       name="groupId"
+                                                       value="<%=memberIDSelected%>" required/>
+                                            </td>
 
-                                    <%--Position--%>
-                                    <td>
-                                        <%=membersList.get(i).getPosition()%>
-                                    </td>
+                                            <td>
+                                                <%=i%>
+                                            </td>
 
-                                    <%--Email--%>
-                                    <td>
-                                        <%=membersList.get(i).getEmail()%>
-                                    </td>
+                                            <%--Id--%>
+                                            <td>
+                                                <%=memberIDSelected%>
+                                            </td>
 
-                                    <%--Participant info--%>
-                                    <td>
-                                        <%=membersList.get(i).getParticipantInfo()%>
-                                    </td>
+                                            <%--Name--%>
+                                            <td>
+                                                <%=membersList.get(i).getName()%>
+                                            </td>
 
-                                    <%--TournamentName--%>
-                                    <td>
-                                        <%=request.getParameter("tournamentName")%>
-                                    </td>
-                                </tr>
-                                <%}%>
+                                            <%--Surname--%>
+                                            <td>
+                                                <%=membersList.get(i).getSurName()%>
+                                            </td>
 
+                                            <%--Position--%>
+                                            <td>
+                                                <%=membersList.get(i).getPosition()%>
+                                            </td>
 
-                            </table>
+                                            <%--Email--%>
+                                            <td>
+                                                <%=membersList.get(i).getEmail()%>
+                                            </td>
 
+                                            <%--Participant info--%>
+                                            <td>
+                                                <%=membersList.get(i).getParticipantInfo()%>
+                                            </td>
 
-                            <!-- Footer -->
-                            <footer>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>Copyright &copy; Artur Babayan 2016</p>
-                                    </div>
-                                </div>
-                            </footer>
+                                            <%--TournamentName--%>
+                                            <td>
+                                                <%=request.getParameter("tournamentName")%>
+                                            </td>
+                                        </tr>
+                                        <%}%>
 
+                                    </table>
+                                </form>
+                            </div>
                         </div>
 
 

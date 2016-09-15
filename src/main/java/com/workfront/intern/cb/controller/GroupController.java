@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,6 +95,8 @@ public class GroupController {
         String notSelected = "notSelected";
 
         if (!tournamentNameId.equals(notSelected)) {
+            Tournament tournament = tournamentService.getTournamentById(Integer.parseInt(tournamentNameId));
+
             Group group = new Group();
             group.setGroupName(nameGroup);
             group.setTournamentId(Integer.parseInt(tournamentNameId));
@@ -104,6 +107,23 @@ public class GroupController {
             return "redirect:add-group-page";
         }
 
-        return "redirect:all-group-page";
+        return "redirect:group-page";
     }
+
+    // region <DELETE Group>
+
+    @RequestMapping(value = "/deleteGroup", method = RequestMethod.GET)
+    public String deleteTournament(Model model,
+                                   @RequestParam("groupId") String groupId) {
+
+        try {
+            groupService.deleteGroup(Integer.parseInt(groupId));
+        } catch (Exception ex) {
+            return "redirect:group-page";
+        }
+
+        return "redirect:group-page";
+    }
+
+    // endregion
 }

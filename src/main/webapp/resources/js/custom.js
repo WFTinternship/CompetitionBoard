@@ -62,6 +62,7 @@ function deleteCheckedElement() {
     }
 }
 
+
 //Updates selected tournament
 function updateCheckedElement() {
     $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);  
@@ -92,3 +93,27 @@ $(document).ready(function () {
         });
     });
 });
+
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+//Deletes selected groups
+function deleteSelectedGroup() {
+    var elements;
+    var current;
+    var noneChecked = true;
+
+    elements = document.getElementsByName("groupId");
+    for (var i = 0, len = elements.length; i < len; ++i) {
+        if (elements[i].checked) {
+            noneChecked = false;
+            current = elements[i].value;
+            if (confirm("Are you sure you want to delete tournament ? ") == true) {
+                document.getElementById("deleteGroupBtnId").submit();
+            }
+            break;
+        }
+    }
+    if (noneChecked) {
+        alert("Axbers nshi mi ban")
+    }
+}

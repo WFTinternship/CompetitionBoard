@@ -39,8 +39,10 @@ public class ParticipantController {
                                     HttpServletRequest request) {
 
         List<Member> membersList = (List<Member>) participantService.getAll(Member.class);
+        HttpSession session = request.getSession();
+        session.setAttribute("groupService", groupService);
+        session.setAttribute("membersList", membersList);
 
-        model.addAttribute("membersList", membersList);
 
         return Params.PAGE_PARTICIPANTS;
     }
@@ -60,7 +62,7 @@ public class ParticipantController {
         return Params.PAGE_ADD_MEMBER;
     }
 
-    @RequestMapping(value = {"/addMemberForm"})
+    @RequestMapping(value = {"/addMember-form"})
     public String addMember(Model model,
                             @RequestParam("nameMember") String nameMember,
                             @RequestParam("surNameMember") String surNameMember,
@@ -71,10 +73,10 @@ public class ParticipantController {
                             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        int groupID = (int) session.getAttribute("groupNameId");
+        int groupID = (int) session.getAttribute("groupIDSelected");
         Group group = groupService.getGroupById(groupID);
         group.setTournamentId(tournamentNameId);
-        groupService.updateGroup(groupID, group);
+        groupService.addGroup(group);
 
 
         Member member = new Member();
@@ -85,8 +87,10 @@ public class ParticipantController {
         member.setParticipantInfo(info);
 
         participantService.addParticipant(member);
+//        request.setAttribute("groupNameId", groupID);
 
-        return "redirect:participant-page";
+//        return "redirect:participant-page";
+        return Params.PAGE_PARTICIPANTS;
     }
 
     // endregion
