@@ -5,6 +5,7 @@ public abstract class Participant {
     protected boolean isTeam;
     protected String avatar;
     protected String participantInfo;
+    protected int tournamentId;
 
     public int getId() {
         return id;
@@ -37,6 +38,14 @@ public abstract class Participant {
         return this;
     }
 
+    public int getTournamentId() {
+        return tournamentId;
+    }
+
+    public void setTournamentId(int tournamentId) {
+        this.tournamentId = tournamentId;
+    }
+
     /**
      * method return participant type: MEMBER or TEAM
      */
@@ -55,6 +64,7 @@ public abstract class Participant {
         sb.append("isTeam(participant_type): ").append(getParticipantType(isTeam)).append("\n");
         sb.append("avatar: ").append(avatar).append("\n");
         sb.append("participantInfo: ").append(participantInfo).append("\n");
+        sb.append("tournamentId: ").append(tournamentId).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 
