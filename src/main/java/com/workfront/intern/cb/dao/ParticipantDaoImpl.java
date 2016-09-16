@@ -50,6 +50,22 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
     }
 
+
+    /**
+     * Gets specific participant list by tournament id - memberList or teamList
+     */
+    @Override
+    public List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls, int tournamentId)
+                                                                                        throws FailedOperationException {
+        if (cls.equals(Member.class)) {
+            return getMemberListByTournamentId(tournamentId);
+        } else if (cls.equals(Team.class)) {
+            return getTeamListByTournamentId(tournamentId);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
+    }
+
     /**
      * Gets specific participant list - memberList or teamList
      */
@@ -199,6 +215,40 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             closeResources(conn, ps, rs);
         }
         return member;
+    }
+
+    /**
+     * Gets member list by tournament id
+     */
+    private List<Member> getMemberListByTournamentId(int tournamentId) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Member member;
+        List<Member> memberList = new ArrayList<>();
+        String sql = "SELECT * FROM participant p WHERE p.tournament_id=?";
+
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, tournamentId);
+
+            // update member data
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                member = extractMemberFromResultSet(rs);
+                memberList.add(member);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return memberList;
     }
 
     /**
@@ -402,6 +452,40 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
+     * Gets member list by tournament id
+     */
+    private List<Team> getTeamListByTournamentId(int tournamentId) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Team team;
+        List<Team> teamList = new ArrayList<>();
+        String sql = "SELECT * FROM participant p WHERE p.tournament_id=?";
+
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, tournamentId);
+
+            // update member data
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                team = extractTeamFromResultSet(rs);
+                teamList.add(team);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return teamList;
+    }
+
+    /**
      * Gets team list
      */
     private List<Team> getTeamList() throws FailedOperationException {
@@ -515,6 +599,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             member.setSurName(rs.getString("surname"));
             member.setPosition(rs.getString("position"));
             member.setEmail(rs.getString("email"));
+            member.setTournamentId(rs.getInt("tournament_id"));
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -531,6 +616,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             team.setAvatar(rs.getString("avatar"));
             team.setParticipantInfo(rs.getString("participant_info"));
             team.setTeamName(rs.getString("team_name"));
+            team.setTournamentId(rs.getInt("tournament_id"));
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
