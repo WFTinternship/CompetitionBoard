@@ -141,18 +141,20 @@
 
                         <div class="container">
                             <div id="table" class="table-editable">
-
                                 <%--Update Button--%>
-                                <button class="btn btn-warning" type="button" onclick="">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </button>
+                                <div id="btn-location-1">
+                                    <button class="btn btn-warning " type="button" onclick="">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </div>
 
                                 <%--Remove Button--%>
                                 <form action="#" method="get" id="deleteMemberBtnId">
-                                    <button class="btn btn-danger" type="button" onclick="deleteSelectedMember()">
+                                  <div id="btn-location-2">
+                                    <button class="btn btn-danger " type="button" onclick="deleteSelectedMember()">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
-
+                                </div>
                                     <br>
                                     <br>
                                     <%

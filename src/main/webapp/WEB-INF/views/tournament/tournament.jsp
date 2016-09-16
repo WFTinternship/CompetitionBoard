@@ -125,15 +125,19 @@
                             <div id="table" class="table-editable">
 
                                 <%--Update Button--%>
-                                <button class="btn btn-warning" type="button" onclick="updateCheckedElement()">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </button>
+                                <div id="btn-location-1">
+                                    <button class="btn btn-warning" type="button" onclick="updateCheckedElement()">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </div>
 
                                 <%--Remove Button--%>
                                 <form action="deleteTournament" method="get" id="deleteBtnId">
-                                    <button class="btn btn-danger" type="button" onclick="deleteCheckedElement()">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
+                                    <div id="btn-location-2">
+                                        <button class="btn btn-danger" type="button" onclick="deleteCheckedElement()">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
 
                                     <br>
                                     <br>
@@ -180,9 +184,9 @@
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
                                                 <%--<a href="participant-page?tournamentName=<%=tournamentList.get(i).getTournamentName()%>"--%>
-                                                   <%--class="a-custom" name="hrefTournamentName">--%>
+                                                <%--class="a-custom" name="hrefTournamentName">--%>
                                                 <%--<a href="participant-page" class="a-custom" name="hrefTournamentName">--%>
-                                                    <%=tournamentList.get(i).getTournamentName()%>
+                                                <%=tournamentList.get(i).getTournamentName()%>
                                                 <%--</a>--%>
                                             </td>
 

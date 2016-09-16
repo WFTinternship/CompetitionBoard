@@ -138,15 +138,20 @@
                             <div id="table" class="table-editable">
 
                                 <%--Update Button--%>
-                                <button class="btn btn-warning" type="button" onclick="#">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </button>
+                                <div id="btn-location-1">
+                                    <button class="btn btn-warning" type="button" onclick="">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </div>
 
                                 <%--Remove Button--%>
                                 <form action="deleteGroup" method="get" id="deleteGroupBtnId">
-                                    <button class="btn btn-danger" type="button" onclick="deleteSelectedGroup()">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
+                                    <div id="btn-location-2">
+
+                                        <button class="btn btn-danger" type="button" onclick="deleteSelectedGroup()">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
 
                                     <br>
                                     <br>
@@ -176,51 +181,52 @@
                                         <tr>
                                             <%--Radio--%>
                                             <td>
-                                                <input type="radio" id="<%=groupIDSelected%>" class="checkbox-custom" name="groupId"
+                                                <input type="radio" id="<%=groupIDSelected%>" class="checkbox-custom"
+                                                       name="groupId"
                                                        value="<%=groupIDSelected%>" required/>
                                             </td>
 
-                                                <td>
-                                                    <%=i%>
-                                                </td>
+                                            <td>
+                                                <%=i%>
+                                            </td>
 
-                                                <%--Id--%>
-                                                <td>
-                                                    <%=groupIDSelected%>
-                                                </td>
+                                            <%--Id--%>
+                                            <td>
+                                                <%=groupIDSelected%>
+                                            </td>
 
-                                                <%--Name--%>
-                                                <td>
-                                                    <a href="participant-page" class="a-custom" name="hrefTournamentName">
-                                                        <%=groups.get(i).getGroupName()%>
+                                            <%--Name--%>
+                                            <td>
+                                                <a href="participant-page" class="a-custom" name="hrefTournamentName">
+                                                    <%=groups.get(i).getGroupName()%>
 
-                                                    </a>
-                                                </td>
+                                                </a>
+                                            </td>
 
-                                                <%--Participant count--%>
-                                                <td>
-                                                    <%=groups.get(i).getParticipantsCount()%>
-                                                </td>
+                                            <%--Participant count--%>
+                                            <td>
+                                                <%=groups.get(i).getParticipantsCount()%>
+                                            </td>
 
-                                                <%--Round--%>
-                                                <td>
-                                                    <%--<%=groups.get(i).getRound()%>--%>
-                                                </td>
+                                            <%--Round--%>
+                                            <td>
+                                                <%--<%=groups.get(i).getRound()%>--%>
+                                            </td>
 
-                                                <%--Next Round Participants--%>
-                                                <td>
-                                                    <%=groups.get(i).getNextRoundParticipants()%>
-                                                </td>
+                                            <%--Next Round Participants--%>
+                                            <td>
+                                                <%=groups.get(i).getNextRoundParticipants()%>
+                                            </td>
 
-                                                <%--Tournament Id--%>
-                                                <td>
-                                                    <%=groups.get(i).getTournamentId()%>
-                                                </td>
+                                            <%--Tournament Id--%>
+                                            <td>
+                                                <%=groups.get(i).getTournamentId()%>
+                                            </td>
 
-                                                <%--Tournament Name--%>
-                                                <td>
-                                                    <%=tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName()%>
-                                                </td>
+                                            <%--Tournament Name--%>
+                                            <td>
+                                                <%=tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName()%>
+                                            </td>
                                         </tr>
                                         <%}%>
                                     </table>
