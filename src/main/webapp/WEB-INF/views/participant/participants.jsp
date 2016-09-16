@@ -150,11 +150,11 @@
 
                                 <%--Remove Button--%>
                                 <form action="#" method="get" id="deleteMemberBtnId">
-                                  <div id="btn-location-2">
-                                    <button class="btn btn-danger " type="button" onclick="deleteSelectedMember()">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                </div>
+                                    <div id="btn-location-2">
+                                        <button class="btn btn-danger " type="button" onclick="deleteSelectedMember()">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
                                     <br>
                                     <br>
                                     <%
@@ -230,23 +230,21 @@
 
                                     </table>
                                 </form>
+
+                                <!-- Footer -->
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>Copyright &copy; Artur Babayan 2016</p>
+                                        </div>
+                                    </div>
+                                </footer>
+
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <%--<footer id="footer">--%>
-            <%--<div class="row">--%>
-            <%--<div class="col-lg-12">--%>
-            <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--</footer>--%>
-
         </div>
     </div>
 </div>

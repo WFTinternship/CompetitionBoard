@@ -110,12 +110,29 @@ public class GroupController {
         return "redirect:group-page";
     }
 
+    // region <UPDATE Group>
+
+    @RequestMapping(value = "/updateGroup", method = RequestMethod.GET)
+    public String updateGroup(Model model,
+                                   @RequestParam("groupName") String groupName,
+                                    HttpServletRequest request) {
+
+        int groupId = Integer.parseInt(request.getParameter("groupIDSelected"));
+        Group group = groupService.getGroupById(groupId);
+        group.setGroupName(groupName);
+
+        groupService.updateGroup(groupId, group);
+
+        return "redirect:group-page";
+    }
+
+    // endregion
+
     // region <DELETE Group>
 
     @RequestMapping(value = "/deleteGroup", method = RequestMethod.GET)
-    public String deleteTournament(Model model,
+    public String deleteGroup(Model model,
                                    @RequestParam("groupId") String groupId) {
-
         try {
             groupService.deleteGroup(Integer.parseInt(groupId));
         } catch (Exception ex) {

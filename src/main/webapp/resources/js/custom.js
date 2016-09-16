@@ -40,8 +40,9 @@ function showMenuItemReverse() {
     });
 }
 
+
 //Deletes selected tournament
-function deleteCheckedElement() {
+function deleteSelectedTournament() {
     var elements;
     var current;
     var noneChecked = true;
@@ -62,9 +63,8 @@ function deleteCheckedElement() {
     }
 }
 
-
 //Updates selected tournament
-function updateCheckedElement() {
+function updateSelectedTournament() {
     $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);  
     // if (noneChecked) {
     //     alert("Axbers nshi mi ban")
@@ -117,3 +117,29 @@ function deleteSelectedGroup() {
         alert("Axbers nshi mi ban")
     }
 }
+
+//Updates selected tournament
+function updateSelectedGroups() {
+    $('input[name=groupId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
+    // if (noneChecked) {
+    //     alert("Axbers nshi mi ban")
+    // }
+}
+
+$(document).ready(function () {
+    $('#updateGroupTable').find('td').blur(function () {
+        var tr = $(this).parent();
+        $.ajax({
+            url: '/updateGroup',
+            type: 'GET',
+            data: {
+                groupIDSelected: $('[data-name="groupIDSelected"]', tr).text().trim(),
+                groupName: $('[data-name="groupName"]', tr).text().trim()
+
+            },
+            success: function (tournament) {
+                $('#updateTableElement').text(tournament);
+            }
+        });
+    });
+});

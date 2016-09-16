@@ -126,7 +126,7 @@
 
                                 <%--Update Button--%>
                                 <div id="btn-location-1">
-                                    <button class="btn btn-warning" type="button" onclick="updateCheckedElement()">
+                                    <button class="btn btn-warning" type="button" onclick="updateSelectedTournament()">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
@@ -134,7 +134,8 @@
                                 <%--Remove Button--%>
                                 <form action="deleteTournament" method="get" id="deleteBtnId">
                                     <div id="btn-location-2">
-                                        <button class="btn btn-danger" type="button" onclick="deleteCheckedElement()">
+                                        <button class="btn btn-danger" type="button"
+                                                onclick="deleteSelectedTournament()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
@@ -166,8 +167,7 @@
                                             <%--Radio--%>
                                             <td>
                                                 <input type="radio" id="<%=tournamentId%>" class="checkbox-custom"
-                                                       name="tournamentNameId"
-                                                       value="<%=tournamentId%>" required/>
+                                                       name="tournamentNameId" value="<%=tournamentId%>" required/>
                                             </td>
 
                                             <%--No--%>
@@ -176,8 +176,7 @@
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="tournamentNameId"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
                                                 <%=tournamentId%>
                                             </td>
 
@@ -236,19 +235,18 @@
                                         <%}%>
                                     </table>
                                 </form>
+
+                                <!-- Footer -->
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>Copyright &copy; Artur Babayan 2016</p>
+                                        </div>
+                                    </div>
+                                </footer>
+
                             </div>
                         </div>
-
-
-                        <!-- Footer -->
-                        <%--<footer id="footer">--%>
-                        <%--<div class="row">--%>
-                        <%--<div class="col-lg-12">--%>
-                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--</footer>--%>
-
                     </div>
                 </div>
             </div>

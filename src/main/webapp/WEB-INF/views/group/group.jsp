@@ -139,7 +139,7 @@
 
                                 <%--Update Button--%>
                                 <div id="btn-location-1">
-                                    <button class="btn btn-warning" type="button" onclick="">
+                                    <button class="btn btn-warning" type="button" onclick="updateSelectedGroups()">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
@@ -160,7 +160,7 @@
                                         List<Group> groups = (List<Group>) request.getAttribute("groupsByManager");
                                         int size = groups.size();
                                     %>
-                                    <table class="table" id="updateTournamentTable">
+                                    <table class="table" id="updateGroupTable">
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
@@ -182,79 +182,71 @@
                                             <%--Radio--%>
                                             <td>
                                                 <input type="radio" id="<%=groupIDSelected%>" class="checkbox-custom"
-                                                       name="groupId"
-                                                       value="<%=groupIDSelected%>" required/>
+                                                       name="groupId" value="<%=groupIDSelected%>" required/>
                                             </td>
 
+                                            <%--No--%>
                                             <td>
                                                 <%=i%>
                                             </td>
 
                                             <%--Id--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
                                                 <%=groupIDSelected%>
                                             </td>
 
                                             <%--Name--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="groupName" data-updatable="true">
                                                 <a href="participant-page" class="a-custom" name="hrefTournamentName">
                                                     <%=groups.get(i).getGroupName()%>
-
                                                 </a>
                                             </td>
 
                                             <%--Participant count--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
                                                 <%=groups.get(i).getParticipantsCount()%>
                                             </td>
 
                                             <%--Round--%>
-                                            <td>
-                                                <%--<%=groups.get(i).getRound()%>--%>
+                                            <td contenteditable="false" data-name="round" data-updatable="false">
+                                                <%=groups.get(i).getRound()%>
                                             </td>
 
                                             <%--Next Round Participants--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="nextRoundParticipants" data-updatable="false">
                                                 <%=groups.get(i).getNextRoundParticipants()%>
                                             </td>
 
                                             <%--Tournament Id--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="tournamentId" data-updatable="false">
                                                 <%=groups.get(i).getTournamentId()%>
                                             </td>
 
-                                            <%--Tournament Name--%>
-                                            <td>
+                                            <%--Tournament name--%>
+                                            <td contenteditable="false" data-name="tournamentName" data-updatable="false">
                                                 <%=tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName()%>
                                             </td>
                                         </tr>
                                         <%}%>
                                     </table>
                                 </form>
+
+                                <!-- Footer -->
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>Copyright &copy; Artur Babayan 2016</p>
+                                        </div>
+                                    </div>
+                                </footer>
                             </div>
                         </div>
-
-
-                        <!-- Footer -->
-                        <%--<footer id="footer">--%>
-                        <%--<div class="row">--%>
-                        <%--<div class="col-lg-12">--%>
-                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--</footer>--%>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-
 <!-- jQuery -->
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 
