@@ -27,8 +27,11 @@ CREATE TABLE `participant` (
   `is_team` tinyint(1) NOT NULL DEFAULT '1',
   `avatar` varchar(255) DEFAULT NULL,
   `participant_info` text,
-  PRIMARY KEY (`participant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+  `tournament_id` int(11) NOT NULL,
+  PRIMARY KEY (`participant_id`),
+  KEY `tournament_id_idx` (`tournament_id`),
+  CONSTRAINT `tournament_id` FOREIGN KEY (`tournament_id`) REFERENCES `tournament` (`tournament_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +40,7 @@ CREATE TABLE `participant` (
 
 LOCK TABLES `participant` WRITE;
 /*!40000 ALTER TABLE `participant` DISABLE KEYS */;
+INSERT INTO `participant` VALUES (95,0,NULL,'',0),(96,0,NULL,'',0),(97,0,NULL,'',0),(98,0,NULL,'',0),(99,0,NULL,'',0),(100,0,NULL,'',0),(101,0,NULL,'',0);
 /*!40000 ALTER TABLE `participant` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-13 12:14:59
+-- Dump completed on 2016-09-16 18:47:36

@@ -29,10 +29,11 @@ CREATE TABLE `match` (
   `participant_2_id` int(11) DEFAULT NULL,
   `score_participant_1` int(11) DEFAULT NULL,
   `score_participant_2` int(11) DEFAULT NULL,
+  `matches_score` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`match_id`),
   KEY `match_group_id_idx` (`group_id`),
   CONSTRAINT `match_group_id` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-13 12:14:59
+-- Dump completed on 2016-09-16 18:47:36

@@ -37,7 +37,7 @@ CREATE TABLE `tournament` (
   KEY `fk_tournament_1_idx` (`tournament_format_id`),
   CONSTRAINT `FK_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`manager_id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `fk_tournament_1` FOREIGN KEY (`tournament_format_id`) REFERENCES `tournament_format` (`format_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,6 +46,7 @@ CREATE TABLE `tournament` (
 
 LOCK TABLES `tournament` WRITE;
 /*!40000 ALTER TABLE `tournament` DISABLE KEYS */;
+INSERT INTO `tournament` VALUES (207,'TestTournament','2016-09-13 01:26:00','2016-09-13 01:26:00','Yerevan, Armenia','bla bla bla',1,104),(208,'user_3 tournament','2016-09-13 06:59:00','2016-09-13 06:59:00','Yerevan, Armenia','bla bla blabla bla bla',2,105),(209,'ches 2016','2016-09-14 03:12:00','2016-09-14 03:12:00','Yerevan, Armenia','bla bla bla',1,104),(211,'chess 2016','2016-09-16 01:47:00','2016-09-16 01:47:00','Yerevan','bla bla bla',1,104),(212,'football 2017','2016-09-16 01:47:00','2016-09-16 01:47:00','Yerevan, Armenia','bla bla bla',NULL,104),(213,'fifa 2020','2016-09-16 01:47:00','2016-09-16 01:47:00','Yerevan, Armenia','bla bla bla',NULL,104),(214,'fifa2020','2016-09-16 01:47:00','2016-09-16 01:47:00','Yerevan, Armenia','bla bla bla',NULL,104),(215,'fifa','2016-09-16 01:47:00','2016-09-16 01:47:00','Yerevan, Armenia','bla bla bla',NULL,104),(216,'batmiton','2016-09-16 01:47:00','2016-09-16 01:47:00','Yerevan, Armenia','bla bla bla',NULL,104),(217,'valeybol','2016-09-16 01:47:00','2016-09-16 01:47:00','Yerevan, Armenia','bla bla bla',NULL,104);
 /*!40000 ALTER TABLE `tournament` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-13 12:14:59
+-- Dump completed on 2016-09-16 18:47:36
