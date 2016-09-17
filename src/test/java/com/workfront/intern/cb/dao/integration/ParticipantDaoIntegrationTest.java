@@ -1,10 +1,7 @@
 package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
-import com.workfront.intern.cb.common.Member;
-import com.workfront.intern.cb.common.Participant;
-import com.workfront.intern.cb.common.Team;
-import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.*;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.dao.*;
 import org.junit.After;
@@ -19,31 +16,53 @@ import static org.junit.Assert.*;
 public class ParticipantDaoIntegrationTest extends BaseTest {
 
     // DAO instances
-    private ParticipantDao participantDao;
+    private ManagerDao managerDao;
     private TournamentDao tournamentDao;
+    private ParticipantDao participantDao;
 
     // Test helper objects
+    private Manager testManager;
+    private Tournament testTournament;
     private Member testMember;
     private Team testTeam;
-    private Tournament testTournament;
 
     private DataSource dataSource = DBManager.getDataSource();
 
     @Before
     public void beforeTest() throws Exception {
+        managerDao = new ManagerDaoImpl(dataSource);
         tournamentDao = new TournamentDaoImpl(dataSource);
         participantDao = new ParticipantDaoImpl(dataSource);
 
         // Delete all remaining objects
         cleanUp();
 
+        // region <MANAGER>
+
+        // Initialize random manager instance
+        testManager = createRandomManager();
+        assertEquals(0, testManager.getId());
+
+        // Save to DB
+        managerDao.addManager(testManager);
+        assertTrue(testManager.getId() > 0);
+
+        // endregion
+
+        // region <TOURNAMENT>
+
         // Initialize random tournament instance
         testTournament = createRandomTournament();
+        testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
 
         // Save to DB
         tournamentDao.addTournament(testTournament);
         assertTrue(testTournament.getTournamentId() > 0);
+
+        // endregion
+
+        // region <MEMBER>
 
         // Initialize random member instance
         testMember = createRandomMember();
@@ -54,6 +73,10 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         participantDao.addParticipant(testMember);
         assertTrue(testMember.getId() > 0);
 
+        // endregion
+
+        // region <TEAM>
+
         // Initialize random team instance
         testTeam = createRandomTeam();
         testTeam.setTournamentId(testTournament.getTournamentId());
@@ -62,6 +85,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         // Save to DB
         participantDao.addParticipant(testTeam);
         assertTrue(testTeam.getId() > 0);
+
+        // endregion
     }
 
     @After
@@ -73,6 +98,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         participantDao.deleteAll(Member.class);
         participantDao.deleteAll(Team.class);
         tournamentDao.deleteAll();
+        managerDao.deleteAll();
     }
 
     // region <MEMBER>
