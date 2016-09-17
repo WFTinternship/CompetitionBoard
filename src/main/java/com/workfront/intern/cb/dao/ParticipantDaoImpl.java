@@ -125,7 +125,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     private Member addMember(Member member) throws FailedOperationException {
         Connection conn = null;
 
-        String sql_participant = "INSERT INTO participant(is_team, avatar, participant_info) VALUES (?,?,?)";
+        String sql_participant = "INSERT INTO participant(is_team, avatar, participant_info, tournament_id) VALUES (?,?,?,?)";
         String sql_member = "INSERT INTO member(member_id, name, surname, position, email) VALUES (?,?,?,?,?)";
         try {
             // Acquire connection
@@ -139,6 +139,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             ps.setBoolean(1, member.isTeam());
             ps.setString(2, member.getAvatar());
             ps.setString(3, member.getParticipantInfo());
+            ps.setInt(4, member.getTournamentId());
 
             // insert base participant info
             ps.executeUpdate();
@@ -226,8 +227,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         ResultSet rs = null;
         Member member;
         List<Member> memberList = new ArrayList<>();
-        String sql = "SELECT * FROM participant p WHERE p.tournament_id=?";
 
+        String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id where p.tournament_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -290,7 +291,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     private Member updateMember(int id, Member member) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
 
-        String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
+        String sql_participant = "UPDATE participant SET avatar=?, participant_info=?, tournament_id=? WHERE participant_id=?";
         String sql_member = "UPDATE member SET name=?, surname=?, position=?, email=? WHERE member_id=?";
         try {
             // Acquire connection
@@ -302,7 +303,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             PreparedStatement ps_participant = conn.prepareStatement(sql_participant);
             ps_participant.setString(1, member.getAvatar());
             ps_participant.setString(2, member.getParticipantInfo());
-            ps_participant.setInt(3, id);
+            ps_participant.setInt(3, member.getTournamentId());
+            ps_participant.setInt(4, id);
 
             // update base participant info
             ps_participant.executeUpdate();
@@ -365,7 +367,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     private Team addTeam(Team team) throws FailedOperationException {
         Connection conn = null;
 
-        String sql_participant = "INSERT INTO participant (is_team, avatar, participant_info) VALUES (?,?,?)";
+        String sql_participant = "INSERT INTO participant (is_team, avatar, participant_info, tournament_id) VALUES (?,?,?,?)";
         String sql_team = "INSERT INTO team (team_id, team_name) VALUES (?,?)";
         try {
             // Acquire connection
@@ -379,6 +381,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             ps.setBoolean(1, team.isTeam());
             ps.setString(2, team.getAvatar());
             ps.setString(3, team.getParticipantInfo());
+            ps.setInt(4, team.getTournamentId());
 
             // insert base participant info
             ps.executeUpdate();
@@ -452,7 +455,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
-     * Gets member list by tournament id
+     * Gets team list by tournament id
      */
     private List<Team> getTeamListByTournamentId(int tournamentId) throws FailedOperationException {
         Connection conn = null;
@@ -460,7 +463,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         ResultSet rs = null;
         Team team;
         List<Team> teamList = new ArrayList<>();
-        String sql = "SELECT * FROM participant p WHERE p.tournament_id=?";
+        String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id WHERE p.tournament_id=?";
 
         try {
             // Acquire connection
@@ -521,7 +524,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     private Team updateTeam(int id, Team team) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
 
-        String sql_participant = "UPDATE participant SET avatar=?, participant_info=? WHERE participant_id=?";
+        String sql_participant = "UPDATE participant SET avatar=?, participant_info=?, tournament_id=? WHERE participant_id=?";
         String sql_team = "UPDATE team SET team_name=? WHERE team_id=?";
         try {
             // Acquire connection
@@ -533,7 +536,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             PreparedStatement ps_participant = conn.prepareStatement(sql_participant);
             ps_participant.setString(1, team.getAvatar());
             ps_participant.setString(2, team.getParticipantInfo());
-            ps_participant.setInt(3, team.getId());
+            ps_participant.setInt(3, team.getTournamentId());
+            ps_participant.setInt(4, team.getId());
 
             // update base participant info
             ps_participant.executeUpdate();

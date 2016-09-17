@@ -53,6 +53,11 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
+    public void getMembersByTournament_dbError() throws Exception {
+        participantDao.getParticipantsByTournamentId(Member.class, NON_EXISTING_ID);
+    }
+
+    @Test(expected = FailedOperationException.class)
     public void getAllMember_dbError() throws Exception {
         participantDao.getAll(Member.class);
     }
@@ -85,6 +90,11 @@ public class ParticipantDaoUnitTest extends BaseTest {
     @Test(expected = FailedOperationException.class)
     public void getOneTeam_dbError() throws Exception {
         participantDao.getOne(Team.class, NON_EXISTING_ID);
+    }
+
+    @Test(expected = FailedOperationException.class)
+    public void getTeamByTournament_dbError() throws Exception {
+        participantDao.getParticipantsByTournamentId(Team.class, NON_EXISTING_ID);
     }
 
     @Test(expected = FailedOperationException.class)
