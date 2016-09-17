@@ -124,12 +124,12 @@ h1 {
 }
 
 /* Locations table row update/delete buttons */
-#btn-location-1 {
+.btn-location-1 {
     width: auto;
     height: auto;
 }
 
-#btn-location-2{
+.btn-location-2{
     width: auto;
     height: auto;
     margin-left: 55px;

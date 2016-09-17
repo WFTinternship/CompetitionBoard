@@ -35,7 +35,7 @@
     <!--Request Filtering-->
     <filter>
         <filter-name>RequestFilter</filter-name>
-        <filter-class>com.workfront.intern.cb.web.RequestFilter</filter-class>
+        <filter-class>com.workfront.intern.cb.web.filter.RequestFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RequestFilter</filter-name>

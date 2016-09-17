@@ -46,18 +46,6 @@
 
             <form action="addMember-form" class="form-horizontal" method="get" >
 
-                <%--Groups Name--%>
-                <div class="group">
-                    <label for="groupId" class="cols-sm-2 control-label">Name</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="groupName" id="groupId"
-                                   placeholder="<%=session.getAttribute("groupName")%>" disabled />
-                        </div>
-                    </div>
-                </div>
-
                 <%--Tournament Name--%>
                 <div class="form-group">
                     <label for="tournamentSelectId" class="cols-sm-2 control-label">Name</label>

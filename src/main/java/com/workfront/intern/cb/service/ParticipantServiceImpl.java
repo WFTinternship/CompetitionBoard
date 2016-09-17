@@ -38,6 +38,19 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     /**
+     * Adds participant: member's or team's and group id-s in db
+     */
+    @Override
+    public void addIDs(int groupId, int tournamentID) {
+        try{
+            participantDao.addIDs(groupId, tournamentID);
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    /**
      * Gets specific participant - member or team, by id:
      */
     @Override

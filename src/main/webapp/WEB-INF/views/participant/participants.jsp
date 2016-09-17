@@ -130,19 +130,19 @@
                     </div>
 
                     <div class="col-sm-9">
-                        <h2><%=userName%>'s team</h2>
+                        <h2><%=request.getParameter("groupName")%>
+                        </h2>
+                        <br>
+
+                        <h3>Teams</h3>
                         <hr>
                         <br>
 
-                        <h2> members</h2>
-                        <hr>
-                        <br>
-
-
+                        <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
                         <div class="container">
-                            <div id="table" class="table-editable">
+                            <div id="tableTeam" class="table-editable">
                                 <%--Update Button--%>
-                                <div id="btn-location-1">
+                                <div class="btn-location-1">
                                     <button class="btn btn-warning " type="button" onclick="">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
@@ -150,8 +150,78 @@
 
                                 <%--Remove Button--%>
                                 <form action="#" method="get" id="deleteMemberBtnId">
-                                    <div id="btn-location-2">
-                                        <button class="btn btn-danger " type="button" onclick="deleteSelectedMember()">
+                                    <div class="btn-location-2">
+                                        <button class="btn btn-danger " type="button" onclick="">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                    <br>
+                                    <br>
+
+                                    <table class="table" id="1">
+                                        <tr>
+                                            <th width="1%">Check</th>
+                                            <th width="3%">No</th>
+                                            <th width="3%">Id</th>
+                                            <th>Team Name</th>
+                                            <th>Team Info</th>
+                                            <th>Tournament Name</th>
+                                        </tr>
+
+                                        <tr>
+                                            <%--Radio--%>
+                                            <td>
+                                                <input type="radio" id="" class="checkbox-custom"
+                                                       name="groupId"
+                                                       value="" required/>
+                                            </td>
+
+                                            <%--No--%>
+                                            <td>
+                                            </td>
+
+                                            <%--Id--%>
+                                            <td>
+                                            </td>
+
+                                            <%--Team name--%>
+                                            <td>
+
+                                            </td>
+
+                                            <%--Team info--%>
+                                            <td>
+                                            </td>
+
+                                            <%--TournamentName--%>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+
+                        <%-------------=-=-=-=-=-=-=---MEMBERS'S TABLE---=-=-=-=-=-=-=-------------%>
+                        <br>
+                        <h3>Members</h3>
+                        <hr>
+                        <br>
+
+                        <div class="container">
+                            <div id="table" class="table-editable">
+                                <%--Update Button--%>
+                                <div class="btn-location-1">
+                                    <button class="btn btn-warning " type="button" onclick="">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </div>
+
+                                <%--Remove Button--%>
+                                <form action="#" method="get" id="deleteMemberBtnId">
+                                    <div class="btn-location-2">
+                                        <button class="btn btn-danger " type="button"
+                                                onclick="deleteSelectedMember()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
@@ -182,7 +252,8 @@
                                         <tr>
                                             <%--Radio--%>
                                             <td>
-                                                <input type="radio" id="<%=memberIDSelected%>" class="checkbox-custom"
+                                                <input type="radio" id="<%=memberIDSelected%>"
+                                                       class="checkbox-custom"
                                                        name="groupId"
                                                        value="<%=memberIDSelected%>" required/>
                                             </td>

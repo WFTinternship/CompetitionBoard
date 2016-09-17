@@ -43,7 +43,6 @@ public class ParticipantController {
         session.setAttribute("groupService", groupService);
         session.setAttribute("membersList", membersList);
 
-
         return Params.PAGE_PARTICIPANTS;
     }
 
@@ -74,6 +73,7 @@ public class ParticipantController {
 
         HttpSession session = request.getSession();
         int groupID = (int) session.getAttribute("groupIDSelected");
+
         Group group = groupService.getGroupById(groupID);
         group.setTournamentId(tournamentNameId);
         groupService.addGroup(group);
@@ -86,7 +86,9 @@ public class ParticipantController {
         member.setEmail(email);
         member.setParticipantInfo(info);
 
+
         participantService.addParticipant(member);
+        participantService.addIDs(groupID, tournamentNameId);
 //        request.setAttribute("groupNameId", groupID);
 
 //        return "redirect:participant-page";

@@ -29,6 +29,7 @@ body {
 }
 
 hr {
+    margin-top: -7px;
     border-color: #F05F40;
     border-width: 3px;
     /*max-width: 50px*/

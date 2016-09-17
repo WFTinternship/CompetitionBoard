@@ -1,10 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Group" %>
-<%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.service.TournamentService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.web.util.Helpers" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -197,7 +195,7 @@
 
                                             <%--Name--%>
                                             <td contenteditable="false" data-name="groupName" data-updatable="true">
-                                                <a href="participant-page" class="a-custom" name="hrefTournamentName">
+                                                <a href="participant-page?groupName=<%=groups.get(i).getGroupName()%>" class="a-custom" name="hrefTournamentName">
                                                     <%=groups.get(i).getGroupName()%>
                                                 </a>
                                             </td>

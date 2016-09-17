@@ -1,6 +1,7 @@
-package com.workfront.intern.cb.web;
+package com.workfront.intern.cb.web.filter;
 
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.web.Initializer;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

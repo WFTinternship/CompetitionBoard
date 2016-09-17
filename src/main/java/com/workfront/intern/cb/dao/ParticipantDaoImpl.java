@@ -37,6 +37,14 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
+     * Adds participant: member's or team's and group id-s in db
+     */
+    @Override
+    public void addIDs(int groupId, int tournamentID) throws FailedOperationException {
+        addMemberIdAndGroupId(groupId, tournamentID);
+    }
+
+    /**
      * Gets specific participant - member or team, by id:
      */
     @Override
@@ -56,7 +64,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      */
     @Override
     public List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls, int tournamentId)
-                                                                                        throws FailedOperationException {
+            throws FailedOperationException {
         if (cls.equals(Member.class)) {
             return getMemberListByTournamentId(tournamentId);
         } else if (cls.equals(Team.class)) {
@@ -185,6 +193,32 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
+     * Adds member to of group_participant table in db
+     */
+    public void addMemberIdAndGroupId(int groupId, int memberId) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "INSERT INTO group_participant(group_id, participant_id) VALUES (?,?)";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // prepare base insert query
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, groupId);
+            ps.setInt(2, memberId);
+
+            // Execute statement
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+    }
+
+    /**
      * Gets member by member id
      */
     private Member getMemberById(int id) throws ObjectNotFoundException, FailedOperationException {
@@ -228,7 +262,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         Member member;
         List<Member> memberList = new ArrayList<>();
 
-        String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id where p.tournament_id=?";
+        String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id WHERE p.tournament_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
