@@ -60,6 +60,25 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     /**
+     * Gets specific participant - member or team, by tournament id:
+     */
+    @Override
+    public List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls, int tournamentId) {
+        try {
+            if (cls.equals(Member.class)) {
+                return participantDao.getParticipantsByTournamentId(Member.class, tournamentId);
+            } else if (cls.equals(Team.class)) {
+                return participantDao.getParticipantsByTournamentId(Team.class, tournamentId);
+            } else {
+                throw new RuntimeException("Unknown participant type");
+            }
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    /**
      * Gets specific participant list - memberList or teamList
      */
     @Override

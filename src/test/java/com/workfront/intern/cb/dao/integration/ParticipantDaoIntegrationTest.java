@@ -157,7 +157,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getMemberListByTournamentI_found() throws Exception {
-        int targetId = testTournament.getTournamentId();
+        int targetId;
+        targetId = testTournament.getTournamentId();
 
         // Testing method
         List<Member> memberList = (List<Member>) participantDao.getParticipantsByTournamentId(Member.class, targetId);

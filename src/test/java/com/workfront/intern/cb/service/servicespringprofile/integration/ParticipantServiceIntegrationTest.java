@@ -1,10 +1,11 @@
 package com.workfront.intern.cb.service.servicespringprofile.integration;
 
 import com.workfront.intern.cb.BaseTest;
-import com.workfront.intern.cb.common.Member;
-import com.workfront.intern.cb.common.Participant;
-import com.workfront.intern.cb.common.Team;
+import com.workfront.intern.cb.common.*;
+import com.workfront.intern.cb.service.GroupService;
+import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.ParticipantService;
+import com.workfront.intern.cb.service.TournamentService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,29 +18,94 @@ import static org.junit.Assert.*;
 public class ParticipantServiceIntegrationTest extends BaseTest {
 
     @Autowired
+    private ManagerService managerService;
+
+    @Autowired
+    private TournamentService tournamentService;
+
+    @Autowired
+    private GroupService groupService;
+
+    @Autowired
     private ParticipantService participantService;
 
     // Test helper objects
+    private Manager testManager;
+    private Tournament testTournament;
+    private Group testGroup;
     private Member testMember;
     private Team testTeam;
+
 
     @Before
     public void beforeTest() throws Exception {
         // Delete all remaining objects
         cleanUp();
 
+        // region <MANAGER>
+
+        // Initialize random manager instance
+        testManager = createRandomManager();
+        assertEquals(0, testManager.getId());
+
+        // Save to DB
+        managerService.addManager(testManager);
+        assertTrue(testManager.getId() > 0);
+
+        // endregion
+
+        // region <TOURNAMENT>
+
+        // Initialize random tournament instance
+        testTournament = createRandomTournament();
+        testTournament.setManagerId(testManager.getId());
+        assertEquals(0, testTournament.getTournamentId());
+
+        // Save to DB
+        tournamentService.addTournament(testTournament);
+        assertTrue(testTournament.getTournamentId() > 0);
+
+        // endregion
+
+        // region <GROUP>
+
+        // Initialize random tournament instance
+        testGroup = createRandomGroup();
+        testGroup.setTournamentId(testTournament.getTournamentId());
+        assertEquals(0, testGroup.getGroupId());
+
+        // Save to DB
+        groupService.addGroup(testGroup);
+        assertTrue(testGroup.getGroupId() > 0);
+
+        // endregion
+
+        // region <MEMBER>
+
         // Initialize random member instance
         testMember = createRandomMember();
+        testMember.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testMember.getId());
+
+        // Save to DB
         participantService.addParticipant(testMember);
         assertTrue(testMember.getId() > 0);
 
+        // endregion
+
+        // region <TEAM>
+
         // Initialize random team instance
         testTeam = createRandomTeam();
+        testTeam.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testTeam.getId());
+
+        // Save to DB
         participantService.addParticipant(testTeam);
         assertTrue(testTeam.getId() > 0);
     }
+
+    // endregion
 
     @After
     public void afterTest() throws Exception {
@@ -49,6 +115,9 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
     private void cleanUp() throws Exception {
         participantService.deleteAll(Member.class);
         participantService.deleteAll(Team.class);
+        groupService.deleteAll();
+        tournamentService.deleteAll();
+        managerService.deleteAll();
     }
 
     // region <MEMBER>
@@ -75,6 +144,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         assertEquals(testMember.getSurName(), member.getSurName());
         assertEquals(testMember.getPosition(), member.getPosition());
         assertEquals(testMember.getEmail(), member.getEmail());
+        assertEquals(testMember.getTournamentId(), member.getTournamentId());
     }
 
     @Test
@@ -108,12 +178,53 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         assertEquals(testMember.getSurName(), member.getSurName());
         assertEquals(testMember.getPosition(), member.getPosition());
         assertEquals(testMember.getEmail(), member.getEmail());
+        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+    }
+
+    @Test
+    public void getMemberListByTournamentId_emptyList() throws Exception {
+        int targetId;
+        targetId = testTournament.getTournamentId();
+
+        // Testing method
+        cleanUp();
+
+        // Testing method
+        List<Member> memberList = (List<Member>) participantService.getParticipantsByTournamentId(Member.class, targetId);
+
+        assertNotNull(memberList);
+        assertEquals(0, memberList.size());
+    }
+
+    @Test
+    public void getMemberListByTournamentI_found() throws Exception {
+        int targetId = testTournament.getTournamentId();
+
+        // Testing method
+        List<Member> memberList = (List<Member>) participantService.getParticipantsByTournamentId(Member.class, targetId);
+
+        assertNotNull(memberList);
+        assertEquals(1, memberList.size());
+
+        Member member = memberList.get(0);
+        assertEquals(testMember.getId(), member.getId());
+        assertEquals(testMember.getAvatar(), member.getAvatar());
+        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
+        assertEquals(testMember.getSurName(), member.getSurName());
+        assertEquals(testMember.getPosition(), member.getPosition());
+        assertEquals(testMember.getEmail(), member.getEmail());
+        assertEquals(testMember.getTournamentId(), member.getTournamentId());
     }
 
     @Test
     public void addMember_created() throws Exception {
+        int targetId;
+        targetId = testTournament.getTournamentId();
+
         // Initialize random manager instance
         Member member = createRandomMember();
+        member.setTournamentId(targetId);
+
         assertEquals(0, member.getId());
 
         // Testing method
@@ -138,6 +249,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         assertEquals(testMember.getSurName(), member.getSurName());
         assertEquals(testMember.getPosition(), member.getPosition());
         assertEquals(testMember.getEmail(), member.getEmail());
+        assertEquals(testMember.getTournamentId(), member.getTournamentId());
     }
 
     @Test(expected = RuntimeException.class)
@@ -215,12 +327,17 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
         assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
         assertEquals(testTeam.getTeamName(), team.getTeamName());
+        assertEquals(testTeam.getTournamentId(), team.getTournamentId());
     }
 
     @Test
     public void addTeam_created() throws Exception {
+        int targetId;
+        targetId = testTournament.getTournamentId();
+
         // Initialize random manager instance
         Team team = createRandomTeam();
+        team.setTournamentId(targetId);
         assertEquals(0, team.getId());
 
         // Testing method
@@ -244,6 +361,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
         assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
         assertEquals(testTeam.getTeamName(), team.getTeamName());
+        assertEquals(testTeam.getTournamentId(), team.getTournamentId());
     }
 
     @Test(expected = RuntimeException.class)

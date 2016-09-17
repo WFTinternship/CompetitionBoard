@@ -22,9 +22,11 @@ import static org.mockito.Mockito.when;
 @SuppressWarnings("unchecked")
 public class TournamentServiceUnitTest extends BaseTest {
     protected DataSource dataSource;
+
     private TournamentDao tournamentDao;
     private Tournament testTournament;
     private TournamentService tournamentService;
+
 
     @Before
     public void beforeTest() throws Exception {

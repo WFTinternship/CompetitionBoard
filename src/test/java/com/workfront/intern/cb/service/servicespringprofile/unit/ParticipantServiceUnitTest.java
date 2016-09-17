@@ -3,6 +3,7 @@ package com.workfront.intern.cb.service.servicespringprofile.unit;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Team;
+import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.ParticipantDao;
 import com.workfront.intern.cb.dao.ParticipantDaoImpl;
@@ -23,9 +24,13 @@ import static org.mockito.Mockito.when;
 @SuppressWarnings("unchecked")
 public class ParticipantServiceUnitTest extends BaseTest {
     protected DataSource dataSource;
+
     private ParticipantDao participantDao;
+
+    private Tournament testTournament;
     private Member testMember;
     private Team testTeam;
+
     private ParticipantService participantService;
 
     @Before
@@ -66,6 +71,18 @@ public class ParticipantServiceUnitTest extends BaseTest {
     public void getMemberById_DAOSuccess() throws Exception {
         participantService.getOne(Member.class, NON_EXISTING_ID);
         verify(participantDao).getOne(Member.class, NON_EXISTING_ID);
+    }
+
+//    @Test(expected = RuntimeException.class)
+//    public void getMemberListByTournamentId_DAOError() throws Exception {
+////        when(participantDao.getAll(Member.class)).thenThrow(FailedOperationException.class);
+////        participantService.getParticipantsByTournamentId(Member.class, testTournament.getTournamentId());
+//    }
+
+    @Test
+    public void getMemberListByTournamentId_DAOError() throws Exception {
+        when(participantDao.getAll(Member.class)).thenThrow(FailedOperationException.class);
+        participantService.getParticipantsByTournamentId(Member.class, testTournament.getTournamentId());
     }
 
     @Test(expected = RuntimeException.class)

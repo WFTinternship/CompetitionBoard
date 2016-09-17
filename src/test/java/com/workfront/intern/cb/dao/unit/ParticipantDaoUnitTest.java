@@ -93,7 +93,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
     }
 
     @Test(expected = FailedOperationException.class)
-    public void getTeamByTournament_dbError() throws Exception {
+    public void getTeamByTournamentId_dbError() throws Exception {
         participantDao.getParticipantsByTournamentId(Team.class, NON_EXISTING_ID);
     }
 

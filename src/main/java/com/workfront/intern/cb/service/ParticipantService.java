@@ -11,6 +11,7 @@ public interface ParticipantService {
 
     // READ
     Participant getOne(Class<? extends Participant> cls, int id);
+    List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls, int tournamentId);
     List<? extends Participant> getAll(Class<? extends Participant> cls);
 
     // UPDATE
