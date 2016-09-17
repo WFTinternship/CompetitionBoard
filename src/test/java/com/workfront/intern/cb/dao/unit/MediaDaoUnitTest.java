@@ -20,13 +20,12 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 public class MediaDaoUnitTest extends BaseTest {
-    DataSource dataSource;
-    MediaDao mediaDao;
+    private MediaDao mediaDao;
 
     @SuppressWarnings("unchecked")
     @Before
     public void beforeTest() throws Exception {
-        dataSource = Mockito.mock(DataSource.class);
+        DataSource dataSource = Mockito.mock(DataSource.class);
         Connection conn = Mockito.mock(Connection.class);
 
         when(dataSource.getConnection()).thenReturn(conn);

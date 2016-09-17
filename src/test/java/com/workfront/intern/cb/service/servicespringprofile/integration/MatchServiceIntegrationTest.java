@@ -15,11 +15,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Component
 public class MatchServiceIntegrationTest extends BaseTest {
 
     @Autowired
@@ -133,6 +135,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
     }
 
     @Test(expected = RuntimeException.class)
@@ -158,6 +161,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
     }
 
     @Test
@@ -194,6 +198,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
     }
 
     @Test
@@ -205,6 +210,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         int participantTwoId = 15;
         int scoreParticipantOne = 20;
         int scoreParticipantTwo = 30;
+        String matchScore = "8 : 0";
 
         // Testing method
         Match match = createRandomMatch();
@@ -214,6 +220,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         match.setParticipantTwoId(participantTwoId);
         match.setScoreParticipantOne(scoreParticipantOne);
         match.setScoreParticipantTwo(scoreParticipantTwo);
+        match.setMatchScore(matchScore);
 
         // Testing method
         matchService.updateMatch(matchId, match);
@@ -225,6 +232,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
 
     }
 

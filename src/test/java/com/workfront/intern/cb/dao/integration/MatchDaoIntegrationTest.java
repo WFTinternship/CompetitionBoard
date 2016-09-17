@@ -129,6 +129,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
     }
 
     @Test(expected = ObjectNotFoundException.class)
@@ -153,6 +154,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
     }
 
     @Test
@@ -187,6 +189,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
     }
 
     @Test
@@ -197,6 +200,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         int participantTwoId = 15;
         int scoreParticipantOne = 20;
         int scoreParticipantTwo = 30;
+        String matchScore = "0 : 5";
 
         // Testing method
         Match match = createRandomMatch();
@@ -206,6 +210,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         match.setParticipantTwoId(participantTwoId);
         match.setScoreParticipantOne(scoreParticipantOne);
         match.setScoreParticipantTwo(scoreParticipantTwo);
+        match.setMatchScore(matchScore);
 
         // Testing method
         matchDao.updateMatch(matchId, match);
@@ -217,6 +222,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         assertEquals(testMatch.getParticipantTwoId(), match.getParticipantTwoId());
         assertEquals(testMatch.getScoreParticipantOne(), match.getScoreParticipantOne());
         assertEquals(testMatch.getScoreParticipantTwo(), match.getScoreParticipantTwo());
+        assertEquals(testMatch.getMatchScore(), match.getMatchScore());
     }
 
     @Test(expected = ObjectNotFoundException.class)

@@ -10,11 +10,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Component
 public class ParticipantServiceIntegrationTest extends BaseTest {
 
     @Autowired
@@ -29,13 +31,9 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
     @Autowired
     private ParticipantService participantService;
 
-    // Test helper objects
-    private Manager testManager;
     private Tournament testTournament;
-    private Group testGroup;
     private Member testMember;
     private Team testTeam;
-
 
     @Before
     public void beforeTest() throws Exception {
@@ -45,7 +43,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         // region <MANAGER>
 
         // Initialize random manager instance
-        testManager = createRandomManager();
+        Manager testManager = createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
@@ -70,7 +68,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         // region <GROUP>
 
         // Initialize random tournament instance
-        testGroup = createRandomGroup();
+        Group testGroup = createRandomGroup();
         testGroup.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testGroup.getGroupId());
 

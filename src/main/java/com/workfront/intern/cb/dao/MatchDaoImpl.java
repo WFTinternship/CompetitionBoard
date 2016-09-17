@@ -75,7 +75,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "INSERT INTO `match` (group_id, participant_1_id, participant_2_id, score_participant_1, score_participant_2) VALUE(?,?,?,?,?);";
+        String sql = "INSERT INTO `match` (group_id, participant_1_id, participant_2_id, score_participant_1, score_participant_2, match_score) VALUE(?,?,?,?,?,?);";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -87,6 +87,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             ps.setInt(3, match.getParticipantTwoId());
             ps.setInt(4, match.getScoreParticipantOne());
             ps.setInt(5, match.getScoreParticipantTwo());
+            ps.setString(6, match.getMatchScore());
 
             // insert base participant info
             ps.executeUpdate();
@@ -110,8 +111,8 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "UPDATE `match` SET group_id=?, participant_1_id=?, participant_2_id=?,  score_participant_1=?, score_participant_2=? " +
-                "WHERE match_id=?";
+        String sql = "UPDATE `match` SET group_id=?, participant_1_id=?, participant_2_id=?,  " +
+                "score_participant_1=?, score_participant_2=?, match_score=? WHERE match_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -123,7 +124,8 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             ps.setInt(3, match.getParticipantTwoId());
             ps.setInt(4, match.getScoreParticipantOne());
             ps.setInt(5, match.getScoreParticipantTwo());
-            ps.setInt(6, match.getMatchId());
+            ps.setString(6, match.getMatchScore());
+            ps.setInt(7, match.getMatchId());
 
             // Execute statement
             int rows = ps.executeUpdate();
@@ -167,6 +169,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         match.setParticipantTwoId(rs.getInt("participant_2_id"));
         match.setScoreParticipantOne(rs.getInt("score_participant_1"));
         match.setScoreParticipantTwo(rs.getInt("score_participant_2"));
+        match.setMatchScore(rs.getString("match_score"));
 
         return match;
     }

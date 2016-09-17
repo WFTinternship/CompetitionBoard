@@ -7,6 +7,7 @@ public class Match {
     private int participantTwoId;
     private int scoreParticipantOne;
     private int scoreParticipantTwo;
+    private String matchScore;
 
     public Match() {
     }
@@ -59,6 +60,14 @@ public class Match {
         this.scoreParticipantTwo = scoreParticipantTwo;
     }
 
+    public String getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(String matchScore) {
+        this.matchScore = matchScore;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -69,6 +78,7 @@ public class Match {
         sb.append("participantSecondId: ").append(getParticipantTwoId()).append("\n");
         sb.append("scoreParticipantFirst: ").append(scoreParticipantOne).append("\n");
         sb.append("scoreParticipantSecond: ").append(scoreParticipantTwo).append("\n");
+        sb.append("matchesScore: ").append(matchScore).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 

@@ -20,13 +20,12 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 public class MatchDaoUnitTest extends BaseTest{
-    DataSource dataSource;
-    MatchDao matchDao;
+    private MatchDao matchDao;
 
     @SuppressWarnings("unchecked")
     @Before
     public void beforeTest() throws Exception {
-        dataSource = Mockito.mock(DataSource.class);
+        DataSource dataSource = Mockito.mock(DataSource.class);
         Connection conn = Mockito.mock(Connection.class);
         when(dataSource.getConnection()).thenReturn(conn);
         when(conn.prepareStatement(any(String.class))).thenThrow(SQLException.class);

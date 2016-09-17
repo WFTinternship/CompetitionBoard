@@ -12,12 +12,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Component
 public class TournamentServiceIntegrationTest extends BaseTest {
 
     @Autowired
