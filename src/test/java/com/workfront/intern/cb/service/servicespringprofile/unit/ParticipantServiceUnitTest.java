@@ -39,8 +39,14 @@ public class ParticipantServiceUnitTest extends BaseTest {
         participantService = new ParticipantServiceImpl();
         Whitebox.setInternalState(participantService, "participantDao", participantDao);
 
+        testTournament = createRandomTournament();
+        int targetId = testTournament.getTournamentId();
+
         testMember = createRandomMember();
+        testMember.setTournamentId(targetId);
+
         testTeam = createRandomTeam();
+        testMember.setTournamentId(targetId);
     }
 
     // region <MEMBER>
@@ -73,16 +79,18 @@ public class ParticipantServiceUnitTest extends BaseTest {
         verify(participantDao).getOne(Member.class, NON_EXISTING_ID);
     }
 
-//    @Test(expected = RuntimeException.class)
-//    public void getMemberListByTournamentId_DAOError() throws Exception {
-////        when(participantDao.getAll(Member.class)).thenThrow(FailedOperationException.class);
-////        participantService.getParticipantsByTournamentId(Member.class, testTournament.getTournamentId());
-//    }
+    @Test(expected = RuntimeException.class)
+    public void getMemberListByTournamentId_DAOError() throws Exception {
+        int targetId = testTournament.getTournamentId();
+        when(participantDao.getParticipantsByTournamentId(Member.class, targetId)).thenThrow(FailedOperationException.class);
+        participantService.getParticipantsByTournamentId(Member.class, targetId);
+    }
 
     @Test
-    public void getMemberListByTournamentId_DAOError() throws Exception {
-        when(participantDao.getAll(Member.class)).thenThrow(FailedOperationException.class);
-        participantService.getParticipantsByTournamentId(Member.class, testTournament.getTournamentId());
+    public void getMemberListByTournamentId_DAOSuccess() throws Exception {
+        int targetId = testTournament.getTournamentId();
+        participantService.getParticipantsByTournamentId(Member.class, targetId);
+        verify(participantDao).getParticipantsByTournamentId(Member.class, targetId);
     }
 
     @Test(expected = RuntimeException.class)
@@ -159,6 +167,20 @@ public class ParticipantServiceUnitTest extends BaseTest {
     public void getTeamList_DAOError() throws Exception {
         when(participantDao.getAll(Team.class)).thenThrow(FailedOperationException.class);
         participantService.getAll(Team.class);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void getTeamListByTournamentId_DAOError() throws Exception {
+        int targetId = testTournament.getTournamentId();
+        when(participantDao.getParticipantsByTournamentId(Team.class, targetId)).thenThrow(FailedOperationException.class);
+        participantService.getParticipantsByTournamentId(Team.class, targetId);
+    }
+
+    @Test
+    public void getTeamListByTournamentId_DAOSuccess() throws Exception {
+        int targetId = testTournament.getTournamentId();
+        participantService.getParticipantsByTournamentId(Team.class, targetId);
+        verify(participantDao).getParticipantsByTournamentId(Team.class, targetId);
     }
 
     @Test()
