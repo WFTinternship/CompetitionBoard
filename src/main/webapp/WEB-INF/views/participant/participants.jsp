@@ -2,6 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.service.ParticipantService" %>
 <%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
+<%@ page import="com.workfront.intern.cb.common.Member" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.common.Tournament" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,14 +132,9 @@
                         <br>
                     </div>
 
-                    <%
-                        String groupName = request.getParameter("groupName");
-                        session.setAttribute("groupName", groupName);
-
-                    %>
-
-                    <div class="col-sm-9">
-                        <h2><%=groupName%>
+                   <div class="col-sm-9">
+                        <h2>
+                        <%=request.getParameter("tournamentName")%>
                         </h2>
                         <br>
 
@@ -173,6 +171,7 @@
                                             <th>Team Info</th>
                                             <th>Tournament Name</th>
                                         </tr>
+
 
                                         <tr>
                                             <%--Radio--%>
@@ -234,11 +233,9 @@
                                     <br>
                                     <br>
                                     <%
-                                        ParticipantService participantService = BeanProvider.getParticipantService();
-
-//                                        int tournamentIdSelected = (int) session.getAttribute("tournamentIdSelected");
-//                                        List<Member> membersList = (List<Member>) participantService.getParticipantsByTournamentId(Member.class, tournamentIdSelected);
-//                                        int listSize = membersList.size();
+                                        int tournamentId = (int) session.getAttribute("memberTournamentId");
+                                        List<Member> memberList = (List<Member>) BeanProvider.getParticipantService().getParticipantsByTournamentId(Member.class, tournamentId);
+                                        int size = memberList.size();
                                     %>
 
                                     <table class="table" id="updateTournamentTable">
@@ -253,64 +250,62 @@
                                             <th>Participant Info</th>
                                             <th>Tournament Name</th>
                                         </tr>
-                                        <%--<%--%>
-                                            <%--for (int i = 0; i < listSize; i++) {--%>
-                                                <%--int memberIDSelected = membersList.get(i).getId();--%>
-                                        <%--%>--%>
+                                        <%
+                                            for (int i = 0; i < size; i++) {
+                                                int memberId = memberList.get(i).getId();
+                                        %>
 
                                         <tr>
                                             <%--Radio--%>
                                             <td>
-                                                <%--<input type="radio" id="<%=memberIDSelected%>"--%>
-                                                       <%--class="checkbox-custom"--%>
-                                                       <%--name="groupId"--%>
-                                                       <%--value="<%=memberIDSelected%>" required/>--%>
+                                                <input type="radio" id="<%=memberId%>" class="checkbox-custom" name="groupId"
+                                                       value="<%=memberId%>" required/>
                                             </td>
 
                                             <td>
-                                                <%--<%=i%>--%>
+                                                <%=i%>
                                             </td>
 
                                             <%--Id--%>
                                             <td>
-                                                <%--<%=memberIDSelected%>--%>
+                                                <%=memberId%>
                                             </td>
 
                                             <%--Name--%>
                                             <td>
-                                                <%--<%=membersList.get(i).getName()%>--%>
+                                                <%=memberList.get(i).getName()%>
                                             </td>
 
                                             <%--Surname--%>
                                             <td>
-                                                <%--<%=membersList.get(i).getSurName()%>--%>
+                                                <%=memberList.get(i).getSurName()%>
                                             </td>
 
                                             <%--Position--%>
                                             <td>
-                                                <%--<%=membersList.get(i).getPosition()%>--%>
+                                                <%=memberList.get(i).getPosition()%>
                                             </td>
 
                                             <%--Email--%>
                                             <td>
-                                                <%--<%=membersList.get(i).getEmail()%>--%>
+                                                <%=memberList.get(i).getEmail()%>
                                             </td>
 
                                             <%--Participant info--%>
                                             <td>
-                                                <%--<%=membersList.get(i).getParticipantInfo()%>--%>
+                                                <%=memberList.get(i).getParticipantInfo()%>
                                             </td>
 
                                             <%--TournamentName--%>
                                                 <%
-//                                                    String tournamentNameSelected = (String) session.getAttribute("tournamentNameSelected");
+                                                    Tournament tournament = BeanProvider.getTournamentService().getTournamentById(memberList.get(i).getTournamentId());
                                                 %>
                                             <td>
-                                                <%--<%=tournamentNameSelected%>--%>
+                                                <%=tournament.getTournamentName()%>
 
                                             </td>
                                         </tr>
-                                        <%--<%}%>--%>
+                                        <%}%>
 
                                     </table>
                                 </form>

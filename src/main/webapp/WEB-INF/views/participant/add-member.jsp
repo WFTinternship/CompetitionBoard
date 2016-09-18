@@ -1,5 +1,6 @@
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
@@ -36,6 +37,10 @@
     String name;
     int tournamentId;
     int size = tournamentList.size();
+
+    int targetId = (int) session.getAttribute("selectedTournamentId");
+    Tournament tournament = BeanProvider.getTournamentService().getTournamentById(targetId);
+    session.setAttribute("memberTournamentId", targetId);
 %>
 
 <body>
@@ -47,6 +52,19 @@
             <hr>
 
             <form action="addMember-form" class="form-horizontal" method="get" >
+
+                <%--Tournament name--%>
+                <div class="form-group">
+                    <label for="tournamentName" class="cols-sm-2 control-label">Tournament name</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="nameMember" id="tournamentName"
+                                   placeholder=<%=tournament.getTournamentName()%> disabled/>
+                        </div>
+                    </div>
+                </div>
+
 
                 <%--Name--%>
                 <div class="form-group">
@@ -107,18 +125,6 @@
                             </div>
                         </div>
                     </div>
-
-                <%--Avatar--%>
-                <%--<div class="form-group">--%>
-                    <%--<label for="username" class="cols-sm-2 control-label">Avatar</label>--%>
-                    <%--<div class="cols-sm-10">--%>
-                        <%--<div class="input-group">--%>
-                            <%--<span class="input-group-addon"><i class="fa fa-upload fa" aria-hidden="true"></i></span>--%>
-                            <%--<input type="file" class="form-control" name="username" id="file"--%>
-                                   <%--placeholder="Enter your Username"/>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
 
                 <div class="form-group ">
                     <input type="reset" class="btn btn-danger btn-lg btn-block login-button" value="Reset"/>

@@ -176,7 +176,6 @@
                                                 int groupIDSelected = groups.get(i).getGroupId();
                                                 session.setAttribute("groupIDSelected", groupIDSelected);
                                         %>
-
                                         <tr>
                                             <%--Radio--%>
                                             <td>

@@ -177,12 +177,14 @@
 
                                             <%--Id--%>
                                             <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
+                                                <%session.setAttribute("memberTournamentId", tournamentId);%>
                                                 <%=tournamentId%>
                                             </td>
 
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
-                                                <a href="participant-page" class="a-custom" name="hrefTournamentName">
+                                                <a href="participant-page?tournamentName=<%=tournamentList.get(i).getTournamentName()%>"
+                                                class="a-custom" name="hrefTournamentName">
                                                 <%=tournamentList.get(i).getTournamentName()%>
                                                 </a>
                                             </td>

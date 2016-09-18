@@ -10,7 +10,6 @@ public interface ParticipantDao {
 
     // CREATE
     Participant addParticipant(Participant participant) throws FailedOperationException;
-//    void addIDs(int groupId, int tournamentID) throws FailedOperationException;
 
     // READ
     Participant getOne(Class<? extends Participant> cls, int id) throws FailedOperationException, ObjectNotFoundException;

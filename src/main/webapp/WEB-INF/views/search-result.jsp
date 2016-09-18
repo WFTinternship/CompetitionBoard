@@ -5,6 +5,7 @@
 <%@ page import="com.workfront.intern.cb.web.util.Helpers" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Group" %>
+<%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -196,12 +197,12 @@
                                             </td>
 
                                             <%--Tournament creator--%>
-                                            <%--<%--%>
-                                                <%--assert manager != null;--%>
-                                                <%--String managerName = manager.getLogin();--%>
-                                            <%--%>--%>
+                                            <%
+                                                int managerID = tournamentList.get(i).getManagerId();
+                                                Manager login = BeanProvider.getManagerService().getManagerById(managerID);
+                                            %>
                                             <td contenteditable="false" data-name="managerUpdateNot" data-updatable="false">
-                                                <%--<%= managerName%>--%>
+                                                <%=login.getLogin()%>
                                             </td>
                                         </tr>
                                         <%}%>
@@ -216,9 +217,6 @@
                                     List<Group> groupList = (List<Group>) request.getAttribute("searchResultGroup");
                                     int groupListSize = groupList.size();
                                 %>
-
-
-
                                 <table class="table" id="updateGroupTable">
                                     <tr>
                                         <th width="3%">No</th>
@@ -241,10 +239,8 @@
                                         </td>
 
                                         <%--Id--%>
-                                        <td contenteditable="false" data-name="groupIDSelected"
-                                            data-updatable="false">
+                                        <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
                                             <%=groupList.get(i).getGroupId()%>
-                                            ${groupList.get}
                                         </td>
 
                                         <%--Name--%>
@@ -281,13 +277,13 @@
                                         </td>
 
                                         <%--Tournament name--%>
-                                        <%--<%--%>
-                                            <%--String tournamentNameSelected = tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName();--%>
-                                            <%--session.setAttribute("tournamentNameSelected", tournamentNameSelected);--%>
+                                        <%
+                                            int tournamentId = groupList.get(i).getTournamentId();
+                                            Tournament tournament = BeanProvider.getTournamentService().getTournamentById(tournamentId);
 
-                                        <%--%>--%>
+                                        %>
                                         <td contenteditable="false" data-name="tournamentName" data-updatable="false">
-                                            <%--<%=tournamentNameSelected%>--%>
+                                            <%=tournament.getTournamentName()%>
                                         </td>
                                     </tr>
                                     <%}%>

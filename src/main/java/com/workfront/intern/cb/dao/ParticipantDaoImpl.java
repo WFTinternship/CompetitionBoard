@@ -199,12 +199,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return member;
     }
 
-    /**
-     * Adds member to of group_participant table in db
-     */
-    public void addMemberIdAndGroupId(int groupId, int memberId) throws FailedOperationException {
-
-    }
 
     /**
      * Gets member by member id
@@ -240,6 +234,15 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return member;
     }
 
+    //ToDo
+    /*
+     Change query:
+         SELECT * FROM participant p
+	                    INNER JOIN member m ON p.participant_id=m.member_id
+	                    INNER JOIN group_participant gp on p.participant_id=gp.participant_id
+	                    INNER JOIN `group` g ON gp.group_id=g.group_id
+	                    WHERE g.group_id=?;
+      */
 
     /**
      * Gets member list by By groupId id

@@ -68,8 +68,7 @@ public class ParticipantController {
                             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        int groupID = (int) session.getAttribute("groupIDSelected");
-        int tournamentIdSelected = (int) session.getAttribute("tournamentIdSelected");
+        int tournamentId = (int) session.getAttribute("memberTournamentId");
 
 
         Member member = new Member();
@@ -78,13 +77,14 @@ public class ParticipantController {
         member.setPosition(positionMember);
         member.setEmail(email);
         member.setParticipantInfo(info);
-        member.setTournamentId(tournamentIdSelected);
+        member.setTournamentId(tournamentId);
+
 
         participantService.addParticipant(member);
 
 
-//        return "redirect:participant-page";
-        return Params.PAGE_PARTICIPANTS;
+        return "redirect:participant-page";
+//        return Params.PAGE_PARTICIPANTS;
     }
 
     // endregion
