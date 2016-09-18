@@ -110,7 +110,7 @@
 
     <%--Search tournament---%>
     <div class="header-content">
-        <form action="searchByName-form" method="post" class="container">
+        <form action="searchByName-form" method="get" class="container">
             <div class="container">
                 <div class="row">
 

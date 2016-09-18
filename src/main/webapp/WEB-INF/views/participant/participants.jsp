@@ -114,13 +114,13 @@
 
                         <ul class="nav nav-pills nav-stacked">
                             <li>
-                                <button class="btn btn-primary button-custom"><B>Create Team</B></button>
+                                <button class="btn btn-primary button-custom visible-when-logged-in"><B>Create Team</B></button>
                             </li>
                             <BR>
 
                             <li>
                                 <form action="add-members-page" method="get">
-                                    <button type="submit" class="btn btn-primary button-custom"><B>ADD A MEMBER</B>
+                                    <button type="submit" class="btn btn-primary button-custom visible-when-logged-in"><B>ADD A MEMBER</B>
                                     </button>
                                 </form>
                             </li>
@@ -149,7 +149,7 @@
                             <div id="tableTeam" class="table-editable">
                                 <%--Update Button--%>
                                 <div class="btn-location-1">
-                                    <button class="btn btn-warning " type="button" onclick="">
+                                    <button class="btn btn-warning visible-when-logged-in" type="button" onclick="">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
@@ -157,7 +157,7 @@
                                 <%--Remove Button--%>
                                 <form action="#" method="get" id="deleteMemberBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger " type="button" onclick="">
+                                        <button class="btn btn-danger visible-when-logged-in" type="button" onclick="">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
@@ -219,7 +219,7 @@
                             <div id="table" class="table-editable">
                                 <%--Update Button--%>
                                 <div class="btn-location-1">
-                                    <button class="btn btn-warning " type="button" onclick="">
+                                    <button class="btn btn-warning visible-when-logged-in" type="button" onclick="">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
@@ -227,7 +227,7 @@
                                 <%--Remove Button--%>
                                 <form action="#" method="get" id="deleteMemberBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger " type="button" onclick="">
+                                        <button class="btn btn-danger visible-when-logged-in " type="button" onclick="">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>

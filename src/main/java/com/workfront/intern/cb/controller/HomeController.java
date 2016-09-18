@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeController {
     private static Logger LOG = Logger.getLogger(HomeController.class);
 
-
     @RequestMapping(value = {"/", "/home"})
     public String toHomePage(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "index";

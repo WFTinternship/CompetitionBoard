@@ -119,8 +119,8 @@
                             <li>
                                 <form action="add-group-page" method="get">
                                     <button type="submit"
-                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll"><B>Create
-                                        Group</B>
+                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll">
+                                        <B>Create Group</B>
                                     </button>
                                 </form>
                             </li>
@@ -137,7 +137,7 @@
                             <div id="table" class="table-editable">
 
                                 <%--Update Button--%>
-                                <div id="btn-location-1">
+                                <div class="btn-location-1">
                                     <button class="btn btn-warning" type="button" onclick="updateSelectedGroups()">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
@@ -145,8 +145,7 @@
 
                                 <%--Remove Button--%>
                                 <form action="deleteGroup" method="get" id="deleteGroupBtnId">
-                                    <div id="btn-location-2">
-
+                                    <div class="btn-location-2">
                                         <button class="btn btn-danger" type="button" onclick="deleteSelectedGroup()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>

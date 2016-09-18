@@ -30,7 +30,7 @@ public class SearchingController {
         return Params.PAGE_SEARCH_RESULT;
     }
 
-    @RequestMapping(value = {"/searchByName-form"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/searchByName-form"}, method = RequestMethod.GET)
     public String searchTournamentsByName(Model model,
                                           @RequestParam("searchStr") String searchTournamentStr,
                                           HttpServletRequest request) {
@@ -66,6 +66,3 @@ public class SearchingController {
         return Params.PAGE_SEARCH_RESULT;
     }
 }
-
-
-

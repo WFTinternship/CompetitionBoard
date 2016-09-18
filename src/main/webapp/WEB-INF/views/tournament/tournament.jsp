@@ -125,7 +125,7 @@
                             <div id="table" class="table-editable">
 
                                 <%--Update Button--%>
-                                <div id="btn-location-1">
+                                <div class="btn-location-1">
                                     <button class="btn btn-warning" type="button" onclick="updateSelectedTournament()">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
@@ -133,7 +133,7 @@
 
                                 <%--Remove Button--%>
                                 <form action="deleteTournament" method="get" id="deleteBtnId">
-                                    <div id="btn-location-2">
+                                    <div class="btn-location-2">
                                         <button class="btn btn-danger" type="button"
                                                 onclick="deleteSelectedTournament()">
                                             <span class="glyphicon glyphicon-remove"></span>
