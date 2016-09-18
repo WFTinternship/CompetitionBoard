@@ -35,6 +35,10 @@
 
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
+    <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.min.js" />"></script>
+
     <![endif]-->
 </head>
 
@@ -106,20 +110,19 @@
 
     <%--Search tournament---%>
     <div class="header-content">
-        <form action="searchTournamentByName-form" method="get" class="container">
+        <form action="searchByName-form" method="post" class="container">
             <div class="container">
-
                 <div class="row">
 
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                            <input type="text" class="  search-query form-control" name="searchStr"
-                                   placeholder="Search tournaments" required/>
+                            <input type="text" class="search-query form-control" name="searchStr"
+                                   placeholder="Search name of object..." required/>
                             <span class="input-group-btn">
-                    <button class="btn btn-danger" type="submit">
-                        <span class=" glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
+                                <button class="btn btn-danger" type="submit">
+                                    <span class=" glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -129,11 +132,7 @@
         <br>
         <%-----------Write error message, when not found with provided search criteria-----------%>
         <p class="err-msg">
-            <%
-                String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");
-                if (searchResultMsg != null)
-                    out.println(searchResultMsg);
-            %>
+            <c:out value="${noSearchResultMsg}"/>
         </p>
     </div>
 </header>
@@ -275,7 +274,7 @@
 <!-- Theme JavaScript -->
 <script src="<c:url value="/resources/js/creative.min.js" />"></script>
 
-<%--Custom JS--%>
+<%--&lt;%&ndash;Custom JS&ndash;%&gt;--%>
 <script src="<c:url value="/resources/js/custom.js" />"></script>
 
 </body>

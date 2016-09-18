@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Participant;
+import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
@@ -88,6 +89,41 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             closeResources(conn, ps, rs);
         }
         return group;
+    }
+
+    /**
+     * Gets group by group name
+     */
+    @Override
+    public List<Group> getGroupListByName(String inputStr) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Group group;
+        List<Group> groupListByName = new ArrayList<>();
+
+        String sql = "SELECT * FROM `group` g WHERE g.group_name LIKE ? ";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, String.format("%s", inputStr) + "%");
+
+            // Execute statement
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                group = extractGroupFromResultSet(rs);
+                groupListByName.add(group);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return groupListByName;
     }
 
     /**
@@ -214,7 +250,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             // prepare base insert query
             ps = conn.prepareStatement(sql);
             ps.setInt(1, groupId);
-
 
 
 

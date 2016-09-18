@@ -81,7 +81,6 @@ public class ParticipantController {
         member.setTournamentId(tournamentIdSelected);
 
         participantService.addParticipant(member);
-        participantService.addIDs(groupID, member.getId());
 
 
 //        return "redirect:participant-page";

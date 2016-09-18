@@ -8,7 +8,6 @@ public interface ParticipantService {
 
     // CREATE
     Participant addParticipant(Participant participant);
-    void addIDs(int groupId, int tournamentID);
 
     // READ
     Participant getOne(Class<? extends Participant> cls, int id);

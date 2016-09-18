@@ -139,3 +139,8 @@ h1 {
 .label-custom {
     color: black;
 }
+
+.background-custom {
+    background-color: #838383;
+    background-size: 100% 110%;
+}

@@ -1,18 +1,21 @@
 package com.workfront.intern.cb.web;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
 import java.io.File;
 
-/**
- *
- */
-public class Initializer implements ServletContextListener {
+@Component
+public class Initializer implements WebApplicationInitializer, ApplicationContextAware {
     private static Logger LOG = Logger.getLogger(Initializer.class);
 
     /***/
@@ -26,10 +29,17 @@ public class Initializer implements ServletContextListener {
     public static final File tempDir = new File(System.getProperty("java.io.tmpdir"));
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        SERVLET_CONTEXT = sce.getServletContext();
-        APPLICATION_CONTEXT = (ApplicationContext) SERVLET_CONTEXT.getAttribute(WebApplicationContext.
-                ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        APPLICATION_CONTEXT = applicationContext;
+        init();
+    }
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        SERVLET_CONTEXT = servletContext;
+    }
+
+    public void init() {
         SERVER_ROOT_PATH = SERVLET_CONTEXT.getRealPath("/");
 
         RESOURCES_PATH = SERVER_ROOT_PATH + File.separator + "resources";
@@ -46,11 +56,6 @@ public class Initializer implements ServletContextListener {
         );
 
         LOG.info("-- context initialized");
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        LOG.info("-- context destroyed");
     }
 
     ///////////////////////////////////////////////

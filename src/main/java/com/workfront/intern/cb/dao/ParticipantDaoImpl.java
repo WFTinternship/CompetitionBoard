@@ -37,14 +37,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
-     * Adds participant: member's or team's and group id-s in db
-     */
-    @Override
-    public void addIDs(int groupId, int tournamentID) throws FailedOperationException {
-        addMemberIdAndGroupId(groupId, tournamentID);
-    }
-
-    /**
      * Gets specific participant - member or team, by id:
      */
     @Override

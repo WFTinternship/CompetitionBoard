@@ -14,6 +14,7 @@ public interface GroupDao {
 
     // READ
     Group getGroupById(int id) throws ObjectNotFoundException, FailedOperationException;
+    List<Group> getGroupListByName (String groupName) throws FailedOperationException;
     List<Group> getTournamentGroups (int tournamentId) throws FailedOperationException;
     List<Group> getAllGroups() throws FailedOperationException;
     List<Participant> getGroupParticipants(int groupId) throws FailedOperationException;
@@ -21,8 +22,8 @@ public interface GroupDao {
     // UPDATE
     void updateGroup(int id, Group group) throws ObjectNotFoundException, FailedOperationException;
 
+    //ToDo
     void assignParticipant(int tournamentId, int groupId, Participant participant) throws ObjectNotFoundException, FailedOperationException;
-
     void removeParticipant(int tournamentId, int groupId, int participantId) throws ObjectNotFoundException, FailedOperationException;
 
     // DELETE

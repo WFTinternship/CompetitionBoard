@@ -120,10 +120,6 @@ function deleteSelectedGroup() {
 
 //Updates selected tournament
 function updateSelectedGroups() {
-    $('input[name=groupId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
-    // if (noneChecked) {
-    //     alert("Axbers nshi mi ban")
-    // }
 }
 
 $(document).ready(function () {
@@ -143,3 +139,14 @@ $(document).ready(function () {
         });
     });
 });
+
+
+    $(document).ready(function(e){
+        $('.search-panel .dropdown-menu').find('a').click(function(e) {
+            e.preventDefault();
+            var param = $(this).attr("href").replace("#","");
+            var concept = $(this).text();
+            $('.search-panel span#search_concept').text(concept);
+            $('.input-group #search_param').val(param);
+        });
+    });

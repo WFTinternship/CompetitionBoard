@@ -157,7 +157,6 @@
                                     <%
                                         TournamentService tournamentService = BeanProvider.getTournamentService();
 
-
                                         List<Group> groups = (List<Group>) request.getAttribute("groupsByManager");
                                         int size = groups.size();
                                     %>

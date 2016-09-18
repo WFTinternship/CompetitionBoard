@@ -1,7 +1,9 @@
 package com.workfront.intern.cb.controller;
 
+import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.service.GroupService;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Helpers;
@@ -30,6 +32,9 @@ public class TournamentController {
     @Autowired
     TournamentService tournamentService;
 
+    @Autowired
+    GroupService groupService;
+
     @RequestMapping(value = {"/tournament-page"})
     public String toTournamentPage(Model model, HttpServletRequest request, HttpServletResponse response) {
 
@@ -43,31 +48,7 @@ public class TournamentController {
         return Params.PAGE_TOURNAMENT;
     }
 
-    // region <SEARCH TOURNAMENT>
 
-    @RequestMapping(value = {"/search-result"})
-    public String toSearchResultPage(Model model) {
-        return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
-    }
-
-    @RequestMapping(value = {"/searchTournamentByName-form"})
-    public String searchTournamentsByName(Model model,
-                                          @RequestParam("searchStr") String searchTournamentStr) {
-
-        List<Tournament> tournamentList = tournamentService.getTournamentListByName(searchTournamentStr);
-
-        int listSize = tournamentList.size();
-        if (listSize != 0) {
-//            List<Manager> managerList = managerService.getManagerList();
-            model.addAttribute("searchResultList", tournamentList);
-            model.addAttribute("managerService", managerService);
-        } else {
-            model.addAttribute("noSearchResultMsg", "No tournament(s) found with provided search criteria");
-            return "index";
-        }
-        return Params.PAGE_SEARCH_TOURNAMENT_BY_NAME;
-    }
-    // endregion
 
     @RequestMapping(value = {"/all-tournaments-page"})
     public String allTournament(Model model, HttpServletRequest request, HttpServletResponse response) {

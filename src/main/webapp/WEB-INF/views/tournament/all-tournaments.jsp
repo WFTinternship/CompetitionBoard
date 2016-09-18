@@ -83,7 +83,7 @@
 
                 <%--Contact Us--%>
                 <li>
-                    <a class="page-scroll" href="contact-page">Contact Us</a>
+                    <a class="page-scroll" href="#contact">Contact Us</a>
                 </li>
 
                 <%--Sign Up--%>
@@ -178,7 +178,8 @@
                                         </td>
 
                                         <%--TournamentDescription--%>
-                                        <td contenteditable="false" data-name="tournamentDescription" data-updatable="false">
+                                        <td contenteditable="false" data-name="tournamentDescription"
+                                            data-updatable="false">
                                             <%=tournamentList.get(i).getTournamentDescription()%>
                                         </td>
 
@@ -187,11 +188,13 @@
                                             int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
                                             String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
                                         %>
-                                        <td contenteditable="false" data-name="tournamentFormatId" data-updatable="false">
+                                        <td contenteditable="false" data-name="tournamentFormatId"
+                                            data-updatable="false">
                                             <%=formatStr%>
                                         </td>
 
                                         <%--Tournament creator--%>
+
                                         <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
                                             <%=tournamentList.get(i).getManagerId()%>
                                         </td>
