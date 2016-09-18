@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.13, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: competition_board
 -- ------------------------------------------------------
--- Server version	5.7.13-log
+-- Server version	5.7.13-0ubuntu0.16.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,7 @@ CREATE TABLE `match` (
   `participant_2_id` int(11) DEFAULT NULL,
   `score_participant_1` int(11) DEFAULT NULL,
   `score_participant_2` int(11) DEFAULT NULL,
-  `matches_score` varchar(45) DEFAULT NULL,
+  `match_score` int(11) DEFAULT NULL,
   PRIMARY KEY (`match_id`),
   KEY `match_group_id_idx` (`group_id`),
   CONSTRAINT `match_group_id` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-16 18:47:36
+-- Dump completed on 2016-09-18  0:32:46

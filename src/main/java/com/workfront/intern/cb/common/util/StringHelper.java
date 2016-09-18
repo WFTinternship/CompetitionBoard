@@ -28,4 +28,13 @@ public class StringHelper {
         }
         return passToEncrypt;
     }
+
+    public static String deCapitalize(String text) {
+        if (text.length() == 1) {
+            return text.toLowerCase();
+        } else {
+            return text.substring(0, 1).toLowerCase() + text.substring(1);
+        }
+    }
+
 }

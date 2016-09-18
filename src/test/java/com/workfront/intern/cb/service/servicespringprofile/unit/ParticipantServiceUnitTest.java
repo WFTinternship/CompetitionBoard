@@ -82,7 +82,7 @@ public class ParticipantServiceUnitTest extends BaseTest {
     @Test(expected = RuntimeException.class)
     public void getMemberListByTournamentId_DAOError() throws Exception {
         int targetId = testTournament.getTournamentId();
-        when(participantDao.getParticipantsByTournamentId(Member.class, targetId)).thenThrow(FailedOperationException.class);
+        when(participantDao.getParticipantListByTournamentId(Member.class, targetId)).thenThrow(FailedOperationException.class);
         participantService.getParticipantsByTournamentId(Member.class, targetId);
     }
 
@@ -90,7 +90,7 @@ public class ParticipantServiceUnitTest extends BaseTest {
     public void getMemberListByTournamentId_DAOSuccess() throws Exception {
         int targetId = testTournament.getTournamentId();
         participantService.getParticipantsByTournamentId(Member.class, targetId);
-        verify(participantDao).getParticipantsByTournamentId(Member.class, targetId);
+        verify(participantDao).getParticipantListByTournamentId(Member.class, targetId);
     }
 
     @Test(expected = RuntimeException.class)
@@ -172,7 +172,7 @@ public class ParticipantServiceUnitTest extends BaseTest {
     @Test(expected = RuntimeException.class)
     public void getTeamListByTournamentId_DAOError() throws Exception {
         int targetId = testTournament.getTournamentId();
-        when(participantDao.getParticipantsByTournamentId(Team.class, targetId)).thenThrow(FailedOperationException.class);
+        when(participantDao.getParticipantListByTournamentId(Team.class, targetId)).thenThrow(FailedOperationException.class);
         participantService.getParticipantsByTournamentId(Team.class, targetId);
     }
 
@@ -180,7 +180,7 @@ public class ParticipantServiceUnitTest extends BaseTest {
     public void getTeamListByTournamentId_DAOSuccess() throws Exception {
         int targetId = testTournament.getTournamentId();
         participantService.getParticipantsByTournamentId(Team.class, targetId);
-        verify(participantDao).getParticipantsByTournamentId(Team.class, targetId);
+        verify(participantDao).getParticipantListByTournamentId(Team.class, targetId);
     }
 
     @Test()

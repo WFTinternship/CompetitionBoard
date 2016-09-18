@@ -1,7 +1,5 @@
 package com.workfront.intern.cb.controller;
 
-
-import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Tournament;
@@ -38,10 +36,9 @@ public class ParticipantController {
     public String toParticipantPage(Model model,
                                     HttpServletRequest request) {
 
-        List<Member> membersList = (List<Member>) participantService.getAll(Member.class);
         HttpSession session = request.getSession();
         session.setAttribute("groupService", groupService);
-        session.setAttribute("membersList", membersList);
+        session.setAttribute("participantService", participantService);
 
         return Params.PAGE_PARTICIPANTS;
     }
@@ -68,15 +65,11 @@ public class ParticipantController {
                             @RequestParam("positionMember") String positionMember,
                             @RequestParam("emailMember") String email,
                             @RequestParam("infoMember") String info,
-                            @RequestParam("tournamentNameId") int tournamentNameId,
                             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         int groupID = (int) session.getAttribute("groupIDSelected");
-
-        Group group = groupService.getGroupById(groupID);
-        group.setTournamentId(tournamentNameId);
-        groupService.addGroup(group);
+        int tournamentIdSelected = (int) session.getAttribute("tournamentIdSelected");
 
 
         Member member = new Member();
@@ -85,11 +78,11 @@ public class ParticipantController {
         member.setPosition(positionMember);
         member.setEmail(email);
         member.setParticipantInfo(info);
-
+        member.setTournamentId(tournamentIdSelected);
 
         participantService.addParticipant(member);
-        participantService.addIDs(groupID, tournamentNameId);
-//        request.setAttribute("groupNameId", groupID);
+        participantService.addIDs(groupID, member.getId());
+
 
 //        return "redirect:participant-page";
         return Params.PAGE_PARTICIPANTS;

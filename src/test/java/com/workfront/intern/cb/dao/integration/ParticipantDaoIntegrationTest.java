@@ -149,7 +149,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         cleanUp();
 
         // Testing method
-        List<Member> memberList = (List<Member>) participantDao.getParticipantsByTournamentId(Member.class, targetId);
+        List<Member> memberList = (List<Member>) participantDao.getParticipantListByTournamentId(Member.class, targetId);
 
         assertNotNull(memberList);
         assertEquals(0, memberList.size());
@@ -161,7 +161,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         targetId = testTournament.getTournamentId();
 
         // Testing method
-        List<Member> memberList = (List<Member>) participantDao.getParticipantsByTournamentId(Member.class, targetId);
+        List<Member> memberList = (List<Member>) participantDao.getParticipantListByTournamentId(Member.class, targetId);
 
         assertNotNull(memberList);
         assertEquals(1, memberList.size());
@@ -296,7 +296,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         cleanUp();
 
         // Testing method
-        List<Team> teamList = (List<Team>) participantDao.getParticipantsByTournamentId(Team.class, targetId);
+        List<Team> teamList = (List<Team>) participantDao.getParticipantListByTournamentId(Team.class, targetId);
 
         assertNotNull(teamList);
         assertEquals(0, teamList.size());
@@ -307,7 +307,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         int targetId = testTournament.getTournamentId();
 
         // Testing method
-        List<Team> teamList = (List<Team>) participantDao.getParticipantsByTournamentId(Team.class, targetId);
+        List<Team> teamList = (List<Team>) participantDao.getParticipantListByTournamentId(Team.class, targetId);
 
         assertNotNull(teamList);
         assertEquals(1, teamList.size());

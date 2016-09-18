@@ -1,10 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="com.workfront.intern.cb.common.Member" %>
+<%@ page import="com.workfront.intern.cb.service.ParticipantService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.service.GroupService" %>
-<%@ page import="com.workfront.intern.cb.common.*" %>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
+
+
 
 <head>
     <title>Participant</title>
@@ -129,8 +134,14 @@
                         <br>
                     </div>
 
+                    <%
+                        String groupName = request.getParameter("groupName");
+                        session.setAttribute("groupName", groupName);
+
+                    %>
+
                     <div class="col-sm-9">
-                        <h2><%=request.getParameter("groupName")%>
+                        <h2><%=groupName%>
                         </h2>
                         <br>
 
@@ -204,6 +215,7 @@
 
                         <%-------------=-=-=-=-=-=-=---MEMBERS'S TABLE---=-=-=-=-=-=-=-------------%>
                         <br>
+
                         <h3>Members</h3>
                         <hr>
                         <br>
@@ -228,7 +240,10 @@
                                     <br>
                                     <br>
                                     <%
-                                        List<Member> membersList = (List<Member>) session.getAttribute("membersList");
+                                        ParticipantService participantService = (ParticipantService) session.getAttribute("participantService");
+                                        int tournamentIdSelected = (int) session.getAttribute("tournamentIdSelected");
+
+                                        List<Member> membersList = (List<Member>) participantService.getParticipantsByTournamentId(Member.class, tournamentIdSelected);
                                         int listSize = membersList.size();
                                     %>
 
@@ -293,8 +308,12 @@
                                             </td>
 
                                             <%--TournamentName--%>
+                                                <%
+                                                    String tournamentNameSelected = (String) session.getAttribute("tournamentNameSelected");
+                                                %>
                                             <td>
-                                                <%=request.getParameter("tournamentName")%>
+                                                <%=tournamentNameSelected%>
+
                                             </td>
                                         </tr>
                                         <%}%>

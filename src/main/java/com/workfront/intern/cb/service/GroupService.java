@@ -20,6 +20,8 @@ public interface GroupService {
 
     // UPDATE
     void updateGroup(int id, Group group);
+    void assignParticipant(int tournamentId, int groupId, Participant participant);
+    void removeParticipant(int tournamentId, int groupId, int participantId);
 
     // DELETE
     void deleteGroup(int id);

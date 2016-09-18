@@ -79,9 +79,9 @@ public class ParticipantServiceImpl implements ParticipantService {
     public List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls, int tournamentId) {
         try {
             if (cls.equals(Member.class)) {
-                return participantDao.getParticipantsByTournamentId(Member.class, tournamentId);
+                return participantDao.getParticipantListByTournamentId(Member.class, tournamentId);
             } else if (cls.equals(Team.class)) {
-                return participantDao.getParticipantsByTournamentId(Team.class, tournamentId);
+                return participantDao.getParticipantListByTournamentId(Team.class, tournamentId);
             } else {
                 throw new RuntimeException("Unknown participant type");
             }

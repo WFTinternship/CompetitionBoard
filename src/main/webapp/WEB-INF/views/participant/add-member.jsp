@@ -1,6 +1,8 @@
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,27 +47,6 @@
             <hr>
 
             <form action="addMember-form" class="form-horizontal" method="get" >
-
-                <%--Tournament Name--%>
-                <div class="form-group">
-                    <label for="tournamentSelectId" class="cols-sm-2 control-label">Name</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="tournamentSelectId" name="tournamentNameId" class="form-control" required >
-                                <option value="notSelected" selected="selected">Select tournament</option>
-                                <%
-                                    for (Tournament aTournamentList : tournamentList) {
-                                        name = aTournamentList.getTournamentName();
-                                        tournamentId = aTournamentList.getTournamentId();
-                                %>
-                                <option value="<%=tournamentId%>"><%=name%>
-                                    <%}%>
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
 
                 <%--Name--%>
                 <div class="form-group">
