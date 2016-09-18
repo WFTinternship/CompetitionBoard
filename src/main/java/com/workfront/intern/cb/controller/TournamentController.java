@@ -38,7 +38,7 @@ public class TournamentController {
         int managerId = manager.getId();
 
         List<Tournament> tournamentList = tournamentService.getTournamentListByManager(managerId);
-        model.addAttribute("tournamentListByManager", tournamentList);
+        request.setAttribute("tournamentListByManager", tournamentList);
 
         return Params.PAGE_TOURNAMENT;
     }

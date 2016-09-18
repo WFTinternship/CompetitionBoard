@@ -40,38 +40,6 @@
 
 <%@ include file="layout/layout.jsp" %>
 
-<%--&lt;%&ndash;Gets specific atributes from http session&ndash;%&gt;--%>
-<%--<%--%>
-    <%--String userName = "";--%>
-    <%--String welcomeStr = "";--%>
-    <%--String hrefToSpecificTournamentPage = "all-tournaments-page";--%>
-    <%--String hrefToSpecificGroupPage = "all-group-page";--%>
-    <%--String avatar = "";--%>
-    <%--String addTournamentMenuItem = null;--%>
-    <%--String classStr = null;--%>
-    <%--String allTournaments = "All Tournaments";--%>
-    <%--String allGroups = "All Groups";--%>
-
-    <%--Manager manager = (Manager) session.getAttribute("manager");--%>
-
-    <%--if (manager != null) {--%>
-        <%--avatar = "resources/img/user_avatar/" + manager.getAvatar();--%>
-        <%--userName = manager.getLogin();--%>
-        <%--welcomeStr = "Hi, ";--%>
-        <%--hrefToSpecificTournamentPage = "tournament-page";--%>
-        <%--hrefToSpecificGroupPage = "group-page";--%>
-        <%--addTournamentMenuItem = "Add Tournament";--%>
-        <%--allTournaments = "Tournaments";--%>
-        <%--allGroups = "Groups";--%>
-        <%--classStr = "visible-element";--%>
-    <%--}--%>
-
-    <%--if (userName.equals("")) {--%>
-        <%--addTournamentMenuItem = "";--%>
-        <%--classStr = "hidden-element";--%>
-    <%--}--%>
-<%--%>--%>
-
 <body id="page-top">
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -140,13 +108,15 @@
     <div class="header-content">
         <form action="searchTournamentByName-form" method="get" class="container">
             <div class="container">
+
                 <div class="row">
+
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
                             <input type="text" class="  search-query form-control" name="searchStr"
                                    placeholder="Search tournaments" required/>
                             <span class="input-group-btn">
-                    <button class="btn btn-danger" type="submit" onclick="submitSearchNameInForm()">
+                    <button class="btn btn-danger" type="submit">
                         <span class=" glyphicon glyphicon-search"></span>
                     </button>
                 </span>
@@ -157,7 +127,7 @@
         </form>
 
         <br>
-        <%--Write error message, when not found with provided search criteria  --%>
+        <%-----------Write error message, when not found with provided search criteria-----------%>
         <p class="err-msg">
             <%
                 String searchResultMsg = (String) request.getAttribute("noSearchResultMsg");

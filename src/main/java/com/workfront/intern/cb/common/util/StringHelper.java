@@ -36,5 +36,4 @@ public class StringHelper {
             return text.substring(0, 1).toLowerCase() + text.substring(1);
         }
     }
-
 }

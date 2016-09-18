@@ -16,12 +16,13 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/blog-home.css"/>">
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
     <%--Custom JS--%>
-    <script src="<c:url value="/resources/js/custom.js" />"></script>
     <script src="<c:url value="/resources/js/warning_messages.js" />"></script>
+    <script src="<c:url value="/resources/js/custom.js" />"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
     <![endif]-->
 </head>
@@ -50,14 +51,12 @@
                     <form action="send-mail" id="contact-form" method="post" role="form"
                           onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-1']);">
 
-
-
                         <div class="messages"></div>
                         <div class="controls">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="form_name">Firstname *</label>
+                                        <label class="label-custom" for="form_name">Firstname *</label>
                                         <input id="form_name" type="text" name="name" class="form-control"
                                                placeholder="Please enter your firstname *" required="required"
                                                data-error="Firstname is required.">
@@ -67,7 +66,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="form_lastname">Lastname *</label>
+                                        <label class="label-custom" for="form_lastname">Lastname *</label>
                                         <input id="form_lastname" type="text" name="surname" class="form-control"
                                                placeholder="Please enter your lastname *" required="required"
                                                data-error="Lastname is required.">
@@ -79,7 +78,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="form_email">Email *</label>
+                                        <label class="label-custom" for="form_email">Email *</label>
                                         <input id="form_email" type="email" name="email" class="form-control"
                                                placeholder="Please enter your email *" required="required"
                                                data-error="Valid email is required.">
@@ -89,7 +88,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="form_phone">Phone</label>
+                                        <label class="label-custom" for="form_phone">Phone</label>
                                         <input id="form_phone" type="tel" name="phone" class="form-control"
                                                placeholder="Please enter your phone">
 
@@ -100,7 +99,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="form_message">Message *</label>
+                                        <label class="label-custom" for="form_message">Message *</label>
                                 <textarea id="form_message" name="message" class="form-control"
                                           placeholder="Message for me *" rows="4" required="required"
                                           data-error="Please,leave us a message."></textarea>

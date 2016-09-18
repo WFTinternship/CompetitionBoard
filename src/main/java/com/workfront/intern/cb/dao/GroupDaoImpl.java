@@ -200,6 +200,45 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         }
     }
 
+    @Override
+    public void assignParticipant(int tournamentId, int groupId, Participant participant) throws ObjectNotFoundException, FailedOperationException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = "INSERT INTO group_participant(group_id, participant_id) VALUES (?,?)";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // prepare base insert query
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, groupId);
+
+
+
+
+
+            // Execute statement
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps);
+        }
+
+
+
+    }
+
+    @Override
+    public void removeParticipant(int tournamentId, int groupId, int participantId) throws ObjectNotFoundException, FailedOperationException {
+
+    }
+
+
     /**
      * Deletes group by id
      */

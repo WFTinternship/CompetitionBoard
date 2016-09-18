@@ -45,8 +45,8 @@ public class BeanProvider {
      * Gets media service
      */
     public static MediaService getMediaService() {
-        return (MediaService) Initializer.getApplicationContext()
-                .getBean(ClassHelper.getBeanName(MediaServiceImpl.class));
+        return (MediaService) Initializer.getApplicationContext().
+                getBean(ClassHelper.getBeanName(MediaServiceImpl.class));
     }
 
     /**

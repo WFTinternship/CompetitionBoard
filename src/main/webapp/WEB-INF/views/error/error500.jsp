@@ -5,6 +5,8 @@
     <title>Error 500</title>
 </head>
 <body>
-<img src="<c:url value="/resources/img/notifications/error_500.jpg"/>" style="width: 100%; height: 100%">
+<div style="text-align: center">
+    <img src="<c:url value="/resources/img/notifications/error_500.jpg"/>" style="width: 100%; height: 100%">
+</div>
 </body>
 </html>

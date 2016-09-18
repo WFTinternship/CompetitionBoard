@@ -211,28 +211,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Adds member to of group_participant table in db
      */
     public void addMemberIdAndGroupId(int groupId, int memberId) throws FailedOperationException {
-        Connection conn = null;
-        PreparedStatement ps = null;
 
-        String sql = "INSERT INTO group_participant(group_id, participant_id) VALUES (?,?)";
-        try {
-            // Acquire connection
-            conn = dataSource.getConnection();
-
-            // prepare base insert query
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, groupId);
-            ps.setInt(2, memberId);
-
-            // Execute statement
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            throw new FailedOperationException(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps);
-        }
     }
 
     /**

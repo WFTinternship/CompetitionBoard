@@ -21,6 +21,10 @@ public interface GroupDao {
     // UPDATE
     void updateGroup(int id, Group group) throws ObjectNotFoundException, FailedOperationException;
 
+    void assignParticipant(int tournamentId, int groupId, Participant participant) throws ObjectNotFoundException, FailedOperationException;
+
+    void removeParticipant(int tournamentId, int groupId, int participantId) throws ObjectNotFoundException, FailedOperationException;
+
     // DELETE
     void deleteGroup(int id) throws ObjectNotFoundException, FailedOperationException;
     void deleteAll() throws FailedOperationException;

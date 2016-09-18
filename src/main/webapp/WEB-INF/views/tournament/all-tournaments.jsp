@@ -83,7 +83,7 @@
 
                 <%--Contact Us--%>
                 <li>
-                    <a class="page-scroll" href="#contact">Contact Us</a>
+                    <a class="page-scroll" href="contact-page">Contact Us</a>
                 </li>
 
                 <%--Sign Up--%>
@@ -153,32 +153,32 @@
                                         </td>
 
                                         <%--TournamentId--%>
-                                        <td contenteditable="false">
+                                        <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
                                             <%=tournamentList.get(i).getTournamentId()%>
                                         </td>
 
                                         <%--TournamentName--%>
-                                        <td contenteditable="true">
+                                        <td contenteditable="false" data-name="tournamentName" data-updatable="false">
                                             <%=tournamentList.get(i).getTournamentName()%>
                                         </td>
 
                                         <%--StartDate--%>
-                                        <td contenteditable="false">
+                                        <td contenteditable="false" data-name="startDate" data-updatable="false">
                                             <%=tournamentList.get(i).getStartDate()%>
                                         </td>
 
                                         <%--EndDate--%>
-                                        <td contenteditable="false">
+                                        <td contenteditable="false" data-name="endDate" data-updatable="false">
                                             <%=tournamentList.get(i).getEndDate()%>
                                         </td>
 
                                         <%--Location--%>
-                                        <td contenteditable="false">
+                                        <td contenteditable="false" data-name="location" data-updatable="false">
                                             <%=tournamentList.get(i).getLocation()%>
                                         </td>
 
                                         <%--TournamentDescription--%>
-                                        <td contenteditable="false">
+                                        <td contenteditable="false" data-name="tournamentDescription" data-updatable="false">
                                             <%=tournamentList.get(i).getTournamentDescription()%>
                                         </td>
 
@@ -187,31 +187,30 @@
                                             int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
                                             String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
                                         %>
-                                        <td contenteditable="false">
+                                        <td contenteditable="false" data-name="tournamentFormatId" data-updatable="false">
                                             <%=formatStr%>
                                         </td>
 
                                         <%--Tournament creator--%>
-                                        <% int id = tournamentList.get(i).getManagerId();%>
-                                        <td contenteditable="false">
-                                            <%=id%>
+                                        <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
+                                            <%=tournamentList.get(i).getManagerId()%>
                                         </td>
                                     </tr>
                                     <%}%>
                                 </table>
+
+                                <!-- Footer -->
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>Copyright &copy; Artur Babayan 2016</p>
+                                        </div>
+                                    </div>
+                                </footer>
+
+
                             </div>
                         </div>
-
-
-                        <!-- Footer -->
-                        <%--<footer id="footer">--%>
-                        <%--<div class="row">--%>
-                        <%--<div class="col-lg-12">--%>
-                        <%--<p>Copyright &copy; Artur Babayan 2016</p>--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--</footer>--%>
-
                     </div>
                 </div>
             </div>

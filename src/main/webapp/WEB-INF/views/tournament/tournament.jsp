@@ -117,7 +117,7 @@
                     </div>
 
                     <div class="col-sm-9">
-                        <h2><%=userName%> tournaments</h2>
+                        <h2><%=userName%>'s tournaments</h2>
                         <hr>
                         <br>
 
@@ -182,16 +182,13 @@
 
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
-                                                <%--<a href="participant-page?tournamentName=<%=tournamentList.get(i).getTournamentName()%>"--%>
-                                                <%--class="a-custom" name="hrefTournamentName">--%>
-                                                <%--<a href="participant-page" class="a-custom" name="hrefTournamentName">--%>
+                                                <a href="participant-page" class="a-custom" name="hrefTournamentName">
                                                 <%=tournamentList.get(i).getTournamentName()%>
-                                                <%--</a>--%>
+                                                </a>
                                             </td>
 
                                             <%--StartDate--%>
-                                            <td contenteditable="false" data-name="startDateUpdate"
-                                                data-updatable="true">
+                                            <td contenteditable="false" data-name="startDateUpdate" data-updatable="true">
                                                 <%=Helpers.parseTimeStampToString(tournamentList.get(i).getStartDate())%>
                                             </td>
 
@@ -201,24 +198,21 @@
                                             </td>
 
                                             <%--Location--%>
-                                            <td contenteditable="false" data-name="locationUpdate"
-                                                data-updatable="true">
+                                            <td contenteditable="false" data-name="locationUpdate" data-updatable="true">
                                                 <%=tournamentList.get(i).getLocation()%>
                                             </td>
 
                                             <%--TournamentDescription--%>
-                                            <td contenteditable="false" data-name="descriptionUpdate"
-                                                data-updatable="true">
+                                            <td contenteditable="false" data-name="descriptionUpdate" data-updatable="true">
                                                 <%=tournamentList.get(i).getTournamentDescription()%>
                                             </td>
 
                                             <%--TournamentFormatId--%>
-                                            <%
-                                                int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                                                String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
-                                            %>
-                                            <td contenteditable="false" data-name="formatUpdateNot"
-                                                data-updatable="false">
+                                                <%
+                                                    int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                                    String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                                %>
+                                            <td contenteditable="false" data-name="formatUpdateNot" data-updatable="false">
                                                 <%=formatStr%>
                                             </td>
 
@@ -227,8 +221,7 @@
                                                 assert manager != null;
                                                 String managerName = manager.getLogin();
                                             %>
-                                            <td contenteditable="false" data-name="managerUpdateNot"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="managerUpdateNot" data-updatable="false">
                                                 <%= managerName%>
                                             </td>
                                         </tr>
