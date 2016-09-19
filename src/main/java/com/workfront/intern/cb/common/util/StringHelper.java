@@ -36,4 +36,29 @@ public class StringHelper {
             return text.substring(0, 1).toLowerCase() + text.substring(1);
         }
     }
+
+    public static boolean contains(String[] values, String token) {
+        return contains(values, token, false);
+    }
+
+    public static boolean contains(String[] values, String token, boolean ignoreCase) {
+        if (token == null)
+            return false;
+        if (values == null || values.length == 0)
+            return false;
+
+        for (String val : values) {
+            if (ignoreCase) {
+                if (val != null && token.toLowerCase().equals(val.toLowerCase())) {
+                    return true;
+                }
+            } else {
+                if (token.equals(val)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

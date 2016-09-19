@@ -88,6 +88,41 @@ abstract class GenericDao {
     }
 
     /**
+     * Deletes entry(es) for group_participant to specified SQL, groupID and participantID params.
+     */
+    void deleteEntryForGroupParticipant(String sql, int groupId, int participantId) throws ObjectNotFoundException, FailedOperationException {
+        if (sql != null) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+
+            if (groupId <= 0) {
+                throw new FailedOperationException(String.format("Invalid ID provided: %d", groupId));
+            }
+
+            try {
+                // Acquire connection
+                conn = dataSource.getConnection();
+
+                // Initialize statement
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, groupId);
+                ps.setInt(2, participantId);
+
+                // Execute statement
+                int result = ps.executeUpdate();
+                if (result == 0) {
+                    throw new ObjectNotFoundException(String.format("Entity with ID=%s not found", groupId));
+                }
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+                throw new FailedOperationException(e.getMessage(), e);
+            } finally {
+                closeResources(conn, ps);
+            }
+        }
+    }
+
+    /**
      * Deletes all entries according to specified SQL.
      */
     void deleteAllEntries(String sql) throws FailedOperationException {

@@ -28,10 +28,6 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <listener>
-        <listener-class>com.workfront.intern.cb.web.Initializer</listener-class>
-    </listener>
-
     <!--Request Filtering-->
     <filter>
         <filter-name>RequestFilter</filter-name>

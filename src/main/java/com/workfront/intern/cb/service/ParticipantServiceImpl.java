@@ -37,8 +37,6 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
     }
 
-
-
     /**
      * Gets specific participant - member or team, by id:
      */

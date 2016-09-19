@@ -1,16 +1,15 @@
 package com.workfront.intern.cb.web;
 
+import com.workfront.intern.cb.common.util.StringHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import java.io.File;
 
@@ -40,20 +39,28 @@ public class Initializer implements WebApplicationInitializer, ApplicationContex
     }
 
     public void init() {
-        SERVER_ROOT_PATH = SERVLET_CONTEXT.getRealPath("/");
+        // Acquire active profiles
+        Environment env = APPLICATION_CONTEXT.getEnvironment();
+        String[] profiles = env.getActiveProfiles();
 
-        RESOURCES_PATH = SERVER_ROOT_PATH + File.separator + "resources";
-        FILES_PATH = RESOURCES_PATH + File.separator + "files";
-        File filesDir = new File(FILES_PATH);
-        if (!filesDir.exists()) {
-            if (!filesDir.mkdirs()) {
-                LOG.error("-- could not create files directory");
+        // Skip server specific data initialization for Test profile
+        boolean isTestProfile = StringHelper.contains(profiles, "Test", true);
+        if (!isTestProfile) {
+            SERVER_ROOT_PATH = SERVLET_CONTEXT.getRealPath("/");
+
+            RESOURCES_PATH = SERVER_ROOT_PATH + File.separator + "resources";
+            FILES_PATH = RESOURCES_PATH + File.separator + "files";
+            File filesDir = new File(FILES_PATH);
+            if (!filesDir.exists()) {
+                if (!filesDir.mkdirs()) {
+                    LOG.error("-- could not create files directory");
+                }
             }
-        }
 
-        REDIRECT_UNAUTHORIZED_REQUESTS_TO_HOME = Boolean.valueOf(
-                SERVLET_CONTEXT.getInitParameter("redirectToHomeOnUnauthorizedRequest")
-        );
+            REDIRECT_UNAUTHORIZED_REQUESTS_TO_HOME = Boolean.valueOf(
+                    SERVLET_CONTEXT.getInitParameter("redirectToHomeOnUnauthorizedRequest")
+            );
+        }
 
         LOG.info("-- context initialized");
     }

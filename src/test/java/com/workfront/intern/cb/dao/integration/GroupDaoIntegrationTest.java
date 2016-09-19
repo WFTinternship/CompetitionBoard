@@ -1,9 +1,7 @@
 package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
-import com.workfront.intern.cb.common.Group;
-import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.*;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.dao.*;
 import org.junit.After;
@@ -24,14 +22,17 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
     private Tournament testTournament;
     private Group testGroup;
+    private Participant testMember;
 
     private DataSource dataSource = DBManager.getDataSource();
+    private ParticipantDaoImpl participantDao;
 
     @Before
     public void beforeTest() throws Exception {
         managerDao = new ManagerDaoImpl(dataSource);
         tournamentDao = new TournamentDaoImpl(dataSource);
         groupDao = new GroupDaoImpl(dataSource);
+        participantDao = new ParticipantDaoImpl(dataSource);
 
         // Delete all remaining objects
         cleanUp();
@@ -63,6 +64,20 @@ public class GroupDaoIntegrationTest extends BaseTest {
         // Save to DB
         groupDao.addGroup(testGroup);
         assertTrue(testGroup.getGroupId() > 0);
+
+
+        // Initialize random member instance
+        testMember = createRandomMember();
+        testMember.setTournamentId(testTournament.getTournamentId());
+        assertEquals(0, testMember.getId());
+
+        // Save to DB
+        participantDao.addParticipant(testMember);
+        assertTrue(testMember.getId() > 0);
+
+
+        groupDao.assignParticipant(testTournament.getTournamentId(), testGroup.getGroupId(), testMember);
+        assertTrue(testMember.getId() > 0);
     }
 
     @After
@@ -71,7 +86,9 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     private void cleanUp() throws Exception {
+        groupDao.removeAllParticipants();
         groupDao.deleteAll();
+        participantDao.deleteAll(Member.class);
         tournamentDao.deleteAll();
         managerDao.deleteAll();
     }
@@ -121,10 +138,9 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
     @Test
     public void getGroupByTournamentList_emptyList() throws Exception {
-        int groupId = testGroup.getGroupId();
         int tournamentId = testTournament.getTournamentId();
 
-        groupDao.deleteGroup(groupId);
+        cleanUp();
 
         // Testing method
         List<Group> groupList = groupDao.getTournamentGroups(tournamentId);
@@ -211,6 +227,28 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testGroup.getRound(), group.getRound());
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
+    }
+
+    @Test
+    public void assignParticipant() throws Exception {
+        int tournamentId = testTournament.getTournamentId();
+        int groupId = testGroup.getGroupId();
+
+        Group group = createRandomGroup();
+        group.setTournamentId(tournamentId);
+        groupDao.addGroup(group);
+
+        // Initialize random member instance
+        Member member = createRandomMember();
+        member.setTournamentId(tournamentId);
+        participantDao.addParticipant(member);
+
+        groupDao.assignParticipant(tournamentId, groupId, member);
+
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+
+        assertEquals(testGroup.getTournamentId(), testMember.getTournamentId());
     }
 
     @Test(expected = ObjectNotFoundException.class)

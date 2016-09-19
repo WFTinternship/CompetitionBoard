@@ -2,7 +2,6 @@ package com.workfront.intern.cb.dao;
 
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Participant;
-import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
@@ -236,10 +235,8 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         }
     }
 
-    //ToDo
     @Override
     public void assignParticipant(int tournamentId, int groupId, Participant participant) throws ObjectNotFoundException, FailedOperationException {
-
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -248,32 +245,43 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
             // Acquire connection
             conn = dataSource.getConnection();
 
-            // prepare base insert query
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, groupId);
+            if (tournamentId == (participant.getTournamentId())) {
+                int participantId = participant.getId();
 
+                // prepare base insert query
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, groupId);
+                ps.setInt(2, participantId);
 
-
-
-            // Execute statement
-            ps.executeUpdate();
-
+                // Execute statement
+                ps.executeUpdate();
+            } else {
+                throw new ObjectNotFoundException(String.format("Participant with tournamentId[%d] not found in that group", tournamentId));
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
         } finally {
             closeResources(conn, ps);
         }
-
-
-
     }
 
     @Override
-    public void removeParticipant(int tournamentId, int groupId, int participantId) throws ObjectNotFoundException, FailedOperationException {
+    public void removeParticipant(int tournamentId, int groupId, Participant participant)
+            throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM group_participant WHERE group_id=? and participant_id=?";
 
+        if (tournamentId == (participant.getTournamentId())) {
+            int participantId = participant.getId();
+            deleteEntryForGroupParticipant(sql, groupId, participantId);
+        }
     }
 
+    @Override
+    public void removeAllParticipants() throws FailedOperationException {
+        String sql = "DELETE FROM group_participant";
+        deleteAllEntries(sql);
+    }
 
     /**
      * Deletes group by id
