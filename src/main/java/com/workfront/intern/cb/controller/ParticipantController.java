@@ -35,12 +35,15 @@ public class ParticipantController {
     @RequestMapping(value = {"/participant-page"})
     public String toParticipantPage(Model model,
                                     HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-        session.setAttribute("groupService", groupService);
-        session.setAttribute("participantService", participantService);
-
         return Params.PAGE_PARTICIPANTS;
+    }
+
+
+    @RequestMapping(value = {"/participant-mirror-page"})
+    public String toParticipantMirrorPage(Model model,
+                                    HttpServletRequest request) {
+
+        return Params.PAGE_PARTICIPANTS_MIRROR;
     }
 
     // region <ADD MEMBER>
@@ -68,8 +71,7 @@ public class ParticipantController {
                             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        int tournamentId = (int) session.getAttribute("memberTournamentId");
-
+        int tournamentId = (int) session.getAttribute("selectedTournamentId");
 
         Member member = new Member();
         member.setName(nameMember);
@@ -79,12 +81,9 @@ public class ParticipantController {
         member.setParticipantInfo(info);
         member.setTournamentId(tournamentId);
 
-
         participantService.addParticipant(member);
 
-
-        return "redirect:participant-page";
-//        return Params.PAGE_PARTICIPANTS;
+        return "participant/participant-mirror";
     }
 
     // endregion

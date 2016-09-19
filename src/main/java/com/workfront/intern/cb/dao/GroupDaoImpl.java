@@ -236,6 +236,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         }
     }
 
+    //ToDo
     @Override
     public void assignParticipant(int tournamentId, int groupId, Participant participant) throws ObjectNotFoundException, FailedOperationException {
 

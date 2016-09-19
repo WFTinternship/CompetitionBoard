@@ -102,6 +102,11 @@
     </div>
 </nav>
 
+<%
+    List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
+    int sizeList = tournamentList.size();
+%>
+
 <div class="row">
     <!-- Blog Entries Column -->
     <div class="col-md-8">
@@ -142,10 +147,7 @@
 
                                     <br>
                                     <br>
-                                    <%
-                                        List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
-                                        int sizeList = tournamentList.size();
-                                    %>
+
                                     <table class="table" id="updateTournamentTable">
                                         <tr class="thCustom">
                                             <th>Check</th>
@@ -165,7 +167,7 @@
 
                                         <tr>
                                             <%--Radio--%>
-                                            <td>
+                                                <td>
                                                 <input type="radio" id="<%=tournamentId%>" class="checkbox-custom"
                                                        name="tournamentNameId" value="<%=tournamentId%>" required/>
                                             </td>
@@ -177,13 +179,12 @@
 
                                             <%--Id--%>
                                             <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
-                                                <%session.setAttribute("memberTournamentId", tournamentId);%>
                                                 <%=tournamentId%>
                                             </td>
 
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
-                                                <a href="participant-page?tournamentName=<%=tournamentList.get(i).getTournamentName()%>"
+                                                <a href="participant-page?selectedTournamentId=<%=tournamentList.get(i).getTournamentId()%>"
                                                 class="a-custom" name="hrefTournamentName">
                                                 <%=tournamentList.get(i).getTournamentName()%>
                                                 </a>

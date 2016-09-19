@@ -65,7 +65,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
     }
 
-
     /**
      * Gets specific participant list by tournament id - memberList or teamList
      */
@@ -243,7 +242,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 	                    INNER JOIN `group` g ON gp.group_id=g.group_id
 	                    WHERE g.group_id=?;
       */
-
     /**
      * Gets member list by By groupId id
      */

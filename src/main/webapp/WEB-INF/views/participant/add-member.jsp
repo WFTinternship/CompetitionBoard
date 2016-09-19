@@ -33,14 +33,8 @@
 </head>
 
 <%
-    List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListParticipantFrom");
-    String name;
-    int tournamentId;
-    int size = tournamentList.size();
-
-    int targetId = (int) session.getAttribute("selectedTournamentId");
-    Tournament tournament = BeanProvider.getTournamentService().getTournamentById(targetId);
-    session.setAttribute("memberTournamentId", targetId);
+    int selectedTournamentId = (int) session.getAttribute("selectedTournamentId");
+    Tournament tournament = BeanProvider.getTournamentService().getTournamentById(selectedTournamentId);
 %>
 
 <body>
@@ -64,7 +58,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <%--Name--%>
                 <div class="form-group">
