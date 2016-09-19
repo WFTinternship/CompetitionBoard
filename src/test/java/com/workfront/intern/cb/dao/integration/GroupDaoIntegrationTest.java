@@ -244,6 +244,27 @@ public class GroupDaoIntegrationTest extends BaseTest {
         participantDao.addParticipant(member);
 
         groupDao.assignParticipant(tournamentId, groupId, member);
+        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
+        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+
+        assertEquals(testGroup.getTournamentId(), testMember.getTournamentId());
+    }
+
+    @Test
+    public void removeParticipant() throws Exception {
+        int tournamentId = testTournament.getTournamentId();
+        int groupId = testGroup.getGroupId();
+
+        Group group = createRandomGroup();
+        group.setTournamentId(tournamentId);
+        groupDao.addGroup(group);
+
+        // Initialize random member instance
+        Member member = createRandomMember();
+        member.setTournamentId(tournamentId);
+        participantDao.addParticipant(member);
+
+        groupDao.removeParticipant(groupId, member.getId());
 
         assertEquals(testGroup.getTournamentId(), group.getTournamentId());
         assertEquals(testMember.getTournamentId(), member.getTournamentId());

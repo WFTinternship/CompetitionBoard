@@ -267,14 +267,12 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
     }
 
     @Override
-    public void removeParticipant(int tournamentId, int groupId, Participant participant)
+    public void removeParticipant(int groupId, int participantId)
             throws ObjectNotFoundException, FailedOperationException {
-        String sql = "DELETE FROM group_participant WHERE group_id=? and participant_id=?";
 
-        if (tournamentId == (participant.getTournamentId())) {
-            int participantId = participant.getId();
-            deleteEntryForGroupParticipant(sql, groupId, participantId);
-        }
+        String sql = "DELETE FROM group_participant WHERE group_id=? and participant_id=?";
+        deleteEntryForGroupParticipant(sql, groupId, participantId);
+
     }
 
     @Override
