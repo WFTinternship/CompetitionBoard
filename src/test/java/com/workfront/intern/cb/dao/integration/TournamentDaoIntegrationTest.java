@@ -6,34 +6,33 @@ import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.TournamentFormat;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.*;
+import com.workfront.intern.cb.dao.ManagerDao;
+import com.workfront.intern.cb.dao.TournamentDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SpringJavaAutowiredMembersInspection")
 public class TournamentDaoIntegrationTest extends BaseTest {
 
     // DAO instances
-    private ManagerDao managerDao;
+    @Autowired
     private TournamentDao tournamentDao;
+    @Autowired
+    private ManagerDao managerDao;
 
     // Test helper objects
     private Manager testManager;
     private Tournament testTournament;
 
-    private DataSource dataSource = DBManager.getDataSource();
-
     @Before
     public void beforeTest() throws FailedOperationException, ObjectNotFoundException {
-        managerDao = new ManagerDaoImpl(dataSource);
-        tournamentDao = new TournamentDaoImpl(dataSource);
-
         // Delete all remaining objects
         cleanUp();
 
@@ -217,10 +216,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
 
     @Test
     public void updateTournament() throws Exception {
-        // Testing method
-        Tournament tournament;
-        tournament = createRandomTournament();
-
         // Tournament new data
         String nameUpdate = "UPDATED, THE BEST OF IF THE BEST";
         Timestamp startDateUpdate = Timestamp.valueOf("2020-08-08 10:00:00");
@@ -231,6 +226,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         int targetId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
 
+        Tournament tournament = createRandomTournament();
+
         tournament.setTournamentId(tournamentId);
         tournament.setTournamentName(nameUpdate);
         tournament.setStartDate(startDateUpdate);
@@ -240,7 +237,6 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         tournament.setTournamentFormatId(TournamentFormat.ROUND_ROBBIN.getFormatId());
         tournament.setManagerId(targetId);
 
-        // Updates specific tournament in db
         tournamentDao.updateTournament(tournamentId, tournament);
         testTournament = tournamentDao.getTournamentById(tournamentId);
 

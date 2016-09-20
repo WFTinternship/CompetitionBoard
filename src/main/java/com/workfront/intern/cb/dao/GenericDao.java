@@ -6,11 +6,15 @@ import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
 
 abstract class GenericDao {
     private static final Logger LOG = Logger.getLogger(GenericDao.class);
 
     protected DataSource dataSource;
+
+    protected abstract <T> T mapObject(ResultSet rs);
+    protected abstract <T> List<T> mapList(ResultSet rs);
 
     /**
      * Closed DB resources, when Statement and ResultSet of null

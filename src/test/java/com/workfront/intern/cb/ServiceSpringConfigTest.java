@@ -15,6 +15,6 @@ public class ServiceSpringConfigTest {
     @Bean
     @Profile("test")
     public DataSource getDataSource() {
-        return DBManager.getDataSource();
+        return DBManager.getTestDataSource();
     }
 }

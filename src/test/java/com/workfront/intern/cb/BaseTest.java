@@ -16,7 +16,9 @@ public class BaseTest {
 
     protected final int NON_EXISTING_ID = 9999;
 
-    protected final String NON_EXISTING_LOGIN = "adgjOwkJ";
+    protected final String NON_EXISTING_LOGIN = "adgOwkJ";
+
+    protected final String NON_EXISTING_PARTICIPANT_NAME = "aksMsaa";
 
     protected final String NON_EXISTING_GROUP = "adgjOwkJ";
 
@@ -129,12 +131,15 @@ public class BaseTest {
         int participantTwoId = randomIntGenerate();
         int scoreParticipantOne = randomIntGenerate();
         int scoreParticipantTwo = randomIntGenerate();
+        String matchScore = "8 : 0";
 
         Match match = new Match();
+
         match.setParticipantOneId(participantOneId);
         match.setParticipantTwoId(participantTwoId);
         match.setScoreParticipantOne(scoreParticipantOne);
         match.setScoreParticipantOne(scoreParticipantTwo);
+        match.setMatchScore(matchScore);
 
         return match;
     }
@@ -148,6 +153,7 @@ public class BaseTest {
         int nextRoundParticipants = randomIntGenerate();
 
         Group group = new Group();
+
         group.setGroupName(generateRandomString(10));
         group.setParticipantsCount(participantsCount);
         group.setRound(round);

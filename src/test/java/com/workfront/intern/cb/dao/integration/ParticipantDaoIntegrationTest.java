@@ -3,37 +3,38 @@ package com.workfront.intern.cb.dao.integration;
 import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.*;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.*;
+import com.workfront.intern.cb.dao.GroupDao;
+import com.workfront.intern.cb.dao.ManagerDao;
+import com.workfront.intern.cb.dao.ParticipantDao;
+import com.workfront.intern.cb.dao.TournamentDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"SpringJavaAutowiredMembersInspection", "unchecked"})
 public class ParticipantDaoIntegrationTest extends BaseTest {
 
     // DAO instances
-    private ManagerDao managerDao;
-    private TournamentDao tournamentDao;
-    private GroupDao groupDao;
+    @Autowired
     private ParticipantDao participantDao;
+    @Autowired
+    private ManagerDao managerDao;
+    @Autowired
+    private TournamentDao tournamentDao;
+    @Autowired
+    private GroupDao groupDao;
 
     private Tournament testTournament;
     private Member testMember;
     private Team testTeam;
 
-    private DataSource dataSource = DBManager.getDataSource();
-
     @Before
     public void beforeTest() throws Exception {
-        managerDao = new ManagerDaoImpl(dataSource);
-        tournamentDao = new TournamentDaoImpl(dataSource);
-        groupDao = new GroupDaoImpl(dataSource);
-        participantDao = new ParticipantDaoImpl(dataSource);
-
         // Delete all remaining objects
         cleanUp();
 
@@ -156,7 +157,7 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     @Test
-    public void getMemberListByTournamentI_found() throws Exception {
+    public void getMemberListByTournamentId_found() throws Exception {
         int targetId;
         targetId = testTournament.getTournamentId();
 
@@ -206,6 +207,20 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertEquals(testMember.getPosition(), member.getPosition());
         assertEquals(testMember.getEmail(), member.getEmail());
         assertEquals(testMember.getTournamentId(), member.getTournamentId());
+    }
+
+    @Test
+    public void getMemberListByMemberName_emptyList() throws Exception {
+        int targetId = testMember.getId();
+
+        // Testing method
+        participantDao.delete(targetId);
+
+        // Testing method
+        List<Member> memberList = (List<Member>) participantDao.getParticipantListByName(Member.class, NON_EXISTING_PARTICIPANT_NAME );
+
+        assertNotNull(memberList);
+        assertEquals(0, memberList.size());
     }
 
     @Test

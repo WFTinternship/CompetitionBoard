@@ -249,13 +249,11 @@ public class TournamentServiceIntegrationTest extends BaseTest {
     @Test(expected = RuntimeException.class)
     public void deleteTournamentById_notFound() throws Exception {
         tournamentService.deleteTournamentById(NON_EXISTING_ID);
-
     }
 
     @Test
     public void deleteTournamentById_found() throws Exception {
         tournamentService.deleteTournamentById(testTournament.getTournamentId());
-
     }
 
     @Test

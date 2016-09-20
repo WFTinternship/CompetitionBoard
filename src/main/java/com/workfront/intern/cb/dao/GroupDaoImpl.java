@@ -5,16 +5,19 @@ import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class GroupDaoImpl extends GenericDao implements GroupDao {
     private static final Logger LOG = Logger.getLogger(GroupDaoImpl.class);
 
-    public GroupDaoImpl(DataSource dataSource) {
+    public GroupDaoImpl(@Autowired DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -76,9 +79,8 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
             // update member data
             rs = ps.executeQuery();
-            if (rs.next()) {
-                group = extractGroupFromResultSet(rs);
-            } else {
+            group = mapObject(rs);
+            if (group == null) {
                 throw new ObjectNotFoundException(String.format("Group with id[%d] not found", id));
             }
         } catch (SQLException e) {
@@ -98,7 +100,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Group group;
         List<Group> groupListByName = new ArrayList<>();
 
         String sql = "SELECT * FROM `group` g WHERE g.group_name LIKE ? ";
@@ -112,10 +113,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            while (rs.next()) {
-                group = extractGroupFromResultSet(rs);
-                groupListByName.add(group);
-            }
+            groupListByName = mapList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -134,7 +132,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Group> groupList = new ArrayList<>();
-        Group group;
 
         String sql = "SELECT * FROM `group` WHERE tournament_id=?";
         try {
@@ -147,10 +144,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            while (rs.next()) {
-                group = extractGroupFromResultSet(rs);
-                groupList.add(group);
-            }
+            groupList = mapList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -169,7 +163,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Group> groupList = new ArrayList<>();
-        Group group;
 
         String sql = "SELECT * FROM `group`";
         try {
@@ -181,10 +174,7 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            while (rs.next()) {
-                group = extractGroupFromResultSet(rs);
-                groupList.add(group);
-            }
+            groupList = mapList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -295,25 +285,44 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
      */
     @Override
     public void deleteAll() throws FailedOperationException {
-        String sql = "DELETE FROM `group`";
+        String sql = "DELETE FROM `group` ";
         deleteAllEntries(sql);
     }
 
-    /**
-     * Extracting specific data of Group from ResultSet
-     */
-    private static Group extractGroupFromResultSet(ResultSet rs) {
-        Group group = new Group();
-        try {
-            group.setGroupId(rs.getInt("group_id"));
-            group.setGroupName(rs.getString("group_name"));
-            group.setParticipantsCount(rs.getInt("participants_count"));
-            group.setRound(rs.getInt("round"));
-            group.setNextRoundParticipants(rs.getInt("next_round_participants"));
-            group.setTournamentId(rs.getInt("tournament_id"));
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
-        return group;
+    @SuppressWarnings("unchecked")
+    @Override
+    protected Group mapObject(ResultSet rs) {
+        List<Group> entities = mapList(rs);
+        return entities.size() == 0 ? null : entities.get(0);
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected List<Group> mapList(ResultSet rs) {
+        List<Group> resultList = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Group group = new Group();
+
+                group.setGroupId(rs.getInt("group_id"));
+                group.setGroupName(rs.getString("group_name"));
+                group.setParticipantsCount(rs.getInt("participants_count"));
+                group.setRound(rs.getInt("round"));
+                group.setNextRoundParticipants(rs.getInt("next_round_participants"));
+                group.setTournamentId(rs.getInt("tournament_id"));
+
+                resultList.add(group);
+            }
+        } catch (SQLException ex) {
+            LOG.error(ex.getMessage(), ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
+        return resultList;
+    }
+
 }

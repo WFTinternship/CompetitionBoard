@@ -190,7 +190,7 @@
                                             <%--TournamentFormatId--%>
                                             <%
                                                 int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                                                String formatStr = TournamentFormat.parseTournamentFormatIdToString(tournamentFormatId);
+                                                String formatStr = TournamentFormat.fromId(tournamentFormatId).getFormatName();
                                             %>
                                             <td contenteditable="false" data-name="formatUpdateNot" data-updatable="false">
                                                 <%=formatStr%>

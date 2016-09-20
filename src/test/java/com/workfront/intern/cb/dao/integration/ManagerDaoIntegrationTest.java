@@ -4,32 +4,28 @@ import com.workfront.intern.cb.BaseTest;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
-import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.ManagerDao;
-import com.workfront.intern.cb.dao.ManagerDaoImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SpringJavaAutowiredMembersInspection")
 public class ManagerDaoIntegrationTest extends BaseTest {
 
     // DAO instances
+    @Autowired
     private ManagerDao managerDao;
 
     // Test helper objects
     private Manager testManager;
 
-    private DataSource dataSource = DBManager.getDataSource();
-
     @Before
     public void beforeTest() throws Exception {
-        managerDao = new ManagerDaoImpl(dataSource);
-
         // Delete all remaining objects
         cleanUp();
 

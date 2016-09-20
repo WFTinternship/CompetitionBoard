@@ -1,16 +1,23 @@
 package com.workfront.intern.cb.common;
 
 public enum TournamentFormat {
-    ROUND_ROBBIN(1), OLYMPIC(2);
+    ROUND_ROBBIN (1, "ROUND ROBIN"),
+    OLYMPIC (2, "OLYMPIC");
 
     private final int formatId;
+    private final String formatName;
 
-    TournamentFormat(int formatId) {
+    TournamentFormat(int formatId, String formatName) {
         this.formatId = formatId;
+        this.formatName = formatName;
     }
 
     public int getFormatId() {
         return formatId;
+    }
+
+    public String getFormatName() {
+        return formatName;
     }
 
     public static TournamentFormat getTournamentFormatById(int formatId) {
@@ -27,27 +34,59 @@ public enum TournamentFormat {
     }
 
     /**
-     * Returns tournament format name(string) by specific tournament id
+     * Returns tournament format by specified format ID.
      */
-    public static String parseTournamentFormatIdToString(int formatId) {
-        String formatStr;
-        switch (formatId) {
-            case 1:
-                formatStr = "ROUND_ROBBIN";
-                break;
-            case 2:
-                formatStr = "OLYMPIC";
-                break;
-            default:
-                formatStr = "UNKNOWN_FORMAT";
+    public static TournamentFormat fromId(int formatId) {
+        if (formatId == 0)
+            return null;
+
+        for (TournamentFormat format : TournamentFormat.values()) {
+            if (format.getFormatId() == formatId) {
+                return format;
+            }
         }
-        return formatStr;
+        return null;
+    }
+
+    /**
+     * Returns tournament format by specified format Name.
+     */
+    public static TournamentFormat fromName(String formatName) {
+        if (formatName == null)
+            return null;
+
+        for (TournamentFormat format : TournamentFormat.values()) {
+            if (format.getFormatName().equals(formatName)) {
+                return format;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns tournament format by specified format ID and Name.
+     *
+     * @param formatId
+     * @param formatName
+     * @return
+     */
+    public static TournamentFormat fromIdAnName(int formatId, String formatName) {
+        if (formatId == 0 || formatName == null)
+            return null;
+
+        for (TournamentFormat format : TournamentFormat.values()) {
+            if (format.getFormatId() == formatId && format.getFormatName().equals(formatName)) {
+                return format;
+            }
+        }
+        return null;
     }
 
     @Override
     public String toString() {
         return "TournamentFormat{" +
                 "formatId=" + formatId +
+                ", formatName='" + formatName + '\'' +
                 '}';
     }
 }

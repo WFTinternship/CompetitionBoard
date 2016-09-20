@@ -7,36 +7,37 @@ import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.*;
+import com.workfront.intern.cb.dao.GroupDao;
+import com.workfront.intern.cb.dao.ManagerDao;
+import com.workfront.intern.cb.dao.MatchDao;
+import com.workfront.intern.cb.dao.TournamentDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SpringJavaAutowiredMembersInspection")
 public class MatchDaoIntegrationTest extends BaseTest {
 
     // DAO instances
-    private ManagerDao managerDao;
-    private TournamentDao tournamentDao;
-    private GroupDao groupDao;
+    @Autowired
     private MatchDao matchDao;
+    @Autowired
+    private ManagerDao managerDao;
+    @Autowired
+    private TournamentDao tournamentDao;
+    @Autowired
+    private GroupDao groupDao;
 
     private Group testGroup;
     private Match testMatch;
 
-    private DataSource dataSource = DBManager.getDataSource();
-
     @Before
     public void beforeTest() throws Exception {
-        managerDao = new ManagerDaoImpl(dataSource);
-        tournamentDao = new TournamentDaoImpl(dataSource);
-        groupDao = new GroupDaoImpl(dataSource);
-        matchDao = new MatchDaoImpl(dataSource);
-
         // Delete all remaining objects
         cleanUp();
 
@@ -204,6 +205,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
 
         // Testing method
         Match match = createRandomMatch();
+
         match.setMatchId(matchId);
         match.setGroupId(groupId);
         match.setParticipantOneId(participantOneId);
@@ -212,7 +214,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         match.setScoreParticipantTwo(scoreParticipantTwo);
         match.setMatchScore(matchScore);
 
-        // Testing method
+        // Updates specific match in db
         matchDao.updateMatch(matchId, match);
         testMatch = matchDao.getMatchById(matchId);
 

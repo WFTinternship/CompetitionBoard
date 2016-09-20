@@ -1,8 +1,10 @@
 package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.common.Group;
+import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.GroupService;
+import com.workfront.intern.cb.service.ParticipantService;
 import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Params;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class SearchingController {
 
     @Autowired
     GroupService groupService;
+
+    @Autowired
+    ParticipantService participantService;
 
     @RequestMapping(value = {"/search-result-page"})
     public String toSearchResultPage(Model model) {
@@ -47,6 +52,11 @@ public class SearchingController {
         List<Group> groupList = groupService.getGroupListByName(searchTournamentStr);
         int groupListSize = groupList.size();
         allListSize.add(groupListSize);
+
+        // Result by group list
+        List<Member> memberList;
+        allListSize.add(groupListSize);
+
 
         int size = allListSize.size();
         int sumSize = 0;

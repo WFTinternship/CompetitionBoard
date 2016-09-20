@@ -4,16 +4,19 @@ import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MediaDaoImpl extends GenericDao implements MediaDao {
     private static final Logger LOG = Logger.getLogger(MediaDaoImpl.class);
 
-    public MediaDaoImpl(DataSource dataSource) {
+    public MediaDaoImpl(@Autowired DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -38,9 +41,8 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            if (rs.next()) {
-                media = extractMediaFromResultSet(rs);
-            } else {
+            media = mapObject(rs);
+            if (media == null) {
                 throw new ObjectNotFoundException(String.format("Media with id[%d] not found", id));
             }
         } catch (SQLException e) {
@@ -207,10 +209,7 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            while (rs.next()) {
-                media = extractMediaFromResultSet(rs);
-                mediaList.add(media);
-            }
+            mediaList = mapList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -218,24 +217,6 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
             closeResources(conn, ps, rs);
         }
         return mediaList;
-    }
-
-    /**
-     * Extracting specific data of deleteMediaById from ResultSet
-     */
-    private static Media extractMediaFromResultSet(ResultSet rs) throws FailedOperationException {
-        Media media = new Media();
-        try {
-            media.setMediaId(rs.getInt("media_id"));
-            media.setPhoto(rs.getString("photo"));
-            media.setVideo(rs.getString("video"));
-            media.setTournamentId(rs.getInt("tournament_id"));
-            media.setManagerId(rs.getInt("manager_id"));
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            throw new FailedOperationException(e.getMessage(), e);
-        }
-        return media;
     }
 
     /**
@@ -270,4 +251,40 @@ public class MediaDaoImpl extends GenericDao implements MediaDao {
 
         return media;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected Media mapObject(ResultSet rs) {
+        List<Media> entities = mapList(rs);
+        return entities.size() == 0 ? null : entities.get(0);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected List<Media> mapList(ResultSet rs) {
+        List<Media> resultList = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Media media = new Media();
+
+                media.setMediaId(rs.getInt("media_id"));
+                media.setPhoto(rs.getString("photo"));
+                media.setVideo(rs.getString("video"));
+                media.setTournamentId(rs.getInt("tournament_id"));
+                media.setManagerId(rs.getInt("manager_id"));
+
+                resultList.add(media);
+            }
+        } catch (SQLException ex) {
+            LOG.error(ex.getMessage(), ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
+        return resultList;
+    }
+
 }

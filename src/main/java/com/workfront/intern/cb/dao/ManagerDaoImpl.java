@@ -42,9 +42,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            if (rs.next()) {
-                manager = extractManagerFromResultSet(rs);
-            } else {
+            manager = mapObject(rs);
+            if (manager == null) {
                 throw new ObjectNotFoundException(String.format("Manager with id[%d] not found", id));
             }
         } catch (SQLException e) {
@@ -78,9 +77,8 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            if (rs.next()) {
-                manager = extractManagerFromResultSet(rs);
-            } else {
+            manager = mapObject(rs);
+            if (manager == null) {
                 throw new ObjectNotFoundException(String.format("Manager with login[%s] not found", login));
             }
         } catch (SQLException e) {
@@ -101,7 +99,6 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Manager> managerList = new ArrayList<>();
-        Manager manager;
 
         String sql = "SELECT * FROM manager";
         try {
@@ -111,11 +108,7 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
             // Initialize statement
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
-
-            while (rs.next()) {
-                manager = extractManagerFromResultSet(rs);
-                managerList.add(manager);
-            }
+            managerList = mapList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -206,16 +199,38 @@ public class ManagerDaoImpl extends GenericDao implements ManagerDao {
         deleteAllEntries(sql);
     }
 
-    /**
-     * Extracting specific data of Manager from ResultSet
-     */
-    private Manager extractManagerFromResultSet(ResultSet rs) throws SQLException {
-        Manager manager = new Manager();
-        manager.setId(rs.getInt("manager_id"));
-        manager.setLogin(rs.getString("login"));
-        manager.setPassword(rs.getString("password"));
-        manager.setAvatar(rs.getString("avatar"));
-
-        return manager;
+    @SuppressWarnings("unchecked")
+    @Override
+    protected Manager mapObject(ResultSet rs) {
+        List<Manager> entities = mapList(rs);
+        return entities.size() == 0 ? null : entities.get(0);
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected List<Manager> mapList(ResultSet rs) {
+        List<Manager> resultList = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Manager manager = new Manager();
+
+                manager.setId(rs.getInt("manager_id"));
+                manager.setLogin(rs.getString("login"));
+                manager.setPassword(rs.getString("password"));
+                manager.setAvatar(rs.getString("avatar"));
+
+                resultList.add(manager);
+            }
+        } catch (SQLException ex) {
+            LOG.error(ex.getMessage(), ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
+        return resultList;
+    }
+
 }

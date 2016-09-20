@@ -4,16 +4,19 @@ import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MatchDaoImpl extends GenericDao implements MatchDao {
     private static final Logger LOG = Logger.getLogger(MatchDaoImpl.class);
 
-    public MatchDaoImpl(DataSource dataSource) {
+    public MatchDaoImpl(@Autowired DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -43,7 +46,6 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Match match;
         List<Match> matchList = new ArrayList<>();
 
         String sql = "SELECT * FROM `match` WHERE group_id=?";
@@ -54,10 +56,7 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                match = extractMatchFromResultSet(rs);
-                matchList.add(match);
-            }
+            matchList = mapList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -159,22 +158,6 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
     }
 
     /**
-     * Extracting specific data of Manager from ResultSet
-     */
-    private Match extractMatchFromResultSet(ResultSet rs) throws SQLException {
-        Match match = new Match();
-        match.setMatchId(rs.getInt("match_id"));
-        match.setGroupId(rs.getInt("group_id"));
-        match.setParticipantOneId(rs.getInt("participant_1_id"));
-        match.setParticipantTwoId(rs.getInt("participant_2_id"));
-        match.setScoreParticipantOne(rs.getInt("score_participant_1"));
-        match.setScoreParticipantTwo(rs.getInt("score_participant_2"));
-        match.setMatchScore(rs.getString("match_score"));
-
-        return match;
-    }
-
-    /**
      * Returns match by specific sql query
      */
     private Match getMatchFromSpecQuery(String sql, int id) throws ObjectNotFoundException, FailedOperationException {
@@ -193,9 +176,8 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            if (rs.next()) {
-                match = extractMatchFromResultSet(rs);
-            } else {
+            match = mapObject(rs);
+            if (match == null) {
                 throw new ObjectNotFoundException(String.format("Manager with id[%d] not found", id));
             }
         } catch (SQLException e) {
@@ -206,4 +188,42 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
         }
         return match;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected Match mapObject(ResultSet rs) {
+        List<Match> entities = mapList(rs);
+        return entities.size() == 0 ? null : entities.get(0);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected List<Match> mapList(ResultSet rs) {
+        List<Match> resultList = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Match match = new Match();
+
+                match.setMatchId(rs.getInt("match_id"));
+                match.setGroupId(rs.getInt("group_id"));
+                match.setParticipantOneId(rs.getInt("participant_1_id"));
+                match.setParticipantTwoId(rs.getInt("participant_2_id"));
+                match.setScoreParticipantOne(rs.getInt("score_participant_1"));
+                match.setScoreParticipantTwo(rs.getInt("score_participant_2"));
+                match.setMatchScore(rs.getString("match_score"));
+
+                resultList.add(match);
+            }
+        } catch (SQLException ex) {
+            LOG.error(ex.getMessage(), ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
+        return resultList;
+    }
+
 }

@@ -5,36 +5,36 @@ import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.*;
+import com.workfront.intern.cb.dao.ManagerDao;
+import com.workfront.intern.cb.dao.MediaDao;
+import com.workfront.intern.cb.dao.TournamentDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SpringJavaAutowiredMembersInspection")
 public class MediaDaoIntegrationTest extends BaseTest {
 
     // DAO instances
-    private ManagerDao managerDao;
-    private TournamentDao tournamentDao;
+    @Autowired
     private MediaDao mediaDao;
+    @Autowired
+    private ManagerDao managerDao;
+    @Autowired
+    private TournamentDao tournamentDao;
 
     // Test helper objects
     private Manager testManager;
     private Tournament testTournament;
     private Media testMedia;
 
-    private DataSource dataSource = DBManager.getDataSource();
-
     @Before
     public void beforeTest() throws Exception {
-        managerDao = new ManagerDaoImpl(dataSource);
-        tournamentDao = new TournamentDaoImpl(dataSource);
-        mediaDao = new MediaDaoImpl(dataSource);
-
         // Delete all remaining objects
         cleanUp();
 
