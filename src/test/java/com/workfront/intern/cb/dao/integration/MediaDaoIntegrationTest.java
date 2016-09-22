@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Media;
 import com.workfront.intern.cb.common.Tournament;
@@ -39,7 +40,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         cleanUp();
 
         // Initialize random manager instance
-        testManager = createRandomManager();
+        testManager = DataHelper.createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
@@ -47,7 +48,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
-        testTournament = createRandomTournament();
+        testTournament = DataHelper.createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
 
@@ -56,7 +57,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         assertTrue(testTournament.getTournamentId() > 0);
 
         // Initialize random media instance
-        testMedia = createRandomPhotoMedia();
+        testMedia = DataHelper.createRandomPhotoMedia();
         testMedia.setManagerId(testManager.getId());
         testMedia.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testMedia.getMediaId());
@@ -107,7 +108,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
 
         // Testing method
-        Media media = createRandomPhotoMedia();
+        Media media = DataHelper.createRandomPhotoMedia();
         media.setTournamentId(tournamentId);
         media.setManagerId(managerId);
         assertEquals(0, media.getMediaId());
@@ -126,7 +127,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
 
         // Testing method
-        Media media = createRandomVideoMedia();
+        Media media = DataHelper.createRandomVideoMedia();
         media.setTournamentId(tournamentId);
         media.setManagerId(managerId);
         assertEquals(0, media.getMediaId());
@@ -207,7 +208,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
         int mediaId = testMedia.getMediaId();
 
-        Media media = createRandomPhotoMedia();
+        Media media = DataHelper.createRandomPhotoMedia();
         media.setPhoto("photo_updated");
         media.setTournamentId(tournamentId);
         media.setManagerId(managerId);
@@ -230,7 +231,7 @@ public class MediaDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
         int mediaId = testMedia.getMediaId();
 
-        Media media = createRandomVideoMedia();
+        Media media = DataHelper.createRandomVideoMedia();
         media.setVideo("video_updated");
         media.setTournamentId(tournamentId);
         media.setManagerId(managerId);

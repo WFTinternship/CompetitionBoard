@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.servicespringprofile.unit;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.common.Tournament;
@@ -17,9 +18,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 
 import javax.sql.DataSource;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class ParticipantServiceUnitTest extends BaseTest {
@@ -39,13 +38,13 @@ public class ParticipantServiceUnitTest extends BaseTest {
         participantService = new ParticipantServiceImpl();
         Whitebox.setInternalState(participantService, "participantDao", participantDao);
 
-        testTournament = createRandomTournament();
+        testTournament = DataHelper.createRandomTournament();
         int targetId = testTournament.getTournamentId();
 
-        testMember = createRandomMember();
+        testMember = DataHelper.createRandomMember();
         testMember.setTournamentId(targetId);
 
-        testTeam = createRandomTeam();
+        testTeam = DataHelper.createRandomTeam();
         testMember.setTournamentId(targetId);
     }
 

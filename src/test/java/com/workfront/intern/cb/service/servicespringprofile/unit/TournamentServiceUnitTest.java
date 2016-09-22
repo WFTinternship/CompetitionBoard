@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.servicespringprofile.unit;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.TournamentDao;
@@ -15,9 +16,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 
 import javax.sql.DataSource;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class TournamentServiceUnitTest extends BaseTest {
@@ -34,7 +33,7 @@ public class TournamentServiceUnitTest extends BaseTest {
         tournamentService = new TournamentServiceImpl();
         Whitebox.setInternalState(tournamentService, "tournamentDao", tournamentDao);
 
-        testTournament = createRandomTournament();
+        testTournament = DataHelper.createRandomTournament();
     }
 
     @After

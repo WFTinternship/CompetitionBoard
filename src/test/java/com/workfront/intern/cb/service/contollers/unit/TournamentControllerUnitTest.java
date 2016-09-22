@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.contollers.unit;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.controller.TournamentController;
@@ -43,8 +44,8 @@ public class TournamentControllerUnitTest extends BaseTest {
     public void beforeTest() {
         controller = new TournamentController();
 
-        testManager = createRandomManager();
-        testTournament = createRandomTournament();
+        testManager = DataHelper.createRandomManager();
+        testTournament = DataHelper.createRandomTournament();
 
         managerService = mock(ManagerService.class);
         tournamentService = mock(TournamentService.class);
@@ -60,8 +61,8 @@ public class TournamentControllerUnitTest extends BaseTest {
         model = mock(Model.class);
 
         when(testRequest.getSession()).thenReturn(testSession);
-        testManager = createRandomManager();
-        testTournament = createRandomTournament();
+        testManager = DataHelper.createRandomManager();
+        testTournament = DataHelper.createRandomTournament();
         when(testRequest.getParameter("usernameLogin")).thenReturn(testManager.getLogin());
         when(testRequest.getParameter("passwordLogin")).thenReturn(testManager.getPassword());
     }

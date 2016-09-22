@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.servicespringprofile.unit;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.ManagerDao;
@@ -30,7 +31,7 @@ public class ManagerServiceUnitTest extends BaseTest {
         managerService = new ManagerServiceImpl();
         Whitebox.setInternalState(managerService, "managerDao", managerDao);
 
-        testManager = createRandomManager();
+        testManager = DataHelper.createRandomManager();
     }
 
     @After

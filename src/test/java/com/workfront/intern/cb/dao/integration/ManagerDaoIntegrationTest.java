@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
@@ -30,7 +31,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
         cleanUp();
 
         // Initialize random manager instance
-        testManager = createRandomManager();
+        testManager = DataHelper.createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to database
@@ -124,7 +125,7 @@ public class ManagerDaoIntegrationTest extends BaseTest {
     @Test
     public void addManager_created() throws Exception {
         // Initialize random manager instance
-        Manager manager = createRandomManager();
+        Manager manager = DataHelper.createRandomManager();
 
         assertEquals(0, manager.getId());
 

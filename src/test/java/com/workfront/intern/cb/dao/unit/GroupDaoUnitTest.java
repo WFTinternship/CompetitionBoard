@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.GroupDao;
@@ -65,7 +66,7 @@ public class GroupDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void updateGroup_dbError() throws Exception {
-        Group testGroup = createRandomGroup();
+        Group testGroup = DataHelper.createRandomGroup();
         groupDao.updateGroup(NON_EXISTING_ID, testGroup);
     }
 

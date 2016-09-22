@@ -56,8 +56,8 @@ CREATE TABLE `group_participant` (
   `participant_id` int(11) NOT NULL,
   PRIMARY KEY (`group_id`,`participant_id`),
   KEY `fk_group_participant_1_idx` (`participant_id`),
-  CONSTRAINT `fk_group_participant_1` FOREIGN KEY (`participant_id`) REFERENCES `participant` (`participant_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group_participant_2` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_group_participant_1` FOREIGN KEY (`participant_id`) REFERENCES `participant` (`participant_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_group_participant_2` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

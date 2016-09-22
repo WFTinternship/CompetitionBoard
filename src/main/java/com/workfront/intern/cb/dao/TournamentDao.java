@@ -15,7 +15,7 @@ public interface TournamentDao {
 
     // READ
     Tournament getTournamentById(int id) throws ObjectNotFoundException, FailedOperationException;
-    List<Tournament>  getTournamentListByName(String tournamentName) throws ObjectNotFoundException, FailedOperationException;
+    List<Tournament> getTournamentListByName(String tournamentName) throws ObjectNotFoundException, FailedOperationException;
     List<Tournament> getTournamentListByManager(int managerId) throws FailedOperationException;
     List<Tournament> getTournamentList() throws FailedOperationException;
     List<TournamentFormat> getTournamentFormats() throws FailedOperationException;

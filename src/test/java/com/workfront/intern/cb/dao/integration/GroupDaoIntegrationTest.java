@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.*;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.dao.GroupDao;
@@ -40,14 +41,14 @@ public class GroupDaoIntegrationTest extends BaseTest {
         cleanUp();
 
         // Initialize random MANAGER instance
-        testManager = createRandomManager();
+        testManager = DataHelper.createRandomManager();
         assertEquals(0, testManager.getId());
         // Save to DB
         managerDao.addManager(testManager);
         assertTrue(testManager.getId() > 0);
 
         // Initialize random TOURNAMENT instance
-        testTournament = createRandomTournament();
+        testTournament = DataHelper.createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
         // Save to DB
@@ -55,7 +56,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertTrue(testTournament.getTournamentId() > 0);
 
         // Initialize random GROUP instance
-        testGroup = createRandomGroup();
+        testGroup = DataHelper.createRandomGroup();
         testGroup.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testGroup.getGroupId());
         // Save to DB
@@ -63,7 +64,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertTrue(testGroup.getGroupId() > 0);
 
         // Initialize random MEMBER instance
-        testMember = createRandomMember();
+        testMember = DataHelper.createRandomMember();
         testMember.setTournamentId(testTournament.getTournamentId());
         // Save to DB
         participantDao.addParticipant(testMember);
@@ -95,7 +96,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         int tournamentId = testTournament.getTournamentId();
 
         // Testing method
-        Group group = createRandomGroup();
+        Group group = DataHelper.createRandomGroup();
         group.setTournamentId(tournamentId);
         assertEquals(0, group.getGroupId());
 
@@ -204,7 +205,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         int nextRoundParticipants = 30;
 
         // Testing method
-        Group group = createRandomGroup();
+        Group group = DataHelper.createRandomGroup();
         group.setGroupId(groupId);
         group.setGroupName(GROUP_NAME);
         group.setParticipantsCount(participantsCount);

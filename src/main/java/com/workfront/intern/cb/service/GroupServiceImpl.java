@@ -94,6 +94,26 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
+    @Override
+    public void removeAllParticipants(int groupId) {
+        try {
+            groupDao.removeAllParticipants(groupId);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Group instance with id=%s not found", groupId));
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void removeAll() {
+        try {
+            groupDao.removeAll();
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     /**
      * Deletes manager by id
      */
@@ -114,6 +134,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void deleteAll() {
         try {
+            removeAll();
             groupDao.deleteAll();
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());

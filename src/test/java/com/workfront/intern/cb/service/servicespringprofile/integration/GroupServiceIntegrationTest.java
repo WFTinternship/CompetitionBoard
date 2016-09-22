@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.servicespringprofile.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
@@ -38,7 +39,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         cleanUp();
 
         // Initialize random manager instance
-        Manager testManager = createRandomManager();
+        Manager testManager = DataHelper.createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
@@ -46,7 +47,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
-        testTournament = createRandomTournament();
+        testTournament = DataHelper.createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
 
@@ -55,7 +56,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         assertTrue(testTournament.getTournamentId() > 0);
 
         // Initialize random group instance
-        testGroup = createRandomGroup();
+        testGroup = DataHelper.createRandomGroup();
         testGroup.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testGroup.getGroupId());
 
@@ -84,7 +85,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         tournamentId = testTournament.getTournamentId();
 
         // Testing method
-        Group group = createRandomGroup();
+        Group group = DataHelper.createRandomGroup();
         group.setTournamentId(tournamentId);
         assertEquals(0, group.getGroupId());
 
@@ -198,7 +199,7 @@ public class GroupServiceIntegrationTest extends BaseTest {
         int nextRoundParticipants = 30;
 
         // Testing method
-        Group group = createRandomGroup();
+        Group group = DataHelper.createRandomGroup();
         group.setGroupId(groupId);
         group.setParticipantsCount(participantsCount);
         group.setTournamentId(tournamentId);

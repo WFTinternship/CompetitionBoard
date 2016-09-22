@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.servicespringprofile.unit;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.MatchDao;
@@ -15,9 +16,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 
 import javax.sql.DataSource;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class MatchServiceUnitTest extends BaseTest {
@@ -32,7 +31,7 @@ public class MatchServiceUnitTest extends BaseTest {
         matchService = new MatchServiceImpl();
         Whitebox.setInternalState(matchService, "matchDao", matchDao);
 
-        testMatch = createRandomMatch();
+        testMatch = DataHelper.createRandomMatch();
     }
 
     @After

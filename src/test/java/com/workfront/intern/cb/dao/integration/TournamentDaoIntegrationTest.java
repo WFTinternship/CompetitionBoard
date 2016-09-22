@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.TournamentFormat;
@@ -37,7 +38,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         cleanUp();
 
         // Initialize random manager instance
-        testManager = createRandomManager();
+        testManager = DataHelper.createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
@@ -45,7 +46,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
-        testTournament = createRandomTournament();
+        testTournament = DataHelper.createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
 
@@ -203,7 +204,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         targetId = testManager.getId();
 
         // Testing method
-        Tournament tournament = createRandomTournament();
+        Tournament tournament = DataHelper.createRandomTournament();
         tournament.setManagerId(targetId);
         assertEquals(0, tournament.getTournamentId());
 
@@ -226,7 +227,7 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         int targetId = testManager.getId();
         int tournamentId = testTournament.getTournamentId();
 
-        Tournament tournament = createRandomTournament();
+        Tournament tournament = DataHelper.createRandomTournament();
 
         tournament.setTournamentId(tournamentId);
         tournament.setTournamentName(nameUpdate);

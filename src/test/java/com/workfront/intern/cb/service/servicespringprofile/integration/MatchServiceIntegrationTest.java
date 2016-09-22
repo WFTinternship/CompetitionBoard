@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.servicespringprofile.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Match;
@@ -45,7 +46,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         cleanUp();
 
         // Initialize random manager instance
-        Manager testManager = createRandomManager();
+        Manager testManager = DataHelper.createRandomManager();
         assertEquals(0, testManager.getId());
 
         // Save to DB
@@ -53,7 +54,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         assertTrue(testManager.getId() > 0);
 
         // Initialize random tournament instance
-        Tournament testTournament = createRandomTournament();
+        Tournament testTournament = DataHelper.createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
 
@@ -62,7 +63,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         assertTrue(testTournament.getTournamentId() > 0);
 
         // Initialize random group instance
-        testGroup = createRandomGroup();
+        testGroup = DataHelper.createRandomGroup();
         testGroup.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testGroup.getGroupId());
 
@@ -71,7 +72,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         assertTrue(testGroup.getGroupId() > 0);
 
         // Initialize random match instance
-        testMatch = createRandomMatch();
+        testMatch = DataHelper.createRandomMatch();
         testMatch.setGroupId(testGroup.getGroupId());
         assertEquals(0, testMatch.getMatchId());
 
@@ -100,7 +101,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         groupId = testGroup.getGroupId();
 
         // Initialize random match instance
-        Match match = createRandomMatch();
+        Match match = DataHelper.createRandomMatch();
         match.setGroupId(groupId);
 
         assertEquals(0, match.getMatchId());
@@ -213,7 +214,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         String matchScore = "8 : 0";
 
         // Testing method
-        Match match = createRandomMatch();
+        Match match = DataHelper.createRandomMatch();
         match.setMatchId(matchId);
         match.setGroupId(groupId);
         match.setParticipantOneId(participantOneId);

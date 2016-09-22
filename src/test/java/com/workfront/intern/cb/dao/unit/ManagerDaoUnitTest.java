@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.ManagerDao;
@@ -34,7 +35,7 @@ public class ManagerDaoUnitTest extends BaseTest {
         when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenThrow(SQLException.class);
 
         managerDao = new ManagerDaoImpl(dataSource);
-        testManager = createRandomManager();
+        testManager = DataHelper.createRandomManager();
     }
 
     @After

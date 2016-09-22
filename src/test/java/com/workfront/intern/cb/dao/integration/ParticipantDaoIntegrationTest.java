@@ -1,18 +1,15 @@
 package com.workfront.intern.cb.dao.integration;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.*;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.GroupDao;
-import com.workfront.intern.cb.dao.ManagerDao;
-import com.workfront.intern.cb.dao.ParticipantDao;
-import com.workfront.intern.cb.dao.TournamentDao;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -20,60 +17,31 @@ import static org.junit.Assert.*;
 @SuppressWarnings({"SpringJavaAutowiredMembersInspection", "unchecked"})
 public class ParticipantDaoIntegrationTest extends BaseTest {
 
-    // DAO instances
-    @Autowired
-    private ParticipantDao participantDao;
-    @Autowired
-    private ManagerDao managerDao;
-    @Autowired
-    private TournamentDao tournamentDao;
-    @Autowired
-    private GroupDao groupDao;
-
-    private Manager testManager;
-    private Tournament testTournament;
-    private Member testMember;
-    private Team testTeam;
-    private Group testGroup;
-
     @Before
     public void beforeTest() throws Exception {
         // Delete all remaining objects
         cleanUp();
 
         // Initialize random MANAGER instance
-        testManager = createRandomManager();
-        assertEquals(0, testManager.getId());
-        // Save to DB
-        managerDao.addManager(testManager);
-        assertTrue(testManager.getId() > 0);
+        initManagers();
 
         // Initialize random TOURNAMENT instance
-        testTournament = createRandomTournament();
-        testTournament.setManagerId(testManager.getId());
-        assertEquals(0, testTournament.getTournamentId());
-        // Save to DB
-        tournamentDao.addTournament(testTournament);
-        assertTrue(testTournament.getTournamentId() > 0);
+        initTournaments();
 
         // Initialize random GROUP instance
-        testGroup = createRandomGroup();
-        testGroup.setTournamentId(testTournament.getTournamentId());
-        assertEquals(0, testGroup.getGroupId());
-        // Save to DB
-        groupDao.addGroup(testGroup);
-        assertTrue(testGroup.getGroupId() > 0);
+        initGroups();
 
         // Initialize random MEMBER instance
-        testMember = createRandomMember();
-        testMember.setTournamentId(testTournament.getTournamentId());
-        // Save to DB
-        participantDao.addParticipant(testMember);
-        assertTrue(testMember.getId() > 0);
+        initMemberParticipants();
 
-        groupDao.assignParticipant(testTournament.getTournamentId(), testGroup.getGroupId(), testMember);
-        assertTrue(testMember.getId() > 0);
+        // Initialize random TEAM instance
+        initTeamParticipants();
 
+        groupDao.assignParticipant(testTournament1.getTournamentId(), testGroup1.getGroupId(), testMember1);
+        groupDao.assignParticipant(testTournament1.getTournamentId(), testGroup1.getGroupId(), testMember2);
+
+        groupDao.assignParticipant(testTournament2.getTournamentId(), testGroup2.getGroupId(), testTeam1);
+        groupDao.assignParticipant(testTournament2.getTournamentId(), testGroup2.getGroupId(), testTeam2);
     }
 
     @After
@@ -82,9 +50,9 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
     }
 
     private void cleanUp() throws Exception {
+        groupDao.removeAll();
         participantDao.deleteAll(Member.class);
         participantDao.deleteAll(Team.class);
-        groupDao.removeAll();
         groupDao.deleteAll();
         tournamentDao.deleteAll();
         managerDao.deleteAll();
@@ -98,80 +66,67 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         Participant member = participantDao.getOne(Member.class, NON_EXISTING_ID);
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, member);
     }
-    @Ignore
+    
     @Test
     public void getMemberById_found() throws Exception {
-        int targetId = testMember.getId();
+        int targetId = testMember1.getId();
 
         // Testing method
         Member member = (Member) participantDao.getOne(Member.class, targetId);
 
         assertNotNull(member);
-        assertEquals(testMember.getId(), member.getId());
-        assertEquals(testMember.getAvatar(), member.getAvatar());
-        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
-        assertEquals(testMember.getSurName(), member.getSurName());
-        assertEquals(testMember.getPosition(), member.getPosition());
-        assertEquals(testMember.getEmail(), member.getEmail());
-        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+        compareMembers(testMember1, member);
     }
-    @Ignore
+    
     @Test
     public void getMembersByGroupWithRelativeObjects_emptyList() throws Exception {
-        int groupId = testGroup.getGroupId();
+        Group group = initGroup(testTournament1.getTournamentId());
 
         // Testing method
-        cleanUp();
-
-        // Testing method
-        List<Member> memberList = (List<Member>) participantDao.
-                getParticipantListByGroupWithRelativeObjects(Member.class, groupId);
+        List<Member> memberList = (List<Member>) participantDao
+                .getParticipantListByGroupWithRelativeObjects(Member.class, group.getGroupId());
 
         assertNotNull(memberList);
         assertEquals(0, memberList.size());
     }
-    @Ignore
+    
     @Test
     public void getMemberListByTournamentId_emptyList() throws Exception {
-        int tournamentId = testTournament.getTournamentId();
+        Tournament tournament = initTournament();
 
         // Testing method
-        cleanUp();
-
-        // Testing method
-        List<Member> memberList = (List<Member>) participantDao.getParticipantListByTournamentId(Member.class, tournamentId);
+        List<Member> memberList = (List<Member>) participantDao
+                .getParticipantListByTournamentId(Member.class, tournament.getTournamentId());
 
         assertNotNull(memberList);
         assertEquals(0, memberList.size());
     }
-    @Ignore
+    
     @Test
     public void getMemberListByTournamentId_found() throws Exception {
-        int targetId;
-        targetId = testTournament.getTournamentId();
+        int targetId = testTournament1.getTournamentId();
 
         // Testing method
         List<Member> memberList = (List<Member>) participantDao.getParticipantListByTournamentId(Member.class, targetId);
 
         assertNotNull(memberList);
-        assertEquals(1, memberList.size());
+        assertEquals(2, memberList.size());
+        sortById(memberList);
 
-        Member member = memberList.get(0);
-        assertEquals(testMember.getId(), member.getId());
-        assertEquals(testMember.getAvatar(), member.getAvatar());
-        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
-        assertEquals(testMember.getSurName(), member.getSurName());
-        assertEquals(testMember.getPosition(), member.getPosition());
-        assertEquals(testMember.getEmail(), member.getEmail());
-        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+        Member member1 = memberList.get(0);
+        Member member2 = memberList.get(1);
+
+        compareMembers(testMember1, member1);
+        compareMembers(testMember2, member2);
     }
-    @Ignore
+    
     @Test
     public void getMemberList_emptyList() throws Exception {
-        int targetId = testMember.getId();
+        groupDao.removeParticipant(testGroup1.getGroupId(), testMember1.getId());
+        groupDao.removeParticipant(testGroup1.getGroupId(), testMember2.getId());
 
-        // Testing method
-        participantDao.delete(targetId);
+        participantDao.delete(testMember1.getId());
+        participantDao.delete(testMember2.getId());
 
         // Testing method
         List<Member> memberList = (List<Member>) participantDao.getAll(Member.class);
@@ -179,45 +134,38 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertNotNull(memberList);
         assertEquals(0, memberList.size());
     }
-    @Ignore
+    
     @Test
     public void getMemberList_found() throws Exception {
         // Testing method
         List<Member> memberList = (List<Member>) participantDao.getAll(Member.class);
 
         assertNotNull(memberList);
-        assertEquals(1, memberList.size());
+        assertEquals(2, memberList.size());
+        sortById(memberList);
 
-        Member member = memberList.get(0);
-        assertEquals(testMember.getId(), member.getId());
-        assertEquals(testMember.getAvatar(), member.getAvatar());
-        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
-        assertEquals(testMember.getSurName(), member.getSurName());
-        assertEquals(testMember.getPosition(), member.getPosition());
-        assertEquals(testMember.getEmail(), member.getEmail());
-        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+        Member member1 = memberList.get(0);
+        Member member2 = memberList.get(1);
+
+        compareMembers(testMember1, member1);
+        compareMembers(testMember2, member2);
     }
-    @Ignore
+    
     @Test
     public void getMemberListByMemberName_emptyList() throws Exception {
-        int targetId = testMember.getId();
-
         // Testing method
-        participantDao.delete(targetId);
-
-        // Testing method
-        List<Member> memberList = (List<Member>) participantDao.getParticipantListByName(Member.class, NON_EXISTING_PARTICIPANT_NAME );
+        List<Member> memberList = (List<Member>) participantDao.getParticipantListByName(Member.class, NON_EXISTING_PARTICIPANT_NAME);
 
         assertNotNull(memberList);
         assertEquals(0, memberList.size());
     }
-    @Ignore
+    
     @Test
     public void addMember_created() throws Exception {
-        int targetId = testTournament.getTournamentId();
+        int targetId = testTournament1.getTournamentId();
 
         // Initialize random manager instance
-        Member member = createRandomMember();
+        Member member = DataHelper.createRandomMember();
         member.setTournamentId(targetId);
 
         assertEquals(0, member.getId());
@@ -226,110 +174,127 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         participantDao.addParticipant(member);
         assertTrue(member.getId() > 0);
     }
-    @Ignore
+    
     @Test
     public void updateMember() throws Exception {
-        int targetId = testMember.getId();
+        int targetId = testMember2.getId();
+        String newEmail = "new-" + testMember2.getEmail();
+        String newPosition = "new-" + testMember2.getPosition();
+        String newAvatar = "new-" + testMember2.getAvatar();
+        String newInfo = "new-" + testMember2.getParticipantInfo();
+
+        Member member = (Member)participantDao.getOne(Member.class, targetId);
+        member.setEmail(newEmail);
+        member.setPosition(newPosition);
+        member.setAvatar(newAvatar);
+        member.setParticipantInfo(newInfo);
 
         // Testing method
-        participantDao.update(targetId, testMember);
+        participantDao.update(testMember2.getId(), member);
 
         // Initialize random manager instance
-        Member member = (Member) participantDao.getOne(Member.class, targetId);
+        member = (Member) participantDao.getOne(Member.class, targetId);
 
-        assertEquals(testMember.getId(), member.getId());
-        assertEquals(testMember.getAvatar(), member.getAvatar());
-        assertEquals(testMember.getParticipantInfo(), member.getParticipantInfo());
-        assertEquals(testMember.getSurName(), member.getSurName());
-        assertEquals(testMember.getPosition(), member.getPosition());
-        assertEquals(testMember.getEmail(), member.getEmail());
-        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+        assertEquals(targetId, member.getId());
+        assertEquals(newAvatar, member.getAvatar());
+        assertEquals(newInfo, member.getParticipantInfo());
+        assertEquals(newPosition, member.getPosition());
+        assertEquals(newEmail, member.getEmail());
     }
-    @Ignore
+    
     @Test(expected = ObjectNotFoundException.class)
     public void deleteMember_notFound() throws Exception {
         // Testing method
         participantDao.delete(NON_EXISTING_ID);
     }
-    @Ignore
-    @Test
+    
+    @Test(expected = ObjectNotFoundException.class)
     public void deleteMember_found() throws Exception {
-        int targetId = testMember.getId();
+        Participant newMember = DataHelper.createRandomMember(testTournament1.getTournamentId());
+        newMember = participantDao.addParticipant(newMember);
+
+        int id = newMember.getId();
+        assertTrue(id > 0);
 
         // Testing method
-        participantDao.delete(targetId);
+        participantDao.delete(id);
+
+        Participant deleted = participantDao.getOne(Member.class, id);
+        assertNull(deleted);
     }
-    @Ignore
+    
     @Test
     public void deleteAllMembers() throws Exception {
+        groupDao.removeAll();
+
         // Testing method
         participantDao.deleteAll(Member.class);
+
+        List members = participantDao.getAll(Member.class);
+        assertNotNull(members);
+        assertEquals(0, members.size());
     }
+
     // endregion
 
     // region <TEAM>
-    @Ignore
+    
     @Test(expected = ObjectNotFoundException.class)
     public void getTeamId_notFound() throws Exception {
         // Testing method
         Participant team = participantDao.getOne(Team.class, NON_EXISTING_ID);
-
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, team);
     }
-    @Ignore
+    
     @Test
     public void getTeamId_found() throws Exception {
-        int targetId = testTeam.getId();
+        int targetId = testTeam1.getId();
 
         // Testing method
         Team team = (Team) participantDao.getOne(Team.class, targetId);
 
         assertNotNull(team);
-        assertEquals(testTeam.getId(), team.getId());
-        assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
-        assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
-        assertEquals(testTeam.getTeamName(), team.getTeamName());
-        assertEquals(testTeam.getTournamentId(), team.getTournamentId());
+        compareTeams(testTeam1, team);
     }
-    @Ignore
+    
     @Test
     public void getTeamListByTournamentId_emptyList() throws Exception {
-        int targetId = testTournament.getTournamentId();
+        Tournament tournament = initTournament();
 
         // Testing method
-        cleanUp();
-
-        // Testing method
-        List<Team> teamList = (List<Team>) participantDao.getParticipantListByTournamentId(Team.class, targetId);
+        List<Team> teamList = (List<Team>) participantDao
+                .getParticipantListByTournamentId(Team.class, tournament.getTournamentId());
 
         assertNotNull(teamList);
         assertEquals(0, teamList.size());
     }
-    @Ignore
+    
     @Test
-    public void getTeamListByTournamentI_found() throws Exception {
-        int targetId = testTournament.getTournamentId();
+    public void getTeamListByTournamentId_found() throws Exception {
+        int targetId = testTournament2.getTournamentId();
 
         // Testing method
         List<Team> teamList = (List<Team>) participantDao.getParticipantListByTournamentId(Team.class, targetId);
 
         assertNotNull(teamList);
-        assertEquals(1, teamList.size());
+        assertEquals(2, teamList.size());
+        sortById(teamList);
 
-        Team team = teamList.get(0);
-        assertEquals(testTeam.getId(), team.getId());
-        assertEquals(testTeam.getAvatar(), team.getAvatar());
-        assertEquals(testTeam.getParticipantInfo(), team.getParticipantInfo());
-        assertEquals(testTeam.getTeamName(), team.getTeamName());
-        assertEquals(testTeam.getTournamentId(), team.getTournamentId());
+        Team team1 = teamList.get(0);
+        Team team2 = teamList.get(1);
+
+        compareTeams(testTeam1, team1);
+        compareTeams(testTeam2, team2);
     }
-    @Ignore
+    
     @Test
     public void getTeamList_emptyList() throws Exception {
-        int targetId = testTeam.getId();
+        groupDao.removeParticipant(testGroup2.getGroupId(), testTeam1.getId());
+        groupDao.removeParticipant(testGroup2.getGroupId(), testTeam2.getId());
 
         // Testing method
-        participantDao.delete(targetId);
+        participantDao.delete(testTeam1.getId());
+        participantDao.delete(testTeam2.getId());
 
         // Testing method
         List<Team> teamList = (List<Team>) participantDao.getAll(Team.class);
@@ -337,29 +302,29 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
         assertNotNull(teamList);
         assertEquals(0, teamList.size());
     }
-    @Ignore
+    
     @Test
     public void getTeamList_found() throws Exception {
         // Testing method
         List<Team> teamList = (List<Team>) participantDao.getAll(Team.class);
 
         assertNotNull(teamList);
-        assertEquals(1, teamList.size());
+        assertEquals(2, teamList.size());
+        sortById(teamList);
 
-        Team team = teamList.get(0);
-        assertEquals(testTeam.getId(), team.getId());
-        assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
-        assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
-        assertEquals(testTeam.getTeamName(), team.getTeamName());
-        assertEquals(testTeam.getTournamentId(), team.getTournamentId());
+        Team team1 = teamList.get(0);
+        Team team2 = teamList.get(1);
+
+        compareTeams(testTeam1, team1);
+        compareTeams(testTeam2, team2);
     }
-    @Ignore
+    
     @Test
     public void addTeam_created() throws Exception {
-        int targetId = testTournament.getTournamentId();
+        int targetId = testTournament1.getTournamentId();
 
         // Initialize random manager instance
-        Team team = createRandomTeam();
+        Team team = DataHelper.createRandomTeam();
         team.setTournamentId(targetId);
         assertEquals(0, team.getId());
 
@@ -368,41 +333,90 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
         assertTrue(team.getId() > 0);
     }
-    @Ignore
+    
     @Test
     public void updateTeam() throws Exception {
-        int targetId = testTeam.getId();
+        int targetId = testTeam2.getId();
+        String newName = "new-" + testTeam2.getTeamName();
+        String newAvatar = "new-" + testTeam2.getAvatar();
+        String newInfo = "new-" + testTeam2.getParticipantInfo();
+
+        Team team = (Team)participantDao.getOne(Team.class, targetId);
+        team.setTeamName(newName);
+        team.setAvatar(newAvatar);
+        team.setParticipantInfo(newInfo);
 
         // Testing method
-        participantDao.update(targetId, testTeam);
+        participantDao.update(targetId, team);
 
         // Initialize random manager instance
-        Team team = (Team) participantDao.getOne(Team.class, targetId);
+        team = (Team) participantDao.getOne(Team.class, targetId);
 
-        assertEquals(testTeam.getId(), team.getId());
-        assertEquals(testTeam.getAvatar(), testTeam.getAvatar());
-        assertEquals(testTeam.getParticipantInfo(), testTeam.getParticipantInfo());
-        assertEquals(testTeam.getTeamName(), team.getTeamName());
+        assertEquals(targetId, team.getId());
+        assertEquals(newAvatar, team.getAvatar());
+        assertEquals(newInfo, team.getParticipantInfo());
+        assertEquals(newName, team.getTeamName());
     }
-    @Ignore
+    
     @Test(expected = ObjectNotFoundException.class)
     public void deleteTeam_notFound() throws Exception {
         // Testing method
         participantDao.delete(NON_EXISTING_ID);
     }
-    @Ignore
-    @Test
+    
+    @Test(expected = ObjectNotFoundException.class)
     public void deleteTeam_found() throws Exception {
-        int targetId = testTeam.getId();
+        groupDao.removeParticipant(testGroup2.getGroupId(), testTeam2.getId());
+        int targetId = testTeam2.getId();
 
         // Testing method
         participantDao.delete(targetId);
+
+        Team team = (Team)participantDao.getOne(Team.class, targetId);
+        assertNull(team);
     }
-    @Ignore
+    
     @Test
     public void deleteAllTeams() throws Exception {
+        groupDao.removeAll();
+
         // Testing method
-        participantDao.deleteAll(Member.class);
+        participantDao.deleteAll(Team.class);
+
+        List teams = participantDao.getAll(Team.class);
+        assertNotNull(teams);
+        assertEquals(0, teams.size());
+    }
+
+    // endregion
+
+    // region <COMPARE>
+
+    public static void compareMembers(Member expected, Member actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getAvatar(), actual.getAvatar());
+        assertEquals(expected.getParticipantInfo(), actual.getParticipantInfo());
+        assertEquals(expected.getSurName(), actual.getSurName());
+        assertEquals(expected.getPosition(), actual.getPosition());
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertEquals(expected.getTournamentId(), actual.getTournamentId());
+    }
+
+    public static void compareTeams(Team expected, Team actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getAvatar(), actual.getAvatar());
+        assertEquals(expected.getParticipantInfo(), actual.getParticipantInfo());
+        assertEquals(expected.getTeamName(), actual.getTeamName());
+        assertEquals(expected.getTournamentId(), actual.getTournamentId());
+    }
+
+    public static void sortById(List<? extends Participant> participantList) {
+        Collections.sort(participantList, new Comparator<Participant>() {
+            @Override
+            public int compare(Participant o1, Participant o2) {
+                return o1.getId() - o2.getId();
+            }
+        });
     }
 
     // endregion

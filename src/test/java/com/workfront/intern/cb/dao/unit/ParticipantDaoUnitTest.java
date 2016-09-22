@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
@@ -63,7 +64,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void updateMember_dbError() throws Exception {
-        Member testMember = createRandomMember();
+        Member testMember = DataHelper.createRandomMember();
         participantDao.update(NON_EXISTING_ID, testMember);
     }
 
@@ -103,7 +104,7 @@ public class ParticipantDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void updateTeam_dbError() throws Exception {
-        Team testTeam = createRandomTeam();
+        Team testTeam = DataHelper.createRandomTeam();
         participantDao.update(NON_EXISTING_ID, testTeam);
     }
 

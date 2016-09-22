@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Match;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.MatchDao;
@@ -59,7 +60,7 @@ public class MatchDaoUnitTest extends BaseTest{
 
     @Test(expected = FailedOperationException.class)
     public void updateMatch_dbError() throws Exception {
-        Match testMatch = createRandomMatch();
+        Match testMatch = DataHelper.createRandomMatch();
         matchDao.updateMatch(NON_EXISTING_ID, testMatch);
     }
 

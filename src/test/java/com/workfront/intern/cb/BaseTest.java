@@ -1,194 +1,200 @@
 package com.workfront.intern.cb;
 
 import com.workfront.intern.cb.common.*;
+import com.workfront.intern.cb.dao.*;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.sql.Timestamp;
-import java.util.Random;
+import static com.workfront.intern.cb.DataHelper.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceSpringConfigTest.class)
 @ActiveProfiles("test")
 public class BaseTest {
-
     protected final int NON_EXISTING_ID = 9999;
-
     protected final String NON_EXISTING_LOGIN = "adgOwkJ";
-
     protected final String NON_EXISTING_PARTICIPANT_NAME = "aksMsaa";
-
     protected final String NON_EXISTING_GROUP = "adgjOwkJ";
-
     protected final String TOURNAMENT_NAME = "FIFA 2025";
-
     protected final String GROUP_NAME = "FIFA 2025";
-
     protected final String MESSAGE_TEST_COMPLETED_OK = "Test completed successfully!";
-
     protected final String MESSAGE_TEST_COMPLETED_ERROR = "Test completed with errors :(";
 
-    protected static Random random = new Random();
+    // DAO instances
+    @Autowired
+    protected ManagerDao managerDao;
+    @Autowired
+    protected TournamentDao tournamentDao;
+    @Autowired
+    protected GroupDao groupDao;
+    @Autowired
+    protected ParticipantDao participantDao;
+    @Autowired
+    protected MatchDao matchDao;
+    @Autowired
+    protected MediaDao mediaDao;
 
-    /**
-     * Creates random manager
-     */
-    protected static Manager createRandomManager() {
-        String managerLoginRandom = generateRandomString();
-        String managerPassword = generateRandomString(10);
-        String avatarPath = "/resources/img/test/" + generateRandomString();
+    // Test business objects
+    protected Manager testManager;
+    protected Tournament testTournament1;
+    protected Group testGroup1;
+    protected Member testMember1;
+    protected Member testMember2;
+    protected Tournament testTournament2;
+    protected Group testGroup2;
+    protected Team testTeam1;
+    protected Team testTeam2;
 
-        Manager testManager = new Manager();
-        testManager.setLogin(managerLoginRandom);
-        testManager.setPassword(managerPassword);
-        testManager.setAvatar(avatarPath);
+    // region <MANAGER>
 
+    protected void initManagers() throws Exception {
+        testManager = createRandomManager();
+        assertEquals(0, testManager.getId());
+        // Save to DB
+        managerDao.addManager(testManager);
+        assertTrue(testManager.getId() > 0);
+    }
+
+    protected Manager initManager() throws Exception {
+        Manager testManager = createRandomManager();
+        assertEquals(0, testManager.getId());
+        // Save to DB
+        managerDao.addManager(testManager);
+        assertTrue(testManager.getId() > 0);
         return testManager;
     }
 
-    /**
-     * Creates random tournament
-     */
-    protected static Tournament createRandomTournament() {
-        Tournament testTournament = new Tournament();
+    // endregion
 
-        String tournamentName = generateRandomString();
-        Timestamp startDate = Timestamp.valueOf("2020-08-08 10:00:00");
-        Timestamp endDate = Timestamp.valueOf("2020-08-08 20:00:00");
-        String location = "Yerevan, Armenia";
-        String tournamentDescription = "Tournament begins gentlemen, welcome";
+    // region <TOURNAMENT>
 
-        int formatIdx = 1 + random.nextInt(1);
-        TournamentFormat tournamentFormat = TournamentFormat.getTournamentFormatById(formatIdx);
+    protected void initTournaments() throws Exception {
+        // Init personal tournament (T1)
+        testTournament1 = createRandomTournament();
+        testTournament1.setManagerId(testManager.getId());
+        assertEquals(0, testTournament1.getTournamentId());
+        // Save to DB
+        tournamentDao.addTournament(testTournament1);
+        assertTrue(testTournament1.getTournamentId() > 0);
+        // Init team tournament (T2)
+        testTournament2 = createRandomTournament();
+        testTournament2.setManagerId(testManager.getId());
+        assertEquals(0, testTournament2.getTournamentId());
+        // Save to DB
+        tournamentDao.addTournament(testTournament2);
+        assertTrue(testTournament2.getTournamentId() > 0);
+    }
 
-        // Sets specific data to testTournament
-        testTournament.setTournamentName(tournamentName);
-        testTournament.setStartDate(startDate);
-        testTournament.setEndDate(endDate);
-        testTournament.setLocation(location);
-        testTournament.setTournamentDescription(tournamentDescription);
-        testTournament.setTournamentFormatId(tournamentFormat.getFormatId());
-
+    protected Tournament initTournament() throws Exception {
+        Tournament testTournament = createRandomTournament();
+        testTournament.setManagerId(testManager.getId());
+        assertEquals(0, testTournament.getTournamentId());
+        // Save to DB
+        tournamentDao.addTournament(testTournament);
+        assertTrue(testTournament.getTournamentId() > 0);
         return testTournament;
     }
 
-    /**
-     * Creates random member
-     */
-    protected static Member createRandomMember() {
-        Member testMember = new Member();
-        testMember.setAvatar(generateRandomString(10));
-        testMember.setParticipantInfo(generateRandomString(10));
-        testMember.setName(generateRandomString(10));
-        testMember.setSurName(generateRandomString(5));
-        testMember.setEmail(generateRandomString(10) + "@gmail.com");
-        testMember.setPosition(generateRandomString(5));
+    // endregion
 
+    // region <GROUP>
+
+    protected void initGroups() throws Exception {
+        // Init Group
+        testGroup1 = createRandomGroup();
+        testGroup1.setTournamentId(testTournament1.getTournamentId());
+        assertEquals(0, testGroup1.getGroupId());
+        // Save to DB
+        groupDao.addGroup(testGroup1);
+        assertTrue(testGroup1.getGroupId() > 0);
+        // Init Group
+        testGroup2 = createRandomGroup();
+        testGroup2.setTournamentId(testTournament2.getTournamentId());
+        assertEquals(0, testGroup2.getGroupId());
+        // Save to DB
+        groupDao.addGroup(testGroup2);
+        assertTrue(testGroup2.getGroupId() > 0);
+    }
+
+    protected Group initGroup(int tournamentId) throws Exception {
+        Group testGroup = createRandomGroup();
+        testGroup.setTournamentId(tournamentId);
+        assertEquals(0, testGroup.getGroupId());
+        // Save to DB
+        groupDao.addGroup(testGroup);
+        assertTrue(testGroup.getGroupId() > 0);
+        return testGroup;
+    }
+
+    // endregion
+
+    // region <PARTICIPANT : MEMBER>
+
+    protected void initMemberParticipants() throws Exception {
+        // Init Member
+        testMember1 = createRandomMember();
+        testMember1.setTournamentId(testTournament1.getTournamentId());
+        // Save to DB
+        participantDao.addParticipant(testMember1);
+        assertTrue(testMember1.getId() > 0);
+        // Init Member
+        testMember2 = createRandomMember();
+        testMember2.setTournamentId(testTournament1.getTournamentId());
+        // Save to DB
+        participantDao.addParticipant(testMember2);
+        assertTrue(testMember2.getId() > 0);
+    }
+
+    protected Member initMemberParticipant(int tournamentId) throws Exception {
+        Member testMember = createRandomMember();
+        testMember.setTournamentId(tournamentId);
+        // Save to DB
+        participantDao.addParticipant(testMember);
+        assertTrue(testMember.getId() > 0);
         return testMember;
     }
 
-    /**
-     * Creates random team
-     */
-    protected static Team createRandomTeam() {
-        Team testTeam = new Team();
-        testTeam.setAvatar(generateRandomString(10));
-        testTeam.setParticipantInfo(generateRandomString(50));
-        testTeam.setTeamName(generateRandomString(10));
+    // endregion
 
+    // region <PARTICIPANT : TEAM>
+
+    protected void initTeamParticipants() throws Exception {
+        // Init Team
+        testTeam1 = createRandomTeam();
+        testTeam1.setTournamentId(testTournament2.getTournamentId());
+        // Save to DB
+        participantDao.addParticipant(testTeam1);
+        assertTrue(testTeam1.getId() > 0);
+        // Init Team
+        testTeam2 = createRandomTeam();
+        testTeam2.setTournamentId(testTournament2.getTournamentId());
+        // Save to DB
+        participantDao.addParticipant(testTeam2);
+        assertTrue(testTeam2.getId() > 0);
+    }
+
+    protected Team initTeamParticipant(int tournamentId) throws Exception {
+        Team testTeam = createRandomTeam();
+        testTeam.setTournamentId(tournamentId);
+        // Save to DB
+        participantDao.addParticipant(testTeam);
+        assertTrue(testTeam.getId() > 0);
         return testTeam;
     }
 
-    /**
-     * Creates random photo media
-     */
-    protected static Media createRandomPhotoMedia() {
-        Media media = new Media();
-        media.setPhoto("https://drive.google.com/drive/my-drive/photo" + generateRandomString() + ".jpg");
-        media.setVideo(null);
+    // endregion
 
-        return media;
-    }
+    // region <MATCH>
 
-    /**
-     * Creates random video media
-     */
-    protected static Media createRandomVideoMedia() {
-        Media media = new Media();
-        media.setPhoto(null);
-        media.setVideo("https://drive.google.com/drive/my-drive/video" + generateRandomString() + ".mp4");
+    // endregion
 
-        return media;
-    }
+    // region <MEDIA>
 
-    /**
-     * Creates random match
-     */
-    protected static Match createRandomMatch() {
-        int participantOneId = randomIntGenerate();
-        int participantTwoId = randomIntGenerate();
-        int scoreParticipantOne = randomIntGenerate();
-        int scoreParticipantTwo = randomIntGenerate();
-        String matchScore = "8 : 0";
+    // endregion
 
-        Match match = new Match();
-
-        match.setParticipantOneId(participantOneId);
-        match.setParticipantTwoId(participantTwoId);
-        match.setScoreParticipantOne(scoreParticipantOne);
-        match.setScoreParticipantOne(scoreParticipantTwo);
-        match.setMatchScore(matchScore);
-
-        return match;
-    }
-
-    /**
-     * Creates random group
-     */
-    protected static Group createRandomGroup() {
-        int participantsCount = randomIntGenerate();
-        int round = randomIntGenerate();
-        int nextRoundParticipants = randomIntGenerate();
-
-        Group group = new Group();
-
-        group.setGroupName(generateRandomString(10));
-        group.setParticipantsCount(participantsCount);
-        group.setRound(round);
-        group.setNextRoundParticipants(nextRoundParticipants);
-
-        return group;
-    }
-
-    /**
-     * Generates random string of different length
-     */
-    private static String generateRandomString(int length) {
-        int smallCaseLeft = 97; // letter 'a'
-        int smallCaseRight = 122; // letter 'z'
-
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            int randomLimitedInt = smallCaseLeft + (int) (random.nextFloat() * (smallCaseRight - smallCaseLeft));
-            sb.append((char) randomLimitedInt);
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * Generates random string of concrete length(5 symbols)
-     */
-    private static String generateRandomString() {
-        return generateRandomString(5);
-    }
-
-    /**
-     * Generates random int
-     */
-    private static int randomIntGenerate() {
-        return (int) (1 + Math.random() * 30);
-    }
 }

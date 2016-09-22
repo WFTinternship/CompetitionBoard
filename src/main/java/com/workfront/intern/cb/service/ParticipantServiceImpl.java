@@ -17,6 +17,9 @@ public class ParticipantServiceImpl implements ParticipantService {
     private static final Logger LOG = Logger.getLogger(ParticipantServiceImpl.class);
 
     @Autowired
+    private GroupService groupService;
+
+    @Autowired
     private ParticipantDao participantDao;
 
     /**
@@ -139,7 +142,7 @@ public class ParticipantServiceImpl implements ParticipantService {
      */
     @Override
     public void deleteAll(Class<? extends Participant> cls) {
-
+        groupService.removeAll();
         try {
             if (cls.equals(Member.class)) {
                 participantDao.deleteAll(Member.class);

@@ -2,6 +2,7 @@ package com.workfront.intern.cb.dao.unit;
 
 import com.mysql.jdbc.Connection;
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.TournamentDao;
@@ -67,7 +68,7 @@ public class TournamentDaoUnitTest extends BaseTest {
 
     @Test(expected = FailedOperationException.class)
     public void updateTournament_dbError() throws Exception {
-        Tournament testTournament = createRandomTournament();
+        Tournament testTournament = DataHelper.createRandomTournament();
         tournamentDao.updateTournament(NON_EXISTING_ID, testTournament);
     }
 

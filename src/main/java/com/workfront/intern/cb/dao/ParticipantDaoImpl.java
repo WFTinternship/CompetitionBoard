@@ -842,7 +842,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 member.setAvatar(rs.getString("avatar"));
                 member.setParticipantInfo(rs.getString("participant_info"));
                 member.setTournamentId(rs.getInt("tournament_id"));
-                member.setId(rs.getInt("member_id"));
                 member.setName(rs.getString("name"));
                 member.setSurName(rs.getString("surname"));
                 member.setPosition(rs.getString("position"));
@@ -880,7 +879,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 team.setId(rs.getInt("participant_id"));
                 team.setAvatar(rs.getString("avatar"));
                 team.setParticipantInfo(rs.getString("participant_info"));
-                team.setParticipantInfo(rs.getString("team_id"));
                 team.setTeamName(rs.getString("team_name"));
                 team.setTournamentId(rs.getInt("tournament_id"));
 

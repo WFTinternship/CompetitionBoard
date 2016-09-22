@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service.contollers.unit;
 
 import com.workfront.intern.cb.BaseTest;
+import com.workfront.intern.cb.DataHelper;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.common.util.StringHelper;
@@ -42,7 +43,7 @@ public class AuthenticationControllerUnitTest extends BaseTest {
         testSession = mock(HttpSession.class);
         when(testRequest.getSession()).thenReturn(testSession);
 
-        testManager = createRandomManager();
+        testManager = DataHelper.createRandomManager();
         when(testRequest.getParameter("usernameLogin")).thenReturn(testManager.getLogin());
         when(testRequest.getParameter("passwordLogin")).thenReturn(testManager.getPassword());
     }
