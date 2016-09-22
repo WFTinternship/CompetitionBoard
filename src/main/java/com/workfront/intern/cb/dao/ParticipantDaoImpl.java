@@ -54,13 +54,12 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Gets specific participant - member or team, by id:
      */
     @Override
-    public List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId)
+    public List<? extends Participant> getParticipantListByGroupFull(Class<? extends Participant> cls, int groupId)
             throws FailedOperationException, ObjectNotFoundException {
         if (cls.equals(Member.class)) {
-            return getMemberListByGroupId(groupId);
+            return getMemberListByGroupIdFull(groupId);
         } else if (cls.equals(Team.class)) {
-            //todo
-            return getMemberListByGroupId(groupId);
+            return getTeamListByGroupIdFull(groupId);
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -100,12 +99,12 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Gets specific participant list by group id - memberList or teamList
      */
     @Override
-    public List<? extends Participant> getParticipantsByGroup(Class<? extends Participant> cls, int groupId)
+    public List<? extends Participant> getParticipantListByGroupShort(Class<? extends Participant> cls, int groupId)
             throws FailedOperationException {
         if (cls.equals(Member.class)) {
-            return getMemberListByGroup(groupId);
+            return getMemberListByGroupShort(groupId);
         } else if (cls.equals(Team.class)) {
-            return getTeamListByGroup(groupId);
+            return getTeamListByGroupShort(groupId);
         } else {
             throw new RuntimeException("Unknown participant type");
         }
@@ -249,7 +248,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // update member data
             rs = ps.executeQuery();
-            member = mapObject(rs);
+            member = mapMember(rs);
             if (member == null) {
                 throw new ObjectNotFoundException(String.format("Team with id[%d] not found", id));
             }
@@ -262,29 +261,20 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return member;
     }
 
-    //ToDo
-    /*
-     Change query:
-         SELECT * FROM participant p
-	                    INNER JOIN member m ON p.participant_id=m.member_id
-	                    INNER JOIN group_participant gp on p.participant_id=gp.participant_id
-	                    INNER JOIN `group` g ON gp.group_id=g.group_id
-	                    WHERE g.group_id=?;
-      */
-
     /**
      * Gets member list by By groupId id
      */
-    private List<Member> getMemberListByGroupId(int groupId) throws FailedOperationException {
+    private List<Member> getMemberListByGroupIdFull(int groupId) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Member member;
         List<Member> memberList = new ArrayList<>();
 
-        String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id" +
-                " INNER JOIN `group` g ON g.tournament_id=p.tournament_id " +
-                "CROSS JOIN group_participant gp ON p.participant_id=gp.participant_id WHERE gp.group_id=?";
+        String sql = "SELECT * FROM participant p " +
+                                    "INNER JOIN member m ON p.participant_id=m.member_id " +
+                                    "INNER JOIN group_participant gp ON p.participant_id=gp.participant_id " +
+                                    "INNER JOIN `group` g ON gp.group_id=g.group_id" +
+                                    " WHERE g.group_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -295,10 +285,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // update member data
             rs = ps.executeQuery();
 
-            while (rs.next()) {
-                member = extractMemberFromResultSet(rs);
-                memberList.add(member);
-            }
+            memberList = mapMemberList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -308,8 +295,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return memberList;
     }
 
-    //ToDo
-
     /**
      * Gets member list by member name
      */
@@ -317,7 +302,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Member member;
         List<Member> memberList = new ArrayList<>();
 
         String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id" +
@@ -332,10 +316,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // update member data
             rs = ps.executeQuery();
 
-            while (rs.next()) {
-                member = extractMemberFromResultSet(rs);
-                memberList.add(member);
-            }
+            memberList = mapMemberList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -352,7 +333,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Member member;
         List<Member> memberList = new ArrayList<>();
 
         String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id WHERE p.tournament_id=?";
@@ -366,10 +346,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // update member data
             rs = ps.executeQuery();
 
-            while (rs.next()) {
-                member = extractMemberFromResultSet(rs);
-                memberList.add(member);
-            }
+            rs = ps.executeQuery();
+            memberList = mapMemberList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -382,13 +360,13 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Gets member list by group id
      */
-    private List<Member> getMemberListByGroup(int groupId) throws FailedOperationException {
+    private List<Member> getMemberListByGroupShort(int groupId) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Member> groupList = new ArrayList<>();
 
-        String sql = "SELECT * FROM group_participant gp where gp.group_id=?;";
+        String sql = "SELECT * FROM group_participant gp WHERE gp.group_id=?;";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -399,7 +377,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // Execute statement
             rs = ps.executeQuery();
-            groupList = mapList(rs);
+            groupList = mapMemberList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -416,7 +394,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Member member;
         List<Member> memberList = new ArrayList<>();
         String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id";
 
@@ -429,10 +406,8 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // update member data
             rs = ps.executeQuery();
 
-            while (rs.next()) {
-                member = extractMemberFromResultSet(rs);
-                memberList.add(member);
-            }
+            rs = ps.executeQuery();
+            memberList = mapMemberList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -597,7 +572,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            team = mapObject(rs);
+            team = mapTeam(rs);
             if (team == null) {
                 throw new ObjectNotFoundException(String.format("Team with id[%d] not found", id));
             }
@@ -611,13 +586,47 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
+     * Gets team list by by groupId id, full
+     */
+    private List<Team> getTeamListByGroupIdFull(int groupId) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Team> teamList = new ArrayList<>();
+
+        String sql = "SELECT * FROM participant p " +
+                                    "INNER JOIN team t ON p.participant_id=t.team_id" +
+                                    "INNER JOIN group_participant gp ON p.participant_id=gp.participant_id " +
+                                    "INNER JOIN `group` g ON gp.group_id=g.group_id" +
+                                    " WHERE g.group_id=?";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, groupId);
+
+            // update member data
+            rs = ps.executeQuery();
+            teamList = mapTeamList(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+
+        return teamList;
+    }
+
+
+    /**
      * Gets team list by tournament id
      */
     private List<Team> getTeamListByTournamentId(int tournamentId) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Team team;
         List<Team> teamList = new ArrayList<>();
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id WHERE p.tournament_id=?";
 
@@ -630,7 +639,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // update member data
             rs = ps.executeQuery();
-            teamList = mapList(rs);
+            teamList = mapTeamList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -638,6 +647,36 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             closeResources(conn, ps, rs);
         }
         return teamList;
+    }
+
+    /**
+     * Gets team list by group id
+     */
+    private List<Member> getTeamListByGroupShort(int groupId) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Member> groupList = new ArrayList<>();
+
+        String sql = "SELECT * FROM group_participant gp WHERE gp.group_id=?;";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, groupId);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            groupList = mapMemberList(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return groupList;
     }
 
     /**
@@ -647,7 +686,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Team team;
         List<Team> teamList = new ArrayList<>();
         String sql = "SELECT * FROM participant p " +
                 "INNER JOIN team t ON p.participant_id=t.team_id WHERE t.team_name=?";
@@ -656,12 +694,13 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // Acquire connection
             conn = dataSource.getConnection();
 
+            // Initialize statement
             ps = conn.prepareStatement(sql);
             ps.setString(1, teamName);
 
             // update member data
             rs = ps.executeQuery();
-            teamList = mapList(rs);
+            teamList = mapTeamList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -671,7 +710,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return teamList;
     }
 
-
     /**
      * Gets team list
      */
@@ -679,7 +717,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Team team;
         List<Team> teamList = new ArrayList<>();
 
         String sql = "SELECT * FROM participant p INNER JOIN team t ON p.participant_id=t.team_id";
@@ -687,9 +724,11 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             // Acquire connection
             conn = dataSource.getConnection();
 
+            // Initialize statement
             ps = conn.prepareStatement(sql);
+
             rs = ps.executeQuery();
-            teamList = mapList(rs);
+            teamList = mapTeamList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
@@ -770,69 +809,30 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
     // endregion
 
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected Participant mapObject(ResultSet rs) {
+        throw new RuntimeException("Unsupported for Generic participant type. " +
+                "Please defined the type of participant.");
+    }
+
+    @Override
+    protected <T> List<T> mapList(ResultSet rs) {
+        throw new RuntimeException("Unsupported for Generic participant type. " +
+                "Please defined the type of participant.");
+    }
+
+    private Member mapMember(ResultSet rs) {
+        List<Member> entities = mapMemberList(rs);
+        return entities.size() == 0 ? null : entities.get(0);
+    }
+
     /**
      * Extracting specific data of Member from ResultSet
      */
-    private static Member extractMemberFromResultSet(ResultSet rs) {
-        Member member = new Member();
-        try {
-            member.setId(rs.getInt("participant_id"));
-            member.setAvatar(rs.getString("avatar"));
-            member.setParticipantInfo(rs.getString("participant_info"));
-            member.setId(rs.getInt("member_id"));
-            member.setName(rs.getString("name"));
-            member.setSurName(rs.getString("surname"));
-            member.setPosition(rs.getString("position"));
-            member.setEmail(rs.getString("email"));
-            member.setTournamentId(rs.getInt("tournament_id"));
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
-        return member;
-    }
-
-
-
     @SuppressWarnings("unchecked")
-    public Participant mapObject(Participant participant, ResultSet rs) {
-        if (participant instanceof Member) {
-            return mapObjectMember(rs);
-        } else if (participant instanceof Team) {
-            return mapObjectTeam(rs);
-        } else {
-            throw new RuntimeException("Unknown participant type");
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public Participant mapList(Participant participant, ResultSet rs) {
-        if (participant instanceof Member) {
-            return (Participant) mapListMember(rs);
-        } else if (participant instanceof Team) {
-            return (Participant) mapListTeam(rs);
-        } else {
-            throw new RuntimeException("Unknown participant type");
-        }
-    }
-
-
-    @SuppressWarnings("unchecked")
-    private Member mapObjectMember(ResultSet rs) {
-        List<Member> entities = mapList(rs);
-        return entities.size() == 0 ? null : entities.get(0);
-    }
-
-    @SuppressWarnings("unchecked")
-    private Team mapObjectTeam(ResultSet rs) {
-        List<Team> entities = mapList(rs);
-        return entities.size() == 0 ? null : entities.get(0);
-    }
-
-
-
-
-    @SuppressWarnings("unchecked")
-    private List<Member> mapListMember(ResultSet rs) {
+    private List<Member> mapMemberList(ResultSet rs) {
         List<Member> resultList = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -862,8 +862,16 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return resultList;
     }
 
+    private Team mapTeam(ResultSet rs) {
+        List<Team> entities = mapTeamList(rs);
+        return entities.size() == 0 ? null : entities.get(0);
+    }
+
+    /**
+     * Extracting specific data of Team from ResultSet
+     */
     @SuppressWarnings("unchecked")
-    private List<Team> mapListTeam(ResultSet rs) {
+    private List<Team> mapTeamList(ResultSet rs) {
         List<Team> resultList = new ArrayList<>();
         try {
             while (rs.next()) {

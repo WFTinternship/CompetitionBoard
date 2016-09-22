@@ -13,10 +13,10 @@ public interface ParticipantDao {
 
     // READ
     Participant getOne(Class<? extends Participant> cls, int id) throws FailedOperationException, ObjectNotFoundException;
-    List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId) throws FailedOperationException, ObjectNotFoundException;
+    List<? extends Participant> getParticipantListByGroupFull(Class<? extends Participant> cls, int groupId) throws FailedOperationException, ObjectNotFoundException;
+    List<? extends Participant> getParticipantListByGroupShort(Class<? extends Participant> cls, int groupId) throws FailedOperationException, ObjectNotFoundException;
     List<? extends Participant> getParticipantListByName(Class<? extends Participant> cls, String participantName) throws FailedOperationException, ObjectNotFoundException;
     List<? extends Participant> getParticipantListByTournamentId(Class<? extends Participant> cls, int tournamentId) throws FailedOperationException;
-    List<? extends Participant> getParticipantsByGroup(Class<? extends Participant> cls, int groupId) throws FailedOperationException, ObjectNotFoundException;
     List<? extends Participant> getAll(Class<? extends Participant> cls) throws FailedOperationException;
 
     // UPDATE
