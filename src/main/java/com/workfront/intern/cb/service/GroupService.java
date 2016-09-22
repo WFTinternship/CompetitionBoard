@@ -1,8 +1,6 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Group;
-import com.workfront.intern.cb.common.Participant;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 
 import java.util.List;
 
@@ -16,9 +14,6 @@ public interface GroupService {
     List<Group> getGroupListByName (String groupName);
     List<Group> getTournamentGroups(int tournamentId);
     List<Group> getAllGroups();
-
-    //TODO implements
-    List<Participant> getGroupParticipants(int groupId);
 
     // UPDATE
     void updateGroup(int id, Group group);

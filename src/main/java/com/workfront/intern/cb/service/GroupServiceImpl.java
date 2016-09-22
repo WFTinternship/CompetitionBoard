@@ -1,7 +1,6 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Group;
-import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.dao.DBManager;
@@ -76,18 +75,6 @@ public class GroupServiceImpl implements GroupService {
     public List<Group> getAllGroups() {
         try {
             return groupDao.getAllGroups();
-        } catch (FailedOperationException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    /**
-     * Returns all participants groups
-     */
-    @Override
-    public List<Participant> getGroupParticipants(int groupId) {
-        try {
-            return groupDao.getGroupParticipants(groupId);
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

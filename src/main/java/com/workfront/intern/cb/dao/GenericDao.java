@@ -92,6 +92,31 @@ abstract class GenericDao {
     }
 
     /**
+     * Deletes all entries according to specified SQL.
+     */
+    void deleteAllEntries(String sql) throws FailedOperationException {
+        if (sql != null) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                // Acquire connection
+                conn = dataSource.getConnection();
+
+                // Initialize statement
+                ps = conn.prepareStatement(sql);
+
+                // Execute statement
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+                throw new FailedOperationException(e.getMessage(), e);
+            } finally {
+                closeResources(conn, ps);
+            }
+        }
+    }
+
+    /**
      * Deletes entry(es) for group_participant to specified SQL, groupID and participantID params.
      */
     void deleteEntryForGroupParticipant(String sql, int groupId, int participantId) throws ObjectNotFoundException, FailedOperationException {
@@ -126,30 +151,7 @@ abstract class GenericDao {
         }
     }
 
-    /**
-     * Deletes all entries according to specified SQL.
-     */
-    void deleteAllEntries(String sql) throws FailedOperationException {
-        if (sql != null) {
-            Connection conn = null;
-            PreparedStatement ps = null;
-            try {
-                // Acquire connection
-                conn = dataSource.getConnection();
 
-                // Initialize statement
-                ps = conn.prepareStatement(sql);
-
-                // Execute statement
-                ps.executeUpdate();
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-                throw new FailedOperationException(e.getMessage(), e);
-            } finally {
-                closeResources(conn, ps);
-            }
-        }
-    }
 
     /**
      * Generated key from PreparedStatement

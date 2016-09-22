@@ -22,7 +22,7 @@ public interface GroupDao {
     void updateGroup(int id, Group group) throws ObjectNotFoundException, FailedOperationException;
     void assignParticipant(int tournamentId, int groupId, Participant participant) throws ObjectNotFoundException, FailedOperationException;
     void removeParticipant(int groupId, int participant) throws ObjectNotFoundException, FailedOperationException;
-    void removeAllParticipants(int groupId) throws FailedOperationException;
+    void removeAllParticipants(int groupId) throws ObjectNotFoundException, FailedOperationException;
     void removeAll() throws FailedOperationException;
 
     // DELETE

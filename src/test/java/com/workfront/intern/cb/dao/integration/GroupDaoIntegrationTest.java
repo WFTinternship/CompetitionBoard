@@ -9,7 +9,6 @@ import com.workfront.intern.cb.dao.ParticipantDao;
 import com.workfront.intern.cb.dao.TournamentDao;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -83,6 +82,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         groupDao.removeAll();
         groupDao.deleteAll();
         participantDao.deleteAll(Member.class);
+        participantDao.deleteAll(Team.class);
         tournamentDao.deleteAll();
         managerDao.deleteAll();
     }
@@ -224,48 +224,53 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
 
-    @Ignore
+    @SuppressWarnings("unchecked")
     @Test
     public void assignParticipant() throws Exception {
+        groupDao.removeAll();
+
         int tournamentId = testTournament.getTournamentId();
         int groupId = testGroup.getGroupId();
 
-        Group group = createRandomGroup();
-        group.setTournamentId(tournamentId);
-        groupDao.addGroup(group);
+        // Acquire existing participants in specified Group
+        List<Participant> participantList =
+                (List<Participant>) participantDao.getParticipantListByGroupId(Member.class, groupId);
+        int groupParticipants = participantList.size();
 
-        // Initialize random member instance
-        Member member = createRandomMember();
-        member.setTournamentId(tournamentId);
-        participantDao.addParticipant(member);
+        // Add another participant in Group
+        groupDao.assignParticipant(tournamentId, groupId, testMember);
 
-        groupDao.assignParticipant(tournamentId, groupId, member);
-        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
-        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+        // Acquire updated list of participants
+        participantList = (List<Participant>) participantDao.getParticipantListByGroupId(Member.class, groupId);
 
-        assertEquals(testGroup.getTournamentId(), testMember.getTournamentId());
+        // Check/validate if new participant was added
+        assertEquals(1 + groupParticipants, participantList.size());
     }
-    @Ignore
+
+    @Test(expected = ObjectNotFoundException.class)
+    public void removeParticipantByGroup_notFound() throws Exception {
+        groupDao.removeParticipant(NON_EXISTING_ID, NON_EXISTING_ID);
+    }
+
     @Test
-    public void removeParticipant() throws Exception {
-        int tournamentId = testTournament.getTournamentId();
+    public void removeParticipantByGroup() throws Exception {
         int groupId = testGroup.getGroupId();
+        int memberId = testMember.getId();
 
-        Group group = createRandomGroup();
-        group.setTournamentId(tournamentId);
-        groupDao.addGroup(group);
+        groupDao.removeParticipant(groupId, memberId);
 
-        // Initialize random member instance
-        Member member = createRandomMember();
-        member.setTournamentId(tournamentId);
-        participantDao.addParticipant(member);
+    }
 
-        groupDao.removeParticipant(groupId, member.getId());
+    @SuppressWarnings("unchecked")
+    @Test
+    public void removeAllParticipants() throws Exception {
+        int groupId = testGroup.getGroupId();
+        groupDao.removeAllParticipants(groupId);
 
-        assertEquals(testGroup.getTournamentId(), group.getTournamentId());
-        assertEquals(testMember.getTournamentId(), member.getTournamentId());
+        List<Member> memberList =
+                (List<Member>) participantDao.getParticipantListByGroupId(Member.class, groupId);
 
-        assertEquals(testGroup.getTournamentId(), testMember.getTournamentId());
+        assertEquals(0, memberList.size());
     }
 
     @Test(expected = ObjectNotFoundException.class)
@@ -278,9 +283,10 @@ public class GroupDaoIntegrationTest extends BaseTest {
         groupDao.removeAll();
         groupDao.deleteGroup(testGroup.getGroupId());
     }
-    @Ignore
+
     @Test
     public void deleteAll() throws Exception {
+        groupDao.removeAll();
         groupDao.deleteAll();
 
         List<Group> groupList = groupDao.getAllGroups();

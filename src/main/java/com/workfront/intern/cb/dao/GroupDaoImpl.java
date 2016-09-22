@@ -260,9 +260,9 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
     }
 
     @Override
-    public void removeAllParticipants(int groupId) throws FailedOperationException {
-        String sql = "DELETE FROM group_participant where group_id=?";
-        deleteAllEntries(sql);
+    public void removeAllParticipants(int groupId) throws ObjectNotFoundException, FailedOperationException {
+        String sql = "DELETE FROM group_participant WHERE group_id=?";
+        deleteEntry(sql, groupId);
     }
 
     @Override
@@ -324,5 +324,4 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         }
         return resultList;
     }
-
 }
