@@ -133,7 +133,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Tournament tournament;
         List<Tournament> tournamentListByName = new ArrayList<>();
 
         String sql = "SELECT * FROM tournament WHERE tournament_name LIKE ? ";
@@ -166,7 +165,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Tournament> tournamentList = new ArrayList<>();
-        Tournament tournament;
 
         String sql = "SELECT * FROM tournament";
         try {
@@ -232,7 +230,6 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Tournament tournament;
         List<Tournament> tournamentListByManager = new ArrayList<>();
 
         String sql = "SELECT * FROM tournament WHERE manager_id=?";
@@ -346,5 +343,4 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         }
         return resultList;
     }
-
 }

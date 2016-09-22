@@ -184,12 +184,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         return groupList;
     }
 
-    @Override
-    public List<Participant> getGroupParticipants(int groupId) throws FailedOperationException {
-        //TODO implement
-        return null;
-    }
-
     /**
      * Updates group
      */
@@ -266,7 +260,13 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
     }
 
     @Override
-    public void removeAllParticipants() throws FailedOperationException {
+    public void removeAllParticipants(int groupId) throws FailedOperationException {
+        String sql = "DELETE FROM group_participant where group_id=?";
+        deleteAllEntries(sql);
+    }
+
+    @Override
+    public void removeAll() throws FailedOperationException {
         String sql = "DELETE FROM group_participant";
         deleteAllEntries(sql);
     }

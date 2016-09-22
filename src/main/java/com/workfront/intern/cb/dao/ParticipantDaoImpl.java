@@ -97,6 +97,21 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
+     * Gets specific participant list by group id - memberList or teamList
+     */
+    @Override
+    public List<? extends Participant> getParticipantsByGroup(Class<? extends Participant> cls, int groupId)
+            throws FailedOperationException {
+        if (cls.equals(Member.class)) {
+            return getMemberListByGroup(groupId);
+        } else if (cls.equals(Team.class)) {
+            return getTeamListByGroup(groupId);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
+    }
+
+    /**
      * Gets specific participant list - memberList or teamList
      */
     @Override
@@ -214,7 +229,6 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return member;
     }
 
-
     /**
      * Gets member by member id
      */
@@ -235,10 +249,9 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // update member data
             rs = ps.executeQuery();
-            if (rs.next()) {
-                member = extractMemberFromResultSet(rs);
-            } else {
-                throw new ObjectNotFoundException(String.format("Member with id[%d] not found", id));
+            member = mapObject(rs);
+            if (member == null) {
+                throw new ObjectNotFoundException(String.format("Team with id[%d] not found", id));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -364,6 +377,36 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             closeResources(conn, ps, rs);
         }
         return memberList;
+    }
+
+    /**
+     * Gets member list by group id
+     */
+    private List<Member> getMemberListByGroup(int groupId) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Member> groupList = new ArrayList<>();
+
+        String sql = "SELECT * FROM group_participant gp where gp.group_id=?;";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, groupId);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            groupList = mapList(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return groupList;
     }
 
     /**
@@ -748,39 +791,79 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         return member;
     }
 
-    //|ToDo
 
-    /**
-     * Extracting specific data of Member from ResultSet
-     */
-    private static Member extractMemberFromResultSetWithGroup(ResultSet rs) {
-        Member member = new Member();
-//        try {
-//            member.setId(rs.getInt("participant_id"));
-//            member.setAvatar(rs.getString("avatar"));
-//            member.setParticipantInfo(rs.getString("participant_info"));
-//            member.setId(rs.getInt("member_id"));
-//            member.setName(rs.getString("name"));
-//            member.setSurName(rs.getString("surname"));
-//            member.setPosition(rs.getString("position"));
-//            member.setEmail(rs.getString("email"));
-//            member.setTournamentId(rs.getInt("tournament_id"));
-//        } catch (SQLException e) {
-//            LOG.error(e.getMessage(), e);
-//        }
-        return member;
+
+    @SuppressWarnings("unchecked")
+    public Participant mapObject(Participant participant, ResultSet rs) {
+        if (participant instanceof Member) {
+            return mapObjectMember(rs);
+        } else if (participant instanceof Team) {
+            return mapObjectTeam(rs);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    protected Team mapObject(ResultSet rs) {
-        List<Team> entities = mapList(rs);
+    public Participant mapList(Participant participant, ResultSet rs) {
+        if (participant instanceof Member) {
+            return (Participant) mapListMember(rs);
+        } else if (participant instanceof Team) {
+            return (Participant) mapListTeam(rs);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private Member mapObjectMember(ResultSet rs) {
+        List<Member> entities = mapList(rs);
         return entities.size() == 0 ? null : entities.get(0);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    protected List<Team> mapList(ResultSet rs) {
+    private Team mapObjectTeam(ResultSet rs) {
+        List<Team> entities = mapList(rs);
+        return entities.size() == 0 ? null : entities.get(0);
+    }
+
+
+
+
+    @SuppressWarnings("unchecked")
+    private List<Member> mapListMember(ResultSet rs) {
+        List<Member> resultList = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Member member = new Member();
+
+                member.setId(rs.getInt("participant_id"));
+                member.setAvatar(rs.getString("avatar"));
+                member.setParticipantInfo(rs.getString("participant_info"));
+                member.setId(rs.getInt("member_id"));
+                member.setName(rs.getString("name"));
+                member.setSurName(rs.getString("surname"));
+                member.setPosition(rs.getString("position"));
+                member.setEmail(rs.getString("email"));
+                member.setTournamentId(rs.getInt("tournament_id"));
+
+                resultList.add(member);
+            }
+        } catch (SQLException ex) {
+            LOG.error(ex.getMessage(), ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                LOG.error(ex.getMessage(), ex);
+            }
+        }
+        return resultList;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Team> mapListTeam(ResultSet rs) {
         List<Team> resultList = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -789,6 +872,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
                 team.setId(rs.getInt("participant_id"));
                 team.setAvatar(rs.getString("avatar"));
                 team.setParticipantInfo(rs.getString("participant_info"));
+                team.setParticipantInfo(rs.getString("team_id"));
                 team.setTeamName(rs.getString("team_name"));
                 team.setTournamentId(rs.getInt("tournament_id"));
 
@@ -805,5 +889,4 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         }
         return resultList;
     }
-
 }

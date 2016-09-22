@@ -30,6 +30,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     @Autowired
     private TournamentDao tournamentDao;
 
+    private Manager testManager;
     private Tournament testTournament;
     private Group testGroup;
     private Participant testMember;
@@ -39,40 +40,32 @@ public class GroupDaoIntegrationTest extends BaseTest {
         // Delete all remaining objects
         cleanUp();
 
-        // Initialize random manager instance
-        Manager testManager = createRandomManager();
+        // Initialize random MANAGER instance
+        testManager = createRandomManager();
         assertEquals(0, testManager.getId());
-
         // Save to DB
         managerDao.addManager(testManager);
         assertTrue(testManager.getId() > 0);
 
-
-        // Initialize random tournament instance
+        // Initialize random TOURNAMENT instance
         testTournament = createRandomTournament();
         testTournament.setManagerId(testManager.getId());
         assertEquals(0, testTournament.getTournamentId());
-
         // Save to DB
         tournamentDao.addTournament(testTournament);
         assertTrue(testTournament.getTournamentId() > 0);
 
-
-        // Initialize random group instance
+        // Initialize random GROUP instance
         testGroup = createRandomGroup();
         testGroup.setTournamentId(testTournament.getTournamentId());
         assertEquals(0, testGroup.getGroupId());
-
         // Save to DB
         groupDao.addGroup(testGroup);
         assertTrue(testGroup.getGroupId() > 0);
 
-
-        // Initialize random member instance
+        // Initialize random MEMBER instance
         testMember = createRandomMember();
         testMember.setTournamentId(testTournament.getTournamentId());
-        assertEquals(0, testMember.getId());
-
         // Save to DB
         participantDao.addParticipant(testMember);
         assertTrue(testMember.getId() > 0);
@@ -87,7 +80,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
     }
 
     private void cleanUp() throws Exception {
-//        groupDao.removeAllParticipants();
+        groupDao.removeAll();
         groupDao.deleteAll();
         participantDao.deleteAll(Member.class);
         tournamentDao.deleteAll();
@@ -113,7 +106,6 @@ public class GroupDaoIntegrationTest extends BaseTest {
         groupDao.deleteGroup(group.getGroupId());
     }
 
-    @Ignore
     @Test(expected = ObjectNotFoundException.class)
     public void getGroupById_notFound() throws Exception {
         // Testing method
@@ -121,7 +113,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
         assertNull(MESSAGE_TEST_COMPLETED_ERROR, group);
     }
-    @Ignore
+
     @Test
     public void getGroupById_found() throws Exception {
         int groupId = testGroup.getGroupId();
@@ -137,7 +129,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getRound(), group.getRound());
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
-    @Ignore
+
     @Test
     public void getGroupByTournamentList_emptyList() throws Exception {
         int tournamentId = testTournament.getTournamentId();
@@ -150,7 +142,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertNotNull(groupList);
         assertEquals(0, groupList.size());
     }
-    @Ignore
+
     @Test
     public void getGroupByTournamentList_found() throws Exception {
         // Testing method
@@ -169,10 +161,11 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getRound(), group.getRound());
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
-    @Ignore
+
     @Test
     public void getAllGroups_emptyList() throws Exception {
         int groupId = testGroup.getGroupId();
+        groupDao.removeAll();
         groupDao.deleteGroup(groupId);
 
         // Testing method
@@ -181,7 +174,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertNotNull(groupList);
         assertEquals(0, groupList.size());
     }
-    @Ignore
+
     @Test
     public void getAllGroups_found() throws Exception {
         // Testing method
@@ -199,7 +192,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getRound(), group.getRound());
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
-    @Ignore
+
     @Test
     public void updateGroup() throws Exception {
         int groupId = testGroup.getGroupId();
@@ -230,6 +223,7 @@ public class GroupDaoIntegrationTest extends BaseTest {
         assertEquals(testGroup.getRound(), group.getRound());
         assertEquals(testGroup.getNextRoundParticipants(), group.getNextRoundParticipants());
     }
+
     @Ignore
     @Test
     public void assignParticipant() throws Exception {
@@ -273,14 +267,15 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
         assertEquals(testGroup.getTournamentId(), testMember.getTournamentId());
     }
-    @Ignore
+
     @Test(expected = ObjectNotFoundException.class)
     public void deleteGroup_notFound() throws Exception {
         groupDao.deleteGroup(NON_EXISTING_ID);
     }
-    @Ignore
+
     @Test
     public void deleteGroup_found() throws Exception {
+        groupDao.removeAll();
         groupDao.deleteGroup(testGroup.getGroupId());
     }
     @Ignore
