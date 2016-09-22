@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Group;
+import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.dao.DBManager;
@@ -89,6 +90,28 @@ public class GroupServiceImpl implements GroupService {
             groupDao.updateGroup(id, group);
         } catch (ObjectNotFoundException e) {
             throw new RuntimeException(String.format("Group instance with id=%s not found", id));
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void assignParticipant(int tournamentId, int groupId, Participant participant) {
+        try {
+            groupDao.assignParticipant(tournamentId, groupId, participant);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Group instance with id=%s not found", groupId));
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void removeParticipant(int groupId, int participantId) {
+        try {
+            groupDao.removeParticipant(groupId, participantId);
+        } catch (ObjectNotFoundException e) {
+            throw new RuntimeException(String.format("Group instance with id=%s not found", groupId));
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }

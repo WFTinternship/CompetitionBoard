@@ -1,11 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.common.Tournament" %>
-<%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="com.workfront.intern.cb.web.util.Helpers" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.common.Group" %>
 <%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
+<%@ page import="com.workfront.intern.cb.common.*" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -130,87 +128,88 @@
 
                                 <h3>Tournaments</h3>
                                 <hr>
-                                    <%
-                                        List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("searchResultTournament");
-                                        int tournamenListSize = tournamentList.size();
+                                <%
+                                    List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("searchResultTournament");
+                                    int tournamenListSize = tournamentList.size();
+                                %>
+                                <table class="table" id="updateTournamentTable">
+                                    <tr class="thCustom">
+                                        <th>No</th>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>Location</th>
+                                        <th>Description</th>
+                                        <th>Format</th>
+                                        <th>Owner</th>
+                                    </tr>
+                                    <% for (int i = 0; i < tournamenListSize; i++) {
+                                        int tournamentId = tournamentList.get(i).getTournamentId();
                                     %>
-                                    <table class="table" id="updateTournamentTable">
-                                        <tr class="thCustom">
-                                            <th>No</th>
-                                            <th>Id</th>
-                                            <th>Name</th>
-                                            <th>StartDate</th>
-                                            <th>EndDate</th>
-                                            <th>Location</th>
-                                            <th>Description</th>
-                                            <th>Format</th>
-                                            <th>Owner</th>
-                                        </tr>
-                                        <% for (int i = 0; i < tournamenListSize; i++) {
-                                            int tournamentId = tournamentList.get(i).getTournamentId();
+                                    <tr>
+                                        <%--No--%>
+                                        <td contenteditable="false">
+                                            <%=i%>
+                                        </td>
+
+                                        <%--Id--%>
+                                        <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
+                                            <%=tournamentId%>
+                                        </td>
+
+                                        <%--TournamentName--%>
+                                        <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
+                                            <a href="participant-page" class="a-custom" name="hrefTournamentName">
+                                                <%=tournamentList.get(i).getTournamentName()%>
+                                            </a>
+                                        </td>
+
+                                        <%--StartDate--%>
+                                        <td contenteditable="false" data-name="startDateUpdate" data-updatable="true">
+                                            <%=Helpers.parseTimeStampToString(tournamentList.get(i).getStartDate())%>
+                                        </td>
+
+                                        <%--EndDate--%>
+                                        <td contenteditable="false" data-name="endDateUpdate" data-updatable="true">
+                                            <%=Helpers.parseTimeStampToString(tournamentList.get(i).getEndDate())%>
+                                        </td>
+
+                                        <%--Location--%>
+                                        <td contenteditable="false" data-name="locationUpdate" data-updatable="true">
+                                            <%=tournamentList.get(i).getLocation()%>
+                                        </td>
+
+                                        <%--TournamentDescription--%>
+                                        <td contenteditable="false" data-name="descriptionUpdate" data-updatable="true">
+                                            <%=tournamentList.get(i).getTournamentDescription()%>
+                                        </td>
+
+                                        <%--TournamentFormatId--%>
+                                        <%
+                                            int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                            String formatStr = TournamentFormat.fromId(tournamentFormatId).getFormatName();
                                         %>
-                                        <tr>
-                                          <%--No--%>
-                                            <td contenteditable="false">
-                                                <%=i%>
-                                            </td>
+                                        <td contenteditable="false" data-name="formatUpdateNot" data-updatable="false">
+                                            <%=formatStr%>
+                                        </td>
 
-                                            <%--Id--%>
-                                            <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
-                                                <%=tournamentId%>
-                                            </td>
-
-                                            <%--TournamentName--%>
-                                            <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
-                                                <a href="participant-page" class="a-custom" name="hrefTournamentName">
-                                                    <%=tournamentList.get(i).getTournamentName()%>
-                                                </a>
-                                            </td>
-
-                                            <%--StartDate--%>
-                                            <td contenteditable="false" data-name="startDateUpdate" data-updatable="true">
-                                                <%=Helpers.parseTimeStampToString(tournamentList.get(i).getStartDate())%>
-                                            </td>
-
-                                            <%--EndDate--%>
-                                            <td contenteditable="false" data-name="endDateUpdate" data-updatable="true">
-                                                <%=Helpers.parseTimeStampToString(tournamentList.get(i).getEndDate())%>
-                                            </td>
-
-                                            <%--Location--%>
-                                            <td contenteditable="false" data-name="locationUpdate" data-updatable="true">
-                                                <%=tournamentList.get(i).getLocation()%>
-                                            </td>
-
-                                            <%--TournamentDescription--%>
-                                            <td contenteditable="false" data-name="descriptionUpdate" data-updatable="true">
-                                                <%=tournamentList.get(i).getTournamentDescription()%>
-                                            </td>
-
-                                            <%--TournamentFormatId--%>
-                                            <%
-                                                int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                                                String formatStr = TournamentFormat.fromId(tournamentFormatId).getFormatName();
-                                            %>
-                                            <td contenteditable="false" data-name="formatUpdateNot" data-updatable="false">
-                                                <%=formatStr%>
-                                            </td>
-
-                                            <%--Tournament creator--%>
-                                            <%
-                                                int managerID = tournamentList.get(i).getManagerId();
-                                                Manager login = BeanProvider.getManagerService().getManagerById(managerID);
-                                            %>
-                                            <td contenteditable="false" data-name="managerUpdateNot" data-updatable="false">
-                                                <%=login.getLogin()%>
-                                            </td>
-                                        </tr>
-                                        <%}%>
-                                    </table>
+                                        <%--Tournament creator--%>
+                                        <%
+                                            int managerID = tournamentList.get(i).getManagerId();
+                                            Manager login = BeanProvider.getManagerService().getManagerById(managerID);
+                                        %>
+                                        <td contenteditable="false" data-name="managerUpdateNot" data-updatable="false">
+                                            <%=login.getLogin()%>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </table>
 
 
                                 <%-------------------------------------------GROUP RESULT-------------------------------------------%>
                                 <br>
+
                                 <h3>Groups</h3>
                                 <hr>
                                 <%
@@ -233,7 +232,7 @@
                                     %>
 
                                     <tr>
-                                       <%--No--%>
+                                        <%--No--%>
                                         <td>
                                             <%=i%>
                                         </td>
@@ -289,35 +288,167 @@
                                     <%}%>
                                 </table>
 
+                                <%-------------------------------------------TEAM RESULT-------------------------------------------%>
+                                <br>
 
-                                <!-- Footer -->
-                                <footer>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <p>Copyright &copy; Artur Babayan 2016</p>
-                                        </div>
-                                    </div>
-                                </footer>
+                                <h3>Teams</h3>
+                                <hr>
 
+                                <table class="table" id="1">
+                                    <tr>
+                                        <th width="1%">Check</th>
+                                        <th width="3%">No</th>
+                                        <th width="3%">Id</th>
+                                        <th>Team Name</th>
+                                        <th>Team Info</th>
+                                        <th>Tournament Name</th>
+                                    </tr>
+
+                                    <tr>
+                                        <%--Radio--%>
+                                        <td>
+                                            <input type="radio" id="" class="checkbox-custom" name="groupId"
+                                                   value="" required/>
+                                        </td>
+
+                                        <%--No--%>
+                                        <td>
+                                        </td>
+
+                                        <%--Id--%>
+                                        <td>
+                                        </td>
+
+                                        <%--Team name--%>
+                                        <td>
+
+                                        </td>
+
+                                        <%--Team info--%>
+                                        <td>
+                                        </td>
+
+                                        <%--TournamentName--%>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </form>
                             </div>
                         </div>
+
+                        <%-------------------------------------------MEMBERS RESULT-------------------------------------------%>
+                        <br>
+
+                        <h3>Members</h3>
+                        <hr>
+                        <br>
+                        <%
+                            List<Member> memberList = (List<Member>) request.getAttribute("searchResultMember");
+                            int memberListSize = memberList.size();
+                        %>
+                        <table class="table" id="updateTournamentTable">
+                            <tr>
+                                <th width="1%">Check</th>
+                                <th width="3%">No</th>
+                                <th width="3%">Id</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Position</th>
+                                <th>Email</th>
+                                <th>Participant Info</th>
+                                <th>Tournament Name</th>
+                            </tr>
+                            <%
+                                for (int i = 0; i < memberListSize; i++) {
+                                    int memberId = memberList.get(i).getId();
+                            %>
+
+                            <tr>
+                                <%--Radio--%>
+                                <td>
+                                    <input type="radio" id="<%=memberId%>" class="checkbox-custom"
+                                           name="groupId"
+                                           value="<%=memberId%>" required/>
+                                </td>
+
+                                <td>
+                                    <%=i%>
+                                </td>
+
+                                <%--Id--%>
+                                <td>
+                                    <%=memberId%>
+                                </td>
+
+                                <%--Name--%>
+                                <td>
+                                    <%=memberList.get(i).getName()%>
+                                </td>
+
+                                <%--Surname--%>
+                                <td>
+                                    <%=memberList.get(i).getSurName()%>
+                                </td>
+
+                                <%--Position--%>
+                                <td>
+                                    <%=memberList.get(i).getPosition()%>
+                                </td>
+
+                                <%--Email--%>
+                                <td>
+                                    <%=memberList.get(i).getEmail()%>
+                                </td>
+
+                                <%--Participant info--%>
+                                <td>
+                                    <%=memberList.get(i).getParticipantInfo()%>
+                                </td>
+
+                                <%--TournamentName--%>
+                                <%
+                                    Tournament tournament = BeanProvider.getTournamentService().
+                                            getTournamentById(memberList.get(i).getTournamentId());
+                                %>
+                                <td>
+                                    <%=tournament.getTournamentName()%>
+
+                                </td>
+                            </tr>
+                            <%}%>
+
+                        </table>
+
+
+                        <!-- Footer -->
+                        <footer>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p>Copyright &copy; Artur Babayan 2016</p>
+                                </div>
+                            </div>
+                        </footer>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 
 
-        <!-- jQuery -->
-        <script src="<c:url value="/resources/js/jquery-3.1.0.js" />"></script>
-        <%--<script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>--%>
+<!-- jQuery -->
+<script src="<c:url value="/resources/js/jquery-3.1.0.js" />"></script>
+<%--<script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>--%>
 
-        <%--Custom JS--%>
-        <script src="<c:url value="/resources/js/custom.js" />"></script>
+<%--Custom JS--%>
+<script src="<c:url value="/resources/js/custom.js" />"></script>
 
-        <script src='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
-        <%--<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>--%>
+<script src='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
+<%--<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>--%>
 
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js'></script>
 </body>
 </html>

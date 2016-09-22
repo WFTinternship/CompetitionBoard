@@ -81,6 +81,25 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
     }
 
+    @Override
+    public List<? extends Participant> getParticipantListByName(Class<? extends Participant> cls, String participantName) {
+        try {
+            if (cls.equals(Member.class)) {
+                return participantDao.getParticipantListByName(Member.class, participantName);
+            } else if (cls.equals(Team.class)) {
+                return participantDao.getParticipantListByName(Team.class, participantName);
+            } else {
+                throw new RuntimeException("Unknown participant type");
+            }
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
+        } catch (ObjectNotFoundException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException("Participant instance with id=%s not updated");
+        }
+    }
+
     /**
      * Gets specific participant list - memberList or teamList
      */

@@ -1,6 +1,7 @@
 package com.workfront.intern.cb.service;
 
 import com.workfront.intern.cb.common.Group;
+import com.workfront.intern.cb.common.Participant;
 
 import java.util.List;
 
@@ -17,14 +18,12 @@ public interface GroupService {
 
     // UPDATE
     void updateGroup(int id, Group group);
-//    void assignParticipant(int tournamentId, int groupId, Participant participant);
-//    void removeParticipant(int tournamentId, int groupId, int participantId);
+    void assignParticipant(int tournamentId, int groupId, Participant participant);
+    void removeParticipant(int groupId, int participant);
     void removeAllParticipants(int groupId);
     void removeAll();
 
     // DELETE
     void deleteGroup(int id);
     void deleteAll();
-
-
 }

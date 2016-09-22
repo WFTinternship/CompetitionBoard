@@ -304,18 +304,17 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         ResultSet rs = null;
         List<Member> memberList = new ArrayList<>();
 
-        String sql = "SELECT * FROM participant p INNER JOIN member m ON p.participant_id=m.member_id" +
-                " INNER JOIN `group` g ON g.tournament_id=p.tournament_id WHERE m.name=?";
+        String sql = "SELECT * FROM member WHERE name LIKE ? ";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
 
+            // Initialize statement
             ps = conn.prepareStatement(sql);
-            ps.setString(1, memberName);
+            ps.setString(1, String.format("%s", memberName) + "%");
 
             // update member data
             rs = ps.executeQuery();
-
             memberList = mapMemberList(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);

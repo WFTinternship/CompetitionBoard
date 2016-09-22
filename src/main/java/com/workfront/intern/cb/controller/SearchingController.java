@@ -37,26 +37,26 @@ public class SearchingController {
 
     @RequestMapping(value = {"/searchByName-form"}, method = RequestMethod.GET)
     public String searchTournamentsByName(Model model,
-                                          @RequestParam("searchStr") String searchTournamentStr,
+                                          @RequestParam("searchStr") String searchStr,
                                           HttpServletRequest request) {
 
         // It contains the values of all list sizes
         List<Integer> allListSize = new ArrayList<>();
 
         // Result by tournament list
-        List<Tournament> tournamentList = tournamentService.getTournamentListByName(searchTournamentStr);
+        List<Tournament> tournamentList = tournamentService.getTournamentListByName(searchStr);
         int tournamentListSize = tournamentList.size();
         allListSize.add(tournamentListSize);
 
         // Result by group list
-        List<Group> groupList = groupService.getGroupListByName(searchTournamentStr);
+        List<Group> groupList = groupService.getGroupListByName(searchStr);
         int groupListSize = groupList.size();
         allListSize.add(groupListSize);
 
-        // Result by group list
-        List<Member> memberList;
-        allListSize.add(groupListSize);
-
+        // Result by member list
+        List<Member> memberList = (List<Member>) participantService.getParticipantListByName(Member.class, searchStr);
+        int memberListSize = memberList.size();
+        allListSize.add(memberListSize);
 
         int size = allListSize.size();
         int sumSize = 0;
@@ -67,6 +67,7 @@ public class SearchingController {
         if (sumSize != 0) {
             request.setAttribute("searchResultTournament", tournamentList);
             request.setAttribute("searchResultGroup", groupList);
+            request.setAttribute("searchResultMember", memberList);
         } else {
             model.addAttribute("noSearchResultMsg", "No matches with provided search criteria");
 
