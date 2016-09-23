@@ -54,8 +54,8 @@ DROP TABLE IF EXISTS `group_participant`;
 CREATE TABLE `group_participant` (
   `group_id` int(11) NOT NULL,
   `participant_id` int(11) NOT NULL,
-  PRIMARY KEY (`group_id`,`participant_id`),
   KEY `fk_group_participant_1_idx` (`participant_id`),
+  KEY `fk_group_participant_2` (`group_id`),
   CONSTRAINT `fk_group_participant_1` FOREIGN KEY (`participant_id`) REFERENCES `participant` (`participant_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_group_participant_2` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -2,7 +2,6 @@ package com.workfront.intern.cb.web.util;
 
 import javax.imageio.ImageIO;
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.awt.*;
@@ -94,8 +93,8 @@ public class Helpers {
 
             // Compose message
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(props.getProperty("mail.from")));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(props.getProperty("mail.to")));
+            message.setFrom(new InternetAddress(props.getProperty("mail.smtp.from")));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(props.getProperty("mail.smtp.to")));
             message.setSubject("From form");
             message.setText(inputMsg);
 
@@ -154,5 +153,4 @@ public class Helpers {
             throw new IllegalArgumentException("unknown image format");
         return filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
     }
-
 }

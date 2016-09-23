@@ -8,6 +8,8 @@ import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.dao.ParticipantDao;
 import com.workfront.intern.cb.dao.ParticipantDaoImpl;
+import com.workfront.intern.cb.service.GroupService;
+import com.workfront.intern.cb.service.GroupServiceImpl;
 import com.workfront.intern.cb.service.ParticipantService;
 import com.workfront.intern.cb.service.ParticipantServiceImpl;
 import org.junit.After;
@@ -30,12 +32,17 @@ public class ParticipantServiceUnitTest extends BaseTest {
     private Member testMember;
     private Team testTeam;
 
-    private ParticipantService participantService;
+    private ParticipantService participantService;;
 
     @Before
     public void beforeTest() throws Exception {
         participantDao = Mockito.mock(ParticipantDaoImpl.class);
+
+        GroupService groupService = Mockito.mock(GroupServiceImpl.class);
+        doNothing().when(groupService).removeAll();
+
         participantService = new ParticipantServiceImpl();
+        Whitebox.setInternalState(participantService, "groupService", groupService);
         Whitebox.setInternalState(participantService, "participantDao", participantDao);
 
         testTournament = DataHelper.createRandomTournament();

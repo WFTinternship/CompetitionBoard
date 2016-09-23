@@ -58,7 +58,6 @@ public class SearchingController {
         int memberListSize = memberList.size();
         allListSize.add(memberListSize);
 
-        int size = allListSize.size();
         int sumSize = 0;
         for (Integer anAllListSize : allListSize) {
             sumSize += anAllListSize;

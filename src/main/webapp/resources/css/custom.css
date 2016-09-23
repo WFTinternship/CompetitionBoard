@@ -124,6 +124,13 @@ h1 {
 }
 
 /* Locations table row update/delete buttons */
+
+.btn-location-0 {
+    position: relative;
+    left: 120px;
+    top: 36px;
+}
+
 .btn-location-1 {
     width: auto;
     height: auto;

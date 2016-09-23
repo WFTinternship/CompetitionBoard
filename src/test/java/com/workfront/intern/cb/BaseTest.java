@@ -2,6 +2,7 @@ package com.workfront.intern.cb;
 
 import com.workfront.intern.cb.common.*;
 import com.workfront.intern.cb.dao.*;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceSpringConfigTest.class)
 @ActiveProfiles("test")
+@Ignore
 public class BaseTest {
     protected final int NON_EXISTING_ID = 9999;
     protected final String NON_EXISTING_LOGIN = "adgOwkJ";

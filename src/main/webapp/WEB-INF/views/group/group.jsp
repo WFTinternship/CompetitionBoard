@@ -189,8 +189,7 @@
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
                                                 <%=groupIDSelected%>
                                             </td>
 
@@ -203,8 +202,7 @@
                                             </td>
 
                                             <%--Participant count--%>
-                                            <td contenteditable="false" data-name="participantCount"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
                                                 <%=groups.get(i).getParticipantsCount()%>
                                             </td>
 

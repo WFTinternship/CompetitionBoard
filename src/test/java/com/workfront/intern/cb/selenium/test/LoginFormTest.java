@@ -12,6 +12,7 @@ import static org.junit.Assert.assertNotNull;
 public class LoginFormTest {
     private static LoginForm loginPopup;
     private static HomePage homePage;
+
     @BeforeClass
     public static void setUp(){
         loginPopup = new LoginForm();

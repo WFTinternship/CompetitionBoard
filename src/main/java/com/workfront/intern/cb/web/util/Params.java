@@ -26,7 +26,8 @@ public class Params {
     public static final String PAGE_GROUPS = "group/group";
     public static final String PAGE_ADD_GROUP = "group/add-group";
 
-
+    //Groups pages
+    public static final String PAGE_ASSIGN_TO_GROUP = "group/assign-participant-to-group";
 
 
     //Medias pages

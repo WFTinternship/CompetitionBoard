@@ -296,7 +296,6 @@
 
                                 <table class="table" id="1">
                                     <tr>
-                                        <th width="1%">Check</th>
                                         <th width="3%">No</th>
                                         <th width="3%">Id</th>
                                         <th>Team Name</th>
@@ -305,12 +304,6 @@
                                     </tr>
 
                                     <tr>
-                                        <%--Radio--%>
-                                        <td>
-                                            <input type="radio" id="" class="checkbox-custom" name="groupId"
-                                                   value="" required/>
-                                        </td>
-
                                         <%--No--%>
                                         <td>
                                         </td>
@@ -334,22 +327,18 @@
                                     </tr>
                                 </table>
                                 </form>
-                            </div>
-                        </div>
 
                         <%-------------------------------------------MEMBERS RESULT-------------------------------------------%>
                         <br>
-
                         <h3>Members</h3>
                         <hr>
-                        <br>
+
                         <%
                             List<Member> memberList = (List<Member>) request.getAttribute("searchResultMember");
                             int memberListSize = memberList.size();
                         %>
-                        <table class="table" id="updateTournamentTable">
+                        <table class="table">
                             <tr>
-                                <th width="1%">Check</th>
                                 <th width="3%">No</th>
                                 <th width="3%">Id</th>
                                 <th>Name</th>
@@ -365,13 +354,6 @@
                             %>
 
                             <tr>
-                                <%--Radio--%>
-                                <td>
-                                    <input type="radio" id="<%=memberId%>" class="checkbox-custom"
-                                           name="groupId"
-                                           value="<%=memberId%>" required/>
-                                </td>
-
                                 <td>
                                     <%=i%>
                                 </td>
@@ -417,8 +399,9 @@
                                 </td>
                             </tr>
                             <%}%>
-
                         </table>
+                            </div>
+                        </div>
 
 
                         <!-- Footer -->

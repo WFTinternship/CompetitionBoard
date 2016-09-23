@@ -5,6 +5,7 @@ import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.dao.*;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.List;
 public class MediaServiceImpl implements MediaService {
     private static final Logger LOG = Logger.getLogger(MediaServiceImpl.class);
 
-    private MediaDao mediaDao = new MediaDaoImpl(DBManager.getDataSource());
+    @Autowired
+    private MediaDao mediaDao;
 
     /**
      * Adds new photo media in db

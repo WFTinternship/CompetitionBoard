@@ -201,7 +201,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         member.setParticipantInfo(newInfo);
 
         // Testing method
-        participantService.update(targetId, testMember1);
+        participantService.update(targetId, member);
 
         // Initialize random manager instance
         member = (Member) participantService.getOne(Member.class, targetId);
@@ -222,7 +222,6 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
     @Test(expected = ObjectNotFoundException.class)
     public void deleteMember_found() throws Exception {
         groupService.removeAllParticipants(testGroup1.getGroupId());
-//        groupDao.removeAllParticipants(testGroup1.getGroupId());
         int targetId = testMember1.getId();
 
         // Testing method
@@ -327,7 +326,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
         team.setParticipantInfo(newInfo);
 
         // Testing method
-        participantService.update(targetId, testTeam1);
+        participantService.update(targetId, team);
 
         // Initialize random manager instance
         team = (Team) participantService.getOne(Team.class, targetId);
@@ -346,8 +345,7 @@ public class ParticipantServiceIntegrationTest extends BaseTest {
 
     @Test(expected = ObjectNotFoundException.class)
     public void deleteTeam_found() throws Exception {
-//        groupService.removeAllParticipants(testGroup2.getGroupId());
-        groupDao.removeAllParticipants(testGroup2.getGroupId());
+        groupService.removeAllParticipants(testGroup2.getGroupId());
         int targetId = testTeam1.getId();
 
         // Testing method

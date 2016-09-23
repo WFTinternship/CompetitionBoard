@@ -125,11 +125,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public void update(int id, Participant participant) {
         try {
-            if (participant instanceof Member) {
-                participantDao.update(id, participant);
-            } else {
-                participantDao.update(id, participant);
-            }
+            participantDao.update(id, participant);
         } catch (FailedOperationException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);

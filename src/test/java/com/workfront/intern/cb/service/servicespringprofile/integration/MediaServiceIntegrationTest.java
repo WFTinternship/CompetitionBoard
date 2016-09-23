@@ -38,10 +38,6 @@ public class MediaServiceIntegrationTest extends BaseTest {
 
     @Before
     public void beforeTest() throws Exception {
-//        managerService = new ManagerServiceImpl();
-//        tournamentService = new TournamentServiceImpl();
-//        mediaService = new MediaServiceImpl();
-
         // Delete all remaining objects
         cleanUp();
 

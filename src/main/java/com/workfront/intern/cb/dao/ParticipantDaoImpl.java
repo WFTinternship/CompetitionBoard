@@ -99,8 +99,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      * Gets specific participant list by group id - memberList or teamList
      */
     @Override
-    public List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId)
-            throws FailedOperationException {
+    public List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId) throws FailedOperationException {
         if (cls.equals(Member.class)) {
             return getMembersByGroupId(groupId);
         } else if (cls.equals(Team.class)) {
@@ -303,8 +302,10 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Member> memberList = new ArrayList<>();
-
-        String sql = "SELECT * FROM member WHERE name LIKE ? ";
+        
+        String sql = "SELECT * FROM participant p INNER JOIN member m ON" +
+                " p.participant_id=m.member_id WHERE name LIKE ?";
+        
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -365,7 +366,10 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         ResultSet rs = null;
         List<Member> memberList = new ArrayList<>();
 
-        String sql = "SELECT * FROM group_participant gp WHERE gp.group_id=?;";
+        String sql = "SELECT * FROM participant p " +
+                "INNER JOIN member m ON p.participant_id = m.member_id " +
+                "INNER JOIN group_participant gp ON p.participant_id = gp.participant_id " +
+                "WHERE gp.group_id = ?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();

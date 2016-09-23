@@ -5,6 +5,7 @@
 <%@ page import="com.workfront.intern.cb.common.Member" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.common.Group" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -111,6 +112,14 @@
     int selectedTournamentId = (int) session.getAttribute("selectedTournamentId");
     Tournament selectedTournament = BeanProvider.getTournamentService().getTournamentById(selectedTournamentId);
     String tournamentName = selectedTournament.getTournamentName();
+
+    List<Member> memberListByTournament =
+            (List<Member>) BeanProvider.getParticipantService().getParticipantsByTournamentId(Member.class, selectedTournamentId);
+    int size = memberListByTournament.size();
+
+    int groupId = (int) session.getAttribute("assignedGroupId");
+    Group group = BeanProvider.getGroupService().getGroupById(groupId);
+    String groupName = group.getGroupName();
 %>
 
 <div class="row">
@@ -121,12 +130,14 @@
                 <div class="row content">
                     <div class="col-sm-3 sidenav">
 
+                        <%-------------------- CREATE TEAM BUTTON --------------------%>
                         <ul class="nav nav-pills nav-stacked">
                             <li>
                                 <button class="btn btn-primary button-custom visible-when-logged-in"><B>Create Team</B></button>
                             </li>
                             <BR>
 
+                            <%-------------------- CREATE MEMBER BUTTON --------------------%>
                             <li>
                                 <form action="add-members-page" method="get">
                                     <button type="submit" class="btn btn-primary button-custom visible-when-logged-in"><B>ADD A MEMBER</B>
@@ -236,11 +247,6 @@
                                     </div>
                                     <br>
                                     <br>
-                                    <%
-                                        List<Member> memberListByTournament = (List<Member>) BeanProvider.getParticipantService().
-                                                getParticipantsByTournamentId(Member.class, selectedTournamentId);
-                                        int size = memberListByTournament.size();
-                                    %>
 
                                     <table class="table" id="updateTournamentTable">
                                         <tr>
@@ -253,6 +259,7 @@
                                             <th>Email</th>
                                             <th>Participant Info</th>
                                             <th>Tournament Name</th>
+                                            <th>Group Name</th>
                                         </tr>
                                         <%
                                             for (int i = 0; i < size; i++) {
@@ -309,6 +316,10 @@
                                                 <%=tournament.getTournamentName()%>
 
                                             </td>
+                                                <%--Group Name--%>
+                                                <td>
+                                                <%=groupName%>
+                                                </td>
                                         </tr>
                                         <%}%>
 

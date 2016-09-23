@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
+<%@ page import="com.workfront.intern.cb.common.Group" %>
 <%@ page import="com.workfront.intern.cb.common.Member" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -111,6 +112,12 @@
     Tournament selectedTournament = BeanProvider.getTournamentService().getTournamentById(slcTournamentId);
     String tournamentName = selectedTournament.getTournamentName();
     session.setAttribute("selectedTournamentId", slcTournamentId);
+
+    // Member list by specific tournament
+    List<Member> memberListByTournament = (List<Member>) BeanProvider.getParticipantService().
+            getParticipantsByTournamentId(Member.class, slcTournamentId);
+    int size = memberListByTournament.size();
+    session.setAttribute("memberListByTournament", memberListByTournament);
 %>
 
 <div class="row">
@@ -122,23 +129,29 @@
                     <div class="col-sm-3 sidenav">
 
                         <ul class="nav nav-pills nav-stacked">
-                            <li>
-                                <button class="btn btn-primary button-custom visible-when-logged-in"><B>Create Team</B>
-                                </button>
-                            </li>
-                            <BR>
 
+                            <%-------------------- CREATE TEAM BUTTON --------------------%>
                             <li>
-                                <form action="add-members-page" method="get">
+                                <form action="" method="get">
                                     <button type="submit" class="btn btn-primary button-custom visible-when-logged-in">
-                                        <B>ADD A MEMBER</B>
+                                        <B>CREATE TEAM</B>
                                     </button>
                                 </form>
                             </li>
+                            <BR>
 
+                            <%-------------------- CREATE MEMBER BUTTON --------------------%>
+                            <li>
+                                <form action="add-members-page" method="get">
+                                    <button type="submit" class="btn btn-primary button-custom visible-when-logged-in">
+                                        <B>CREATE MEMBER</B>
+                                    </button>
+                                </form>
+                            </li>
                         </ul>
                         <br>
                     </div>
+
 
                     <div class="col-sm-9">
                         <h2>
@@ -163,7 +176,7 @@
                                 <%--Remove Button--%>
                                 <form action="#" method="get" id="deleteMemberBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger visible-when-logged-in" type="button" onclick="">
+                                        <button class="btn btn-danger visible-when-logged-in" type="button" onclick="deleteSelectedMembers()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
@@ -222,29 +235,35 @@
 
                         <div class="container">
                             <div id="table" class="table-editable">
-                                <%--Update Button--%>
+                                <%------------ Assign to group Button ------------%>
+
+                                <form action="assign-participant-to-group-page" method="get">
+                                    <div class="btn-location-0">
+                                        <button class="btn btn-primary button-custom visible-when-logged-in"
+                                                type="submit" >
+                                            Add to Group
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <%------------ Update Button ------------%>
                                 <div class="btn-location-1">
                                     <button class="btn btn-warning visible-when-logged-in" type="button" onclick="">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
 
-                                <%--Remove Button--%>
-                                <form action="#" method="get" id="deleteMemberBtnId">
+                                <%------------ Remove Button ------------%>
+                                <form action="deleteMember" method="get" id="deleteMemberBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger visible-when-logged-in " type="button" onclick="">
+                                        <button class="btn btn-danger visible-when-logged-in " type="button" onclick="deleteSelectedMembers()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
                                     <br>
                                     <br>
-                                    <%
-                                        List<Member> memberListByTournament = (List<Member>) BeanProvider.getParticipantService().
-                                                getParticipantsByTournamentId(Member.class, slcTournamentId);
-                                        int size = memberListByTournament.size();
-                                    %>
 
-                                    <table class="table" id="updateTournamentTable">
+                                    <table class="table" >
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
@@ -255,6 +274,7 @@
                                             <th>Email</th>
                                             <th>Participant Info</th>
                                             <th>Tournament Name</th>
+                                            <th>Group Name</th>
                                         </tr>
                                         <%
                                             for (int i = 0; i < size; i++) {
@@ -265,7 +285,7 @@
                                             <%--Radio--%>
                                             <td>
                                                 <input type="radio" id="<%=memberId%>" class="checkbox-custom"
-                                                       name="groupId"
+                                                       name="memberId"
                                                        value="<%=memberId%>" required/>
                                             </td>
 
@@ -303,7 +323,7 @@
                                                 <%=memberListByTournament.get(i).getParticipantInfo()%>
                                             </td>
 
-                                            <%--TournamentName--%>
+                                            <%--Tournament Name--%>
                                             <%
                                                 Tournament tournament = BeanProvider.getTournamentService().
                                                         getTournamentById(memberListByTournament.get(i).getTournamentId());
@@ -311,6 +331,9 @@
                                             <td>
                                                 <%=tournament.getTournamentName()%>
 
+                                            </td>
+                                            <%--Group Name--%>
+                                            <td>
                                             </td>
                                         </tr>
                                         <%}%>

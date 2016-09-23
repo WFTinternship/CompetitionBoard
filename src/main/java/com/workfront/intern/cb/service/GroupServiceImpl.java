@@ -4,10 +4,9 @@ import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Participant;
 import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
 import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
-import com.workfront.intern.cb.dao.DBManager;
 import com.workfront.intern.cb.dao.GroupDao;
-import com.workfront.intern.cb.dao.GroupDaoImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,7 +15,8 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
     private static final Logger LOG = Logger.getLogger(GroupServiceImpl.class);
 
-    private GroupDao groupDao = new GroupDaoImpl(DBManager.getDataSource());
+    @Autowired
+    private GroupDao groupDao;
 
     /**
      * Adds new group in db

@@ -1,12 +1,16 @@
 package com.workfront.intern.cb.common;
 
+import java.util.List;
+
 public class Group {
     private int groupId;
     private String groupName;
-    private int participantsCount;
     private int round;
     private int nextRoundParticipants;
     private int tournamentId;
+
+    private int participantsCount;
+    private List<Participant> participants;
 
     public Group() {
     }
@@ -25,14 +29,6 @@ public class Group {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public int getParticipantsCount() {
-        return participantsCount;
-    }
-
-    public void setParticipantsCount(int participantsCount) {
-        this.participantsCount = participantsCount;
     }
 
     public int getRound() {
@@ -57,6 +53,22 @@ public class Group {
 
     public void setTournamentId(int tournamentId) {
         this.tournamentId = tournamentId;
+    }
+
+    public int getParticipantsCount() {
+        return participantsCount;
+    }
+
+    public void setParticipantsCount(int participantsCount) {
+        this.participantsCount = participantsCount;
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 
     @Override

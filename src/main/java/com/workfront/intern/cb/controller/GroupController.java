@@ -2,9 +2,11 @@ package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
+import com.workfront.intern.cb.common.Member;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.GroupService;
 import com.workfront.intern.cb.service.ManagerService;
+import com.workfront.intern.cb.service.ParticipantService;
 import com.workfront.intern.cb.service.TournamentService;
 import com.workfront.intern.cb.web.util.Params;
 import org.apache.log4j.Logger;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.workfront.intern.cb.web.util.Params.PAGE_ASSIGN_TO_GROUP;
+
 @Controller
 public class GroupController {
     private static Logger LOG = Logger.getLogger(GroupController.class);
@@ -32,6 +36,9 @@ public class GroupController {
 
     @Autowired
     GroupService groupService;
+
+    @Autowired
+    ParticipantService participantService;
 
     @RequestMapping(value = {"/all-group-page"})
     public String toAllGroupPage(Model model,
@@ -114,8 +121,8 @@ public class GroupController {
 
     @RequestMapping(value = "/updateGroup", method = RequestMethod.GET)
     public String updateGroup(Model model,
-                                   @RequestParam("groupName") String groupName,
-                                    HttpServletRequest request) {
+                              @RequestParam("groupName") String groupName,
+                              HttpServletRequest request) {
 
         int groupId = Integer.parseInt(request.getParameter("groupIDSelected"));
         Group group = groupService.getGroupById(groupId);
@@ -128,11 +135,71 @@ public class GroupController {
 
     // endregion
 
+    // region <Assign to Group>
+
+    @RequestMapping(value = "/assign-participant-to-group-page", method = RequestMethod.GET)
+    public String assignParticipantToGroupPage(Model model,
+                                           HttpServletRequest request) {
+
+        // Selected groups list of manager tournaments
+        List<Group> groupListByManager = new ArrayList<>();
+
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+
+        // All groups list
+        List<Group> allGroups = groupService.getAllGroups();
+        int allGroupsSize = allGroups.size();
+
+        // Tournaments list of manager
+        List<Tournament> tournamentListByManager = tournamentService.getTournamentListByManager(manager.getId());
+        int tournamentListSize = tournamentListByManager.size();
+        for (int i = 0; i < tournamentListSize; i++) {
+            for (int j = 0; j < allGroupsSize; j++) {
+                if ((tournamentListByManager.get(i).getTournamentId()) == allGroups.get(j).getTournamentId()) {
+                    groupListByManager.add(allGroups.get(j));
+                }
+            }
+        }
+
+        session.setAttribute("groupListByManager", groupListByManager);
+
+        return PAGE_ASSIGN_TO_GROUP;
+    }
+
+    @RequestMapping(value = "/assignToGroup-form", method = RequestMethod.GET)
+    public String assignParticipantToGroup(Model model,
+                                           @RequestParam("groupId") int groupId,
+                                           HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("assignedGroupId", groupId);
+
+        int tournamentId = (int) session.getAttribute("selectedTournamentId");
+        Member member;
+        List<Member> memberList = (List<Member>) session.getAttribute("memberListByTournament");
+        int size = memberList.size();
+        for (int i = 0; i < size; i++) {
+            int id = memberList.get(i).getId();
+            member = (Member) participantService.getOne(Member.class, id);
+            groupService.assignParticipant(tournamentId, groupId, member);
+        }
+
+        return Params.PAGE_PARTICIPANTS_MIRROR;
+    }
+
+
+
+
+
+
+    // endregion
+
     // region <DELETE Group>
 
     @RequestMapping(value = "/deleteGroup", method = RequestMethod.GET)
     public String deleteGroup(Model model,
-                                   @RequestParam("groupId") String groupId) {
+                              @RequestParam("groupId") String groupId) {
         try {
             groupService.deleteGroup(Integer.parseInt(groupId));
         } catch (Exception ex) {
