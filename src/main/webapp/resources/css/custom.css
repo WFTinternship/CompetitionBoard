@@ -147,6 +147,10 @@ h1 {
     color: black;
 }
 
+.label-size {
+    font-size: 15px;
+}
+
 .background-custom {
     background-color: #838383;
     background-size: 100% 110%;

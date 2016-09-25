@@ -14,8 +14,8 @@ import java.util.Set;
 
 public class RequestFilter implements Filter {
     final Set<String> adminURIs = new HashSet<>(Arrays.asList(
-            "/unknown-1-uri",
             "/tournament-page",
+            "/match-page",
             "/unknown-1-uri"
     ));
 

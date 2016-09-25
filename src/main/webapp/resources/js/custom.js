@@ -40,13 +40,13 @@ function showMenuItemReverse() {
     });
 }
 
+//-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-TOURNAMENT-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
 //Deletes selected tournament
 function deleteSelectedTournament() {
     var elements;
     var current;
     var noneChecked = true;
-
     elements = document.getElementsByName("tournamentNameId");
     for (var i = 0, len = elements.length; i < len; ++i) {
         if (elements[i].checked) {
@@ -65,10 +65,7 @@ function deleteSelectedTournament() {
 
 //Updates selected tournament
 function updateSelectedTournament() {
-    $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);  
-    // if (noneChecked) {
-    //     alert("Axbers nshi mi ban")
-    // }
+    $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
 }
 
 $(document).ready(function () {
@@ -94,14 +91,35 @@ $(document).ready(function () {
     });
 });
 
-//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-
+//-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-GROUPS-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//Assign selected member to group
+function assignToGroup() {
+    var elements;
+    var current;
+    var noneChecked = true;
+    elements = document.getElementsByName("memberNameId");
+    for (var i = 0, len = elements.length; i < len; ++i) {
+        if (elements[i].checked) {
+            noneChecked = false;
+            current = elements[i].value;
+            if (confirm("Are you sure you want to assign to group ? ") == true) {
+                document.getElementById("assignToGroupBtn").submit();
+            }
+            break;
+        }
+    }
+    if (noneChecked) {
+        alert("Axbers nshi mi ban")
+    }
+}
+
+
 
 //Deletes selected groups
 function deleteSelectedGroup() {
     var elements;
     var current;
     var noneChecked = true;
-
     elements = document.getElementsByName("groupId");
     for (var i = 0, len = elements.length; i < len; ++i) {
         if (elements[i].checked) {
@@ -139,33 +157,31 @@ $(document).ready(function () {
         });
     });
 });
-
-
-    $(document).ready(function(e){
-        $('.search-panel .dropdown-menu').find('a').click(function(e) {
-            e.preventDefault();
-            var param = $(this).attr("href").replace("#","");
-            var concept = $(this).text();
-            $('.search-panel span#search_concept').text(concept);
-            $('.input-group #search_param').val(param);
-        });
+$(document).ready(function (e) {
+    $('.search-panel .dropdown-menu').find('a').click(function (e) {
+        e.preventDefault();
+        var param = $(this).attr("href").replace("#", "");
+        var concept = $(this).text();
+        $('.search-panel span#search_concept').text(concept);
+        $('.input-group #search_param').val(param);
     });
+});
 
 
-//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-
+//-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-MEMBER-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+
 
 //Deletes selected MEMBERS
 function deleteSelectedMembers() {
     var elements;
     var current;
     var noneChecked = true;
-
-    elements = document.getElementsByName("memberId");
+    elements = document.getElementsByName("memberNameId");
     for (var i = 0, len = elements.length; i < len; ++i) {
         if (elements[i].checked) {
             noneChecked = false;
             current = elements[i].value;
-            if (confirm("Are you sure you want to delete tournament ? ") == true) {
+            if (confirm("Are you sure you want to delete member ? ") == true) {
                 document.getElementById("deleteMemberBtnId").submit();
             }
             break;
