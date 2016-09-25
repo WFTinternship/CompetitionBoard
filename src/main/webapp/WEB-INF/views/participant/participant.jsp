@@ -120,7 +120,7 @@
 
     Tournament selectedTournament = BeanProvider.getTournamentService().getTournamentById(slcTournamentId);
     String tournamentName = selectedTournament.getTournamentName();
-    session.setAttribute("selectedTournamentId", slcTournamentId);
+//    session.setAttribute("selectedTournamentId", slcTournamentId);
 
     // Member list by specific tournament
     List<Member> memberListByTournament = (List<Member>) BeanProvider.getParticipantService().
@@ -252,7 +252,7 @@
                                 <form action="assign-participant-to-group-page" method="get" id="assignToGroupBtn">
                                     <div class="btn-location-0">
                                         <button class="btn btn-primary button-custom visible-when-logged-in"
-                                                type="button" onclick="assignToGroup()">
+                                                type="submit">
                                             Add to Group
                                         </button>
                                     </div>
@@ -346,6 +346,9 @@
                                             </td>
                                             <%--Group Name--%>
                                             <td>
+                                                <%
+                                                    BeanProvider.getGroupService().get
+                                                %>
                                             </td>
                                         </tr>
                                         <%}%>

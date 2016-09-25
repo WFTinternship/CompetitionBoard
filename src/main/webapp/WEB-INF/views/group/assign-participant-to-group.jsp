@@ -1,6 +1,7 @@
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Group" %>
+<%@ page import="com.workfront.intern.cb.common.Member" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -42,7 +43,11 @@
 
             <form action="assignToGroup-form" class="form-horizontal" method="get" id="assignToGroupBtn">
 
-                <%List<Group> groupListByManager = (List<Group>) session.getAttribute("groupListByManager");%>
+                <%
+                    List<Group> groupListByManager = (List<Group>) session.getAttribute("groupListByManager");
+                    List<Member> memberListByTournament = (List<Member>) session.getAttribute("memberListByTournament");
+
+                %>
 
                 <%--Group name--%>
                 <div class="form-group">
@@ -63,6 +68,28 @@
                         </div>
                     </div>
                 </div>
+
+                <%--Participant name--%>
+                <div class="form-group">
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                            <select id="" name="memberId" class="form-control" required >
+                                <option value="notSelected" selected="selected">Select Members</option>
+                                <%
+                                    for (Member member : memberListByTournament) {
+                                        String memberName = member.getName();
+                                        int memberId = member.getId();
+                                %>
+                                <option value="<%=memberId%>"><%=memberName%>
+                                    <%}%>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="form-group ">
                     <br>
                     <br>

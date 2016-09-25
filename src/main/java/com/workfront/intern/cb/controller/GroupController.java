@@ -139,11 +139,9 @@ public class GroupController {
 
     @RequestMapping(value = "/assign-participant-to-group-page", method = RequestMethod.GET)
     public String assignParticipantToGroupPage(Model model,
-                                           @RequestParam("memberNameId") int memberAssignId,
                                                HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        session.setAttribute("memberNameId", memberAssignId);
 
 
         // Selected groups list of manager tournaments
@@ -173,12 +171,12 @@ public class GroupController {
     @RequestMapping(value = "/assignToGroup-form", method = RequestMethod.GET)
     public String assignParticipantToGroup(Model model,
                                            @RequestParam("groupId") int groupId,
+                                           @RequestParam("memberId") int memberId,
                                            HttpServletRequest request) {
 
         HttpSession session = request.getSession();
 
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
-        int memberId = (int) session.getAttribute("memberAssignId");
 
         Member member = (Member) participantService.getOne(Member.class, memberId);
 
