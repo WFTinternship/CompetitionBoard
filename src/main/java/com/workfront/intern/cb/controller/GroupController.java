@@ -139,12 +139,16 @@ public class GroupController {
 
     @RequestMapping(value = "/assign-participant-to-group-page", method = RequestMethod.GET)
     public String assignParticipantToGroupPage(Model model,
-                                           HttpServletRequest request) {
+                                           @RequestParam("memberNameId") int memberAssignId,
+                                               HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("memberNameId", memberAssignId);
+
 
         // Selected groups list of manager tournaments
         List<Group> groupListByManager = new ArrayList<>();
 
-        HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
 
         // All groups list
@@ -161,7 +165,6 @@ public class GroupController {
                 }
             }
         }
-
         session.setAttribute("groupListByManager", groupListByManager);
 
         return PAGE_ASSIGN_TO_GROUP;
@@ -173,19 +176,16 @@ public class GroupController {
                                            HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        session.setAttribute("assignedGroupId", groupId);
 
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
-        Member member;
-        List<Member> memberList = (List<Member>) session.getAttribute("memberListByTournament");
-        int size = memberList.size();
-        for (int i = 0; i < size; i++) {
-            int id = memberList.get(i).getId();
-            member = (Member) participantService.getOne(Member.class, id);
-            groupService.assignParticipant(tournamentId, groupId, member);
-        }
+        int memberId = (int) session.getAttribute("memberAssignId");
 
-        return Params.PAGE_PARTICIPANTS_MIRROR;
+        Member member = (Member) participantService.getOne(Member.class, memberId);
+
+        groupService.assignParticipant(tournamentId, groupId, member);
+
+        session.setAttribute("assignedGroupId", groupId);
+        return Params.PAGE_PARTICIPANTS;
     }
 
 

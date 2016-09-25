@@ -42,31 +42,24 @@
     <div class="row main">
         <div class="main-login main-center">
 
-            <h2>Add Member</h2>
+            <h2>Add Member
+                <p>to
+                <p><%=tournament.getTournamentName()%>
+
+            </h2>
             <hr>
 
-            <form action="addMember-form" class="form-horizontal" method="get" >
-
-                <%--Tournament name--%>
-                <div class="form-group">
-                    <label for="tournamentName" class="cols-sm-2 control-label">Tournament name</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="nameMember" id="tournamentName"
-                                   placeholder=<%=tournament.getTournamentName()%> disabled/>
-                        </div>
-                    </div>
-                </div>
+            <form action="addMember-form" class="form-horizontal" method="get">
 
                 <%--Name--%>
                 <div class="form-group">
                     <label for="memberId" class="cols-sm-2 control-label">Name</label>
+
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="nameMember" id="memberId"
-                                   placeholder="Name" />
+                                   placeholder="Name" required/>
                         </div>
                     </div>
                 </div>
@@ -74,11 +67,12 @@
                 <%--SurName--%>
                 <div class="form-group">
                     <label for="surNameId" class="cols-sm-2 control-label">Surname</label>
+
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="surNameMember" id="surNameId"
-                                   placeholder="Surname"/>
+                                   placeholder="Surname" required/>
                         </div>
                     </div>
                 </div>
@@ -86,6 +80,7 @@
                 <%--Position--%>
                 <div class="form-group">
                     <label for="positionId" class="cols-sm-2 control-label">Position</label>
+
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-wrench fa" aria-hidden="true"></i></span>
@@ -95,29 +90,31 @@
                     </div>
                 </div>
 
-                    <%--Email--%>
-                    <div class="form-group">
-                        <label for="emailId" class="cols-sm-2 control-label">Email</label>
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                <input type="email" class="form-control" name="emailMember" id="emailId"
-                                       placeholder="Email"/>
-                            </div>
-                        </div>
-                    </div>
+                <%--Email--%>
+                <div class="form-group">
+                    <label for="emailId" class="cols-sm-2 control-label">Email</label>
 
-                    <%--Participant info--%>
-                    <div class="form-group">
-                        <label for="infoId" class="cols-sm-2 control-label">Info</label>
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-info fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="infoMember" id="infoId"
-                                       placeholder="Info"/>
-                            </div>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            <input type="email" class="form-control" name="emailMember" id="emailId"
+                                   placeholder="Email"/>
                         </div>
                     </div>
+                </div>
+
+                <%--Participant info--%>
+                <div class="form-group">
+                    <label for="infoId" class="cols-sm-2 control-label">Info</label>
+
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-info fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="infoMember" id="infoId"
+                                   placeholder="Info"/>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group ">
                     <input type="reset" class="btn btn-danger btn-lg btn-block login-button" value="Reset"/>

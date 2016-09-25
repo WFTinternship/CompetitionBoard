@@ -66,9 +66,9 @@
                     </a>
                 </li>
 
-                <%--Group--%>
+                <%--Match--%>
                 <li>
-                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
                     </a>
                 </li>
 
@@ -328,78 +328,79 @@
                                 </table>
                                 </form>
 
-                        <%-------------------------------------------MEMBERS RESULT-------------------------------------------%>
-                        <br>
-                        <h3>Members</h3>
-                        <hr>
+                                <%-------------------------------------------MEMBERS RESULT-------------------------------------------%>
+                                <br>
 
-                        <%
-                            List<Member> memberList = (List<Member>) request.getAttribute("searchResultMember");
-                            int memberListSize = memberList.size();
-                        %>
-                        <table class="table">
-                            <tr>
-                                <th width="3%">No</th>
-                                <th width="3%">Id</th>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>Position</th>
-                                <th>Email</th>
-                                <th>Participant Info</th>
-                                <th>Tournament Name</th>
-                            </tr>
-                            <%
-                                for (int i = 0; i < memberListSize; i++) {
-                                    int memberId = memberList.get(i).getId();
-                            %>
+                                <h3>Members</h3>
+                                <hr>
 
-                            <tr>
-                                <td>
-                                    <%=i%>
-                                </td>
-
-                                <%--Id--%>
-                                <td>
-                                    <%=memberId%>
-                                </td>
-
-                                <%--Name--%>
-                                <td>
-                                    <%=memberList.get(i).getName()%>
-                                </td>
-
-                                <%--Surname--%>
-                                <td>
-                                    <%=memberList.get(i).getSurName()%>
-                                </td>
-
-                                <%--Position--%>
-                                <td>
-                                    <%=memberList.get(i).getPosition()%>
-                                </td>
-
-                                <%--Email--%>
-                                <td>
-                                    <%=memberList.get(i).getEmail()%>
-                                </td>
-
-                                <%--Participant info--%>
-                                <td>
-                                    <%=memberList.get(i).getParticipantInfo()%>
-                                </td>
-
-                                <%--TournamentName--%>
                                 <%
-                                    Tournament tournament = BeanProvider.getTournamentService().
-                                            getTournamentById(memberList.get(i).getTournamentId());
+                                    List<Member> memberList = (List<Member>) request.getAttribute("searchResultMember");
+                                    int memberListSize = memberList.size();
                                 %>
-                                <td>
-                                    <%=tournament.getTournamentName()%>
+                                <table class="table">
+                                    <tr>
+                                        <th width="3%">No</th>
+                                        <th width="3%">Id</th>
+                                        <th>Name</th>
+                                        <th>Surname</th>
+                                        <th>Position</th>
+                                        <th>Email</th>
+                                        <th>Participant Info</th>
+                                        <th>Tournament Name</th>
+                                    </tr>
+                                    <%
+                                        for (int i = 0; i < memberListSize; i++) {
+                                            int memberId = memberList.get(i).getId();
+                                    %>
 
-                                </td>
-                            </tr>
-                            <%}%>
-                        </table>
+                                    <tr>
+                                        <td>
+                                            <%=i%>
+                                        </td>
+
+                                        <%--Id--%>
+                                        <td>
+                                            <%=memberId%>
+                                        </td>
+
+                                        <%--Name--%>
+                                        <td>
+                                            <%=memberList.get(i).getName()%>
+                                        </td>
+
+                                        <%--Surname--%>
+                                        <td>
+                                            <%=memberList.get(i).getSurName()%>
+                                        </td>
+
+                                        <%--Position--%>
+                                        <td>
+                                            <%=memberList.get(i).getPosition()%>
+                                        </td>
+
+                                        <%--Email--%>
+                                        <td>
+                                            <%=memberList.get(i).getEmail()%>
+                                        </td>
+
+                                        <%--Participant info--%>
+                                        <td>
+                                            <%=memberList.get(i).getParticipantInfo()%>
+                                        </td>
+
+                                        <%--TournamentName--%>
+                                        <%
+                                            Tournament tournament = BeanProvider.getTournamentService().
+                                                    getTournamentById(memberList.get(i).getTournamentId());
+                                        %>
+                                        <td>
+                                            <%=tournament.getTournamentName()%>
+
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </table>
                             </div>
                         </div>
 

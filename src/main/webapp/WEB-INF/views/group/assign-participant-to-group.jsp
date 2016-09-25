@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add members</title>
+    <title>Assign to Group</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +40,7 @@
             <h2>Assign to Group</h2>
             <hr>
 
-            <form action="assignToGroup-form" class="form-horizontal" method="get">
+            <form action="assignToGroup-form" class="form-horizontal" method="get" id="assignToGroupBtn">
 
                 <%List<Group> groupListByManager = (List<Group>) session.getAttribute("groupListByManager");%>
 

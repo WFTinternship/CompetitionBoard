@@ -11,12 +11,12 @@
     String userName = "";
     String welcomeStr = "";
     String hrefToSpecificTournamentPage = "all-tournaments-page";
-    String hrefToSpecificGroupPage = "all-group-page";
+    String hrefToSpecificMatchPage = "all-match-page";
     String avatar = "";
     String addTournamentMenuItem = null;
     String classStr = null;
     String allTournaments = "All Tournaments";
-    String allGroups = "All Groups";
+    String allMatches = "All Matches";
 
     Manager manager = (Manager) session.getAttribute("manager");
 
@@ -25,10 +25,10 @@
         userName = manager.getLogin();
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
-        hrefToSpecificGroupPage = "group-page";
+        hrefToSpecificMatchPage = "match-page";
         addTournamentMenuItem = "Add Tournament";
         allTournaments = "Tournaments";
-        allGroups = "Groups";
+        allMatches = "Matches";
         classStr = "visible-element";
     }
 

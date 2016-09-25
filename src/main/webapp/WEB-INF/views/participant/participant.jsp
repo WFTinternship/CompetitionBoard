@@ -72,9 +72,9 @@
                     </a>
                 </li>
 
-                <%--Group--%>
+                <%--Match--%>
                 <li>
-                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
                     </a>
                 </li>
 
@@ -108,7 +108,16 @@
 </nav>
 
 <%
-    int slcTournamentId = Integer.parseInt(request.getParameter("selectedTournamentId"));
+    int slcTournamentId = -1;
+    String slcTournamentIdStr = request.getParameter("selectedTournamentId");
+
+    if (slcTournamentIdStr != null) {
+        slcTournamentId = Integer.parseInt(request.getParameter("selectedTournamentId"));
+        session.setAttribute("selectedTournamentId", slcTournamentId);
+    } else {
+        slcTournamentId = (int) session.getAttribute("selectedTournamentId");
+    }
+
     Tournament selectedTournament = BeanProvider.getTournamentService().getTournamentById(slcTournamentId);
     String tournamentName = selectedTournament.getTournamentName();
     session.setAttribute("selectedTournamentId", slcTournamentId);
@@ -117,7 +126,9 @@
     List<Member> memberListByTournament = (List<Member>) BeanProvider.getParticipantService().
             getParticipantsByTournamentId(Member.class, slcTournamentId);
     int size = memberListByTournament.size();
+
     session.setAttribute("memberListByTournament", memberListByTournament);
+
 %>
 
 <div class="row">
@@ -174,9 +185,10 @@
                                 </div>
 
                                 <%--Remove Button--%>
-                                <form action="#" method="get" id="deleteMemberBtnId">
+                                <form action="#" method="get" id="">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger visible-when-logged-in" type="button" onclick="deleteSelectedMembers()">
+                                        <button class="btn btn-danger visible-when-logged-in" type="button"
+                                                onclick="deleteSelectedMembers()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
@@ -196,7 +208,7 @@
                                         <tr>
                                             <%--Radio--%>
                                             <td>
-                                                <input type="radio" id="" class="checkbox-custom" name="groupId"
+                                                <input type="radio" class="checkbox-custom" name="groupId"
                                                        value="" required/>
                                             </td>
 
@@ -235,16 +247,17 @@
 
                         <div class="container">
                             <div id="table" class="table-editable">
-                                <%------------ Assign to group Button ------------%>
 
-                                <form action="assign-participant-to-group-page" method="get">
+                                <%------------ Assign to group Button ------------%>
+                                <form action="assign-participant-to-group-page" method="get" id="assignToGroupBtn">
                                     <div class="btn-location-0">
                                         <button class="btn btn-primary button-custom visible-when-logged-in"
-                                                type="submit" >
+                                                type="button" onclick="assignToGroup()">
                                             Add to Group
                                         </button>
                                     </div>
-                                </form>
+                                    </form>
+
 
                                 <%------------ Update Button ------------%>
                                 <div class="btn-location-1">
@@ -263,7 +276,7 @@
                                     <br>
                                     <br>
 
-                                    <table class="table" >
+                                    <table class="table">
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
@@ -285,8 +298,7 @@
                                             <%--Radio--%>
                                             <td>
                                                 <input type="radio" id="<%=memberId%>" class="checkbox-custom"
-                                                       name="memberId"
-                                                       value="<%=memberId%>" required/>
+                                                                        name="memberNameId" value="<%=memberId%>" required/>
                                             </td>
 
                                             <td>
@@ -337,7 +349,6 @@
                                             </td>
                                         </tr>
                                         <%}%>
-
                                     </table>
                                 </form>
 

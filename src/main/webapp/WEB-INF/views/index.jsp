@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.workfront.intern.cb.web.util.Params" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,9 +71,9 @@
                     </a>
                 </li>
 
-                <%--Group--%>
+                <%--Matches--%>
                 <li>
-                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
                     </a>
                 </li>
 

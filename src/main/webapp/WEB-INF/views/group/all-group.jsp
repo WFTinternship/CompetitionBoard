@@ -70,11 +70,11 @@
                     </a>
                 </li>
 
-                <%--Group--%>
-                <li>
-                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
-                    </a>
-                </li>
+                    <%--Match--%>
+                    <li>
+                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%%>
+                        </a>
+                    </li>
 
                 <%--Gallery--%>
                 <li>

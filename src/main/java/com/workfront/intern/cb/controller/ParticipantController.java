@@ -85,7 +85,6 @@ public class ParticipantController {
         participantService.addParticipant(member);
 
         return "participant/participant";
-//        return "participant/participant-mirror";
     }
 
     // endregion
@@ -93,18 +92,17 @@ public class ParticipantController {
     // region <DELETE MEMBERS>
 
     @RequestMapping(value = "/deleteMember", method = RequestMethod.GET)
-    public String deleteTournament(Model model,
-                                   @RequestParam("memberId") String tournamentId) {
-
+    public String deleteMember(Model model,
+                                   @RequestParam("memberNameId") int memberId) {
         try {
-
+            participantService.delete(memberId);
         } catch (Exception ex) {
-            return "redirect:tournament-page";
+            LOG.error(ex.getMessage(), ex);
+            return "redirect:participant-page";
         }
 
-        return "redirect:tournament-page";
+        return "redirect:participant-page";
     }
 
     // endregion
-
 }

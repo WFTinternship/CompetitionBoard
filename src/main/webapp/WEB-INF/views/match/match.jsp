@@ -8,7 +8,7 @@
 <html lang="en">
 
 <head>
-    <title>User's groups</title>
+    <title>User's match</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,11 +72,11 @@
                     </a>
                 </li>
 
-                    <%--Match--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%%>
-                        </a>
-                    </li>
+                <%--Match--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                    </a>
+                </li>
 
                 <%--Gallery--%>
                 <li>
@@ -120,7 +120,7 @@
                                 <form action="add-group-page" method="get">
                                     <button type="submit"
                                             class="btn btn-primary button-custom visible-when-logged-in page-scroll">
-                                        <B>Create Group</B>
+                                        <B>...</B>
                                     </button>
                                 </form>
                             </li>
@@ -129,7 +129,7 @@
                         <br>
                     </div>
                     <div class="col-sm-9">
-                        <h2><%=userName%> groups</h2>
+                        <h2><%=userName%> matches</h2>
                         <hr>
                         <br>
 
@@ -138,7 +138,7 @@
 
                                 <%--Update Button--%>
                                 <div class="btn-location-1">
-                                    <button class="btn btn-warning" type="button" onclick="updateSelectedGroups()">
+                                    <button class="btn btn-warning" type="button" onclick="">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
@@ -146,19 +146,13 @@
                                 <%--Remove Button--%>
                                 <form action="deleteGroup" method="get" id="deleteGroupBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger" type="button" onclick="deleteSelectedGroup()">
+                                        <button class="btn btn-danger" type="button" onclick="">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
 
                                     <br>
                                     <br>
-                                    <%
-                                        TournamentService tournamentService = BeanProvider.getTournamentService();
-
-                                        List<Group> groups = (List<Group>) request.getAttribute("groupsByManager");
-                                        int size = groups.size();
-                                    %>
                                     <table class="table" id="updateGroupTable">
                                         <tr>
                                             <th width="1%">Check</th>
@@ -171,72 +165,53 @@
                                             <th>Tournament Id</th>
                                             <th>Tournament name</th>
                                         </tr>
-                                        <%
-                                            for (int i = 0; i < size; i++) {
-                                                int groupIDSelected = groups.get(i).getGroupId();
-                                                session.setAttribute("groupIDSelected", groupIDSelected);
-                                        %>
+
                                         <tr>
                                             <%--Radio--%>
                                             <td>
-                                                <input type="radio" id="<%=groupIDSelected%>" class="checkbox-custom"
-                                                       name="groupId" value="<%=groupIDSelected%>" required/>
+                                                <input type="radio" id="" class="checkbox-custom"
+                                                       name="groupId" value="" required/>
                                             </td>
 
                                             <%--No--%>
                                             <td>
-                                                <%=i%>
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
-                                                <%=groupIDSelected%>
+                                            <td contenteditable="false" data-name="groupIDSelected"
+                                                data-updatable="false">
                                             </td>
 
                                             <%--Name--%>
                                             <td contenteditable="false" data-name="groupName" data-updatable="true">
-                                                <a href="participant-page?groupName=<%=groups.get(i).getGroupName()%>"
+                                                <a href="participant-page?groupName="
                                                    class="a-custom" name="hrefTournamentName">
-                                                    <%=groups.get(i).getGroupName()%>
                                                 </a>
                                             </td>
 
                                             <%--Participant count--%>
-                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
-                                                <%=groups.get(i).getParticipantsCount()%>
+                                            <td contenteditable="false" data-name="participantCount"
+                                                data-updatable="false">
                                             </td>
 
                                             <%--Round--%>
                                             <td contenteditable="false" data-name="round" data-updatable="false">
-                                                <%=groups.get(i).getRound()%>
                                             </td>
 
                                             <%--Next Round Participants--%>
                                             <td contenteditable="false" data-name="nextRoundParticipants"
                                                 data-updatable="false">
-                                                <%=groups.get(i).getNextRoundParticipants()%>
                                             </td>
 
                                             <%--Tournament Id--%>
-                                                <%
-                                                    int tournamentIdSelected = groups.get(i).getTournamentId();
-                                                    session.setAttribute("tournamentIdSelected", tournamentIdSelected);
-                                                %>
                                             <td contenteditable="false" data-name="tournamentId" data-updatable="false">
-                                                <%=tournamentIdSelected%>
                                             </td>
 
                                             <%--Tournament name--%>
-                                            <%
-                                                String tournamentNameSelected = tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName();
-                                                session.setAttribute("tournamentNameSelected", tournamentNameSelected);
-
-                                            %>
-                                            <td contenteditable="false" data-name="tournamentName" data-updatable="false">
-                                                <%=tournamentNameSelected%>
+                                            <td contenteditable="false" data-name="tournamentName"
+                                                data-updatable="false">
                                             </td>
                                         </tr>
-                                        <%}%>
                                     </table>
                                 </form>
 

@@ -46,6 +46,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <BR><BR>
+
                     <h1 style="color: #080808">Contact Us</h1>
 
                     <form action="send-mail" id="contact-form" method="post" role="form"
@@ -54,6 +55,8 @@
                         <div class="messages"></div>
                         <div class="controls">
                             <div class="row">
+
+                                <%----------------FirstName ----------------%>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="label-custom" for="form_name">Firstname *</label>
@@ -64,6 +67,8 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
+
+                                <%----------------LastName ----------------%>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="label-custom" for="form_lastname">Lastname *</label>
@@ -75,6 +80,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <%----------------EmailName ----------------%>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -86,16 +93,21 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
+
+                                <%----------------Phone ----------------%>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="label-custom" for="form_phone">Phone</label>
+                                        <label class="label-custom" for="form_phone">Phone *</label>
                                         <input id="form_phone" type="tel" name="phone" class="form-control"
-                                               placeholder="Please enter your phone">
+                                               placeholder="Please enter your phone *" required="required"
+                                               pattern="[0-9]{1}[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}">
 
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                             </div>
+
+                            <%----------------Messages ----------------%>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -108,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="submit" class="btn btn-success btn-send" value="Send message" >
+                                    <input type="submit" class="btn btn-success btn-send" value="Send message">
                                 </div>
                             </div>
                         </div>

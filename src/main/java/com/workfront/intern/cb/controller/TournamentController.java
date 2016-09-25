@@ -48,8 +48,6 @@ public class TournamentController {
         return Params.PAGE_TOURNAMENT;
     }
 
-
-
     @RequestMapping(value = {"/all-tournaments-page"})
     public String allTournament(Model model, HttpServletRequest request, HttpServletResponse response) {
 
@@ -141,11 +139,12 @@ public class TournamentController {
 
     @RequestMapping(value = "/deleteTournament", method = RequestMethod.GET)
     public String deleteTournament(Model model,
-                                   @RequestParam("tournamentNameId") String tournamentId) {
+                                   @RequestParam("tournamentNameId") int tournamentId) {
 
         try {
-            tournamentService.deleteTournamentById(Integer.parseInt(tournamentId));
+            tournamentService.deleteTournamentById(tournamentId);
         } catch (Exception ex) {
+            LOG.error(ex.getMessage(), ex);
             return "redirect:tournament-page";
         }
 

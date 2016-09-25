@@ -29,6 +29,12 @@ public class Params {
     //Groups pages
     public static final String PAGE_ASSIGN_TO_GROUP = "group/assign-participant-to-group";
 
+    //Matches pages
+    public static final String PAGE_ALL_MATCH = "match/all-match";
+    public static final String PAGE_MATCH = "match/match";
+
+
+
 
     //Medias pages
     public static final String PAGE_MEDIA = "/media.jsp";

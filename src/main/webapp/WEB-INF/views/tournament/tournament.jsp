@@ -66,11 +66,11 @@
                     </a>
                 </li>
 
-                <%--Group--%>
-                <li>
-                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
-                    </a>
-                </li>
+                    <%--Match--%>
+                    <li>
+                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                        </a>
+                    </li>
 
                 <%--Gallery--%>
                 <li>
@@ -139,8 +139,7 @@
                                 <%--Remove Button--%>
                                 <form action="deleteTournament" method="get" id="deleteBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger" type="button"
-                                                onclick="deleteSelectedTournament()">
+                                        <button class="btn btn-danger" type="button" onclick="deleteSelectedTournament()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
