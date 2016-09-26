@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Group" %>
 <%@ page import="com.workfront.intern.cb.common.Member" %>
+<%@ page import="com.workfront.intern.cb.common.Team" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -42,10 +43,10 @@
             <hr>
 
             <form action="assignToGroup-form" class="form-horizontal" method="get" id="assignToGroupBtn">
-
                 <%
                     List<Group> groupListByManager = (List<Group>) session.getAttribute("groupListByManager");
                     List<Member> memberListByTournament = (List<Member>) session.getAttribute("memberListByTournament");
+                    List<Team> teamListByTournament = (List<Team>) session.getAttribute("teamListByTournament");
 
                 %>
 
@@ -69,12 +70,12 @@
                     </div>
                 </div>
 
-                <%--Participant name--%>
+                <%--Member name--%>
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="" name="memberId" class="form-control" required >
+                            <select name="memberId" class="form-control" required >
                                 <option value="notSelected" selected="selected">Select Members</option>
                                 <%
                                     for (Member member : memberListByTournament) {
@@ -89,6 +90,25 @@
                     </div>
                 </div>
 
+                <%--Team name--%>
+                <div class="form-group">
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                            <select id="" name="teamId" class="form-control" required >
+                                <option value="notSelected" selected="selected">Select Teams</option>
+                                <%
+                                    for (Team team : teamListByTournament) {
+                                        String teamName = team.getTeamName();
+                                        int teamId = team.getId();
+                                %>
+                                <option value="<%=teamId%>"><%=teamName%>
+                                    <%}%>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group ">
                     <br>

@@ -61,16 +61,23 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+
                 <%--&lt;%&ndash;Add Tournament&ndash;%&gt;--%>
                 <%--<li>--%>
-                    <%--<a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"--%>
-                       <%--onload="showMenuItem()"><%=addTournamentMenuItem%>--%>
-                    <%--</a>--%>
+                <%--<a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"--%>
+                <%--onload="showMenuItem()"><%=addTournamentMenuItem%>--%>
+                <%--</a>--%>
                 <%--</li>--%>
 
                 <%--All Tournament--%>
                 <li>
                     <a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
+                    </a>
+                </li>
+
+                <%--Groups--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
                     </a>
                 </li>
 
@@ -198,9 +205,21 @@
                             <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
                             <div class="container">
                                 <div id="tableTeam" class="table-editable">
+                                    <%------------ Assign to group Button ------------%>
+                                    <form action="assign-participant-to-group-page" method="get" id="assignToGroupBtn">
+                                        <div class="btn-location-0">
+                                            <button class="btn btn-primary button-custom visible-when-logged-in"
+                                                    type="submit">
+                                                Add to Group
+                                            </button>
+                                        </div>
+                                    </form>
+
+
                                     <%--Update Button--%>
                                     <div class="btn-location-1">
-                                        <button class="btn btn-warning visible-when-logged-in" type="button" onclick="updateSelectedTeam()">
+                                        <button class="btn btn-warning visible-when-logged-in" type="button"
+                                                onclick="updateSelectedTeam()">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </div>
@@ -231,9 +250,11 @@
                                             %>
                                             <tr>
                                                 <%--Radio--%>
-                                                    <td contenteditable="false" data-name="teamNameId" data-updatable="false">                                                    <input type="radio" id="<%=teamId%>" class="checkbox-custom"
-                                                           name="teamNameId"
-                                                           value="<%=teamId%>" required/>
+                                                <td contenteditable="false" data-name="teamNameId"
+                                                    data-updatable="false"><input type="radio" id="<%=teamId%>"
+                                                                                  class="checkbox-custom"
+                                                                                  name="teamNameId"
+                                                                                  value="<%=teamId%>" required/>
                                                 </td>
 
                                                 <%--No--%>
@@ -242,7 +263,8 @@
                                                 </td>
 
                                                 <%--Id--%>
-                                                <td contenteditable="false" data-name="teamNameId" data-updatable="false">
+                                                <td contenteditable="false" data-name="teamNameId"
+                                                    data-updatable="false">
                                                     <%=teamId%>
                                                 </td>
 
@@ -273,6 +295,7 @@
 
                         <%-------------=-=-=-=-=-=-=---MEMBERS'S TABLE---=-=-=-=-=-=-=-------------%>
                         <br>
+
                         <div class="<%=showMemberElement%>">
                             <h3>Members</h3>
                             <hr>
@@ -339,7 +362,8 @@
                                                 </td>
 
                                                 <%--Id--%>
-                                                <td contenteditable="false" data-name="memberNameId" data-updatable="false">
+                                                <td contenteditable="false" data-name="memberNameId"
+                                                    data-updatable="false">
                                                     <%=memberId%>
                                                 </td>
 

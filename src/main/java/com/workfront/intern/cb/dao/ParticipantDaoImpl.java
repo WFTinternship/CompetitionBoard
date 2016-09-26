@@ -55,7 +55,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
      */
     @Override
     public List<? extends Participant> getParticipantListByGroupWithRelativeObjects(Class<? extends Participant> cls, int groupId)
-            throws FailedOperationException, ObjectNotFoundException {
+            throws FailedOperationException {
         if (cls.equals(Member.class)) {
             return getMembersByGroupWithRelativeObjects(groupId);
         } else if (cls.equals(Team.class)) {
@@ -302,10 +302,10 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Member> memberList = new ArrayList<>();
-        
+
         String sql = "SELECT * FROM participant p INNER JOIN member m ON" +
                 " p.participant_id=m.member_id WHERE name LIKE ?";
-        
+
         try {
             // Acquire connection
             conn = dataSource.getConnection();

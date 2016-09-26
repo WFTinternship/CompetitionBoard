@@ -66,13 +66,18 @@ public class ParticipantServiceImpl implements ParticipantService {
      * Gets specific participant list by group id - memberList or teamList
      */
     @Override
-    public List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId) throws FailedOperationException, ObjectNotFoundException {
-        if (cls.equals(Member.class)) {
-            return participantDao.getParticipantListByGroupId(Member.class, groupId);
-        } else if (cls.equals(Team.class)) {
-            return participantDao.getParticipantListByGroupId(Team.class, groupId);
-        } else {
-            throw new RuntimeException("Unknown participant type");
+    public List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId) {
+        try {
+            if (cls.equals(Member.class)) {
+                return participantDao.getParticipantListByGroupId(Member.class, groupId);
+            } else if (cls.equals(Team.class)) {
+                return participantDao.getParticipantListByGroupId(Team.class, groupId);
+            } else {
+                throw new RuntimeException("Unknown participant type");
+            }
+        } catch (FailedOperationException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -80,7 +85,8 @@ public class ParticipantServiceImpl implements ParticipantService {
      * Gets specific participant - member or team, by tournament id:
      */
     @Override
-    public List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls, int tournamentId) {
+    public List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls,
+                                                                     int tournamentId) {
         try {
             if (cls.equals(Member.class)) {
                 return participantDao.getParticipantListByTournamentId(Member.class, tournamentId);
@@ -96,7 +102,8 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<? extends Participant> getParticipantListByName(Class<? extends Participant> cls, String participantName) {
+    public List<? extends Participant> getParticipantListByName(Class<? extends Participant> cls, String
+            participantName) {
         try {
             if (cls.equals(Member.class)) {
                 return participantDao.getParticipantListByName(Member.class, participantName);

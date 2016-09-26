@@ -4,6 +4,7 @@
 <%@ page import="com.workfront.intern.cb.service.TournamentService" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
+<%@ page import="com.workfront.intern.cb.common.Participant" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,12 +60,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <%--Add Tournament--%>
-                <li>
-                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
-                       onload="showMenuItem()"><%=addTournamentMenuItem%>
-                    </a>
-                </li>
 
                 <%--All Tournament--%>
                 <li>
@@ -72,11 +67,17 @@
                     </a>
                 </li>
 
-                    <%--Match--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%%>
-                        </a>
-                    </li>
+                <%--Groups--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
+                </li>
+
+                <%--Match--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                    </a>
+                </li>
 
                 <%--Gallery--%>
                 <li>
@@ -189,7 +190,8 @@
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
+                                            <td contenteditable="false" data-name="groupIDSelected"
+                                                data-updatable="false">
                                                 <%=groupIDSelected%>
                                             </td>
 
@@ -202,7 +204,8 @@
                                             </td>
 
                                             <%--Participant count--%>
-                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
+                                            <td contenteditable="false" data-name="participantCount"
+                                                data-updatable="false">
                                                 <%=groups.get(i).getParticipantsCount()%>
                                             </td>
 
@@ -218,10 +221,10 @@
                                             </td>
 
                                             <%--Tournament Id--%>
-                                                <%
-                                                    int tournamentIdSelected = groups.get(i).getTournamentId();
-                                                    session.setAttribute("tournamentIdSelected", tournamentIdSelected);
-                                                %>
+                                            <%
+                                                int tournamentIdSelected = groups.get(i).getTournamentId();
+                                                session.setAttribute("tournamentIdSelected", tournamentIdSelected);
+                                            %>
                                             <td contenteditable="false" data-name="tournamentId" data-updatable="false">
                                                 <%=tournamentIdSelected%>
                                             </td>
@@ -232,7 +235,8 @@
                                                 session.setAttribute("tournamentNameSelected", tournamentNameSelected);
 
                                             %>
-                                            <td contenteditable="false" data-name="tournamentName" data-updatable="false">
+                                            <td contenteditable="false" data-name="tournamentName"
+                                                data-updatable="false">
                                                 <%=tournamentNameSelected%>
                                             </td>
                                         </tr>

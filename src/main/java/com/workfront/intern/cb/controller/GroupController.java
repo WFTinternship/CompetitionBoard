@@ -1,9 +1,8 @@
 package com.workfront.intern.cb.controller;
 
-import com.workfront.intern.cb.common.Group;
-import com.workfront.intern.cb.common.Manager;
-import com.workfront.intern.cb.common.Member;
-import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.*;
+import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
+import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.service.GroupService;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.ParticipantService;
@@ -74,9 +73,9 @@ public class GroupController {
                 }
             }
         }
-
-        request.setAttribute("tournamentService", tournamentService);
         request.setAttribute("groupsByManager", groupsByManager);
+
+
 
         return Params.PAGE_GROUPS;
     }
@@ -171,25 +170,32 @@ public class GroupController {
     @RequestMapping(value = "/assignToGroup-form", method = RequestMethod.GET)
     public String assignParticipantToGroup(Model model,
                                            @RequestParam("groupId") int groupId,
-                                           @RequestParam("memberId") int memberId,
+                                           @RequestParam("memberId") String memberIdStr,
+                                           @RequestParam("teamId") String teamIdStr,
                                            HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
 
-        Member member = (Member) participantService.getOne(Member.class, memberId);
+        String str = "notSelected";
+        if (!memberIdStr.equals(str)){
+            int memberId = Integer.parseInt(memberIdStr);
+            Member member = (Member) participantService.getOne(Member.class, memberId);
 
-        groupService.assignParticipant(tournamentId, groupId, member);
+            groupService.assignParticipant(tournamentId, groupId, member);
+        } else if (!teamIdStr.equals(str)) {
+            int teamId = Integer.parseInt(teamIdStr);
+            Team team = (Team) participantService.getOne(Team.class, teamId);
+
+            groupService.assignParticipant(tournamentId, groupId, team);
+//            List<Team> teamList = (List<Team>) participantService.getParticipantListByGroupId(Team.class, groupId);
+//            int teamListSize = teamList.size();
+        }
 
         session.setAttribute("assignedGroupId", groupId);
+
         return Params.PAGE_PARTICIPANTS;
     }
-
-
-
-
-
 
     // endregion
 

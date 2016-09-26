@@ -13,7 +13,7 @@ public interface ParticipantService {
 
     // READ
     Participant getOne(Class<? extends Participant> cls, int id);
-    List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId) throws FailedOperationException, ObjectNotFoundException;
+    List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId);
     List<? extends Participant> getParticipantsByTournamentId(Class<? extends Participant> cls, int tournamentId);
     List<? extends Participant> getParticipantListByName(Class<? extends Participant> cls, String participantName);
     List<? extends Participant> getAll(Class<? extends Participant> cls);
