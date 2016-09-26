@@ -26,7 +26,7 @@
         welcomeStr = "Hi, ";
         hrefToSpecificTournamentPage = "tournament-page";
         hrefToSpecificMatchPage = "match-page";
-        addTournamentMenuItem = "Add Tournament";
+//        addTournamentMenuItem = "Add Tournament";
         allTournaments = "Tournaments";
         allMatches = "Matches";
         classStr = "visible-element";

@@ -53,12 +53,12 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
 
-                <%--Add Tournament--%>
-                <li>
-                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
-                       onload="showMenuItem()"><%=addTournamentMenuItem%>
-                    </a>
-                </li>
+                <%--&lt;%&ndash;Add Tournament&ndash;%&gt;--%>
+                <%--<li>--%>
+                    <%--<a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"--%>
+                       <%--onload="showMenuItem()"><%=addTournamentMenuItem%>--%>
+                    <%--</a>--%>
+                <%--</li>--%>
 
                 <%--All Tournament--%>
                 <li>
@@ -116,7 +116,16 @@
                     <div class="col-sm-3 sidenav">
 
                         <ul class="nav nav-pills nav-stacked">
-                            <%--Left Side--%>
+                            <%-------------------- CREATE TEAM BUTTON --------------------%>
+                            <li>
+                                <form action="/addTournament-page" method="get">
+                                    <button type="submit" class="btn btn-primary button-custom visible-element">
+                                        <B>CREATE TOURNAMENT</B>
+                                    </button>
+                                </form>
+                            </li>
+
+
                         </ul>
                         <br>
                     </div>

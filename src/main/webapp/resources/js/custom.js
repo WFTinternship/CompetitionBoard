@@ -33,6 +33,7 @@ function showMenuItem() {
         });
     }
 }
+
 // Show/hidden menu items
 function showMenuItemReverse() {
     $('.visible-element').each(function () {
@@ -59,7 +60,7 @@ function deleteSelectedTournament() {
         }
     }
     if (noneChecked) {
-        alert("Axbers nshi mi ban")
+        alert("Please, select the tournament...")
     }
 }
 
@@ -109,7 +110,7 @@ function assignToGroup() {
         }
     }
     if (noneChecked) {
-        alert("Axbers nshi mi ban")
+        alert("Please, select the group...")
     }
 }
 
@@ -132,7 +133,7 @@ function deleteSelectedGroup() {
         }
     }
     if (noneChecked) {
-        alert("Axbers nshi mi ban")
+        alert("Please, select the group...")
     }
 }
 
@@ -157,15 +158,6 @@ $(document).ready(function () {
         });
     });
 });
-$(document).ready(function (e) {
-    $('.search-panel .dropdown-menu').find('a').click(function (e) {
-        e.preventDefault();
-        var param = $(this).attr("href").replace("#", "");
-        var concept = $(this).text();
-        $('.search-panel span#search_concept').text(concept);
-        $('.input-group #search_param').val(param);
-    });
-});
 
 
 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-MEMBER-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
@@ -188,7 +180,7 @@ function deleteSelectedMembers() {
         }
     }
     if (noneChecked) {
-        alert("Axbers nshi mi ban")
+        alert("Please, select the member...")
     }
 }
 
@@ -217,3 +209,48 @@ $(document).ready(function () {
     });
 });
 
+//-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-TEAM-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+
+
+//Deletes selected TEAM
+function deleteSelectedTeam() {
+    var elements;
+    var current;
+    var noneChecked = true;
+    elements = document.getElementsByName("teamNameId");
+    for (var i = 0, len = elements.length; i < len; ++i) {
+        if (elements[i].checked) {
+            noneChecked = false;
+            current = elements[i].value;
+            if (confirm("Are you sure you want to delete team ? ") == true) {
+                document.getElementById("deleteTeamBtnId").submit();
+            }
+            break;
+        }
+    }
+    if (noneChecked) {
+        alert("Please, select the team...")
+    }
+}
+
+//Updates selected team
+function updateSelectedTeam() {
+    $('input[name=teamNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
+}
+$(document).ready(function () {
+    $('#updateTeamTable').find('td').blur(function () {
+        var tr = $(this).parent();
+        $.ajax({
+            url: '/updateTeam',
+            type: 'GET',
+            data: {
+                teamNameId: $('[data-name="teamNameId"]', tr).text().trim(),
+                teamName: $('[data-name="teamName"]', tr).text().trim(),
+                teamInfo: $('[data-name="teamInfo"]', tr).text().trim()
+            },
+            success: function (tournament) {
+                $('#updateTableElement').text(tournament);
+            }
+        });
+    });
+});

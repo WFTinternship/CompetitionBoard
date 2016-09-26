@@ -59,12 +59,12 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <%--Add Tournament--%>
-                <li>
-                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
-                       onload="showMenuItem()"><%=addTournamentMenuItem%>
-                    </a>
-                </li>
+                <%--&lt;%&ndash;Add Tournament&ndash;%&gt;--%>
+                <%--<li>--%>
+                    <%--<a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"--%>
+                       <%--onload="showMenuItem()"><%=addTournamentMenuItem%>--%>
+                    <%--</a>--%>
+                <%--</li>--%>
 
                 <%--All Tournament--%>
                 <li>

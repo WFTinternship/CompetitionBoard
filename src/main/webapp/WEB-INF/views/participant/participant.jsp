@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.common.Group" %>
 <%@ page import="com.workfront.intern.cb.common.Member" %>
+<%@ page import="com.workfront.intern.cb.common.Team" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
 <%@ page import="java.util.List" %>
@@ -32,6 +32,8 @@
 
     <script src="<c:url value="/resources/js/jquery.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+    <script src="<c:url value="/resources/js/custom.js" />"></script>
+
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -59,12 +61,12 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <%--Add Tournament--%>
-                <li>
-                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
-                       onload="showMenuItem()"><%=addTournamentMenuItem%>
-                    </a>
-                </li>
+                <%--&lt;%&ndash;Add Tournament&ndash;%&gt;--%>
+                <%--<li>--%>
+                    <%--<a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"--%>
+                       <%--onload="showMenuItem()"><%=addTournamentMenuItem%>--%>
+                    <%--</a>--%>
+                <%--</li>--%>
 
                 <%--All Tournament--%>
                 <li>
@@ -120,15 +122,33 @@
 
     Tournament selectedTournament = BeanProvider.getTournamentService().getTournamentById(slcTournamentId);
     String tournamentName = selectedTournament.getTournamentName();
-//    session.setAttribute("selectedTournamentId", slcTournamentId);
 
     // Member list by specific tournament
     List<Member> memberListByTournament = (List<Member>) BeanProvider.getParticipantService().
             getParticipantsByTournamentId(Member.class, slcTournamentId);
-    int size = memberListByTournament.size();
-
+    int memberListSize = memberListByTournament.size();
     session.setAttribute("memberListByTournament", memberListByTournament);
 
+
+    List<Team> teamListByTournament = (List<Team>) BeanProvider.getParticipantService().
+            getParticipantsByTournamentId(Team.class, slcTournamentId);
+    int teamListSize = teamListByTournament.size();
+    session.setAttribute("teamListByTournament", teamListByTournament);
+
+    // Hide/unhide member or team blocks
+    String showTeamElement = null;
+    String showMemberElement = null;
+
+    if (teamListSize <= 0 && memberListSize <= 0) {
+        showTeamElement = "show-element";
+        showMemberElement = "show-element";
+    } else if (teamListSize > 0) {
+        showTeamElement = "show-element";
+        showMemberElement = "hidden-element";
+    } else if (memberListSize > 0) {
+        showTeamElement = "hidden-element";
+        showMemberElement = "show-element";
+    }
 %>
 
 <div class="row">
@@ -142,9 +162,9 @@
                         <ul class="nav nav-pills nav-stacked">
 
                             <%-------------------- CREATE TEAM BUTTON --------------------%>
-                            <li>
-                                <form action="" method="get">
-                                    <button type="submit" class="btn btn-primary button-custom visible-when-logged-in">
+                            <li class="<%=showTeamElement%>">
+                                <form action="add-teams-page" method="get">
+                                    <button type="submit" class="btn btn-primary button-custom visible-element">
                                         <B>CREATE TEAM</B>
                                     </button>
                                 </form>
@@ -152,9 +172,9 @@
                             <BR>
 
                             <%-------------------- CREATE MEMBER BUTTON --------------------%>
-                            <li>
+                            <li class="<%=showMemberElement%>">
                                 <form action="add-members-page" method="get">
-                                    <button type="submit" class="btn btn-primary button-custom visible-when-logged-in">
+                                    <button type="submit" class="btn btn-primary button-custom visible-element">
                                         <B>CREATE MEMBER</B>
                                     </button>
                                 </form>
@@ -165,189 +185,207 @@
 
 
                     <div class="col-sm-9">
-                        <h2>
-                            <%=tournamentName%>
-                        </h2>
-                        <br>
+                        <div class="<%=showTeamElement%>">
+                            <h2>
+                                <%=tournamentName%>
+                            </h2>
+                            <br>
 
-                        <h3>Teams</h3>
-                        <hr>
-                        <br>
+                            <h3>Teams</h3>
+                            <hr>
+                            <br>
 
-                        <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
-                        <div class="container">
-                            <div id="tableTeam" class="table-editable">
-                                <%--Update Button--%>
-                                <div class="btn-location-1">
-                                    <button class="btn btn-warning visible-when-logged-in" type="button" onclick="">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </button>
-                                </div>
-
-                                <%--Remove Button--%>
-                                <form action="#" method="get" id="">
-                                    <div class="btn-location-2">
-                                        <button class="btn btn-danger visible-when-logged-in" type="button"
-                                                onclick="deleteSelectedMembers()">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                            <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
+                            <div class="container">
+                                <div id="tableTeam" class="table-editable">
+                                    <%--Update Button--%>
+                                    <div class="btn-location-1">
+                                        <button class="btn btn-warning visible-when-logged-in" type="button" onclick="updateSelectedTeam()">
+                                            <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </div>
-                                    <br>
-                                    <br>
 
-                                    <table class="table" id="1">
-                                        <tr>
-                                            <th width="1%">Check</th>
-                                            <th width="3%">No</th>
-                                            <th width="3%">Id</th>
-                                            <th>Team Name</th>
-                                            <th>Team Info</th>
-                                            <th>Tournament Name</th>
-                                        </tr>
+                                    <%--Remove Button--%>
+                                    <form action="deleteTeam" method="get" id="deleteTeamBtnId">
+                                        <div class="btn-location-2">
+                                            <button class="btn btn-danger visible-when-logged-in" type="button"
+                                                    onclick="deleteSelectedTeam()">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <br>
 
-                                        <tr>
-                                            <%--Radio--%>
-                                            <td>
-                                                <input type="radio" class="checkbox-custom" name="groupId"
-                                                       value="" required/>
-                                            </td>
+                                        <table class="table" id="updateTeamTable">
+                                            <tr>
+                                                <th width="1%">Check</th>
+                                                <th width="3%">No</th>
+                                                <th width="3%">Id</th>
+                                                <th>Team Name</th>
+                                                <th>Team Info</th>
+                                                <th>Tournament Name</th>
+                                            </tr>
+                                            <%
+                                                for (int j = 0; j < teamListSize; j++) {
+                                                    int teamId = teamListByTournament.get(j).getId();
+                                            %>
+                                            <tr>
+                                                <%--Radio--%>
+                                                    <td contenteditable="false" data-name="teamNameId" data-updatable="false">                                                    <input type="radio" id="<%=teamId%>" class="checkbox-custom"
+                                                           name="teamNameId"
+                                                           value="<%=teamId%>" required/>
+                                                </td>
 
-                                            <%--No--%>
-                                            <td>
-                                            </td>
+                                                <%--No--%>
+                                                <td contenteditable="false" data-name="numberId" data-updatable="false">
+                                                    <%=j%>
+                                                </td>
 
-                                            <%--Id--%>
-                                            <td>
-                                            </td>
+                                                <%--Id--%>
+                                                <td contenteditable="false" data-name="teamNameId" data-updatable="false">
+                                                    <%=teamId%>
+                                                </td>
 
-                                            <%--Team name--%>
-                                            <td>
+                                                <%--Team name--%>
+                                                <td contenteditable="false" data-name="teamName" data-updatable="true">
+                                                    <%=teamListByTournament.get(j).getTeamName()%>
+                                                </td>
 
-                                            </td>
+                                                <%--Team info--%>
+                                                <td contenteditable="false" data-name="teamInfo" data-updatable="true">
+                                                    <%=teamListByTournament.get(j).getParticipantInfo()%>
+                                                </td>
 
-                                            <%--Team info--%>
-                                            <td>
-                                            </td>
-
-                                            <%--TournamentName--%>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
+                                                <%--TournamentName--%>
+                                                <%
+                                                    Tournament tournamentTeam = BeanProvider.getTournamentService().
+                                                            getTournamentById(teamListByTournament.get(j).getTournamentId()); %>
+                                                <td>
+                                                    <%=tournamentTeam.getTournamentName()%>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                        </table>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
                         <%-------------=-=-=-=-=-=-=---MEMBERS'S TABLE---=-=-=-=-=-=-=-------------%>
                         <br>
+                        <div class="<%=showMemberElement%>">
+                            <h3>Members</h3>
+                            <hr>
+                            <br>
 
-                        <h3>Members</h3>
-                        <hr>
-                        <br>
+                            <div class="container">
+                                <div id="table" class="table-editable">
 
-                        <div class="container">
-                            <div id="table" class="table-editable">
+                                    <%------------ Assign to group Button ------------%>
+                                    <form action="assign-participant-to-group-page" method="get" id="assignToGroupBtn">
+                                        <div class="btn-location-0">
+                                            <button class="btn btn-primary button-custom visible-when-logged-in"
+                                                    type="submit">
+                                                Add to Group
+                                            </button>
+                                        </div>
+                                    </form>
 
-                                <%------------ Assign to group Button ------------%>
-                                <form action="assign-participant-to-group-page" method="get" id="assignToGroupBtn">
-                                    <div class="btn-location-0">
-                                        <button class="btn btn-primary button-custom visible-when-logged-in"
-                                                type="submit">
-                                            Add to Group
+
+                                    <%------------ Update Button ------------%>
+                                    <div class="btn-location-1">
+                                        <button class="btn btn-warning visible-when-logged-in" type="button"
+                                                onclick="updateSelectedMember()">
+                                            <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </div>
-                                </form>
 
+                                    <%------------ Remove Button ------------%>
+                                    <form action="deleteMember" method="get" id="deleteMemberBtnId">
+                                        <div class="btn-location-2">
+                                            <button class="btn btn-danger visible-when-logged-in " type="button"
+                                                    onclick="deleteSelectedMembers()">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <br>
 
-                                <%------------ Update Button ------------%>
-                                <div class="btn-location-1">
-                                    <button class="btn btn-warning visible-when-logged-in" type="button" onclick="updateSelectedMember()">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </button>
-                                </div>
-
-                                <%------------ Remove Button ------------%>
-                                <form action="deleteMember" method="get" id="deleteMemberBtnId">
-                                    <div class="btn-location-2">
-                                        <button class="btn btn-danger visible-when-logged-in " type="button"
-                                                onclick="deleteSelectedMembers()">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                    </div>
-                                    <br>
-                                    <br>
-
-                                    <table class="table" id="updateMemberTable">
-                                        <tr>
-                                            <th width="1%">Check</th>
-                                            <th width="3%">No</th>
-                                            <th width="3%">Id</th>
-                                            <th>Name</th>
-                                            <th>Surname</th>
-                                            <th>Position</th>
-                                            <th>Email</th>
-                                            <th>Participant Info</th>
-                                            <th>Tournament Name</th>
-                                        </tr>
-                                        <%
-                                            for (int i = 0; i < size; i++) {
-                                                int memberId = memberListByTournament.get(i).getId();
-                                        %>
-
-                                        <tr>
-                                            <%--Radio--%>
-                                            <td>
-                                                <input type="radio" id="<%=memberId%>" class="checkbox-custom"
-                                                       name="memberNameId" value="<%=memberId%>" required/>
-                                            </td>
-
-                                            <td>
-                                                <%=i%>
-                                            </td>
-
-                                            <%--Id--%>
-                                            <td contenteditable="false" data-name="memberNameId" data-updatable="false">
-                                                <%=memberId%>
-                                            </td>
-
-                                            <%--Name--%>
-                                            <td contenteditable="false" data-name="memberName" data-updatable="true">
-                                                <%=memberListByTournament.get(i).getName()%>
-                                            </td>
-
-                                            <%--Surname--%>
-                                            <td contenteditable="false" data-name="memberSureName" data-updatable="true">
-                                                <%=memberListByTournament.get(i).getSurName()%>
-                                            </td>
-
-                                            <%--Position--%>
-                                            <td contenteditable="false" data-name="memberPosition" data-updatable="true">
-                                                <%=memberListByTournament.get(i).getPosition()%>
-                                            </td>
-
-                                            <%--Email--%>
-                                            <td contenteditable="false" data-name="memberEmail" data-updatable="true">
-                                                <%=memberListByTournament.get(i).getEmail()%>
-                                            </td>
-
-                                            <%--Participant info--%>
-                                                <td contenteditable="false" data-name="memberInfo" data-updatable="true">
-                                                <%=memberListByTournament.get(i).getParticipantInfo()%>
-                                            </td>
-
-                                            <%--Tournament Name--%>
+                                        <table class="table" id="updateMemberTable">
+                                            <tr>
+                                                <th width="1%">Check</th>
+                                                <th width="3%">No</th>
+                                                <th width="3%">Id</th>
+                                                <th>Name</th>
+                                                <th>Surname</th>
+                                                <th>Position</th>
+                                                <th>Email</th>
+                                                <th>Participant Info</th>
+                                                <th>Tournament Name</th>
+                                            </tr>
                                             <%
-                                                Tournament tournament = BeanProvider.getTournamentService().
-                                                        getTournamentById(memberListByTournament.get(i).getTournamentId());
+                                                for (int i = 0; i < memberListSize; i++) {
+                                                    int memberId = memberListByTournament.get(i).getId();
                                             %>
-                                            <td>
-                                                <%=tournament.getTournamentName()%>
-                                            </td>
-                                        </tr>
-                                        <%}%>
-                                    </table>
-                                </form>
+                                            <tr>
+                                                <%--Radio--%>
+                                                <td>
+                                                    <input type="radio" id="<%=memberId%>" class="checkbox-custom"
+                                                           name="memberNameId" value="<%=memberId%>" required/>
+                                                </td>
 
+                                                <td>
+                                                    <%=i%>
+                                                </td>
+
+                                                <%--Id--%>
+                                                <td contenteditable="false" data-name="memberNameId" data-updatable="false">
+                                                    <%=memberId%>
+                                                </td>
+
+                                                <%--Name--%>
+                                                <td contenteditable="false" data-name="memberName"
+                                                    data-updatable="true">
+                                                    <%=memberListByTournament.get(i).getName()%>
+                                                </td>
+
+                                                <%--Surname--%>
+                                                <td contenteditable="false" data-name="memberSureName"
+                                                    data-updatable="true">
+                                                    <%=memberListByTournament.get(i).getSurName()%>
+                                                </td>
+
+                                                <%--Position--%>
+                                                <td contenteditable="false" data-name="memberPosition"
+                                                    data-updatable="true">
+                                                    <%=memberListByTournament.get(i).getPosition()%>
+                                                </td>
+
+                                                <%--Email--%>
+                                                <td contenteditable="false" data-name="memberEmail"
+                                                    data-updatable="true">
+                                                    <%=memberListByTournament.get(i).getEmail()%>
+                                                </td>
+
+                                                <%--Participant info--%>
+                                                <td contenteditable="false" data-name="memberInfo"
+                                                    data-updatable="true">
+                                                    <%=memberListByTournament.get(i).getParticipantInfo()%>
+                                                </td>
+
+                                                <%--Tournament Name--%>
+                                                <%
+                                                    Tournament tournament = BeanProvider.getTournamentService().
+                                                            getTournamentById(memberListByTournament.get(i).getTournamentId());
+                                                %>
+                                                <td>
+                                                    <%=tournament.getTournamentName()%>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                        </table>
+                                    </form>
+                                </div>
                                 <!-- Footer -->
                                 <footer>
                                     <div class="row">

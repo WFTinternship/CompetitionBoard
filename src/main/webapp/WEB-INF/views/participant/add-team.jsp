@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add member form</title>
+    <title>Add team form</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +19,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/add-member.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
+
 
     <!-- Scripts -->
     <script src="<c:url value="/resources/js/jquery.js"/>"></script>
@@ -42,74 +43,33 @@
     <div class="row main">
         <div class="main-login main-center">
 
-            <h2>Add Member
+            <h2>Add Team
                 <p>to
                 <p><%=tournament.getTournamentName()%>
 
             </h2>
             <hr>
 
-            <form action="addMember-form" class="form-horizontal" method="get">
-
-                <%--Name--%>
+            <form action="addTeam-form" class="form-horizontal" method="get">
+                <%--Team Name--%>
                 <div class="form-group">
-                    <label for="memberId" class="cols-sm-2 control-label">Name</label>
-
+                    <label for="teamId" class="cols-sm-2 control-label">Team name</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="nameMember" id="memberId"
-                                   placeholder="Name" required/>
+                            <input type="text" class="form-control" name="nameTeam" id="teamId"
+                                   placeholder="Team name" required/>
                         </div>
                     </div>
                 </div>
 
-                <%--SurName--%>
+                <%--Team info--%>
                 <div class="form-group">
-                    <label for="surNameId" class="cols-sm-2 control-label">Surname</label>
-
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="surNameMember" id="surNameId"
-                                   placeholder="Surname" required/>
-                        </div>
-                    </div>
-                </div>
-
-                <%--Position--%>
-                <div class="form-group">
-                    <label for="positionId" class="cols-sm-2 control-label">Position</label>
-
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-wrench fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="positionMember" id="positionId"
-                                   placeholder="Position"/>
-                        </div>
-                    </div>
-                </div>
-
-                <%--Email--%>
-                <div class="form-group">
-                    <label for="emailId" class="cols-sm-2 control-label">Email</label>
-
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="email" class="form-control" name="emailMember" id="emailId"
-                                   placeholder="Email"/>
-                        </div>
-                    </div>
-                </div>
-
-                <%--Participant info--%>
-                <div class="form-group">
-                    <label for="infoMemberId" class="cols-sm-2 control-label">Info</label>
+                    <label for="infoTeamId" class="cols-sm-2 control-label">Team info</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-info fa" aria-hidden="true"></i></span>
-                            <textarea class="form-control textarea-custom" name="memberInfo" id="infoMemberId"
+                            <textarea class="form-control textarea-custom" name="teamInfo" id="infoTeamId"
                                       ></textarea>
                         </div>
                     </div>

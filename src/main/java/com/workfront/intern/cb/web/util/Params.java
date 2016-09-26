@@ -16,10 +16,16 @@ public class Params {
     //Search result page
     public static final String PAGE_SEARCH_RESULT = "search-result";
 
-    //Participants pages
+    //Participants pages - MEMBER
     public static final String PAGE_PARTICIPANTS = "participant/participant";
     public static final String PAGE_PARTICIPANTS_MIRROR = "participant/participant-mirror";
     public static final String PAGE_ADD_MEMBER = "participant/add-member";
+
+    //Participants pages - TEAM
+    public static final String PAGE_ADD_TEAM = "participant/add-team";
+
+
+
 
     //Participants pages
     public static final String PAGE_ALL_GROUPS = "group/all-group";
