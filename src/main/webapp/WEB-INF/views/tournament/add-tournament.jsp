@@ -73,7 +73,7 @@
             <div class="col-sm-9">
                 <select id="formatId" name="format" class="form-control">
                     <%--<option value="0" selected="selected">Select format</option>--%>
-                    <option value="1">Round_Robin</option>
+                    <option value="1">Round Robin</option>
                     <option value="2">Olympic</option>
                 </select>
             </div>

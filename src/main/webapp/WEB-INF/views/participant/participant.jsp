@@ -288,7 +288,6 @@
                                             <th>Email</th>
                                             <th>Participant Info</th>
                                             <th>Tournament Name</th>
-                                            <th>Group Name</th>
                                         </tr>
                                         <%
                                             for (int i = 0; i < size; i++) {
@@ -343,11 +342,6 @@
                                             %>
                                             <td>
                                                 <%=tournament.getTournamentName()%>
-
-                                            </td>
-                                            <%--Group Name--%>
-                                            <td>
-
                                             </td>
                                         </tr>
                                         <%}%>
