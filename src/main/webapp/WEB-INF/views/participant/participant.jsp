@@ -256,12 +256,12 @@
                                             Add to Group
                                         </button>
                                     </div>
-                                    </form>
+                                </form>
 
 
                                 <%------------ Update Button ------------%>
                                 <div class="btn-location-1">
-                                    <button class="btn btn-warning visible-when-logged-in" type="button" onclick="">
+                                    <button class="btn btn-warning visible-when-logged-in" type="button" onclick="updateSelectedMember()">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
@@ -269,14 +269,15 @@
                                 <%------------ Remove Button ------------%>
                                 <form action="deleteMember" method="get" id="deleteMemberBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger visible-when-logged-in " type="button" onclick="deleteSelectedMembers()">
+                                        <button class="btn btn-danger visible-when-logged-in " type="button"
+                                                onclick="deleteSelectedMembers()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
                                     <br>
                                     <br>
 
-                                    <table class="table">
+                                    <table class="table" id="updateMemberTable">
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
@@ -298,7 +299,7 @@
                                             <%--Radio--%>
                                             <td>
                                                 <input type="radio" id="<%=memberId%>" class="checkbox-custom"
-                                                                        name="memberNameId" value="<%=memberId%>" required/>
+                                                       name="memberNameId" value="<%=memberId%>" required/>
                                             </td>
 
                                             <td>
@@ -306,32 +307,32 @@
                                             </td>
 
                                             <%--Id--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="memberNameId" data-updatable="false">
                                                 <%=memberId%>
                                             </td>
 
                                             <%--Name--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="memberName" data-updatable="true">
                                                 <%=memberListByTournament.get(i).getName()%>
                                             </td>
 
                                             <%--Surname--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="memberSureName" data-updatable="true">
                                                 <%=memberListByTournament.get(i).getSurName()%>
                                             </td>
 
                                             <%--Position--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="memberPosition" data-updatable="true">
                                                 <%=memberListByTournament.get(i).getPosition()%>
                                             </td>
 
                                             <%--Email--%>
-                                            <td>
+                                            <td contenteditable="false" data-name="memberEmail" data-updatable="true">
                                                 <%=memberListByTournament.get(i).getEmail()%>
                                             </td>
 
                                             <%--Participant info--%>
-                                            <td>
+                                                <td contenteditable="false" data-name="memberInfo" data-updatable="true">
                                                 <%=memberListByTournament.get(i).getParticipantInfo()%>
                                             </td>
 
@@ -346,9 +347,7 @@
                                             </td>
                                             <%--Group Name--%>
                                             <td>
-                                                <%
-                                                    BeanProvider.getGroupService().get
-                                                %>
+
                                             </td>
                                         </tr>
                                         <%}%>

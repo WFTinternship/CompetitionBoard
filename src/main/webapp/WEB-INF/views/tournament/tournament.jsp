@@ -66,11 +66,11 @@
                     </a>
                 </li>
 
-                    <%--Match--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
-                        </a>
-                    </li>
+                <%--Match--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                    </a>
+                </li>
 
                 <%--Gallery--%>
                 <li>
@@ -139,7 +139,8 @@
                                 <%--Remove Button--%>
                                 <form action="deleteTournament" method="get" id="deleteBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger" type="button" onclick="deleteSelectedTournament()">
+                                        <button class="btn btn-danger" type="button"
+                                                onclick="deleteSelectedTournament()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
@@ -166,7 +167,7 @@
 
                                         <tr>
                                             <%--Radio--%>
-                                                <td>
+                                            <td>
                                                 <input type="radio" id="<%=tournamentId%>" class="checkbox-custom"
                                                        name="tournamentNameId" value="<%=tournamentId%>" required/>
                                             </td>
@@ -184,13 +185,14 @@
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
                                                 <a href="participant-page?selectedTournamentId=<%=tournamentList.get(i).getTournamentId()%>"
-                                                class="a-custom" name="hrefTournamentName">
-                                                <%=tournamentList.get(i).getTournamentName()%>
+                                                   class="a-custom" name="hrefTournamentName">
+                                                    <%=tournamentList.get(i).getTournamentName()%>
                                                 </a>
                                             </td>
 
                                             <%--StartDate--%>
-                                            <td contenteditable="false" data-name="startDateUpdate" data-updatable="true">
+                                            <td contenteditable="false" data-name="startDateUpdate"
+                                                data-updatable="true">
                                                 <%=Helpers.parseTimeStampToString(tournamentList.get(i).getStartDate())%>
                                             </td>
 
@@ -200,21 +202,24 @@
                                             </td>
 
                                             <%--Location--%>
-                                            <td contenteditable="false" data-name="locationUpdate" data-updatable="true">
+                                            <td contenteditable="false" data-name="locationUpdate"
+                                                data-updatable="true">
                                                 <%=tournamentList.get(i).getLocation()%>
                                             </td>
 
                                             <%--TournamentDescription--%>
-                                            <td contenteditable="false" data-name="descriptionUpdate" data-updatable="true">
+                                            <td contenteditable="false" data-name="descriptionUpdate"
+                                                data-updatable="true">
                                                 <%=tournamentList.get(i).getTournamentDescription()%>
                                             </td>
 
                                             <%--TournamentFormatId--%>
-                                                <%
-                                                    int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
-                                                    String formatStr = TournamentFormat.fromId(tournamentFormatId).getFormatName();
-                                                %>
-                                            <td contenteditable="false" data-name="formatUpdateNot" data-updatable="false">
+                                            <%
+                                                int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
+                                                String formatStr = TournamentFormat.fromId(tournamentFormatId).getFormatName();
+                                            %>
+                                            <td contenteditable="false" data-name="formatUpdateNot"
+                                                data-updatable="false">
                                                 <%=formatStr%>
                                             </td>
 
@@ -223,7 +228,8 @@
                                                 assert manager != null;
                                                 String managerName = manager.getLogin();
                                             %>
-                                            <td contenteditable="false" data-name="managerUpdateNot" data-updatable="false">
+                                            <td contenteditable="false" data-name="managerUpdateNot"
+                                                data-updatable="false">
                                                 <%= managerName%>
                                             </td>
                                         </tr>

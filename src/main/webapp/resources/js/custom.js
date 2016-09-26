@@ -191,3 +191,29 @@ function deleteSelectedMembers() {
         alert("Axbers nshi mi ban")
     }
 }
+
+//Updates selected member
+function updateSelectedMember() {
+    $('input[name=memberNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
+}
+$(document).ready(function () {
+    $('#updateMemberTable').find('td').blur(function () {
+        var tr = $(this).parent();
+        $.ajax({
+            url: '/updateMember',
+            type: 'GET',
+            data: {
+                memberNameId: $('[data-name="memberNameId"]', tr).text().trim(),
+                memberName: $('[data-name="memberName"]', tr).text().trim(),
+                memberSureName: $('[data-name="memberSureName"]', tr).text().trim(),
+                memberPosition: $('[data-name="memberPosition"]', tr).text().trim(),
+                memberEmail: $('[data-name="memberEmail"]', tr).text().trim(),
+                memberInfo: $('[data-name="memberInfo"]', tr).text().trim()
+            },
+            success: function (tournament) {
+                $('#updateTableElement').text(tournament);
+            }
+        });
+    });
+});
+

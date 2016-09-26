@@ -63,6 +63,20 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     /**
+     * Gets specific participant list by group id - memberList or teamList
+     */
+    @Override
+    public List<? extends Participant> getParticipantListByGroupId(Class<? extends Participant> cls, int groupId) throws FailedOperationException, ObjectNotFoundException {
+        if (cls.equals(Member.class)) {
+            return participantDao.getParticipantListByGroupId(Member.class, groupId);
+        } else if (cls.equals(Team.class)) {
+            return participantDao.getParticipantListByGroupId(Team.class, groupId);
+        } else {
+            throw new RuntimeException("Unknown participant type");
+        }
+    }
+
+    /**
      * Gets specific participant - member or team, by tournament id:
      */
     @Override

@@ -1,6 +1,5 @@
 package com.workfront.intern.cb.controller;
 
-import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.GroupService;
@@ -108,7 +107,7 @@ public class TournamentController {
     }
     // endregion
 
-    // region <EDIT(UPDATE) TOURNAMENT>
+    // region <UPDATE TOURNAMENT>
 
     @RequestMapping(value = "/updateTournament", method = RequestMethod.GET)
     public String updateTournament(Model model,

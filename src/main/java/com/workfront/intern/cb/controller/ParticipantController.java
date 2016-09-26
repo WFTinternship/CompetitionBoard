@@ -89,6 +89,33 @@ public class ParticipantController {
 
     // endregion
 
+    // region <UPDATE MEMBER>
+
+    @RequestMapping(value = "/updateMember", method = RequestMethod.GET)
+    public String updateTournament(Model model,
+                                   HttpServletRequest request) {
+
+        int memberId = Integer.parseInt(request.getParameter("memberNameId"));
+        String nameUpdate = request.getParameter("memberName");
+        String sureNameUpdate = request.getParameter("memberSureName");
+        String memberPositionUpdate = request.getParameter("memberPosition");
+        String memberEmailUpdate = request.getParameter("memberEmail");
+        String memberInfoUpdate = request.getParameter("memberInfo");
+
+        Member member = (Member) participantService.getOne(Member.class, memberId);
+        member.setName(nameUpdate);
+        member.setSurName(sureNameUpdate);
+        member.setPosition(memberPositionUpdate);
+        member.setEmail(memberEmailUpdate);
+        member.setParticipantInfo(memberInfoUpdate);
+
+        participantService.update(memberId, member);
+
+        return "redirect:participant-page";
+    }
+
+    // endregion
+
     // region <DELETE MEMBERS>
 
     @RequestMapping(value = "/deleteMember", method = RequestMethod.GET)
