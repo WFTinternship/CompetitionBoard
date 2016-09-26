@@ -1,8 +1,7 @@
 package com.workfront.intern.cb.controller;
 
-import com.workfront.intern.cb.common.Manager;
 import com.workfront.intern.cb.common.Member;
-import com.workfront.intern.cb.common.Tournament;
+import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.service.GroupService;
 import com.workfront.intern.cb.service.ParticipantService;
 import com.workfront.intern.cb.service.TournamentService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class ParticipantController {
@@ -31,7 +29,6 @@ public class ParticipantController {
 
     @Autowired
     GroupService groupService;
-
 
     @RequestMapping(value = {"/participant-page"})
     public String toParticipantPage(Model model,
@@ -52,12 +49,12 @@ public class ParticipantController {
     @RequestMapping(value = {"/add-members-page"})
     public String toAddMembersPage(Model model, HttpServletRequest request) {
 
-        HttpSession session = request.getSession();
-        Manager manager = (Manager) session.getAttribute("manager");
-        int managerId = manager.getId();
-
-        List<Tournament> tournamentListParticipantFrom = tournamentService.getTournamentListByManager(managerId);
-        request.setAttribute("tournamentListParticipantFrom", tournamentListParticipantFrom);
+//        HttpSession session = request.getSession();
+//        Manager manager = (Manager) session.getAttribute("manager");
+//        int managerId = manager.getId();
+//
+//        List<Tournament> tournamentListParticipantFrom = tournamentService.getTournamentListByManager(managerId);
+//        request.setAttribute("tournamentListParticipantFrom", tournamentListParticipantFrom);
 
         return Params.PAGE_ADD_MEMBER;
     }
@@ -68,7 +65,7 @@ public class ParticipantController {
                             @RequestParam("surNameMember") String surNameMember,
                             @RequestParam("positionMember") String positionMember,
                             @RequestParam("emailMember") String email,
-                            @RequestParam("infoMember") String info,
+                            @RequestParam("memberInfo") String memberInfo,
                             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
@@ -79,7 +76,7 @@ public class ParticipantController {
         member.setSurName(surNameMember);
         member.setPosition(positionMember);
         member.setEmail(email);
-        member.setParticipantInfo(info);
+        member.setParticipantInfo(memberInfo);
         member.setTournamentId(tournamentId);
 
         participantService.addParticipant(member);
@@ -92,8 +89,7 @@ public class ParticipantController {
     // region <UPDATE MEMBER>
 
     @RequestMapping(value = "/updateMember", method = RequestMethod.GET)
-    public String updateTournament(Model model,
-                                   HttpServletRequest request) {
+    public String updateMember(Model model, HttpServletRequest request) {
 
         int memberId = Integer.parseInt(request.getParameter("memberNameId"));
         String nameUpdate = request.getParameter("memberName");
@@ -123,6 +119,73 @@ public class ParticipantController {
                                    @RequestParam("memberNameId") int memberId) {
         try {
             participantService.delete(memberId);
+        } catch (Exception ex) {
+            LOG.error(ex.getMessage(), ex);
+            return "redirect:participant-page";
+        }
+
+        return "redirect:participant-page";
+    }
+
+    // endregion
+
+    // region <ADD TEAM>
+
+    @RequestMapping(value = {"/add-teams-page"})
+    public String toAddTeamPage(Model model, HttpServletRequest request) {
+
+
+
+        return Params.PAGE_ADD_TEAM;
+    }
+
+    @RequestMapping(value = {"/addTeam-form"})
+    public String addTeam(Model model,
+                            @RequestParam("nameTeam") String nameTeam,
+                            @RequestParam("teamInfo") String teamInfo,
+                            HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        int tournamentId = (int) session.getAttribute("selectedTournamentId");
+
+
+        Team team = new Team();
+        team.setTeamName(nameTeam);
+        team.setParticipantInfo(teamInfo);
+        team.setTournamentId(tournamentId);
+
+        participantService.addParticipant(team);
+
+        return "redirect:participant-page";
+    }
+
+    // endregion
+
+    // region <UPDATE TEAM>
+
+    @RequestMapping(value = "/updateTeam", method = RequestMethod.GET)
+    public String updateTeam(Model model, HttpServletRequest request) {
+
+        int teamId = Integer.parseInt(request.getParameter("teamNameId"));
+        String nameUpdate = request.getParameter("teamName");
+        String teamInfoUpdate = request.getParameter("teamInfo");
+
+        Team team = (Team) participantService.getOne(Team.class, teamId);
+        team.setTeamName(nameUpdate);
+        team.setParticipantInfo(teamInfoUpdate);
+
+        participantService.update(teamId, team );
+
+        return "redirect:participant-page";
+    }
+
+    // region <DELETE TEAM>
+
+    @RequestMapping(value = "/deleteTeam", method = RequestMethod.GET)
+    public String deleteTeam(Model model,
+                               @RequestParam("teamNameId") int teamId) {
+        try {
+            participantService.delete(teamId);
         } catch (Exception ex) {
             LOG.error(ex.getMessage(), ex);
             return "redirect:participant-page";
