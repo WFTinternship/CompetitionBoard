@@ -84,7 +84,7 @@ public class ParticipantController {
 
         participantService.addParticipant(member);
 
-        return "participant/participant";
+        return "redirect:participant-page";
     }
 
     // endregion
