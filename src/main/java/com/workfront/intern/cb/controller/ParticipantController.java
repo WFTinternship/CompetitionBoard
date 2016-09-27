@@ -31,32 +31,15 @@ public class ParticipantController {
     GroupService groupService;
 
     @RequestMapping(value = {"/participant-page"})
-    public String toParticipantPage(Model model,
-                                    HttpServletRequest request) {
+    public String toParticipantPage(Model model, HttpServletRequest request) {
         return Params.PAGE_PARTICIPANTS;
-    }
-
-
-    @RequestMapping(value = {"/participant-mirror-page"})
-    public String toParticipantMirrorPage(Model model,
-                                    HttpServletRequest request) {
-
-        return Params.PAGE_PARTICIPANTS_MIRROR;
     }
 
     // region <ADD MEMBER>
 
     @RequestMapping(value = {"/add-members-page"})
     public String toAddMembersPage(Model model, HttpServletRequest request) {
-
-//        HttpSession session = request.getSession();
-//        Manager manager = (Manager) session.getAttribute("manager");
-//        int managerId = manager.getId();
-//
-//        List<Tournament> tournamentListParticipantFrom = tournamentService.getTournamentListByManager(managerId);
-//        request.setAttribute("tournamentListParticipantFrom", tournamentListParticipantFrom);
-
-        return Params.PAGE_ADD_MEMBER;
+       return Params.PAGE_ADD_MEMBER;
     }
 
     @RequestMapping(value = {"/addMember-form"})
@@ -133,9 +116,6 @@ public class ParticipantController {
 
     @RequestMapping(value = {"/add-teams-page"})
     public String toAddTeamPage(Model model, HttpServletRequest request) {
-
-
-
         return Params.PAGE_ADD_TEAM;
     }
 
@@ -190,7 +170,6 @@ public class ParticipantController {
             LOG.error(ex.getMessage(), ex);
             return "redirect:participant-page";
         }
-
         return "redirect:participant-page";
     }
 

@@ -37,9 +37,10 @@ public class GroupController {
     @Autowired
     ParticipantService participantService;
 
+    // region <All Group>
+
     @RequestMapping(value = {"/all-group-page"})
-    public String toAllGroupPage(Model model,
-                                 HttpServletRequest request) {
+    public String toAllGroupPage(Model model, HttpServletRequest request) {
 
         List<Group> allGroups = groupService.getAllGroups();
         request.setAttribute("allGroups", allGroups);
@@ -47,6 +48,10 @@ public class GroupController {
 
         return Params.PAGE_ALL_GROUPS;
     }
+
+    // endregion
+
+    // region <Group>
 
     @RequestMapping(value = {"/group-page"})
     public String toGroupPage(Model model, HttpServletRequest request) {
@@ -73,10 +78,12 @@ public class GroupController {
         }
         request.setAttribute("groupsByManager", groupsByManager);
 
-
-
         return Params.PAGE_GROUPS;
     }
+
+    // endregion
+
+    // region <Group Add>
 
     @RequestMapping(value = {"/add-group-page"})
     public String toAddPage(Model model, HttpServletRequest request) {
@@ -109,6 +116,27 @@ public class GroupController {
 
         return "redirect:group-page";
     }
+
+    // endregion
+
+    // region <Group - Participant>
+
+    @RequestMapping(value = {"/group-participant-page"})
+    public String toGroupParticipantPage(Model model,
+                                         @RequestParam("groupNameId") int groupNameId,
+                                         HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        List<Team> teamList = (List<Team>) participantService.getParticipantListByGroupId(Team.class, groupNameId);
+        session.setAttribute("groupParticipantTeamList", teamList);
+
+        List<Member> memberList = (List<Member>) participantService.getParticipantListByGroupId(Member.class, groupNameId);
+        session.setAttribute("groupParticipantMemberList", memberList);
+
+        return Params.PAGE_GROUP_PARTICIPANT;
+    }
+
+    // endregion
 
     // region <UPDATE Group>
 
@@ -171,14 +199,15 @@ public class GroupController {
     @RequestMapping(value = "/assignToGroup-form", method = RequestMethod.GET)
     public String assignParticipantToGroup(Model model,
                                            @RequestParam("groupId") int groupId,
-                                           @RequestParam("memberId") String memberIdStr,
                                            @RequestParam("teamId") String teamIdStr,
+                                           @RequestParam("memberId") String memberIdStr,
                                            HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
 
         String str = "notSelected";
+
         if (!memberIdStr.equals(str)){
             int memberId = Integer.parseInt(memberIdStr);
             Member member = (Member) participantService.getOne(Member.class, memberId);

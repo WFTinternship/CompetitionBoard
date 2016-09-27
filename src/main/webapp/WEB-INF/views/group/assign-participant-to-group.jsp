@@ -67,10 +67,9 @@
                             <select id="groupSelectId" name="groupId" class="form-control" required>
                                 <option value="notSelected" selected="selected">Select Groups</option>
                                 <%
-                                    int groupId;
                                     for (Group groupList : groupListByManager) {
                                         String name = groupList.getGroupName();
-                                        groupId = groupList.getGroupId();
+                                        int groupId = groupList.getGroupId();
                                 %>
                                 <option value="<%=groupId%>"><%=name%>
                                     <%}%>
@@ -86,13 +85,12 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                                <select name="memberSelectId" class="form-control" required>
+                                <select name="memberId" class="form-control" required>
                                     <option value="notSelected" selected="selected">Select Members</option>
                                     <%
-                                        int memberId;
                                         for (Member member : memberListByTournament) {
                                             String memberName = member.getName();
-                                            memberId = member.getId();
+                                            int memberId = member.getId();
                                     %>
                                     <option value="<%=memberId%>"><%=memberName%>
                                         <%}%>
@@ -110,12 +108,11 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
                                 <select id="teamSelectId" name="teamId" class="form-control" required>
-                                    <option value="" selected="selected">Select Teams</option>
+                                    <option value="notSelected" selected="selected">Select Teams</option>
                                     <%
-                                        int teamId;
                                         for (Team team : teamListByTournament) {
                                             String teamName = team.getTeamName();
-                                            teamId = team.getId();
+                                            int teamId = team.getId();
                                     %>
                                     <option value="<%=teamId%>"><%=teamName%>
                                         <%}%>

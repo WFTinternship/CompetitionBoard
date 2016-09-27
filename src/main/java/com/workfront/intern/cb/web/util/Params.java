@@ -18,21 +18,16 @@ public class Params {
 
     //Participants pages - MEMBER
     public static final String PAGE_PARTICIPANTS = "participant/participant";
-    public static final String PAGE_PARTICIPANTS_MIRROR = "participant/participant-mirror";
     public static final String PAGE_ADD_MEMBER = "participant/add-member";
 
     //Participants pages - TEAM
     public static final String PAGE_ADD_TEAM = "participant/add-team";
 
-
-
-
-    //Participants pages
+    //Group pages
     public static final String PAGE_ALL_GROUPS = "group/all-group";
     public static final String PAGE_GROUPS = "group/group";
     public static final String PAGE_ADD_GROUP = "group/add-group";
-
-    //Groups pages
+    public static final String PAGE_GROUP_PARTICIPANT = "group/group-participant";
     public static final String PAGE_ASSIGN_TO_GROUP = "group/assign-participant-to-group";
 
     //Matches pages

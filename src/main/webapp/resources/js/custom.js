@@ -255,13 +255,3 @@ $(document).ready(function () {
         });
     });
 });
-
-function customTest() {
-    var element;
-    var strUser;
-    
-    element = document.getElementById("teamSelectId")    
-    strUser = element.options[e.selectedIndex].value.submit();
-    
-    return strUser;
-}

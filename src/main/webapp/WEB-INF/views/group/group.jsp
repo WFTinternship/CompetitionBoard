@@ -190,22 +190,20 @@
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
                                                 <%=groupIDSelected%>
                                             </td>
 
                                             <%--Name--%>
                                             <td contenteditable="false" data-name="groupName" data-updatable="true">
-                                                <a href="participant-page?groupName=<%=groups.get(i).getGroupName()%>"
+                                                <a href="group-participant-page?groupNameId=<%=groups.get(i).getGroupId()%>"
                                                    class="a-custom" name="hrefTournamentName">
                                                     <%=groups.get(i).getGroupName()%>
                                                 </a>
                                             </td>
 
                                             <%--Participant count--%>
-                                            <td contenteditable="false" data-name="participantCount"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
                                                 <%=BeanProvider.getParticipantService().getParticipantsCountByGroupId(groupIDSelected)%>
                                             </td>
 
@@ -215,8 +213,7 @@
                                             </td>
 
                                             <%--Next Round Participants--%>
-                                            <td contenteditable="false" data-name="nextRoundParticipants"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="nextRoundParticipants" data-updatable="false">
                                                 <%=groups.get(i).getNextRoundParticipants()%>
                                             </td>
 
@@ -233,7 +230,6 @@
                                             <%
                                                 String tournamentNameSelected = tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName();
                                                 session.setAttribute("tournamentNameSelected", tournamentNameSelected);
-
                                             %>
                                             <td contenteditable="false" data-name="tournamentName"
                                                 data-updatable="false">

@@ -59,16 +59,16 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <%--&lt;%&ndash;Add Tournament&ndash;%&gt;--%>
-                <%--<li>--%>
-                    <%--<a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"--%>
-                       <%--onload="showMenuItem()"><%=addTournamentMenuItem%>--%>
-                    <%--</a>--%>
-                <%--</li>--%>
 
                 <%--All Tournament--%>
                 <li>
                     <a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
+                    </a>
+                </li>
+
+                <%--Groups--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
                     </a>
                 </li>
 
@@ -158,19 +158,18 @@
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
                                             <th width="3%">Id</th>
-                                            <th>Name</th>
-                                            <th>Participant count</th>
-                                            <th>Round</th>
-                                            <th>Next round participants</th>
-                                            <th>Tournament Id</th>
-                                            <th>Tournament name</th>
+                                            <th width="7%">Group Id</th>
+                                            <th>Participant 1 Id</th>
+                                            <th>Participant 2 Id</th>
+                                            <th>Score Participant 1</th>
+                                            <th>Score Participant 2</th>
+                                            <th>Match Score</th>
                                         </tr>
 
                                         <tr>
                                             <%--Radio--%>
                                             <td>
-                                                <input type="radio" id="" class="checkbox-custom"
-                                                       name="groupId" value="" required/>
+                                                <input type="radio" id="" class="checkbox-custom" name="matchId" value="" required/>
                                             </td>
 
                                             <%--No--%>
@@ -178,38 +177,31 @@
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
                                             </td>
 
-                                            <%--Name--%>
+                                            <%--Group Id--%>
+                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
+                                            </td>
+
+                                            <%--Participant 1 Id--%>
                                             <td contenteditable="false" data-name="groupName" data-updatable="true">
-                                                <a href="participant-page?groupName="
-                                                   class="a-custom" name="hrefTournamentName">
-                                                </a>
                                             </td>
 
-                                            <%--Participant count--%>
-                                            <td contenteditable="false" data-name="participantCount"
-                                                data-updatable="false">
+                                            <%--Participant 2 Id--%>
+                                            <td contenteditable="false" data-name="groupName" data-updatable="true">
                                             </td>
 
-                                            <%--Round--%>
+                                            <%--Score Participant 1--%>
+                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
+                                            </td>
+
+                                            <%--Score Participant 2--%>
+                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
+                                            </td>
+
+                                            <%--Match score--%>
                                             <td contenteditable="false" data-name="round" data-updatable="false">
-                                            </td>
-
-                                            <%--Next Round Participants--%>
-                                            <td contenteditable="false" data-name="nextRoundParticipants"
-                                                data-updatable="false">
-                                            </td>
-
-                                            <%--Tournament Id--%>
-                                            <td contenteditable="false" data-name="tournamentId" data-updatable="false">
-                                            </td>
-
-                                            <%--Tournament name--%>
-                                            <td contenteditable="false" data-name="tournamentName"
-                                                data-updatable="false">
                                             </td>
                                         </tr>
                                     </table>
