@@ -206,7 +206,7 @@
                                             <%--Participant count--%>
                                             <td contenteditable="false" data-name="participantCount"
                                                 data-updatable="false">
-                                                <%=groups.get(i).getParticipantsCount()%>
+                                                <%=BeanProvider.getParticipantService().getParticipantsCountByGroupId(groupIDSelected)%>
                                             </td>
 
                                             <%--Round--%>

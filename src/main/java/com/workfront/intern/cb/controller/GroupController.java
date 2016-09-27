@@ -1,8 +1,6 @@
 package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.common.*;
-import com.workfront.intern.cb.common.custom.exception.FailedOperationException;
-import com.workfront.intern.cb.common.custom.exception.ObjectNotFoundException;
 import com.workfront.intern.cb.service.GroupService;
 import com.workfront.intern.cb.service.ManagerService;
 import com.workfront.intern.cb.service.ParticipantService;
@@ -99,17 +97,13 @@ public class GroupController {
                            @RequestParam("tournamentNameId") String tournamentNameId) {
 
         String notSelected = "notSelected";
-
         if (!tournamentNameId.equals(notSelected)) {
-            Tournament tournament = tournamentService.getTournamentById(Integer.parseInt(tournamentNameId));
-
             Group group = new Group();
             group.setGroupName(nameGroup);
             group.setTournamentId(Integer.parseInt(tournamentNameId));
 
             groupService.addGroup(group);
         } else {
-
             return "redirect:add-group-page";
         }
 
@@ -124,9 +118,9 @@ public class GroupController {
                               HttpServletRequest request) {
 
         int groupId = Integer.parseInt(request.getParameter("groupIDSelected"));
+
         Group group = groupService.getGroupById(groupId);
         group.setGroupName(groupName);
-
         groupService.updateGroup(groupId, group);
 
         return "redirect:group-page";
@@ -138,14 +132,21 @@ public class GroupController {
 
     @RequestMapping(value = "/assign-participant-to-group-page", method = RequestMethod.GET)
     public String assignParticipantToGroupPage(Model model,
+                                               @RequestParam("assignToGroupBtn") String assignToGroupBtn,
                                                HttpServletRequest request) {
 
         HttpSession session = request.getSession();
+        int assignToGroupBtnValue = Integer.parseInt(assignToGroupBtn);
 
+        // Gets Add To Group Button value, to check who pressed button member or team
+        if (assignToGroupBtnValue == 1){
+            session.setAttribute("assignToGroupBtnValue", assignToGroupBtnValue);
+        } else if (assignToGroupBtnValue == 5){
+            session.setAttribute("assignToGroupBtnValue", assignToGroupBtnValue);
+        }
 
         // Selected groups list of manager tournaments
         List<Group> groupListByManager = new ArrayList<>();
-
         Manager manager = (Manager) session.getAttribute("manager");
 
         // All groups list
@@ -181,17 +182,14 @@ public class GroupController {
         if (!memberIdStr.equals(str)){
             int memberId = Integer.parseInt(memberIdStr);
             Member member = (Member) participantService.getOne(Member.class, memberId);
-
             groupService.assignParticipant(tournamentId, groupId, member);
+
         } else if (!teamIdStr.equals(str)) {
             int teamId = Integer.parseInt(teamIdStr);
             Team team = (Team) participantService.getOne(Team.class, teamId);
-
             groupService.assignParticipant(tournamentId, groupId, team);
-//            List<Team> teamList = (List<Team>) participantService.getParticipantListByGroupId(Team.class, groupId);
-//            int teamListSize = teamList.size();
-        }
 
+       }
         session.setAttribute("assignedGroupId", groupId);
 
         return Params.PAGE_PARTICIPANTS;

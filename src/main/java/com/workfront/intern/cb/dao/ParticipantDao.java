@@ -18,6 +18,7 @@ public interface ParticipantDao {
     List<? extends Participant> getParticipantListByTournamentId(Class<? extends Participant> cls, int tournamentId) throws FailedOperationException;
     List<? extends Participant> getParticipantListByName(Class<? extends Participant> cls, String participantName) throws FailedOperationException, ObjectNotFoundException;
     List<? extends Participant> getAll(Class<? extends Participant> cls) throws FailedOperationException;
+    int getParticipantsCountByGroupId(int groupId) throws FailedOperationException;
 
     // UPDATE
     void update(int id, Participant participant) throws ObjectNotFoundException, FailedOperationException;

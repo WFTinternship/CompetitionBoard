@@ -1,8 +1,7 @@
-<%@ page import="com.workfront.intern.cb.common.Tournament" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.common.Group" %>
 <%@ page import="com.workfront.intern.cb.common.Member" %>
 <%@ page import="com.workfront.intern.cb.common.Team" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -19,7 +18,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/css/add-member.css"/>">
-
+    <link rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>">
 
     <!-- Scripts -->
     <script src="<c:url value="/resources/js/jquery.js"/>"></script>
@@ -33,7 +32,6 @@
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 </head>
 
-
 <body>
 <div class="container">
     <div class="row main">
@@ -44,10 +42,21 @@
 
             <form action="assignToGroup-form" class="form-horizontal" method="get" id="assignToGroupBtn">
                 <%
-                    List<Group> groupListByManager = (List<Group>) session.getAttribute("groupListByManager");
-                    List<Member> memberListByTournament = (List<Member>) session.getAttribute("memberListByTournament");
-                    List<Team> teamListByTournament = (List<Team>) session.getAttribute("teamListByTournament");
+                    int assignToGroupBtnValue = (int) session.getAttribute("assignToGroupBtnValue");
+                    String showTeamElement = null;
+                    String showMemberElement = null;
 
+                    List<Group> groupListByManager = (List<Group>) session.getAttribute("groupListByManager");
+                    List<Team> teamListByTournament = (List<Team>) session.getAttribute("teamListByTournament");
+                    List<Member> memberListByTournament = (List<Member>) session.getAttribute("memberListByTournament");
+
+                    if (assignToGroupBtnValue == 1) {
+                        showTeamElement = "show-element";
+                        showMemberElement = "hidden-element";
+                    } else if (assignToGroupBtnValue == 5) {
+                        showTeamElement = "hidden-element";
+                        showMemberElement = "show-element";
+                    }
                 %>
 
                 <%--Group name--%>
@@ -55,12 +64,13 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="tournamentSelectId" name="groupId" class="form-control" required >
+                            <select id="groupSelectId" name="groupId" class="form-control" required>
                                 <option value="notSelected" selected="selected">Select Groups</option>
                                 <%
+                                    int groupId;
                                     for (Group groupList : groupListByManager) {
                                         String name = groupList.getGroupName();
-                                        int groupId = groupList.getGroupId();
+                                        groupId = groupList.getGroupId();
                                 %>
                                 <option value="<%=groupId%>"><%=name%>
                                     <%}%>
@@ -71,41 +81,47 @@
                 </div>
 
                 <%--Member name--%>
-                <div class="form-group">
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select name="memberId" class="form-control" required >
-                                <option value="notSelected" selected="selected">Select Members</option>
-                                <%
-                                    for (Member member : memberListByTournament) {
-                                        String memberName = member.getName();
-                                        int memberId = member.getId();
-                                %>
-                                <option value="<%=memberId%>"><%=memberName%>
-                                    <%}%>
-                                </option>
-                            </select>
+                <div class="<%=showMemberElement%>">
+                    <div class="form-group ">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                                <select name="memberSelectId" class="form-control" required>
+                                    <option value="notSelected" selected="selected">Select Members</option>
+                                    <%
+                                        int memberId;
+                                        for (Member member : memberListByTournament) {
+                                            String memberName = member.getName();
+                                            memberId = member.getId();
+                                    %>
+                                    <option value="<%=memberId%>"><%=memberName%>
+                                        <%}%>
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <%--Team name--%>
-                <div class="form-group">
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="" name="teamId" class="form-control" required >
-                                <option value="notSelected" selected="selected">Select Teams</option>
-                                <%
-                                    for (Team team : teamListByTournament) {
-                                        String teamName = team.getTeamName();
-                                        int teamId = team.getId();
-                                %>
-                                <option value="<%=teamId%>"><%=teamName%>
-                                    <%}%>
-                                </option>
-                            </select>
+                <div class="<%=showTeamElement%>">
+                    <div class="form-group ">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                                <select id="teamSelectId" name="teamId" class="form-control" required>
+                                    <option value="" selected="selected">Select Teams</option>
+                                    <%
+                                        int teamId;
+                                        for (Team team : teamListByTournament) {
+                                            String teamName = team.getTeamName();
+                                            teamId = team.getId();
+                                    %>
+                                    <option value="<%=teamId%>"><%=teamName%>
+                                        <%}%>
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,14 +131,13 @@
                     <br>
                     <input type="reset" class="btn btn-danger btn-lg btn-block login-button" value="Reset"/>
                     <br>
-                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Submit" />
+                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Submit"/>
                 </div>
 
             </form>
         </div>
     </div>
 </div>
-
 
 <script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
 </body>

@@ -215,6 +215,7 @@ $(document).ready(function () {
 //Deletes selected TEAM
 function deleteSelectedTeam() {
     var elements;
+    var elements1;
     var current;
     var noneChecked = true;
     elements = document.getElementsByName("teamNameId");
@@ -254,3 +255,13 @@ $(document).ready(function () {
         });
     });
 });
+
+function customTest() {
+    var element;
+    var strUser;
+    
+    element = document.getElementById("teamSelectId")    
+    strUser = element.options[e.selectedIndex].value.submit();
+    
+    return strUser;
+}

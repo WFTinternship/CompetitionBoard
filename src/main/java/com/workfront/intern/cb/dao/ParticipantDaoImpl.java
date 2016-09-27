@@ -124,6 +124,14 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     }
 
     /**
+     * Gets participants count by specific group id
+     */
+    @Override
+    public int getParticipantsCountByGroupId(int groupId) throws FailedOperationException {
+        return getParticipantsCount(groupId);
+    }
+
+    /**
      * Updates specific participant - member or team
      */
     @Override
@@ -159,6 +167,41 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
             throw new RuntimeException("Unknown participant type");
         }
     }
+
+    /**
+     * Gets participant count by group id
+     */
+    private int getParticipantsCount (int groupId) throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        String sql = "SELECT COUNT(*) AS count FROM group_participant gp WHERE gp.group_id=?";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            // Initialize statement
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, groupId);
+
+            // Execute statement
+            rs = ps.executeQuery();
+            while (rs.next()){
+                count = rs.getInt("count");
+            }
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return count;
+    }
+
+
 
     // region <MEMBER>
 

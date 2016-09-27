@@ -62,13 +62,6 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
 
-                <%--&lt;%&ndash;Add Tournament&ndash;%&gt;--%>
-                <%--<li>--%>
-                <%--<a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"--%>
-                <%--onload="showMenuItem()"><%=addTournamentMenuItem%>--%>
-                <%--</a>--%>
-                <%--</li>--%>
-
                 <%--All Tournament--%>
                 <li>
                     <a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
@@ -136,7 +129,6 @@
     int memberListSize = memberListByTournament.size();
     session.setAttribute("memberListByTournament", memberListByTournament);
 
-
     List<Team> teamListByTournament = (List<Team>) BeanProvider.getParticipantService().
             getParticipantsByTournamentId(Team.class, slcTournamentId);
     int teamListSize = teamListByTournament.size();
@@ -145,16 +137,21 @@
     // Hide/unhide member or team blocks
     String showTeamElement = null;
     String showMemberElement = null;
+    String showElement = null;
 
     if (teamListSize <= 0 && memberListSize <= 0) {
         showTeamElement = "show-element";
         showMemberElement = "show-element";
+        showElement = "hidden-element";
     } else if (teamListSize > 0) {
         showTeamElement = "show-element";
         showMemberElement = "hidden-element";
+        showElement = "show-element";
     } else if (memberListSize > 0) {
         showTeamElement = "hidden-element";
         showMemberElement = "show-element";
+        showElement = "show-element";
+
     }
 %>
 
@@ -205,16 +202,18 @@
                             <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
                             <div class="container">
                                 <div id="tableTeam" class="table-editable">
+
                                     <%------------ Assign to group Button ------------%>
-                                    <form action="assign-participant-to-group-page" method="get" id="assignToGroupBtn">
+                                    <div class="<%=showElement%>">
+                                    <form action="assign-participant-to-group-page" method="get" id="assignTeamGroupBtnId">
                                         <div class="btn-location-0">
                                             <button class="btn btn-primary button-custom visible-when-logged-in"
-                                                    type="submit">
+                                                    name="assignToGroupBtn" value="1" type="submit">
                                                 Add to Group
                                             </button>
                                         </div>
                                     </form>
-
+                                    </div>
 
                                     <%--Update Button--%>
                                     <div class="btn-location-1">
@@ -263,8 +262,7 @@
                                                 </td>
 
                                                 <%--Id--%>
-                                                <td contenteditable="false" data-name="teamNameId"
-                                                    data-updatable="false">
+                                                <td contenteditable="false" data-name="teamNameId" data-updatable="false">
                                                     <%=teamId%>
                                                 </td>
 
@@ -305,15 +303,17 @@
                                 <div id="table" class="table-editable">
 
                                     <%------------ Assign to group Button ------------%>
-                                    <form action="assign-participant-to-group-page" method="get" id="assignToGroupBtn">
+                                        <div class="<%=showElement%>">
+
+                                        <form action="assign-participant-to-group-page" method="get" id="assignMemberToGroupBtn">
                                         <div class="btn-location-0">
                                             <button class="btn btn-primary button-custom visible-when-logged-in"
-                                                    type="submit">
+                                                    name="assignToGroupBtn" value="5" type="submit">
                                                 Add to Group
                                             </button>
                                         </div>
                                     </form>
-
+                                </div>
 
                                     <%------------ Update Button ------------%>
                                     <div class="btn-location-1">
