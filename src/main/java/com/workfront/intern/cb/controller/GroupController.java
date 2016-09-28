@@ -198,34 +198,12 @@ public class GroupController {
         List<Group> groupsByCurrentTournament = groupService.getTournamentGroups(selectedTournamentId);
         session.setAttribute("groupsByCurrentTournament", groupsByCurrentTournament);
 
-
-
-//        // Selected groups list of manager tournaments
-//        List<Group> groupListByManager = new ArrayList<>();
-//        Manager manager = (Manager) session.getAttribute("manager");
-//
-//        // All groups list
-//        List<Group> allGroups = groupService.getAllGroups();
-//        int allGroupsSize = allGroups.size();
-//
-//        // Tournaments list of manager
-//        List<Tournament> tournamentListByManager = tournamentService.getTournamentListByManager(manager.getId());
-//        int tournamentListSize = tournamentListByManager.size();
-//        for (int i = 0; i < tournamentListSize; i++) {
-//            for (int j = 0; j < allGroupsSize; j++) {
-//                if ((tournamentListByManager.get(i).getTournamentId()) == allGroups.get(j).getTournamentId()) {
-//                    groupListByManager.add(allGroups.get(j));
-//                }
-//            }
-//        }
-//
-//        session.setAttribute("groupListByManager", groupListByManager);
         return PAGE_ASSIGN_TO_GROUP;
     }
 
     @RequestMapping(value = "/assignToGroup-form", method = RequestMethod.GET)
     public String assignParticipantToGroup(Model model,
-                                           @RequestParam("groupId") int groupId,
+                                           @RequestParam("groupId") String groupIdStr,
                                            @RequestParam("teamId") String teamIdStr,
                                            @RequestParam("memberId") String memberIdStr,
                                            HttpServletRequest request) {
@@ -234,17 +212,28 @@ public class GroupController {
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
 
         Participant participant = null;
-        String str = "notSelected";
+        String notSelected = "notSelected";
+        System.out.println(groupIdStr);
+        if (groupIdStr.equals(notSelected) && teamIdStr.equals(notSelected)) {
+            return PAGE_ASSIGN_TO_GROUP;
+        }
+        if (groupIdStr.equals(notSelected) && memberIdStr.equals(notSelected)) {
+            return PAGE_ASSIGN_TO_GROUP;
+        }
 
-        if (!memberIdStr.equals(str)) {
+        if (!memberIdStr.equals(notSelected)) {
             participant = new Member();
             participant.setId(Integer.parseInt(memberIdStr));
-        } else if (!teamIdStr.equals(str)) {
+        } else if (!teamIdStr.equals(notSelected)) {
             participant = new Team();
             participant.setId(Integer.parseInt(teamIdStr));
         }
+
+        assert participant != null;
         participant.setTournamentId(tournamentId);
 
+        assert groupIdStr != null;
+        int groupId = Integer.parseInt(groupIdStr);
         groupService.assignParticipant(tournamentId, groupId, participant);
         session.setAttribute("assignedGroupId", groupId);
 
