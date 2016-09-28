@@ -71,6 +71,18 @@ public class MatchServiceImpl implements MatchService {
     }
 
     /**
+     * Returns all matches by manager id
+     */
+    @Override
+    public List<Match> getMatchListByManager(int managerId) {
+        try {
+            return matchDao.getMatchListByManager(managerId);
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    /**
      * Updates match in db
      */
     @Override

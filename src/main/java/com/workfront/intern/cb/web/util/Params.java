@@ -35,6 +35,7 @@ public class Params {
     //Matches pages
     public static final String PAGE_ALL_MATCH = "match/all-match";
     public static final String PAGE_MATCH = "match/match";
+    public static final String PAGE_MATCH_SELECTOR = "match/match-selector";
 
 
 
