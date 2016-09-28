@@ -28,7 +28,9 @@ public class Params {
     public static final String PAGE_GROUPS = "group/group";
     public static final String PAGE_ADD_GROUP = "group/add-group";
     public static final String PAGE_GROUP_PARTICIPANT = "group/group-participant";
+    public static final String PAGE_GROUP_TOURNAMENT = "group/group-tournament";
     public static final String PAGE_ASSIGN_TO_GROUP = "group/assign-participant-to-group";
+
 
     //Matches pages
     public static final String PAGE_ALL_MATCH = "match/all-match";

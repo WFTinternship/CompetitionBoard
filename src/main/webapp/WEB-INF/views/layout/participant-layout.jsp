@@ -35,6 +35,7 @@
     int teamListSize = teamListByTournament.size();
     session.setAttribute("teamListByTournament", teamListByTournament);
 
+
     // Hide/unhide member or team blocks
     String showTeamElement = null;
     String showMemberElement = null;

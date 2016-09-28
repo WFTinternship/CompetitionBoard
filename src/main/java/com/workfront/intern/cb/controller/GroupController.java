@@ -76,6 +76,7 @@ public class GroupController {
                 }
             }
         }
+
         request.setAttribute("groupsByManager", groupsByManager);
 
         return Params.PAGE_GROUPS;
@@ -140,6 +141,22 @@ public class GroupController {
 
     // endregion
 
+    // region <Group - Tournament>
+
+    @RequestMapping(value = {"/group-tournament-page"})
+    public String toGroupTournamentPage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        // Gets groups by tournament id
+        int selectedTournamentId = (int) session.getAttribute("selectedTournamentId");
+        List<Group> groupsByCurrentTournament = groupService.getTournamentGroups(selectedTournamentId);
+        session.setAttribute("groupsByCurrentTournament", groupsByCurrentTournament);
+
+        return Params.PAGE_GROUP_TOURNAMENT;
+    }
+
+    // endregion
+
     // region <UPDATE Group>
 
     @RequestMapping(value = "/updateGroup", method = RequestMethod.GET)
@@ -169,9 +186,9 @@ public class GroupController {
         int assignToGroupBtnValue = Integer.parseInt(assignToGroupBtn);
 
         // Gets Add To Group Button value, to check who pressed button member or team
-        if (assignToGroupBtnValue == 1){
+        if (assignToGroupBtnValue == 1) {
             session.setAttribute("assignToGroupBtnValue", assignToGroupBtnValue);
-        } else if (assignToGroupBtnValue == 5){
+        } else if (assignToGroupBtnValue == 5) {
             session.setAttribute("assignToGroupBtnValue", assignToGroupBtnValue);
         }
 
@@ -179,7 +196,7 @@ public class GroupController {
         List<Group> groupListByManager = new ArrayList<>();
         Manager manager = (Manager) session.getAttribute("manager");
 
-		//TODO: include only current tournament groups
+        //TODO: include only current tournament groups
         // All groups list
         List<Group> allGroups = groupService.getAllGroups();
         int allGroupsSize = allGroups.size();
@@ -195,7 +212,6 @@ public class GroupController {
             }
         }
         session.setAttribute("groupListByManager", groupListByManager);
-
         return PAGE_ASSIGN_TO_GROUP;
     }
 
@@ -209,19 +225,19 @@ public class GroupController {
         HttpSession session = request.getSession();
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
 
-		Participant participant = null;
-		String str = "notSelected";
+        Participant participant = null;
+        String str = "notSelected";
 
         if (!memberIdStr.equals(str)) {
-			participant = new Member();
-			participant.setId(Integer.parseInt(memberIdStr));
+            participant = new Member();
+            participant.setId(Integer.parseInt(memberIdStr));
         } else if (!teamIdStr.equals(str)) {
-			participant = new Team();
-			participant.setId(Integer.parseInt(teamIdStr));
-       	}
-		participant.setTournamentId(tournamentId);
+            participant = new Team();
+            participant.setId(Integer.parseInt(teamIdStr));
+        }
+        participant.setTournamentId(tournamentId);
 
-		groupService.assignParticipant(tournamentId, groupId, participant);
+        groupService.assignParticipant(tournamentId, groupId, participant);
         session.setAttribute("assignedGroupId", groupId);
 
         return Params.PAGE_PARTICIPANTS;

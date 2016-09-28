@@ -1,12 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.common.Group" %>
 <%@ page import="com.workfront.intern.cb.common.Member" %>
 <%@ page import="com.workfront.intern.cb.common.Team" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
+<%@ page import="com.workfront.intern.cb.common.Group" %>
+<%@ page import="java.util.*" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -165,7 +164,7 @@
 							<% for (Map.Entry<Integer, List<Group>> entry : groupsMap.entrySet()) { %>
 								<% if (entry.getValue().size() > 0) { %>
 									<div class="text-15">Round <%=entry.getKey() %> groups: (<%=entry.getValue().size() %>) &nbsp; (
-										<a class="action-link" href="<%=hrefToSpecificGroupPage %>">view groups</a>
+										<a class="action-link" href="group-tournament-page">view groups</a>
 									)</div>
 								<% } %>
 							<% } %>
@@ -212,6 +211,7 @@
 									<br>
 									<br>
 
+									<div class="container-custom">
 									<table class="table" id="updateTeamTable">
 										<tr>
 											<th width="1%">Check</th>
@@ -247,6 +247,7 @@
 										</tr>
 										<%}%>
 									</table>
+										</div>
 								</form>
 							</div>
 						</div>
@@ -296,6 +297,7 @@
 									<br>
 									<br>
 
+									<div class="container-custom">
 									<table class="table" id="updateMemberTable">
 										<tr>
 											<th width="1%">Check</th>
@@ -360,6 +362,7 @@
 										</tr>
 										<%}%>
 									</table>
+										</div>
 								</form>
 							</div>
 

@@ -124,7 +124,6 @@
                                 </form>
                             </li>
 
-
                         </ul>
                         <br>
                     </div>
@@ -160,6 +159,7 @@
                                         <tr class="thCustom">
                                             <th>Check</th>
                                             <th>No</th>
+                                            <th>Id</th>
                                             <th>Name</th>
                                             <th>StartDate</th>
                                             <th>EndDate</th>
@@ -171,7 +171,6 @@
                                         <% for (int i = 0; i < sizeList; i++) {
                                             int tournamentId = tournamentList.get(i).getTournamentId();
                                         %>
-
                                         <tr>
                                             <%--Radio--%>
                                             <td>
@@ -182,6 +181,11 @@
                                             <%--No--%>
                                             <td contenteditable="false">
                                                 <%=i + 1 %>
+                                            </td>
+
+                                            <%--Id--%>
+                                            <td contenteditable="false" data-name="tournamentId" data-updatable="false">
+                                                <%=tournamentId%>
                                             </td>
 
                                             <%--TournamentName--%>

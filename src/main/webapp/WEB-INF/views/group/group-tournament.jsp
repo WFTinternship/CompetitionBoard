@@ -5,11 +5,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
 <%@ page import="com.workfront.intern.cb.common.Participant" %>
+<%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>User's groups</title>
+    <title>Group turnament</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -129,7 +130,7 @@
                         <br>
                     </div>
                     <div class="col-sm-9">
-                        <h2><%=userName%> groups</h2>
+                        <h2>Tournament's groups</h2>
                         <hr>
                         <br>
 
@@ -154,10 +155,8 @@
                                     <br>
                                     <br>
                                     <%
-                                        TournamentService tournamentService = BeanProvider.getTournamentService();
-
-                                        List<Group> groups = (List<Group>) request.getAttribute("groupsByManager");
-                                        int size = groups.size();
+                                        List<Group> groupList = (List<Group>) session.getAttribute("groupsByCurrentTournament");
+                                        int groupListSize = groupList.size();
                                     %>
                                     <table class="table" id="updateGroupTable">
                                         <tr>
@@ -171,9 +170,9 @@
                                             <th>Tournament name</th>
                                         </tr>
                                         <%
-                                            for (int i = 0; i < size; i++) {
-                                                int groupIDSelected = groups.get(i).getGroupId();
-                                                session.setAttribute("groupIDSelected", groupIDSelected);
+                                            for (int i = 0; i < groupListSize; i++) {
+                                                int groupIDSelected = groupList.get(i).getGroupId();
+//                                                session.setAttribute("groupIDSelected", groupIDSelected);
                                         %>
                                         <tr>
                                             <%--Radio--%>
@@ -189,9 +188,9 @@
 
                                             <%--Name--%>
                                             <td contenteditable="false" data-name="groupName" data-updatable="true">
-                                                <a href="group-participant-page?groupNameId=<%=groups.get(i).getGroupId()%>"
+                                                <a href="group-participant-page?groupNameId=<%=groupList.get(i).getGroupId()%>"
                                                    class="a-custom" name="hrefTournamentName">
-                                                    <%=groups.get(i).getGroupName()%>
+                                                    <%=groupList.get(i).getGroupName()%>
                                                 </a>
                                             </td>
 
@@ -202,18 +201,18 @@
 
                                             <%--Round--%>
                                             <td contenteditable="false" data-name="round" data-updatable="false">
-                                                <%=groups.get(i).getRound()%>
+                                                <%=groupList.get(i).getRound()%>
                                             </td>
 
                                             <%--Next Round Participants--%>
                                             <td contenteditable="false" data-name="nextRoundParticipants" data-updatable="false">
-                                                <%=groups.get(i).getNextRoundParticipants()%>
+                                                <%=groupList.get(i).getNextRoundParticipants()%>
                                             </td>
 
                                             <%--Tournament Id--%>
                                             <%
-                                                int tournamentIdSelected = groups.get(i).getTournamentId();
-                                                session.setAttribute("tournamentIdSelected", tournamentIdSelected);
+                                                int tournamentIdSelected = groupList.get(i).getTournamentId();
+                                                // session.setAttribute("tournamentIdSelected", tournamentIdSelected);
                                             %>
                                             <td contenteditable="false" data-name="tournamentId" data-updatable="false">
                                                 <%=tournamentIdSelected%>
@@ -221,8 +220,8 @@
 
                                             <%--Tournament name--%>
                                             <%
-                                                String tournamentNameSelected = tournamentService.getTournamentById(groups.get(i).getTournamentId()).getTournamentName();
-                                                session.setAttribute("tournamentNameSelected", tournamentNameSelected);
+                                                Tournament tournament = BeanProvider.getTournamentService().getTournamentById(tournamentIdSelected);
+                                                String tournamentNameSelected = tournament.getTournamentName();
                                             %>
                                             <td contenteditable="false" data-name="tournamentName"
                                                 data-updatable="false">

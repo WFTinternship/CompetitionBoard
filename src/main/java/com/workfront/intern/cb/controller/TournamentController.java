@@ -110,14 +110,14 @@ public class TournamentController {
     // region <UPDATE TOURNAMENT>
 
     @RequestMapping(value = "/updateTournament", method = RequestMethod.GET)
-    public String updateTournament(Model model, HttpServletRequest request) {
-
-        String nameUpdate = request.getParameter("nameUpdate");
-        int tournamentId = Integer.parseInt(request.getParameter("tournamentNameId"));
-        Timestamp startDateUpdate = Timestamp.valueOf(request.getParameter("startDateUpdate"));
-        Timestamp endDateUpdate = Timestamp.valueOf(request.getParameter("endDateUpdate"));
-        String locationUpdate = request.getParameter("locationUpdate");
-        String descriptionUpdate = request.getParameter("descriptionUpdate");
+    public String updateTournament(Model model,
+                                   @RequestParam("nameUpdate") String nameUpdate,
+                                   @RequestParam("tournamentId") int tournamentId,
+                                   @RequestParam("startDateUpdate") Timestamp startDateUpdate,
+                                   @RequestParam("endDateUpdate") Timestamp endDateUpdate,
+                                   @RequestParam("locationUpdate") String locationUpdate,
+                                   @RequestParam("descriptionUpdate") String descriptionUpdate) {
+        System.out.println(tournamentId);
 
         Tournament tournament = tournamentService.getTournamentById(tournamentId);
         tournament.setTournamentName(nameUpdate);
@@ -138,7 +138,6 @@ public class TournamentController {
     @RequestMapping(value = "/deleteTournament", method = RequestMethod.GET)
     public String deleteTournament(Model model,
                                    @RequestParam("tournamentNameId") int tournamentId) {
-
         try {
             tournamentService.deleteTournamentById(tournamentId);
         } catch (Exception ex) {
