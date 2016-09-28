@@ -110,8 +110,7 @@ public class TournamentController {
     // region <UPDATE TOURNAMENT>
 
     @RequestMapping(value = "/updateTournament", method = RequestMethod.GET)
-    public String updateTournament(Model model,
-                                   HttpServletRequest request) {
+    public String updateTournament(Model model, HttpServletRequest request) {
 
         String nameUpdate = request.getParameter("nameUpdate");
         int tournamentId = Integer.parseInt(request.getParameter("tournamentNameId"));

@@ -16,12 +16,51 @@ abstract class GenericDao {
     protected abstract <T> T mapObject(ResultSet rs);
     protected abstract <T> List<T> mapList(ResultSet rs);
 
+	public Connection getTransactionalConnection() {
+		try {
+			Connection con = dataSource.getConnection();
+			con.setAutoCommit(false);
+
+			return con;
+		} catch (Exception ex) {
+			LOG.error(ex.getMessage(), ex);
+			throw new RuntimeException(String.format("Connection unavailable. Message: %s", ex.getMessage()));
+		}
+	}
+
+	public void commitTransaction(Connection transaction) {
+		try {
+			if (transaction != null)
+				transaction.commit();
+		} catch (Exception ex) {
+			LOG.error(ex.getMessage(), ex);
+			throw new RuntimeException(String.format("Unable to commit transaction. Message: %s", ex.getMessage()));
+		}
+	}
+
+	public void rollbackTransaction(Connection transaction) {
+		try {
+			if (transaction != null)
+				transaction.rollback();
+		} catch (Exception ex) {
+			LOG.error(ex.getMessage(), ex);
+			throw new RuntimeException(String.format("Unable to rollback transaction. Message: %s", ex.getMessage()));
+		}
+	}
+
     /**
      * Closed DB resources, when Statement and ResultSet of null
      */
     void closeResources(Connection conn) {
         closeResources(conn, null);
     }
+
+	/**
+	 * Closes provided Statement
+	 */
+	void closeResources(Statement st) {
+		closeResources(null, st);
+	}
 
     /**
      * Closed DB resources, when ResultSet of null
@@ -151,8 +190,6 @@ abstract class GenericDao {
         }
     }
 
-
-
     /**
      * Generated key from PreparedStatement
      */
@@ -167,4 +204,5 @@ abstract class GenericDao {
             throw new RuntimeException("Generated ID was NULL");
         return id;
     }
+
 }

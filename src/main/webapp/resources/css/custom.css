@@ -159,3 +159,7 @@ h1 {
     background-color: #838383;
     background-size: 100% 110%;
 }
+
+.container-custom {
+    width: 500px;
+}

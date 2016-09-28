@@ -82,21 +82,37 @@ public class TournamentServiceImpl implements TournamentService {
         }
     }
 
-    /**
+	@Override
+	public boolean tournamentStarted(int tournamentId) {
+		try {
+			return tournamentDao.tournamentStarted(tournamentId);
+		} catch (FailedOperationException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+
+	/**
      * Updates existing tournament in db
      */
     @Override
     public void updateTournament(int id, Tournament tournament) {
         try {
             tournamentDao.updateTournament(id, tournament);
-        } catch (ObjectNotFoundException e) {
-            throw new RuntimeException("Tournament instance with id=%s not updated");
         } catch (FailedOperationException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    /**
+	@Override
+	public void setCompleted(int tournamentId) {
+		try {
+			tournamentDao.setCompleted(tournamentId, true);
+		} catch (FailedOperationException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+
+	/**
      * Deletes tournament by id
      */
     @Override

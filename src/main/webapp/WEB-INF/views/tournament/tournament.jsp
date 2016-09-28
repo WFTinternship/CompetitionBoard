@@ -78,7 +78,7 @@
 
                 <%--Contact Us--%>
                 <li>
-                    <a class="page-scroll" href="#contact">Contact Us</a>
+                    <a class="page-scroll" href="contact-page">Contact Us</a>
                 </li>
 
                 <%--Sign Up--%>
@@ -117,7 +117,7 @@
                         <ul class="nav nav-pills nav-stacked">
                             <%-------------------- CREATE TEAM BUTTON --------------------%>
                             <li>
-                                <form action="/addTournament-page" method="get">
+                                <form action="addTournament-page" method="get">
                                     <button type="submit" class="btn btn-primary button-custom visible-element">
                                         <B>CREATE TOURNAMENT</B>
                                     </button>
@@ -160,7 +160,6 @@
                                         <tr class="thCustom">
                                             <th>Check</th>
                                             <th>No</th>
-                                            <th>Id</th>
                                             <th>Name</th>
                                             <th>StartDate</th>
                                             <th>EndDate</th>
@@ -182,13 +181,7 @@
 
                                             <%--No--%>
                                             <td contenteditable="false">
-                                                <%=i%>
-                                            </td>
-
-                                            <%--Id--%>
-                                            <td contenteditable="false" data-name="tournamentNameId"
-                                                data-updatable="false">
-                                                <%=tournamentId%>
+                                                <%=i + 1 %>
                                             </td>
 
                                             <%--TournamentName--%>

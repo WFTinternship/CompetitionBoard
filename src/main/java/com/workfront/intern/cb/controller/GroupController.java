@@ -177,6 +177,7 @@ public class GroupController {
         List<Group> groupListByManager = new ArrayList<>();
         Manager manager = (Manager) session.getAttribute("manager");
 
+		//TODO: include only current tournament groups
         // All groups list
         List<Group> allGroups = groupService.getAllGroups();
         int allGroupsSize = allGroups.size();
@@ -206,19 +207,19 @@ public class GroupController {
         HttpSession session = request.getSession();
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
 
-        String str = "notSelected";
+		Participant participant = null;
+		String str = "notSelected";
 
-        if (!memberIdStr.equals(str)){
-            int memberId = Integer.parseInt(memberIdStr);
-            Member member = (Member) participantService.getOne(Member.class, memberId);
-            groupService.assignParticipant(tournamentId, groupId, member);
-
+        if (!memberIdStr.equals(str)) {
+			participant = new Member();
+			participant.setId(Integer.parseInt(memberIdStr));
         } else if (!teamIdStr.equals(str)) {
-            int teamId = Integer.parseInt(teamIdStr);
-            Team team = (Team) participantService.getOne(Team.class, teamId);
-            groupService.assignParticipant(tournamentId, groupId, team);
+			participant = new Team();
+			participant.setId(Integer.parseInt(teamIdStr));
+       	}
+		participant.setTournamentId(tournamentId);
 
-       }
+		groupService.assignParticipant(tournamentId, groupId, participant);
         session.setAttribute("assignedGroupId", groupId);
 
         return Params.PAGE_PARTICIPANTS;

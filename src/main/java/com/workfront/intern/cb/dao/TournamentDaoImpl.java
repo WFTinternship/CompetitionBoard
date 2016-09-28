@@ -29,9 +29,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "INSERT INTO " +
-                "tournament(tournament_name, start_date, end_date, location, tournament_description, tournament_format_id, manager_id) " +
-                "VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tournament(tournament_name, start_date, end_date, location, tournament_description, " +
+                " tournament_format_id, manager_id) VALUES (?,?,?,?,?,?,?)";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -61,15 +60,16 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournament;
     }
 
+    /**
+     * Adds tournament format
+     */
     @Override
     public int addTournamentFormat(TournamentFormat tournamentFormat) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         int rows = 0;
 
-        String sql = "INSERT INTO " +
-                "tournament_format(format_id, format_type) " +
-                "VALUES (?,?)";
+        String sql = "INSERT INTO tournament_format(format_id, format_type) VALUES (?,?)";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -186,6 +186,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return tournamentList;
     }
 
+	/**
+	 * Gets registered tournament formats
+	 */
     @Override
     public List<TournamentFormat> getTournamentFormats() throws FailedOperationException {
         List<TournamentFormat> formatList = new ArrayList<>();
@@ -222,7 +225,45 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         return formatList;
     }
 
-    /**
+	/**
+	 * Checks if tournament is started, by checking if any match
+	 * score is entered for selected tournament (tournament group)
+	 */
+	@Override
+	public boolean tournamentStarted(int tournamentId) throws FailedOperationException {
+		boolean started = false;
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+
+		String sql = "SELECT count(*) FROM `match` m " +
+				"INNER JOIN `group` g ON m.group_id = g.group_id " +
+				"WHERE g.tournament_id = ?";
+		try {
+			// Acquire connection
+			conn = dataSource.getConnection();
+
+			// Initialize statement
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, tournamentId);
+
+			// Execute statement
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int result = rs.getInt(1);
+				started = result > 0;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			LOG.error(e.getMessage(), e);
+			throw new FailedOperationException(e.getMessage(), e);
+		} finally {
+			closeResources(conn, ps);
+		}
+		return started;
+	}
+
+	/**
      * Gets all tournament by manager id
      */
     @Override
@@ -262,7 +303,8 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         PreparedStatement ps = null;
 
         String sql = "UPDATE tournament SET tournament_name=?, start_date=?, end_date=?, location=?, " +
-                "tournament_description=?, tournament_format_id=?, manager_id=? WHERE tournament_id=?";
+                "tournament_description=?, is_completed=?, tournament_format_id=?, manager_id=? " +
+                "WHERE tournament_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
@@ -274,9 +316,10 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setTimestamp(3, tournament.getEndDate());
             ps.setString(4, tournament.getLocation());
             ps.setString(5, tournament.getTournamentDescription());
-            ps.setInt(6, tournament.getTournamentFormatId());
-            ps.setInt(7, tournament.getManagerId());
-            ps.setInt(8, id);
+            ps.setBoolean(6, tournament.isCompleted());
+            ps.setInt(7, tournament.getTournamentFormatId());
+            ps.setInt(8, tournament.getManagerId());
+            ps.setInt(9, id);
 
             // Execute statement
             ps.executeUpdate();
@@ -288,7 +331,35 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
         }
     }
 
-    /**
+	/**
+	 * Marks selected tournament as completed (or not completed)
+	 */
+	@Override
+	public void setCompleted(int tournamentId, boolean completed) throws FailedOperationException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+
+		String sql = "UPDATE tournament SET is_completed=? WHERE tournament_id=?";
+		try {
+			// Acquire connection
+			conn = dataSource.getConnection();
+
+			// Initialize statement
+			ps = conn.prepareStatement(sql);
+			ps.setBoolean(1, completed);
+			ps.setInt(2, tournamentId);
+
+			// Execute statement
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			LOG.error(e.getMessage(), e);
+			throw new FailedOperationException(e.getMessage(), e);
+		} finally {
+			closeResources(conn, ps);
+		}
+	}
+
+	/**
      * Deletes tournament by id
      */
     @Override
@@ -327,6 +398,7 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
                 tournament.setEndDate(rs.getTimestamp("end_date"));
                 tournament.setLocation(rs.getString("location"));
                 tournament.setTournamentDescription(rs.getString("tournament_description"));
+				tournament.setCompleted(rs.getBoolean("is_completed"));
                 tournament.setTournamentFormatId(rs.getInt("tournament_format_id"));
                 tournament.setManagerId(rs.getInt("manager_id"));
 

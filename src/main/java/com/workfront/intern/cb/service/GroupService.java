@@ -4,6 +4,7 @@ import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Participant;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GroupService {
 
@@ -12,9 +13,10 @@ public interface GroupService {
 
     // READ
     Group getGroupById(int id);
-    List<Group> getGroupListByName (String groupName);
-    List<Group> getTournamentGroups(int tournamentId);
     List<Group> getAllGroups();
+    List<Group> getGroupListByName(String groupName);
+    List<Group> getTournamentGroups(int tournamentId);
+	Map<Integer, List<Group>> getTournamentGroupsByRounds(int tournamentId);
 
     // UPDATE
     void updateGroup(int id, Group group);

@@ -43,7 +43,7 @@ function showMenuItemReverse() {
 
 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-TOURNAMENT-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
-//Deletes selected tournament
+// Deletes selected tournament
 function deleteSelectedTournament() {
     var elements;
     var current;
@@ -64,11 +64,10 @@ function deleteSelectedTournament() {
     }
 }
 
-//Updates selected tournament
+// Updates selected tournament
 function updateSelectedTournament() {
     $('input[name=tournamentNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
 }
-
 $(document).ready(function () {
     $('#updateTournamentTable').find('td').blur(function () {
         var tr = $(this).parent();

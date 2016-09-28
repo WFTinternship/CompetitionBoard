@@ -2,8 +2,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Member" %>
 <%@ page import="com.workfront.intern.cb.common.Team" %>
-<%@ page import="com.workfront.intern.cb.common.Tournament" %>
-<%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
 <%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
@@ -115,7 +113,7 @@
     int teamListSize = teamList.size();
 
     List<Member> memberList = (List<Member>) session.getAttribute("groupParticipantMemberList");
-    int memberListSize = teamList.size();
+    int memberListSize = memberList.size();
 %>
 
 <div class="row">
@@ -130,7 +128,6 @@
 
                             <%-------------------- CUSTOM BUTTON --------------------%>
 
-                            <%-------------------- CREATE MEMBER BUTTON --------------------%>
                         </ul>
                         <br>
                     </div>
@@ -146,45 +143,20 @@
                             <br>
 
                             <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
-                            <div class="container">
+                            <div class="container-custom">
                                 <div id="tableTeam" class="table-editable">
-
-                                    <%--Update Button--%>
-                                    <div class="btn-location-1">
-                                        <button class="btn btn-warning visible-when-logged-in" type="button"
-                                                onclick="updateSelectedTeam()">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </button>
-                                    </div>
-
-                                    <%--Remove Button--%>
-                                    <form action="deleteTeam" method="get" id="deleteTeamBtnId">
-                                        <div class="btn-location-2">
-                                            <button class="btn btn-danger visible-when-logged-in" type="button"
-                                                    onclick="deleteSelectedTeam()">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </div>
-                                        <br>
-                                        <br>
 
                                         <table class="table" id="updateTeamTable">
                                             <tr>
-                                                <th width="1%">Check</th>
                                                 <th width="3%">No</th>
                                                 <th width="3%">Id</th>
-                                                <th>Team Name</th>
+                                                <th width="50%"> Team Name</th>
                                             </tr>
                                             <%
                                                 for (int j = 0; j < teamListSize; j++) {
                                                     int teamId = teamList.get(j).getId();
                                             %>
                                             <tr>
-                                                <%--Radio--%>
-                                                <td contenteditable="false" data-name="teamNameId" data-updatable="false">
-                                                    <input type="radio" id="<%=teamId%>" class="checkbox-custom"
-                                                           name="teamNameId" value="<%=teamId%>" required/>
-                                                </td>
 
                                                 <%--No--%>
                                                 <td contenteditable="false" data-name="numberId" data-updatable="false">
@@ -206,7 +178,6 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
 
                         <%-------------=-=-=-=-=-=-=---MEMBERS'S TABLE---=-=-=-=-=-=-=-------------%>
                         <br>
@@ -214,48 +185,16 @@
                             <hr>
                             <br>
 
-                            <div class="container">
+                        <div class="container-custom">
                                 <div id="table" class="table-editable">
-
-                                    <%------------ Assign to group Button ------------%>
-                                        <div>
-
-                                        <form action="assign-participant-to-group-page" method="get" id="assignMemberToGroupBtn">
-                                        <div class="btn-location-0">
-                                            <button class="btn btn-primary button-custom visible-when-logged-in"
-                                                    name="assignToGroupBtn" value="5" type="submit">
-                                                Add to Group
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                    <%------------ Update Button ------------%>
-                                    <div class="btn-location-1">
-                                        <button class="btn btn-warning visible-when-logged-in" type="button"
-                                                onclick="updateSelectedMember()">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </button>
-                                    </div>
-
-                                    <%------------ Remove Button ------------%>
-                                    <form action="deleteMember" method="get" id="deleteMemberBtnId">
-                                        <div class="btn-location-2">
-                                            <button class="btn btn-danger visible-when-logged-in " type="button"
-                                                    onclick="deleteSelectedMembers()">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </div>
-                                        <br>
-                                        <br>
 
                                         <table class="table" id="updateMemberTable">
                                             <tr>
                                                 <th width="1%">Check</th>
                                                 <th width="3%">No</th>
                                                 <th width="3%">Id</th>
-                                                <th>Name</th>
-                                                <th>Surname</th>
+                                                <th width="50%">Name</th>
+                                                <th width="50%">Surname</th>
                                             </tr>
                                             <%
                                                 for (int i = 0; i < memberListSize; i++) {
@@ -309,6 +248,7 @@
                 </div>
             </div>
         </div>
+	</div>
 <!-- jQuery -->
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 

@@ -134,7 +134,6 @@
                                 <table class="table">
                                     <tr class="thCustom">
                                         <th>No</th>
-                                        <th>Id</th>
                                         <th>Name</th>
                                         <th>StartDate</th>
                                         <th>EndDate</th>
@@ -149,12 +148,7 @@
                                     <tr>
                                         <%--No--%>
                                         <td contenteditable="false">
-                                            <%=i%>
-                                        </td>
-
-                                        <%--TournamentId--%>
-                                        <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
-                                            <%=tournamentList.get(i).getTournamentId()%>
+                                            <%=i + 1 %>
                                         </td>
 
                                         <%--TournamentName--%>

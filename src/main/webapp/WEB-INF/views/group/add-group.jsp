@@ -32,6 +32,8 @@
 
 
 <%
+	//TODO: tournament round should be inserted!
+
     List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("tournamentList");
     String name;
     int tournamentId;

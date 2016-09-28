@@ -250,6 +250,7 @@ CREATE TABLE `tournament` (
   `end_date` datetime DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `tournament_description` text,
+	`is_completed` tinyint(1) NOT NULL DEFAULT '0',
   `tournament_format_id` int(11) DEFAULT NULL,
   `manager_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`tournament_id`),

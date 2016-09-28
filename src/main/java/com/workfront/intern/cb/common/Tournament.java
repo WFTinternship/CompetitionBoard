@@ -9,6 +9,7 @@ public class Tournament {
     private Timestamp endDate;
     private String location;
     private String tournamentDescription;
+	private boolean completed;
     private int tournamentFormatId;
     private int managerId;
 
@@ -79,7 +80,15 @@ public class Tournament {
         this.tournamentDescription = tournamentDescription;
     }
 
-    @Override
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
@@ -89,7 +98,7 @@ public class Tournament {
         sb.append("endDate: ").append(endDate).append("\n");
         sb.append("location: ").append(location).append("\n");
         sb.append("tournamentDescription: ").append(tournamentDescription).append("\n");
-//        sb.append("tournamentFormatId: ").append(tournamentFormat.getFormatId()).append("\n");
+        sb.append("completed: ").append(completed).append("\n");
         sb.append("*******************************************************************************************");
         sb.append("\n");
 

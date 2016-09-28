@@ -338,3 +338,16 @@ textarea {
 .table-up:hover, .table-down:hover {
     color: #ff8841;
 }
+
+h2.title {
+	font-size: 35px;
+}
+
+.action-link {
+	color: blue;
+	font-style: italic;
+}
+
+.text-15 {
+	font-size: 15px;
+}

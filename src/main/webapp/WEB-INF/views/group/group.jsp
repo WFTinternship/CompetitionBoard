@@ -164,7 +164,6 @@
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
-                                            <th width="3%">Id</th>
                                             <th>Name</th>
                                             <th>Participant count</th>
                                             <th>Round</th>
@@ -186,12 +185,7 @@
 
                                             <%--No--%>
                                             <td>
-                                                <%=i%>
-                                            </td>
-
-                                            <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
-                                                <%=groupIDSelected%>
+                                                <%=i + 1 %>
                                             </td>
 
                                             <%--Name--%>

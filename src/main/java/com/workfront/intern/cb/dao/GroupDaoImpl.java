@@ -191,82 +191,112 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
     @Override
     public void updateGroup(int id, Group group) throws ObjectNotFoundException, FailedOperationException {
         Connection conn = null;
-        PreparedStatement ps = null;
-
-        String sql = "UPDATE `group` SET group_name=?, participants_count=?, round=?, next_round_participants=?, tournament_id=? WHERE group_id=?";
         try {
             // Acquire connection
             conn = dataSource.getConnection();
 
-            // Initialize statement
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, group.getGroupName());
-            ps.setInt(2, group.getParticipantsCount());
-            ps.setInt(3, group.getRound());
-            ps.setInt(4, group.getNextRoundParticipants());
-            ps.setInt(5, group.getTournamentId());
-            ps.setInt(6, id);
-
-            // Execute statement
-            int rows = ps.executeUpdate();
-            if (rows == 0) {
-                throw new ObjectNotFoundException(String.format("Group with id[%d] not found", id));
-            }
+            // Execute update
+            updateGroup(id, group, conn);
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new FailedOperationException(e.getMessage(), e);
         } finally {
-            closeResources(conn, ps);
+            closeResources(conn);
         }
     }
 
-    @Override
+	@Override
+	public void updateGroup(int id, Group group, Connection transaction) throws ObjectNotFoundException, FailedOperationException {
+		String sql = "UPDATE `group` " +
+				"SET group_name=?, participants_count=?, round=?, next_round_participants=?, tournament_id=? " +
+				"WHERE group_id=?";
+
+		PreparedStatement ps = null;
+		try {
+			// Initialize statement
+			ps = transaction.prepareStatement(sql);
+			ps.setString(1, group.getGroupName());
+			ps.setInt(2, group.getParticipantsCount());
+			ps.setInt(3, group.getRound());
+			ps.setInt(4, group.getNextRoundParticipants());
+			ps.setInt(5, group.getTournamentId());
+			ps.setInt(6, id);
+
+			// Execute statement
+			int rows = ps.executeUpdate();
+			if (rows == 0) {
+				throw new ObjectNotFoundException(String.format("Group with id[%d] not found", id));
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage(), e);
+			throw new FailedOperationException(e.getMessage(), e);
+		} finally {
+			closeResources(ps);
+		}
+	}
+
+	@Override
     public void assignParticipant(int tournamentId, int groupId, Participant participant) throws ObjectNotFoundException, FailedOperationException {
-        Connection conn = null;
-        PreparedStatement ps = null;
+		Connection conn = null;
+		try {
+			// Acquire connection
+			conn = dataSource.getConnection();
 
-        String sql = "INSERT INTO group_participant(group_id, participant_id) VALUES (?,?)";
-        try {
-            // Acquire connection
-            conn = dataSource.getConnection();
-
-            if (tournamentId == (participant.getTournamentId())) {
-                int participantId = participant.getId();
-
-                // prepare base insert query
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1, groupId);
-                ps.setInt(2, participantId);
-
-                // Execute statement
-                ps.executeUpdate();
-            } else {
-                throw new ObjectNotFoundException(String.format("Participant with tournamentId[%d] not found in that group", tournamentId));
-            }
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            throw new FailedOperationException(e.getMessage(), e);
-        } finally {
-            closeResources(conn, ps);
-        }
+			// Execute update
+			assignParticipant(tournamentId, groupId, participant, conn);
+		} catch (SQLException e) {
+			LOG.error(e.getMessage(), e);
+			throw new FailedOperationException(e.getMessage(), e);
+		} finally {
+			closeResources(conn);
+		}
     }
 
-    @Override
+	@Override
+	public void assignParticipant(int tournamentId, int groupId, Participant participant, Connection transaction) throws ObjectNotFoundException, FailedOperationException {
+		String sql = "INSERT INTO group_participant(group_id, participant_id) VALUES (?,?)";
+
+		PreparedStatement ps = null;
+		try {
+			// Acquire connection
+			transaction = dataSource.getConnection();
+
+			if (tournamentId == (participant.getTournamentId())) {
+				int participantId = participant.getId();
+
+				// prepare base insert query
+				ps = transaction.prepareStatement(sql);
+				ps.setInt(1, groupId);
+				ps.setInt(2, participantId);
+
+				// Execute statement
+				ps.executeUpdate();
+			} else {
+				throw new ObjectNotFoundException(String.format("Participant with tournamentId[%d] not found in that group", tournamentId));
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage(), e);
+			throw new FailedOperationException(e.getMessage(), e);
+		} finally {
+			closeResources(ps);
+		}
+	}
+
+	@Override
     public void removeParticipant(int groupId, int participantId)
             throws ObjectNotFoundException, FailedOperationException {
 
         String sql = "DELETE FROM group_participant WHERE group_id=? and participant_id=?";
         deleteEntryForGroupParticipant(sql, groupId, participantId);
-
     }
 
-    @Override
+	@Override
     public void removeAllParticipants(int groupId) throws ObjectNotFoundException, FailedOperationException {
         String sql = "DELETE FROM group_participant WHERE group_id=?";
         deleteEntry(sql, groupId);
     }
 
-    @Override
+	@Override
     public void removeAll() throws FailedOperationException {
         String sql = "DELETE FROM group_participant";
         deleteAllEntries(sql);

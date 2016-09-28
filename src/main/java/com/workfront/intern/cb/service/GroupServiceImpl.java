@@ -9,7 +9,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class GroupServiceImpl implements GroupService {
@@ -69,7 +73,32 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
-    /**
+	/**
+	 * Gets/returns group lists seperated for each round
+	 */
+	@Override
+	public Map<Integer, List<Group>> getTournamentGroupsByRounds(int tournamentId) {
+		List<Group> tournamentGroups = getTournamentGroups(tournamentId);
+
+		Map<Integer, List<Group>> resultMap = new LinkedHashMap<>();
+		for (Group group : tournamentGroups) {
+			int round = group.getRound();
+
+			List<Group> roundGroups;
+			if (resultMap.containsKey(round)) {
+				roundGroups = resultMap.get(round);
+			} else {
+				roundGroups = new ArrayList<>();
+				resultMap.put(round, roundGroups);
+			}
+
+			roundGroups.add(group);
+		}
+
+		return resultMap;
+	}
+
+	/**
      * Returns all groups
      */
     @Override
@@ -97,14 +126,32 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void assignParticipant(int tournamentId, int groupId, Participant participant) {
+		// Acquire transactional connection
+		Connection transaction = groupDao.getTransactionalConnection();
+
         try {
-            groupDao.assignParticipant(tournamentId, groupId, participant);
-        } catch (ObjectNotFoundException e) {
-            throw new RuntimeException(String.format("Group instance with id=%s not found", groupId));
-        } catch (FailedOperationException e) {
+			Group group = groupDao.getGroupById(groupId);
+			if (group == null)
+				throw new FailedOperationException(String.format("Group with id [%s]not found", groupId));
+
+			// assign participant
+            groupDao.assignParticipant(tournamentId, groupId, participant, transaction);
+
+			// update participant count for group
+			int participantsCount = group.getParticipantsCount();
+			group.setParticipantsCount(++participantsCount);
+			groupDao.updateGroup(groupId, group, transaction);
+
+			// commit transaction
+			groupDao.commitTransaction(transaction);
+
+        } catch (Exception e) {
+			// rollback transaction
+			groupDao.rollbackTransaction(transaction);
+
             throw new RuntimeException(e.getMessage());
         }
-    }
+	}
 
     @Override
     public void removeParticipant(int groupId, int participantId) {

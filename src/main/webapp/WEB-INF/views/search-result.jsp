@@ -53,18 +53,18 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
 
-                <%--Add Tournament--%>
-                <li>
-                    <a class="visible-when-logged-in page-scroll" href="addTournament-page" id="<%=classStr%>"
-                       onload="showMenuItem()"><%=addTournamentMenuItem%>
-                    </a>
-                </li>
 
                 <%--All Tournament--%>
                 <li>
                     <a class=" page-scroll" href="<%=hrefToSpecificTournamentPage%>"><%=allTournaments%>
                     </a>
                 </li>
+
+					<%--Groups--%>
+					<li>
+						<a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+						</a>
+					</li>
 
                 <%--Match--%>
                 <li>

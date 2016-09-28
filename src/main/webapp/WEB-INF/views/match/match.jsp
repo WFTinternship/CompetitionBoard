@@ -157,7 +157,6 @@
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
-                                            <th width="3%">Id</th>
                                             <th width="7%">Group Id</th>
                                             <th>Participant 1 Id</th>
                                             <th>Participant 2 Id</th>
@@ -174,10 +173,6 @@
 
                                             <%--No--%>
                                             <td>
-                                            </td>
-
-                                            <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
                                             </td>
 
                                             <%--Group Id--%>
