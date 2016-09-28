@@ -101,13 +101,15 @@ public class GroupController {
     @RequestMapping(value = {"/addGroup-form"})
     public String addGroup(Model model,
                            @RequestParam("nameGroup") String nameGroup,
-                           @RequestParam("tournamentNameId") String tournamentNameId) {
+                           @RequestParam("roundSelectId") String roundSelectIdStr,
+                           @RequestParam("tournamentNameId") String tournamentNameIdStr) {
 
         String notSelected = "notSelected";
-        if (!tournamentNameId.equals(notSelected)) {
+        if (!tournamentNameIdStr.equals(notSelected)) {
             Group group = new Group();
             group.setGroupName(nameGroup);
-            group.setTournamentId(Integer.parseInt(tournamentNameId));
+            group.setRound(Integer.parseInt(roundSelectIdStr));
+            group.setTournamentId(Integer.parseInt(tournamentNameIdStr));
 
             groupService.addGroup(group);
         } else {

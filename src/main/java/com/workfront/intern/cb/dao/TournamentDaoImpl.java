@@ -316,10 +316,9 @@ public class TournamentDaoImpl extends GenericDao implements TournamentDao {
             ps.setTimestamp(3, tournament.getEndDate());
             ps.setString(4, tournament.getLocation());
             ps.setString(5, tournament.getTournamentDescription());
-            ps.setBoolean(6, tournament.isCompleted());
-            ps.setInt(7, tournament.getTournamentFormatId());
-            ps.setInt(8, tournament.getManagerId());
-            ps.setInt(9, id);
+            ps.setInt(6, tournament.getTournamentFormatId());
+            ps.setInt(7, tournament.getManagerId());
+            ps.setInt(8, id);
 
             // Execute statement
             ps.executeUpdate();
