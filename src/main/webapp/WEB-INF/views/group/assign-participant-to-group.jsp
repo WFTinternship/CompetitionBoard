@@ -46,9 +46,10 @@
                     String showTeamElement = null;
                     String showMemberElement = null;
 
-                    List<Group> groupListByManager = (List<Group>) session.getAttribute("groupListByManager");
                     List<Team> teamListByTournament = (List<Team>) session.getAttribute("teamListByTournament");
                     List<Member> memberListByTournament = (List<Member>) session.getAttribute("memberListByTournament");
+
+                    List<Group> groupsByCurrentTournament = (List<Group>) session.getAttribute("groupsByCurrentTournament");
 
                     if (assignToGroupBtnValue == 1) {
                         showTeamElement = "show-element";
@@ -64,10 +65,10 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="groupSelectId" name="groupId" class="form-control" required>
+                            <select id="groupSelectId" name="groupId" class="form-control" required title="">
                                 <option value="notSelected" selected="selected">Select Groups</option>
                                 <%
-                                    for (Group groupList : groupListByManager) {
+                                    for (Group groupList : groupsByCurrentTournament) {
                                         String name = groupList.getGroupName();
                                         int groupId = groupList.getGroupId();
                                 %>
@@ -85,7 +86,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                                <select name="memberId" class="form-control" required>
+                                <select name="memberId" class="form-control" required title="">
                                     <option value="notSelected" selected="selected">Select Members</option>
                                     <%
                                         for (Member member : memberListByTournament) {
@@ -107,7 +108,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                                <select id="teamSelectId" name="teamId" class="form-control" required>
+                                <select id="teamSelectId" name="teamId" class="form-control" required title="">
                                     <option value="notSelected" selected="selected">Select Teams</option>
                                     <%
                                         for (Team team : teamListByTournament) {

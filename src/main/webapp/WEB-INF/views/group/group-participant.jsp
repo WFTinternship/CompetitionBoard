@@ -40,6 +40,7 @@
 <%--Gets specific atributes from http session--%>
 <%@ include file="../layout/layout.jsp" %>
 
+
 <body class="backgroundTournament">
 
 <!-- Navigation -->

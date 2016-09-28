@@ -192,26 +192,34 @@ public class GroupController {
             session.setAttribute("assignToGroupBtnValue", assignToGroupBtnValue);
         }
 
-        // Selected groups list of manager tournaments
-        List<Group> groupListByManager = new ArrayList<>();
-        Manager manager = (Manager) session.getAttribute("manager");
 
-        //TODO: include only current tournament groups
-        // All groups list
-        List<Group> allGroups = groupService.getAllGroups();
-        int allGroupsSize = allGroups.size();
+        // Gets groups by tournament id
+        int selectedTournamentId = (int) session.getAttribute("selectedTournamentId");
+        List<Group> groupsByCurrentTournament = groupService.getTournamentGroups(selectedTournamentId);
+        session.setAttribute("groupsByCurrentTournament", groupsByCurrentTournament);
 
-        // Tournaments list of manager
-        List<Tournament> tournamentListByManager = tournamentService.getTournamentListByManager(manager.getId());
-        int tournamentListSize = tournamentListByManager.size();
-        for (int i = 0; i < tournamentListSize; i++) {
-            for (int j = 0; j < allGroupsSize; j++) {
-                if ((tournamentListByManager.get(i).getTournamentId()) == allGroups.get(j).getTournamentId()) {
-                    groupListByManager.add(allGroups.get(j));
-                }
-            }
-        }
-        session.setAttribute("groupListByManager", groupListByManager);
+
+
+//        // Selected groups list of manager tournaments
+//        List<Group> groupListByManager = new ArrayList<>();
+//        Manager manager = (Manager) session.getAttribute("manager");
+//
+//        // All groups list
+//        List<Group> allGroups = groupService.getAllGroups();
+//        int allGroupsSize = allGroups.size();
+//
+//        // Tournaments list of manager
+//        List<Tournament> tournamentListByManager = tournamentService.getTournamentListByManager(manager.getId());
+//        int tournamentListSize = tournamentListByManager.size();
+//        for (int i = 0; i < tournamentListSize; i++) {
+//            for (int j = 0; j < allGroupsSize; j++) {
+//                if ((tournamentListByManager.get(i).getTournamentId()) == allGroups.get(j).getTournamentId()) {
+//                    groupListByManager.add(allGroups.get(j));
+//                }
+//            }
+//        }
+//
+//        session.setAttribute("groupListByManager", groupListByManager);
         return PAGE_ASSIGN_TO_GROUP;
     }
 

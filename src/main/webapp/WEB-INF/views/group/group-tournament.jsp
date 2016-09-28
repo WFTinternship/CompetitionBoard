@@ -1,11 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.workfront.intern.cb.common.Group" %>
-<%@ page import="com.workfront.intern.cb.service.TournamentService" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
-<%@ page import="com.workfront.intern.cb.common.Participant" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,6 +37,7 @@
 <%--Gets specific atributes from http session--%>
 
 <%@ include file="../layout/layout.jsp" %>
+<%@ include file="../layout/bean-provider-layout.jsp" %>
 
 <body class="backgroundTournament">
 
@@ -81,7 +80,7 @@
 
                 <%--Gallery--%>
                 <li>
-                    <a class="page-scroll" href="#portfolio">Gallery</a>
+                    <a class="page-scroll" href="#">Gallery</a>
                 </li>
 
                 <%--Contact Us--%>
@@ -178,7 +177,7 @@
                                             <%--Radio--%>
                                             <td>
                                                 <input type="radio" id="<%=groupIDSelected%>" class="checkbox-custom"
-                                                       name="groupId" value="<%=groupIDSelected%>" required/>
+                                                       name="groupId" value="<%=groupIDSelected%>" required title=""/>
                                             </td>
 
                                             <%--No--%>
@@ -196,7 +195,7 @@
 
                                             <%--Participant count--%>
                                             <td contenteditable="false" data-name="participantCount" data-updatable="false">
-                                                <%=BeanProvider.getParticipantService().getParticipantsCountByGroupId(groupIDSelected)%>
+                                                <%=participantService.getParticipantsCountByGroupId(groupIDSelected)%>
                                             </td>
 
                                             <%--Round--%>
@@ -220,11 +219,10 @@
 
                                             <%--Tournament name--%>
                                             <%
-                                                Tournament tournament = BeanProvider.getTournamentService().getTournamentById(tournamentIdSelected);
+                                                Tournament tournament = tournamentService.getTournamentById(tournamentIdSelected);
                                                 String tournamentNameSelected = tournament.getTournamentName();
                                             %>
-                                            <td contenteditable="false" data-name="tournamentName"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="tournamentName" data-updatable="false">
                                                 <%=tournamentNameSelected%>
                                             </td>
                                         </tr>
