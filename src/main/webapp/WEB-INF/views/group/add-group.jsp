@@ -1,6 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="java.util.List" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,14 +32,12 @@
 
 
 <%
-	//TODO: tournament round should be inserted!
-
     List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("tournamentList");
     String name;
     int tournamentId;
-    int size = tournamentList.size();
+    int roundNameId;
+    int roundId;
 %>
-
 
 <body>
 <div class="container">
@@ -51,7 +49,7 @@
 
             <form action="addGroup-form" class="form-horizontal" method="get">
 
-                <%--Name--%>
+                <%--Group name--%>
                 <div class="form-group">
                     <label for="groupNameID" class="cols-sm-2 control-label">Group name</label>
                     <div class="cols-sm-10">
@@ -63,8 +61,30 @@
                     </div>
                 </div>
 
+                <%--Round--%>
+                <div class="form-group">
+                    <label for="roundSelectId" class="cols-sm-2 control-label">Round No.</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                            <select id="roundSelectId" name="roundSelectId" class="form-control" required >
+                                <option value="notSelected" selected="selected">Select Round No</option>
+                                <%
+                                    for (int i = 1; i < 10; i++) {
+                                        roundNameId = i;
+                                        roundId = i;
+                                %>
+                                <option value="<%=roundId%>"><%=roundNameId%>
+                                    <%}%>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <%--Tournament name--%>
                 <div class="form-group">
+                    <label for="tournamentSelectId" class="cols-sm-2 control-label">Tournament name</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
@@ -82,6 +102,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group ">
                     <br>
                     <br>
