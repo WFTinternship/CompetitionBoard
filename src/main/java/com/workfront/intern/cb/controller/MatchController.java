@@ -123,4 +123,13 @@ public class MatchController {
 
         return "redirect:match-page";
     }
+
+    @RequestMapping(value = "/deleteMatch", method = RequestMethod.GET)
+    public String deleteMatch(Model model,
+                              @RequestParam("matchNameId") int matchID) {
+
+       matchService.deleteMatch(matchID);
+
+        return "redirect:match-page";
+    }
 }

@@ -129,6 +129,7 @@
                                         <B>NEW MATCH</B>
                                     </button>
                                 </form>
+
                             </li>
 
                         </ul>
@@ -150,9 +151,9 @@
                                 </div>
 
                                 <%--Remove Button--%>
-                                <form action="deleteGroup" method="get" id="deleteGroupBtnId">
+                                <form action="deleteMatch" method="get" id="deleteMatchBtnId">
                                     <div class="btn-location-2">
-                                        <button class="btn btn-danger" type="button" onclick="">
+                                        <button class="btn btn-danger" type="button" onclick="deleteSelectedMatch()">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
@@ -193,7 +194,7 @@
                                             </td>
 
                                             <%--Group Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
+                                            <td contenteditable="false" data-name="matchId" data-updatable="false">
                                                 <%
                                                     int groupId = matchList.get(i).getGroupId();
                                                     Group group = groupService.getGroupById(groupId);
