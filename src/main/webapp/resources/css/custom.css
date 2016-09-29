@@ -20,6 +20,15 @@ h1 {
     letter-spacing: 1px;
 }
 
+.err-msg-delete {
+    color: #ffadab;
+    text-align: center;
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+
 .hidden-element {
     display: none !important;
 }
@@ -166,6 +175,6 @@ h1 {
 
 .btn-location-3 {
     position: relative;
-    left: -800px;
-    top: -300px;
+    left: 0px;
+    top: 51px;
 }
