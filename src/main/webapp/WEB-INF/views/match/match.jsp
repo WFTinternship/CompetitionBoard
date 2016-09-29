@@ -189,12 +189,12 @@
                                             </td>
 
                                             <%--Match Id--%>
-                                            <td contenteditable="false" data-name="matchID" data-updatable="false">
+                                            <td contenteditable="false" data-name="matchId" data-updatable="false">
                                                 <%=matchId%>
                                             </td>
 
                                             <%--Group Id--%>
-                                            <td contenteditable="false" data-name="matchId" data-updatable="false">
+                                            <td contenteditable="false" data-name="groupId" data-updatable="false">
                                                 <%
                                                     int groupId = matchList.get(i).getGroupId();
                                                     Group group = groupService.getGroupById(groupId);

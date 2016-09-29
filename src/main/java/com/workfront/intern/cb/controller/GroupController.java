@@ -159,14 +159,14 @@ public class GroupController {
 
     @RequestMapping(value = "/updateGroup", method = RequestMethod.GET)
     public String updateGroup(Model model,
+                              @RequestParam("groupIDSelected") int groupID,
                               @RequestParam("groupName") String groupName,
                               HttpServletRequest request) {
 
-        int groupId = Integer.parseInt(request.getParameter("groupIDSelected"));
-
-        Group group = groupService.getGroupById(groupId);
+        Group group = groupService.getGroupById(groupID);
         group.setGroupName(groupName);
-        groupService.updateGroup(groupId, group);
+
+        groupService.updateGroup(groupID, group);
 
         return "redirect:group-page";
     }
@@ -242,7 +242,7 @@ public class GroupController {
 
     @RequestMapping(value = "/deleteGroup", method = RequestMethod.GET)
     public String deleteGroup(Model model,
-                              @RequestParam("groupId") String groupId) {
+                              @RequestParam("groupNameId") String groupId) {
         try {
             groupService.deleteGroup(Integer.parseInt(groupId));
         } catch (Exception ex) {

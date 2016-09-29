@@ -128,13 +128,21 @@ public class ParticipantController {
         HttpSession session = request.getSession();
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
 
+        try{
+            Team team = new Team();
+            team.setTeamName(nameTeam);
+            team.setParticipantInfo(teamInfo);
+            team.setTournamentId(tournamentId);
 
-        Team team = new Team();
-        team.setTeamName(nameTeam);
-        team.setParticipantInfo(teamInfo);
-        team.setTournamentId(tournamentId);
+            participantService.addParticipant(team);
+        } catch (Exception ex){
+            LOG.error(ex.getMessage(), ex);
+            String errMsgTeam = "Sorry, but team this name exist.";
+            model.addAttribute("errMsgTeam", errMsgTeam);
 
-        participantService.addParticipant(team);
+            return Params.PAGE_ADD_TEAM;
+        }
+
 
         return "redirect:participant-page";
     }
@@ -144,17 +152,17 @@ public class ParticipantController {
     // region <UPDATE TEAM>
 
     @RequestMapping(value = "/updateTeam", method = RequestMethod.GET)
-    public String updateTeam(Model model, HttpServletRequest request) {
+    public String updateTeam(Model model,
+                             @RequestParam("teamNameId") int teamNameId,
+                             @RequestParam("teamName") String teamName,
+                             @RequestParam("teamInfo") String teamInfo,
+                             HttpServletRequest request) {
 
-        int teamId = Integer.parseInt(request.getParameter("teamNameId"));
-        String nameUpdate = request.getParameter("teamName");
-        String teamInfoUpdate = request.getParameter("teamInfo");
+        Team team = (Team) participantService.getOne(Team.class, teamNameId);
+        team.setTeamName(teamName);
+        team.setParticipantInfo(teamInfo);
 
-        Team team = (Team) participantService.getOne(Team.class, teamId);
-        team.setTeamName(nameUpdate);
-        team.setParticipantInfo(teamInfoUpdate);
-
-        participantService.update(teamId, team );
+        participantService.update(teamNameId, team );
 
         return "redirect:participant-page";
     }
@@ -168,7 +176,11 @@ public class ParticipantController {
             participantService.delete(teamId);
         } catch (Exception ex) {
             LOG.error(ex.getMessage(), ex);
-            return "redirect:participant-page";
+            String errMsgTeam = "You can not remove the participant," + "\n" +
+                    " because he participates in the tournament";
+            model.addAttribute("errMsgTeam", errMsgTeam);
+
+            return Params.PAGE_PARTICIPANTS;
         }
         return "redirect:participant-page";
     }

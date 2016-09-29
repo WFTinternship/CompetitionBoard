@@ -34,20 +34,29 @@
 
 
 <%
-    List<Group> groupsMatchByManager = (List<Group>) session.getAttribute("groupsMatchByManager");
-    int size = groupsMatchByManager.size();
+    int size = 0;
     String groupName;
     int groupId;
+    List<Group> groupsMatchByManager = (List<Group>) session.getAttribute("groupsMatchByManager");
+    if (groupsMatchByManager != null) {
+        size = groupsMatchByManager.size();
+    }
 
+    int teamListMatchSize = 0;
     List<Team> teamListMatch = (List<Team>) session.getAttribute("teamListMatch");
-    int teamListMatchSize = teamListMatch.size();
+    if (teamListMatch != null) {
+        teamListMatchSize = teamListMatch.size();
+    }
     int participant1Id;
     int participant2Id;
     String participant1;
     String participant2;
 
+    int memberListMatchSize;
     List<Member> memberListMatch = (List<Member>) session.getAttribute("memberListMatch");
-    int memberListMatchSize = memberListMatch.size();
+    if (memberListMatch != null) {
+        memberListMatchSize = memberListMatch.size();
+    }
 %>
 
 <body>
@@ -60,14 +69,13 @@
             <hr>
 
             <form action="add-match" class="form-horizontal" method="get">
-
-             <%--Group name--%>
+                <%--Group name--%>
                 <div class="form-group">
                     <label for="groupSelectId" class="cols-sm-2 control-label">Group</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                            <select id="groupSelectId" name="groupSelectId" class="form-control" required >
+                            <select id="groupSelectId" name="groupSelectId" class="form-control" required>
                                 <option value="notSelected" selected="selected">Select Group</option>
                                 <%
                                     for (int i = 0; i < size; i++) {
@@ -82,58 +90,55 @@
                     </div>
                 </div>
 
-                 <%--Participant 1--%>
-                 <div class="form-group">
-                     <label for="participant1MatchId" class="cols-sm-2 control-label">Select Participant 1</label>
-                     <div class="cols-sm-10">
-                         <div class="input-group">
-                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                             <select id="participant1MatchId" name="participant1MatchId" class="form-control" required >
-                                 <option value="notSelected" selected="selected">Select Participant 1</option>
-                                 <%
-                                     for (int i = 0; i < teamListMatchSize; i++) {
-                                         participant1 = teamListMatch.get(i).getTeamName();
-                                         participant1Id = teamListMatch.get(i).getId();
-                                 %>
-                                 <option value="<%=participant1Id%>"><%=participant1%>
-                                     <%}%>
-                                 </option>
-                             </select>
-                         </div>
-                     </div>
-                 </div>
+                <%--Participant 1--%>
+                <div class="form-group">
+                    <label for="participant1MatchId" class="cols-sm-2 control-label">Select Participant 1</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                            <select id="participant1MatchId" name="participant1MatchId" class="form-control" required>
+                                <option value="notSelected" selected="selected">Select Participant 1</option>
+                                <%
+                                    for (int i = 0; i < teamListMatchSize; i++) {
+                                        participant1 = teamListMatch.get(i).getTeamName();
+                                        participant1Id = teamListMatch.get(i).getId();
+                                %>
+                                <option value="<%=participant1Id%>"><%=participant1%>
+                                    <%}%>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-                 <%--Participant 2--%>
-                 <div class="form-group">
-                     <label for="participant2MatchId" class="cols-sm-2 control-label">Select Participant 2</label>
-                     <div class="cols-sm-10">
-                         <div class="input-group">
-                             <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
-                             <select id="participant2MatchId" name="participant2MatchId" class="form-control" required >
-                                 <option value="notSelected" selected="selected">Select Participant 2</option>
-                                 <%
-                                     for (int i = 0; i < teamListMatchSize; i++) {
-                                         participant2 = teamListMatch.get(i).getTeamName();
-                                         participant2Id = teamListMatch.get(i).getId();
-                                 %>
-                                 <option value="<%=participant2Id%>"><%=participant2%>
-                                     <%}%>
-                                 </option>
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-
-
+                <%--Participant 2--%>
+                <div class="form-group">
+                    <label for="participant2MatchId" class="cols-sm-2 control-label">Select Participant 2</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                            <select id="participant2MatchId" name="participant2MatchId" class="form-control" required>
+                                <option value="notSelected" selected="selected">Select Participant 2</option>
+                                <%
+                                    for (int i = 0; i < teamListMatchSize; i++) {
+                                        participant2 = teamListMatch.get(i).getTeamName();
+                                        participant2Id = teamListMatch.get(i).getId();
+                                %>
+                                <option value="<%=participant2Id%>"><%=participant2%>
+                                    <%}%>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
 
-
-                 <div class="form-group ">
+                <div class="form-group ">
                     <br>
                     <br>
                     <input type="reset" class="btn btn-danger btn-lg btn-block login-button" value="Reset"/>
                     <br>
-                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Start Match" />
+                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Start Match"/>
                 </div>
 
             </form>

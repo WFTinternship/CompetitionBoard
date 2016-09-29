@@ -177,7 +177,7 @@
                                             <%--Radio--%>
                                             <td>
                                                 <input type="radio" id="<%=groupIDSelected%>" class="checkbox-custom"
-                                                       name="groupId" value="<%=groupIDSelected%>" required/>
+                                                       name="groupNameId" value="<%=groupIDSelected%>" required/>
                                             </td>
 
                                             <%--No--%>

@@ -85,7 +85,7 @@ public class DBManager {
             ds.setInitialPoolSize(50);
             ds.setMinPoolSize(10);
             ds.setAcquireIncrement(50);
-            ds.setMaxPoolSize(100);
+            ds.setMaxPoolSize(200);
             ds.setMaxStatements(100);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);

@@ -50,6 +50,11 @@
             </h2>
             <hr>
 
+            <div class="err-msg">
+                <c:out value="${errMsgTeam}"/>
+
+            </div>
+
             <form action="addTeam-form" class="form-horizontal" method="get">
                 <%--Team Name--%>
                 <div class="form-group">

@@ -211,6 +211,10 @@
 									<br>
 									<br>
 
+									<div class="err-msg-delete">
+									<c:out value="${errMsgTeam}"/>
+										</div>
+
 									<div class="container-custom">
 									<table class="table" id="updateTeamTable">
 										<tr>
@@ -225,13 +229,13 @@
 										%>
 										<tr>
 											<%--Radio--%>
-											<td contenteditable="false" data-name="teamNameId" data-updatable="false">
+											<td>
 												<input type="radio" id="<%=teamId %>" class="checkbox-custom"
-													   name="teamNameId" value="<%=teamId %>" required/>
+													   name="teamNameId" value="<%=teamId%>" required/>
 											</td>
 
 											<%--No--%>
-											<td contenteditable="false" data-name="numberId" data-updatable="false">
+											<td>
 												<%=j + 1 %>
 											</td>
 
@@ -302,7 +306,6 @@
 										<tr>
 											<th width="1%">Check</th>
 											<th width="3%">No</th>
-											<th width="3%">Id</th>
 											<th>Name</th>
 											<th>Surname</th>
 											<th>Position</th>
@@ -321,13 +324,7 @@
 											</td>
 
 											<td>
-												<%=i%>
-											</td>
-
-											<%--Id--%>
-											<td contenteditable="false" data-name="memberNameId"
-												data-updatable="false">
-												<%=memberId%>
+												<%=i+1%>
 											</td>
 
 											<%--Name--%>

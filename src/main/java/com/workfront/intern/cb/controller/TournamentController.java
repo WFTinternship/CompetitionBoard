@@ -112,12 +112,11 @@ public class TournamentController {
     @RequestMapping(value = "/updateTournament", method = RequestMethod.GET)
     public String updateTournament(Model model,
                                    @RequestParam("nameUpdate") String nameUpdate,
-                                   @RequestParam("tournamentId") int tournamentId,
+                                   @RequestParam("tournamentNameId") int tournamentId,
                                    @RequestParam("startDateUpdate") Timestamp startDateUpdate,
                                    @RequestParam("endDateUpdate") Timestamp endDateUpdate,
                                    @RequestParam("locationUpdate") String locationUpdate,
                                    @RequestParam("descriptionUpdate") String descriptionUpdate) {
-        System.out.println(tournamentId);
 
         Tournament tournament = tournamentService.getTournamentById(tournamentId);
         tournament.setTournamentName(nameUpdate);
@@ -149,10 +148,6 @@ public class TournamentController {
                                            "the tournament includes participants!...";
 
             model.addAttribute("notDeleteTournament", notDeleteTournament);
-
-//            request.setAttribute("notDeleteTournament", notDeleteTournament);
-
-
             return Params.PAGE_TOURNAMENT;
         }
 

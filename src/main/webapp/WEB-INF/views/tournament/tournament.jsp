@@ -166,7 +166,7 @@
                                         <tr class="thCustom">
                                             <th>Check</th>
                                             <th>No</th>
-                                            <th>Id</th>
+
                                             <th>Name</th>
                                             <th>StartDate</th>
                                             <th>EndDate</th>
@@ -180,20 +180,17 @@
                                         %>
                                         <tr>
                                             <%--Radio--%>
-                                            <td>
+                                            <td >
                                                 <input type="radio" id="<%=tournamentId%>" class="checkbox-custom"
                                                        name="tournamentNameId" value="<%=tournamentId%>" required/>
                                             </td>
 
                                             <%--No--%>
-                                            <td contenteditable="false">
+                                            <td>
+                                                <%--<input type="hidden" name="tournamentId" value="<%=tournamentId%>">--%>
                                                 <%=i + 1 %>
                                             </td>
 
-                                            <%--Id--%>
-                                            <td contenteditable="false" data-name="tournamentId" data-updatable="false">
-                                                <%=tournamentId%>
-                                            </td>
 
                                             <%--TournamentName--%>
                                             <td contenteditable="false" data-name="nameUpdate" data-updatable="true">

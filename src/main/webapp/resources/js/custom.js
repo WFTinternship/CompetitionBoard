@@ -76,7 +76,7 @@ $(document).ready(function () {
             type: 'GET',
             data: {
                 nameUpdate: $('[data-name="nameUpdate"]', tr).text().trim(),
-                tournamentNameId: $('[data-name="tournamentNameId"]', tr).text().trim(),
+                tournamentNameId: $('[name="tournamentNameId"]', tr).val(),
                 startDateUpdate: $('[data-name="startDateUpdate"]', tr).text().trim(),
                 endDateUpdate: $('[data-name="endDateUpdate"]', tr).text().trim(),
                 locationUpdate: $('[data-name="locationUpdate"]', tr).text().trim(),
@@ -91,8 +91,9 @@ $(document).ready(function () {
     });
 });
 
+
 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-GROUPS-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
-//Assign selected member to group
+// Assign selected member to group
 function assignToGroup() {
     var elements;
     var current;
@@ -113,14 +114,12 @@ function assignToGroup() {
     }
 }
 
-
-
-//Deletes selected groups
+// Deletes selected groups
 function deleteSelectedGroup() {
     var elements;
     var current;
     var noneChecked = true;
-    elements = document.getElementsByName("groupId");
+    elements = document.getElementsByName("groupNameId");
     for (var i = 0, len = elements.length; i < len; ++i) {
         if (elements[i].checked) {
             noneChecked = false;
@@ -136,9 +135,9 @@ function deleteSelectedGroup() {
     }
 }
 
-//Updates selected tournament
+// Updates selected tournament
 function updateSelectedGroups() {
-    $('input[name=groupId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
+    $('input[name=groupNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
 }
 $(document).ready(function () {
     $('#updateGroupTable').find('td').blur(function () {
@@ -147,9 +146,8 @@ $(document).ready(function () {
             url: '/updateGroup',
             type: 'GET',
             data: {
-                groupIDSelected: $('[data-name="groupIDSelected"]', tr).text().trim(),
+                groupIDSelected: $('[name="groupNameId"]', tr).val(),
                 groupName: $('[data-name="groupName"]', tr).text().trim()
-
             },
             success: function (tournament) {
                 $('#updateTableElement').text(tournament);
@@ -161,8 +159,7 @@ $(document).ready(function () {
 
 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-MEMBER-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
-
-//Deletes selected MEMBERS
+// Deletes selected MEMBERS
 function deleteSelectedMembers() {
     var elements;
     var current;
@@ -183,7 +180,7 @@ function deleteSelectedMembers() {
     }
 }
 
-//Updates selected member
+// Updates selected member
 function updateSelectedMember() {
     $('input[name=memberNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
 }
@@ -194,7 +191,7 @@ $(document).ready(function () {
             url: '/updateMember',
             type: 'GET',
             data: {
-                memberNameId: $('[data-name="memberNameId"]', tr).text().trim(),
+                memberNameId: $('[name="memberNameId"]', tr).val(),
                 memberName: $('[data-name="memberName"]', tr).text().trim(),
                 memberSureName: $('[data-name="memberSureName"]', tr).text().trim(),
                 memberPosition: $('[data-name="memberPosition"]', tr).text().trim(),
@@ -210,11 +207,9 @@ $(document).ready(function () {
 
 //-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-TEAM-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
-
-//Deletes selected TEAM
+// Deletes selected TEAM
 function deleteSelectedTeam() {
     var elements;
-    var elements1;
     var current;
     var noneChecked = true;
     elements = document.getElementsByName("teamNameId");
@@ -233,7 +228,7 @@ function deleteSelectedTeam() {
     }
 }
 
-//Updates selected team
+// Updates selected team
 function updateSelectedTeam() {
     $('input[name=teamNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
 }
@@ -244,9 +239,55 @@ $(document).ready(function () {
             url: '/updateTeam',
             type: 'GET',
             data: {
-                teamNameId: $('[data-name="teamNameId"]', tr).text().trim(),
+                teamNameId: $('[name="teamNameId"]', tr).val(),
                 teamName: $('[data-name="teamName"]', tr).text().trim(),
                 teamInfo: $('[data-name="teamInfo"]', tr).text().trim()
+            },
+            success: function (tournament) {
+                $('#updateTableElement').text(tournament);
+            }
+        });
+    });
+});
+
+//-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-MATCH-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+
+// Deletes selected match
+function deleteSelectedMatch() {
+    var elements;
+    var current;
+    var noneChecked = true;
+    elements = document.getElementsByName("matchNameId");
+    for (var i = 0, len = elements.length; i < len; ++i) {
+        if (elements[i].checked) {
+            noneChecked = false;
+            current = elements[i].value;
+            if (confirm("Are you sure you want to delete match ? ") == true) {
+                document.getElementById("deleteMatchBtnId").submit();
+            }
+            break;
+        }
+    }
+    if (noneChecked) {
+        alert("Please, select the match...")
+    }
+}
+
+//Updates selected match
+function updateSelectedMatch() {
+    $('input[name=matchNameId]:checked').parents('tr').find('td[data-updatable="true"]').attr('contenteditable', true);
+}
+$(document).ready(function () {
+    $('#updateMatchTable').find('td').blur(function () {
+        var tr = $(this).parent();
+        $.ajax({
+            url: '/updateMatch',
+            type: 'GET',
+            data: {
+                matchID: $('[data-name="matchId"]', tr).text().trim(),
+                participantOneScore: $('[data-name="participantOneScore"]', tr).text().trim(),
+                participantTwoScore: $('[data-name="participantTwoScore"]', tr).text().trim(),
+                matchScore: $('[data-name="matchScore"]', tr).text().trim()
             },
             success: function (tournament) {
                 $('#updateTableElement').text(tournament);

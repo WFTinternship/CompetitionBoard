@@ -63,9 +63,8 @@ public class MatchController {
         matchService.addMatch(match);
         session.setAttribute("groupSelectMatchId", groupSelectId);
 
-        return Params.PAGE_MATCH;
+        return "redirect:match-page";
     }
-
 
     @RequestMapping(value = {"/match-selector-page"})
     public String toMatchSelectorPage(Model model, HttpServletRequest request) {
@@ -90,7 +89,6 @@ public class MatchController {
                 }
             }
         }
-
         int tournamentId = (int) session.getAttribute("selectedTournamentId");
         List<Team> teamListMatch = (List<Team>) participantService.getParticipantsByTournamentId(Team.class, tournamentId);
         List<Member> memberListMatch = (List<Member>) participantService.getParticipantsByTournamentId(Member.class, tournamentId);
@@ -99,6 +97,7 @@ public class MatchController {
         session.setAttribute("teamListMatch", teamListMatch);
         session.setAttribute("memberListMatch", memberListMatch);
 
+
         return Params.PAGE_MATCH_SELECTOR;
     }
 
@@ -106,6 +105,7 @@ public class MatchController {
     public String allMatchPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         return Params.PAGE_ALL_MATCH;
     }
+
 
     @RequestMapping(value = "/updateMatch", method = RequestMethod.GET)
     public String updateMatch(Model model,
@@ -123,6 +123,7 @@ public class MatchController {
 
         return "redirect:match-page";
     }
+
 
     @RequestMapping(value = "/deleteMatch", method = RequestMethod.GET)
     public String deleteMatch(Model model,
