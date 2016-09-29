@@ -113,7 +113,7 @@
         <div class="main-login main-center">
 
             <h2>Assign to Group</h2>
-            <hr>
+            <hr class="hr-custom">
 
             <form action="assignToGroup-form" class="form-horizontal" method="get" id="assignToGroupBtn">
                 <%

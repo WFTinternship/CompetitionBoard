@@ -76,7 +76,6 @@ public class GroupController {
                 }
             }
         }
-
         request.setAttribute("groupsByManager", groupsByManager);
 
         return Params.PAGE_GROUPS;
@@ -116,7 +115,6 @@ public class GroupController {
         } else {
             return "redirect:add-group-page";
         }
-
         return "redirect:group-page";
     }
 
@@ -192,7 +190,6 @@ public class GroupController {
             session.setAttribute("assignToGroupBtnValue", assignToGroupBtnValue);
         }
 
-
         // Gets groups by tournament id
         int selectedTournamentId = (int) session.getAttribute("selectedTournamentId");
         List<Group> groupsByCurrentTournament = groupService.getTournamentGroups(selectedTournamentId);
@@ -232,7 +229,6 @@ public class GroupController {
         assert participant != null;
         participant.setTournamentId(tournamentId);
 
-        assert groupIdStr != null;
         int groupId = Integer.parseInt(groupIdStr);
         groupService.assignParticipant(tournamentId, groupId, participant);
         session.setAttribute("assignedGroupId", groupId);

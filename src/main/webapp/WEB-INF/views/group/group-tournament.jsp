@@ -129,7 +129,13 @@
                         <br>
                     </div>
                     <div class="col-sm-9">
-                        <h2>Tournament's groups</h2>
+                        <%
+                            int tournamentId = (int) session.getAttribute("selectedTournamentId");
+                            Tournament tournament = tournamentService.getTournamentById(tournamentId);
+                            String tournamentNameSelected = tournament.getTournamentName();
+                        %>
+
+                        <h2>Tournament: <%=tournamentNameSelected%>'s groups</h2>
                         <hr>
                         <br>
 
@@ -218,10 +224,6 @@
                                             </td>
 
                                             <%--Tournament name--%>
-                                            <%
-                                                Tournament tournament = tournamentService.getTournamentById(tournamentIdSelected);
-                                                String tournamentNameSelected = tournament.getTournamentName();
-                                            %>
                                             <td contenteditable="false" data-name="tournamentName" data-updatable="false">
                                                 <%=tournamentNameSelected%>
                                             </td>

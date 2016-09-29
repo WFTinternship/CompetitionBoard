@@ -127,129 +127,135 @@
 
                         <ul class="nav nav-pills nav-stacked">
 
-                            <%-------------------- CUSTOM BUTTON --------------------%>
+                            <li>
+                                <form action="tournament-page" method="get">
+                                    <button type="submit"
+                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll">
+                                        <B>Go to tournament </B>
+                                    </button>
+                                </form>
 
                         </ul>
                         <br>
                     </div>
 
                     <div class="col-sm-9">
-                            <h2>
-                                <%--<%=tournamentName%>--%>
-                            </h2>
-                            <br>
+                        <h2>
+                            <%--<%=tournamentName%>--%>
+                        </h2>
+                        <br>
 
-                            <h3>Teams</h3>
-                            <hr>
-                            <br>
+                        <h3>Teams</h3>
+                        <hr>
+                        <br>
 
-                            <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
-                            <div class="container-custom">
-                                <div id="tableTeam" class="table-editable">
+                        <%-------------=-=-=-=-=-=-=---TEAM'S TABLE---=-=-=-=-=-=-=-------------%>
+                        <div class="container-custom">
+                            <div id="tableTeam" class="table-editable">
 
-                                        <table class="table" id="updateTeamTable">
-                                            <tr>
-                                                <th width="3%">No</th>
-                                                <th width="3%">Id</th>
-                                                <th width="50%"> Team Name</th>
-                                            </tr>
-                                            <%
-                                                for (int j = 0; j < teamListSize; j++) {
-                                                    int teamId = teamList.get(j).getId();
-                                            %>
-                                            <tr>
+                                <table class="table" id="updateTeamTable">
+                                    <tr>
+                                        <th width="3%">No</th>
+                                        <th width="3%">Id</th>
+                                        <th width="50%"> Team Name</th>
+                                    </tr>
+                                    <%
+                                        for (int j = 0; j < teamListSize; j++) {
+                                            int teamId = teamList.get(j).getId();
+                                    %>
+                                    <tr>
 
-                                                <%--No--%>
-                                                <td contenteditable="false" data-name="numberId" data-updatable="false">
-                                                    <%=j%>
-                                                </td>
+                                        <%--No--%>
+                                        <td contenteditable="false" data-name="numberId" data-updatable="false">
+                                            <%=j%>
+                                        </td>
 
-                                                <%--Id--%>
-                                                <td contenteditable="false" data-name="teamNameId" data-updatable="false">
-                                                    <%=teamId%>
-                                                </td>
+                                        <%--Id--%>
+                                        <td contenteditable="false" data-name="teamNameId" data-updatable="false">
+                                            <%=teamId%>
+                                        </td>
 
-                                                <%--Team name--%>
-                                                <td contenteditable="false" data-name="teamName" data-updatable="true">
-                                                    <%=teamList.get(j).getTeamName()%>
-                                                </td>
-                                            </tr>
-                                            <%}%>
-                                        </table>
-                                    </form>
-                                </div>
+                                        <%--Team name--%>
+                                        <td contenteditable="false" data-name="teamName" data-updatable="true">
+                                            <%=teamList.get(j).getTeamName()%>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </table>
+                                </form>
                             </div>
+                        </div>
 
                         <%-------------=-=-=-=-=-=-=---MEMBERS'S TABLE---=-=-=-=-=-=-=-------------%>
                         <br>
-                            <h3>Members</h3>
-                            <hr>
-                            <br>
+                        <h3>Members</h3>
+                        <hr>
+                        <br>
 
                         <div class="container-custom">
-                                <div id="table" class="table-editable">
+                            <div id="table" class="table-editable">
 
-                                        <table class="table" id="updateMemberTable">
-                                            <tr>
-                                                <th width="1%">Check</th>
-                                                <th width="3%">No</th>
-                                                <th width="3%">Id</th>
-                                                <th width="50%">Name</th>
-                                                <th width="50%">Surname</th>
-                                            </tr>
-                                            <%
-                                                for (int i = 0; i < memberListSize; i++) {
-                                                    int memberId = memberList.get(i).getId();
-                                            %>
-                                            <tr>
-                                                <%--Radio--%>
-                                                <td>
-                                                    <input type="radio" id="<%=memberId%>" class="checkbox-custom"
-                                                           name="memberNameId" value="<%=memberId%>" required/>
-                                                </td>
+                                <table class="table" id="updateMemberTable">
+                                    <tr>
+                                        <th width="1%">Check</th>
+                                        <th width="3%">No</th>
+                                        <th width="3%">Id</th>
+                                        <th width="50%">Name</th>
+                                        <th width="50%">Surname</th>
+                                    </tr>
+                                    <%
+                                        for (int i = 0; i < memberListSize; i++) {
+                                            int memberId = memberList.get(i).getId();
+                                    %>
+                                    <tr>
+                                        <%--Radio--%>
+                                        <td>
+                                            <input type="radio" id="<%=memberId%>" class="checkbox-custom"
+                                                   name="memberNameId" value="<%=memberId%>" required/>
+                                        </td>
 
-                                                <td>
-                                                    <%=i%>
-                                                </td>
+                                        <td>
+                                            <%=i%>
+                                        </td>
 
-                                                <%--Id--%>
-                                                <td contenteditable="false" data-name="memberNameId"
-                                                    data-updatable="false">
-                                                    <%=memberId%>
-                                                </td>
+                                        <%--Id--%>
+                                        <td contenteditable="false" data-name="memberNameId"
+                                            data-updatable="false">
+                                            <%=memberId%>
+                                        </td>
 
-                                                <%--Name--%>
-                                                <td contenteditable="false" data-name="memberName"
-                                                    data-updatable="true">
-                                                    <%=memberList.get(i).getName()%>
-                                                </td>
+                                        <%--Name--%>
+                                        <td contenteditable="false" data-name="memberName"
+                                            data-updatable="true">
+                                            <%=memberList.get(i).getName()%>
+                                        </td>
 
-                                                <%--Surname--%>
-                                                <td contenteditable="false" data-name="memberSureName"
-                                                    data-updatable="true">
-                                                    <%=memberList.get(i).getSurName()%>
-                                                </td>
-                                            </tr>
-                                            <%}%>
-                                        </table>
-                                    </form>
-                                </div>
-                                <!-- Footer -->
-                                <footer>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <p>Copyright &copy; Artur Babayan 2016</p>
-                                        </div>
-                                    </div>
-                                </footer>
-
+                                        <%--Surname--%>
+                                        <td contenteditable="false" data-name="memberSureName"
+                                            data-updatable="true">
+                                            <%=memberList.get(i).getSurName()%>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </table>
+                                </form>
                             </div>
+                            <!-- Footer -->
+                            <footer>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>Copyright &copy; Artur Babayan 2016</p>
+                                    </div>
+                                </div>
+                            </footer>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-	</div>
+    </div>
+</div>
 <!-- jQuery -->
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js" />"></script>
 

@@ -117,8 +117,7 @@
                         <ul class="nav nav-pills nav-stacked">
                             <li>
                                 <form action="add-group-page" method="get">
-                                    <button type="submit"
-                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll">
+                                    <button type="submit" class="btn btn-primary button-custom visible-when-logged-in page-scroll">
                                         <B>Create Group</B>
                                     </button>
                                 </form>
