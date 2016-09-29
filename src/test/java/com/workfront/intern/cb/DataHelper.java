@@ -124,7 +124,7 @@ public class DataHelper {
         match.setParticipantTwoId(participantTwoId);
         match.setScoreParticipantOne(scoreParticipantOne);
         match.setScoreParticipantOne(scoreParticipantTwo);
-        match.setMatchScore(matchScore);
+        match.setMatchScore(randomIntGenerate());
 
         return match;
     }

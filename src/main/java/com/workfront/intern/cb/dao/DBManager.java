@@ -132,7 +132,6 @@ public class DBManager {
      * Loads/executed provided database scripts to initialize
      * the database and populate with static data.
      *
-     * @param connection
      */
     public static void loadAndExecuteScript(Connection connection, boolean showExecutionLog) throws Exception {
         final String testDatabaseFileName = "DB_Full_test.sql";
@@ -211,8 +210,6 @@ public class DBManager {
 
     /**
      *
-     * @param con
-     * @return
      */
     private static boolean validateTestDatabase(Connection con) {
         Integer result = null;

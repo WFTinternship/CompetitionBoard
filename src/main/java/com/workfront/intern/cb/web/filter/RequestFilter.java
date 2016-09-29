@@ -16,6 +16,10 @@ public class RequestFilter implements Filter {
     final Set<String> adminURIs = new HashSet<>(Arrays.asList(
             "/tournament-page",
             "/match-page",
+            "/group-page",
+            "/group-participant-page",
+            "/assign-participant-to-group-page",
+            "/contact-page",
             "/unknown-1-uri"
     ));
 
