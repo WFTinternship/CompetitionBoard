@@ -211,7 +211,7 @@ public class MatchServiceIntegrationTest extends BaseTest {
         int participantTwoId = 15;
         int scoreParticipantOne = 20;
         int scoreParticipantTwo = 30;
-        String matchScore = "8 : 0";
+        int matchScore = 3;
 
         // Testing method
         Match match = DataHelper.createRandomMatch();

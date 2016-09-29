@@ -144,7 +144,7 @@
 
                                 <%--Update Button--%>
                                 <div class="btn-location-1">
-                                    <button class="btn btn-warning" type="button" onclick="">
+                                    <button class="btn btn-warning" type="button" onclick="updateSelectedMatch()">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
@@ -159,7 +159,7 @@
 
                                     <br>
                                     <br>
-                                    <table class="table" id="updateGroupTable">
+                                    <table class="table" id="updateMatchTable">
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
@@ -188,50 +188,52 @@
                                             </td>
 
                                             <%--Match Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected"
-                                                data-updatable="false">
-                                                <%=matchList.get(i).getMatchId()%>
+                                            <td contenteditable="false" data-name="matchID" data-updatable="false">
+                                                <%=matchId%>
                                             </td>
 
                                             <%--Group Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected"
-                                                data-updatable="false">
-                                                <%=matchList.get(i).getGroupId()%>
+                                            <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
+                                                <%
+                                                    int groupId = matchList.get(i).getGroupId();
+                                                    Group group = groupService.getGroupById(groupId);
+                                                    String groupName = group.getGroupName();
+                                                %>
+                                                <%=groupName%>
                                             </td>
 
                                             <%--Participant 1 Id--%>
-                                            <td contenteditable="false" data-name="groupName" data-updatable="true">
+                                            <td contenteditable="false" data-name="participantOneId" data-updatable="false">
                                                 <%
-                                                    int participantId = matchList.get(i).getParticipantOneId();
-                                                    Team participantOne = (Team) participantService.getOne(Team.class, participantId);
+                                                    int participantOneId = matchList.get(i).getParticipantOneId();
+                                                    Team participantOne = (Team) participantService.getOne(Team.class, participantOneId);
                                                     String participantOneName = participantOne.getTeamName();
                                                 %>
                                                 <%=participantOneName%>
                                             </td>
 
                                             <%--Participant 2 Id--%>
-                                            <td contenteditable="false" data-name="groupName" data-updatable="true">
+                                            <td contenteditable="false" data-name="participantTwoId" data-updatable="false">
                                                 <%
-                                                    Team participantTwo = (Team) participantService.getOne(Team.class, participantId);
+                                                    int participantTwoId = matchList.get(i).getParticipantTwoId();
+                                                    Team participantTwo = (Team) participantService.getOne(Team.class, participantTwoId);
                                                     String participantTwoName = participantTwo.getTeamName();
                                                 %>
                                                 <%=participantTwoName%>
                                             </td>
 
                                             <%--Score Participant 1--%>
-                                            <td contenteditable="false" data-name="participantCount"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="participantOneScore" data-updatable="true">
                                                 <%=matchList.get(i).getScoreParticipantOne()%>
                                             </td>
 
                                             <%--Score Participant 2--%>
-                                            <td contenteditable="false" data-name="participantCount"
-                                                data-updatable="false">
+                                            <td contenteditable="false" data-name="participantTwoScore" data-updatable="true">
                                                 <%=matchList.get(i).getScoreParticipantTwo()%>
                                             </td>
 
                                             <%--Match score--%>
-                                            <td contenteditable="false" data-name="round" data-updatable="false">
+                                            <td contenteditable="false" data-name="matchScore" data-updatable="true">
                                                 <%=matchList.get(i).getMatchScore()%>
                                             </td>
                                         </tr>

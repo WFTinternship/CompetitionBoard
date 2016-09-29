@@ -202,7 +202,7 @@ public class MatchDaoIntegrationTest extends BaseTest {
         int participantTwoId = 15;
         int scoreParticipantOne = 20;
         int scoreParticipantTwo = 30;
-        String matchScore = "0 : 5";
+        int matchScore = 3;
 
         // Testing method
         Match match = createRandomMatch();

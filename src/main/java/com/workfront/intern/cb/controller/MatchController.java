@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,5 +105,22 @@ public class MatchController {
     @RequestMapping(value = {"/all-match-page"})
     public String allMatchPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         return Params.PAGE_ALL_MATCH;
+    }
+
+    @RequestMapping(value = "/updateMatch", method = RequestMethod.GET)
+    public String updateMatch(Model model,
+                                   @RequestParam("matchID") int matchID,
+                                   @RequestParam("participantOneScore") int participantOneScore,
+                                   @RequestParam("participantTwoScore") int participantTwoScore,
+                                   @RequestParam("matchScore") int matchScore) {
+
+        Match match = matchService.getMatchById(matchID);
+        match.setScoreParticipantOne(participantOneScore);
+        match.setScoreParticipantTwo(participantTwoScore);
+        match.setMatchScore(matchScore);
+
+        matchService.updateMatch(matchID, match);
+
+        return "redirect:match-page";
     }
 }

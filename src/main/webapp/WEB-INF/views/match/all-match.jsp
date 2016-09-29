@@ -72,11 +72,18 @@
                     </a>
                 </li>
 
-                <%--Match--%>
-                <li>
-                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
-                    </a>
-                </li>
+                    <%--Groups--%>
+                    <li>
+                        <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                        </a>
+                    </li>
+
+                    <%--Match--%>
+                    <li>
+                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                        </a>
+                    </li>
+
 
                 <%--Gallery--%>
                 <li>

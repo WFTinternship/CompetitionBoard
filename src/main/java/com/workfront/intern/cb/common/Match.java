@@ -7,7 +7,7 @@ public class Match {
     private int participantTwoId;
     private int scoreParticipantOne;
     private int scoreParticipantTwo;
-    private String matchScore;
+    private int matchScore;
 
     public Match() {
     }
@@ -60,11 +60,11 @@ public class Match {
         this.scoreParticipantTwo = scoreParticipantTwo;
     }
 
-    public String getMatchScore() {
+    public int getMatchScore() {
         return matchScore;
     }
 
-    public void setMatchScore(String matchScore) {
+    public void setMatchScore(int matchScore) {
         this.matchScore = matchScore;
     }
 
