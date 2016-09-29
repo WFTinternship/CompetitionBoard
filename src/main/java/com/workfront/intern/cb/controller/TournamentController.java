@@ -42,7 +42,7 @@ public class TournamentController {
         int managerId = manager.getId();
 
         List<Tournament> tournamentList = tournamentService.getTournamentListByManager(managerId);
-        request.setAttribute("tournamentListByManager", tournamentList);
+        session.setAttribute("tournamentListByManager", tournamentList);
 
         return Params.PAGE_TOURNAMENT;
     }
@@ -137,12 +137,23 @@ public class TournamentController {
 
     @RequestMapping(value = "/deleteTournament", method = RequestMethod.GET)
     public String deleteTournament(Model model,
-                                   @RequestParam("tournamentNameId") int tournamentId) {
+                                   @RequestParam("tournamentNameId") int tournamentId,
+                                   HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
         try {
             tournamentService.deleteTournamentById(tournamentId);
         } catch (Exception ex) {
             LOG.error(ex.getMessage(), ex);
-            return "redirect:tournament-page";
+            String notDeleteTournament  = "Sorry, you can not remove this tournament,\n\n" +
+                                           "the tournament includes participants!...";
+
+            model.addAttribute("notDeleteTournament", notDeleteTournament);
+
+//            request.setAttribute("notDeleteTournament", notDeleteTournament);
+
+
+            return Params.PAGE_TOURNAMENT;
         }
 
         return "redirect:tournament-page";

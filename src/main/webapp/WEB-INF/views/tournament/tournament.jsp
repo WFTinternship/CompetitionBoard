@@ -102,14 +102,18 @@
 </nav>
 
 <%
-    List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("tournamentListByManager");
-    int sizeList = tournamentList.size();
+    int sizeList = 0;
+    List<Tournament> tournamentList = (List<Tournament>) session.getAttribute("tournamentListByManager");
+    if (tournamentList != null){
+        sizeList = tournamentList.size();
+    }
 %>
 
 <div class="row">
     <!-- Blog Entries Column -->
     <div class="col-md-8">
         <div class="container">
+
             <div class="container-fluid">
                 <div class="row content">
                     <div class="col-sm-3 sidenav">
@@ -154,7 +158,10 @@
 
                                     <br>
                                     <br>
+                                    <div class="err-msg-delete">
+                                        <c:out value="${notDeleteTournament}"/>
 
+                                    </div>
                                     <table class="table" id="updateTournamentTable">
                                         <tr class="thCustom">
                                             <th>Check</th>
