@@ -729,14 +729,14 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
     /**
      * Gets team list by team name
      */
-    private List<Team> getTeamListByTeamName(String teamName) throws FailedOperationException {
+    private List<Team> getTeamListByTeamName(String inputStr) throws FailedOperationException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Team> teamList = new ArrayList<>();
 
         String sql = "SELECT * FROM participant p " +
-                "INNER JOIN team t ON p.participant_id=t.team_id WHERE t.team_name=?";
+                "INNER JOIN team t ON p.participant_id=t.team_id WHERE t.team_name LIKE ? ";
 
         try {
             // Acquire connection
@@ -744,7 +744,7 @@ public class ParticipantDaoImpl extends GenericDao implements ParticipantDao {
 
             // Initialize statement
             ps = conn.prepareStatement(sql);
-            ps.setString(1, teamName);
+            ps.setString(1, String.format("%s", inputStr) + "%");
 
             // update member data
             rs = ps.executeQuery();

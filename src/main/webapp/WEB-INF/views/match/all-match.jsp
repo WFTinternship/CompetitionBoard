@@ -162,23 +162,17 @@
                                     <br>
                                     <table class="table" id="updateGroupTable">
                                         <tr>
-                                            <th width="1%">Check</th>
                                             <th width="3%">No</th>
-                                            <th width="3%">Id</th>
-                                            <th>Name</th>
-                                            <th>Participant count</th>
-                                            <th>Round</th>
-                                            <th>Next round participants</th>
-                                            <th>Tournament Id</th>
-                                            <th>Tournament name</th>
+                                            <th width="10%">Match Id</th>
+                                            <th width="10%">Group name</th>
+                                            <th>Participant 1</th>
+                                            <th>Participant 2</th>
+                                            <th width="10%">Score Participant 1</th>
+                                            <th width="10%">Score Participant 2</th>
+                                            <th width="10%">Match Score</th>
                                         </tr>
 
                                         <tr>
-                                            <%--Radio--%>
-                                            <td>
-                                                <input type="radio" id="" class="checkbox-custom"
-                                                       name="groupId" value="" required/>
-                                            </td>
 
                                             <%--No--%>
                                             <td>

@@ -14,13 +14,19 @@ import java.util.Set;
 
 public class RequestFilter implements Filter {
     final Set<String> adminURIs = new HashSet<>(Arrays.asList(
-            "/tournament-page",
-            "/match-page",
+            "/addGroup-page",
             "/group-page",
+            "/add-group-page",
             "/group-participant-page",
+            "/group-tournament-page",
             "/assign-participant-to-group-page",
-            "/contact-page",
-            "/unknown-1-uri"
+            "/match-page",
+            "/match-selector-page",
+            "/participant-page",
+            "/add-members-page",
+            "/add-teams-page",
+            "/tournament-page",
+            "/addTournament-page"
     ));
 
     @Override

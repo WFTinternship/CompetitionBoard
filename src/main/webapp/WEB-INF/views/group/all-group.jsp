@@ -70,17 +70,17 @@
                     </a>
                 </li>
 
-                    <%--Groups--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
-                        </a>
-                    </li>
+                <%--Groups--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
+                </li>
 
-                    <%--Match--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
-                        </a>
-                    </li>
+                <%--Match--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                    </a>
+                </li>
 
 
                 <%--Gallery--%>
@@ -146,14 +146,11 @@
                             %>
                             <table class="table">
                                 <tr>
-                                    <th width="1%">Check</th>
                                     <th width="3%">No</th>
-                                    <th width="3%">Id</th>
-                                    <th>Name</th>
+                                    <th>Group name</th>
                                     <th>Participant count</th>
                                     <th>Round</th>
                                     <th>Next round participants</th>
-                                    <th>Tournament Id</th>
                                     <th>Tournament Name</th>
                                 </tr>
                                 <%
@@ -161,18 +158,9 @@
                                         int tournamentId = tournamentGroupsList.get(i).getTournamentId();
                                 %>
                                 <tr>
-                                    <%--Radio--%>
-                                    <td>
-                                        <input type="radio" id="" class="checkbox-custom" name="" value="" required/>
-                                    </td>
                                     <%--No--%>
                                     <td>
-                                        <%=i%>
-                                    </td>
-
-                                    <%--Id--%>
-                                    <td>
-                                        <%=tournamentGroupsList.get(i).getGroupId()%>
+                                        <%=i + 1%>
                                     </td>
 
                                     <%--Name--%>
@@ -193,11 +181,6 @@
                                     <%--Next Round Participants--%>
                                     <td>
                                         <%=tournamentGroupsList.get(i).getNextRoundParticipants()%>
-                                    </td>
-
-                                    <%--Tournament Id--%>
-                                    <td>
-                                        <%=tournamentId%>
                                     </td>
 
                                     <%--Tournament Name--%>

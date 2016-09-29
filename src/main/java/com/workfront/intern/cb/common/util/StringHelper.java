@@ -58,7 +58,6 @@ public class StringHelper {
                 }
             }
         }
-
         return false;
     }
 }

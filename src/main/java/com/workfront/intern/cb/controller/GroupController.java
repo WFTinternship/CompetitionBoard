@@ -161,15 +161,26 @@ public class GroupController {
     public String updateGroup(Model model,
                               @RequestParam("groupIDSelected") int groupID,
                               @RequestParam("groupName") String groupName,
-                              HttpServletRequest request) {
+                              @RequestParam("nextRoundParticipants") int nextRoundParticipants) {
 
         Group group = groupService.getGroupById(groupID);
-        group.setGroupName(groupName);
+        int participantsCount = participantService.getParticipantsCountByGroupId(groupID);
 
-        groupService.updateGroup(groupID, group);
+        //ToDO
+        if (nextRoundParticipants <= participantsCount) {
+            group.setGroupName(groupName);
+            group.setNextRoundParticipants(nextRoundParticipants);
+            groupService.updateGroup(groupID, group);
+        } else {
+            String errMsgNextRoundParticipants = "The number of participants for the next round" + "\n" +
+                    " can not be more than the total number of participants";
 
-        return "redirect:group-page";
-    }
+            model.addAttribute("errMsgNextRoundParticipants", errMsgNextRoundParticipants);
+            return Params.PAGE_GROUPS;
+        }
+
+    return "redirect:group-page";
+}
 
     // endregion
 

@@ -167,7 +167,7 @@
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
-                                            <th>Name</th>
+                                            <th>Group name</th>
                                             <th>Participant count</th>
                                             <th>Round</th>
                                             <th>Next round participants</th>

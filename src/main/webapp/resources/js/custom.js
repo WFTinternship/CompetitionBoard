@@ -147,7 +147,8 @@ $(document).ready(function () {
             type: 'GET',
             data: {
                 groupIDSelected: $('[name="groupNameId"]', tr).val(),
-                groupName: $('[data-name="groupName"]', tr).text().trim()
+                groupName: $('[data-name="groupName"]', tr).text().trim(),
+                nextRoundParticipants: $('[data-name="nextRoundParticipants"]', tr).text().trim()
             },
             success: function (tournament) {
                 $('#updateTableElement').text(tournament);

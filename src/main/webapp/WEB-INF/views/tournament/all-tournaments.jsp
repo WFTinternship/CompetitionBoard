@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.workfront.intern.cb.common.Manager" %>
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
-<%@ page import="com.workfront.intern.cb.web.util.Params" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +33,7 @@
 
 <%--Gets specific atributes from http session--%>
 <%@ include file="../layout/layout.jsp" %>
+<%@ include file="../layout/bean-provider-layout.jsp" %>
 
 <body class="backgroundTournament">
 
@@ -53,7 +52,6 @@
         </div>
         <input type="hidden" id="login-status" value="<%=userName%>"/>
 
-
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -70,27 +68,26 @@
                     </a>
                 </li>
 
-                    <%--Groups--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
-                        </a>
-                    </li>
+                <%--Groups--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
+                </li>
 
-                    <%--Match--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
-                        </a>
-                    </li>
-
+                <%--Match--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                    </a>
+                </li>
 
                 <%--Gallery--%>
                 <li>
-                    <a class="page-scroll" href="#portfolio">Gallery</a>
+                    <a class="page-scroll" href="#">Gallery</a>
                 </li>
 
                 <%--Contact Us--%>
                 <li>
-                    <a class="page-scroll" href="#contact">Contact Us</a>
+                    <a class="page-scroll" href="contact-page">Contact Us</a>
                 </li>
 
                 <%--Sign Up--%>
@@ -111,7 +108,6 @@
         </div>
     </div>
 </nav>
-
 
 <div class="row">
     <!-- Blog Entries Column -->
@@ -142,10 +138,10 @@
                                     <tr class="thCustom">
                                         <th>No</th>
                                         <th>Name</th>
-                                        <th>StartDate</th>
+                                        <th width="5%">StartDate</th>
                                         <th>EndDate</th>
                                         <th>Location</th>
-                                        <th>Description</th>
+                                        <th width="35%">Description</th>
                                         <th>Format</th>
                                         <th>Owner</th>
                                     </tr>
@@ -154,33 +150,32 @@
                                     %>
                                     <tr>
                                         <%--No--%>
-                                        <td contenteditable="false">
+                                        <td>
                                             <%=i + 1 %>
                                         </td>
 
                                         <%--TournamentName--%>
-                                        <td contenteditable="false" data-name="tournamentName" data-updatable="false">
+                                        <td>
                                             <%=tournamentList.get(i).getTournamentName()%>
                                         </td>
 
                                         <%--StartDate--%>
-                                        <td contenteditable="false" data-name="startDate" data-updatable="false">
+                                        <td>
                                             <%=tournamentList.get(i).getStartDate()%>
                                         </td>
 
                                         <%--EndDate--%>
-                                        <td contenteditable="false" data-name="endDate" data-updatable="false">
+                                        <td>
                                             <%=tournamentList.get(i).getEndDate()%>
                                         </td>
 
                                         <%--Location--%>
-                                        <td contenteditable="false" data-name="location" data-updatable="false">
+                                        <td>
                                             <%=tournamentList.get(i).getLocation()%>
                                         </td>
 
                                         <%--TournamentDescription--%>
-                                        <td contenteditable="false" data-name="tournamentDescription"
-                                            data-updatable="false">
+                                        <td>
                                             <%=tournamentList.get(i).getTournamentDescription()%>
                                         </td>
 
@@ -189,15 +184,18 @@
                                             int tournamentFormatId = tournamentList.get(i).getTournamentFormatId();
                                             String formatStr = TournamentFormat.fromId(tournamentFormatId).getFormatName();
                                         %>
-                                        <td contenteditable="false" data-name="tournamentFormatId"
-                                            data-updatable="false">
+                                        <td>
                                             <%=formatStr%>
                                         </td>
 
                                         <%--Tournament creator--%>
-
                                         <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
-                                            <%=tournamentList.get(i).getManagerId()%>
+                                            <%
+                                                int managerId = tournamentList.get(i).getManagerId();
+                                               Manager managerT = BeanProvider.getManagerService().getManagerById(managerId);
+                                                String managerName = managerT.getLogin();
+                                            %>
+                                            <%=managerName%>
                                         </td>
                                     </tr>
                                     <%}%>

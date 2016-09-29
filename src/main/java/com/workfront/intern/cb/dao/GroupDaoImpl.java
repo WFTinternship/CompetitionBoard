@@ -92,7 +92,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
         return group;
     }
 
-
     /**
      * Gets group by group name
      */

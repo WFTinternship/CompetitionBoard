@@ -64,7 +64,7 @@
             <label  class="col-sm-3 control-label">Description</label>
             <div class="col-sm-9">
                 <label for="field2"></label>
-                <textarea rows="5" cols="20" name="tournament_description" id="field2" class="form-control" ></textarea>
+                <textarea class="form-control textarea-custom" rows="5" cols="20" name="tournament_description" id="field2"></textarea>
             </div>
         </div>
 

@@ -32,6 +32,7 @@
 </head>
 
 <%@ include file="layout/layout.jsp" %>
+<%@ include file="layout/bean-provider-layout.jsp" %>
 
 <body class="backgroundTournament">
 <!-- Navigation -->
@@ -60,11 +61,11 @@
                     </a>
                 </li>
 
-					<%--Groups--%>
-					<li>
-						<a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
-						</a>
-					</li>
+                <%--Groups--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
+                </li>
 
                 <%--Match--%>
                 <li>
@@ -74,12 +75,12 @@
 
                 <%--Gallery--%>
                 <li>
-                    <a class="page-scroll" href="#portfolio">Gallery</a>
+                    <a class="page-scroll" href="#">Gallery</a>
                 </li>
 
                 <%--Contact Us--%>
                 <li>
-                    <a class="page-scroll" href="#contact">Contact Us</a>
+                    <a class="page-scroll" href="contact-page">Contact Us</a>
                 </li>
 
                 <%--Sign Up--%>
@@ -96,7 +97,6 @@
                 <li>
                     <a href="logout-page" class="visible-when-logged-in hidden-element">Log Out</a>
                 </li>
-            </ul>
             </ul>
         </div>
     </div>
@@ -121,7 +121,6 @@
                         <hr>
                         <br>
 
-
                         <%-------------------------------------------TOURNAMENT RESULT-------------------------------------------%>
                         <div class="container">
                             <div id="table" class="table-editable">
@@ -130,39 +129,30 @@
                                 <hr>
                                 <%
                                     List<Tournament> tournamentList = (List<Tournament>) request.getAttribute("searchResultTournament");
-                                    int tournamenListSize = tournamentList.size();
+                                    int tournamentListSize = tournamentList.size();
                                 %>
                                 <table class="table" id="updateTournamentTable">
                                     <tr class="thCustom">
                                         <th>No</th>
-                                        <th>Id</th>
                                         <th>Name</th>
-                                        <th>StartDate</th>
+                                        <th width="5%">StartDate</th>
                                         <th>EndDate</th>
                                         <th>Location</th>
-                                        <th>Description</th>
+                                        <th width="35%">Description</th>
                                         <th>Format</th>
                                         <th>Owner</th>
                                     </tr>
-                                    <% for (int i = 0; i < tournamenListSize; i++) {
-                                        int tournamentId = tournamentList.get(i).getTournamentId();
+                                    <% for (int i = 0; i < tournamentListSize; i++) {
                                     %>
                                     <tr>
                                         <%--No--%>
                                         <td contenteditable="false">
-                                            <%=i%>
-                                        </td>
-
-                                        <%--Id--%>
-                                        <td contenteditable="false" data-name="tournamentNameId" data-updatable="false">
-                                            <%=tournamentId%>
+                                            <%=i + 1%>
                                         </td>
 
                                         <%--TournamentName--%>
-                                        <td contenteditable="false" data-name="nameUpdate" data-updatable="true">
-                                            <a href="participant-page" class="a-custom" name="hrefTournamentName">
-                                                <%=tournamentList.get(i).getTournamentName()%>
-                                            </a>
+                                        <td>
+                                            <%=tournamentList.get(i).getTournamentName()%>
                                         </td>
 
                                         <%--StartDate--%>
@@ -234,12 +224,7 @@
                                     <tr>
                                         <%--No--%>
                                         <td>
-                                            <%=i%>
-                                        </td>
-
-                                        <%--Id--%>
-                                        <td contenteditable="false" data-name="groupIDSelected" data-updatable="false">
-                                            <%=groupList.get(i).getGroupId()%>
+                                            <%=i + 1%>
                                         </td>
 
                                         <%--Name--%>
@@ -293,47 +278,53 @@
 
                                 <h3>Teams</h3>
                                 <hr>
-
+                                <%
+                                    List<Team> teamList = (List<Team>) request.getAttribute("searchResultTeam");
+                                    int teamListSize = teamList.size();
+                                %>
                                 <table class="table" id="1">
                                     <tr>
                                         <th width="3%">No</th>
-                                        <th width="3%">Id</th>
                                         <th>Team Name</th>
                                         <th>Team Info</th>
                                         <th>Tournament Name</th>
                                     </tr>
-
+                                    <%
+                                        for (int i = 0; i < teamListSize; i++) {
+                                            int tournamentId = teamList.get(i).getTournamentId();
+                                    %>
                                     <tr>
                                         <%--No--%>
                                         <td>
-                                        </td>
-
-                                        <%--Id--%>
-                                        <td>
+                                            <%=i + 1%>
                                         </td>
 
                                         <%--Team name--%>
                                         <td>
-
+                                            <%=teamList.get(i).getTeamName()%>
                                         </td>
 
                                         <%--Team info--%>
                                         <td>
+                                            <%=teamList.get(i).getParticipantInfo()%>
                                         </td>
 
                                         <%--TournamentName--%>
                                         <td>
+                                            <%
+                                                Tournament tournament = tournamentService.getTournamentById(tournamentId);
+                                                String tournamentName = tournament.getTournamentName();
+                                            %>
+                                            <%=tournamentName%>
                                         </td>
                                     </tr>
+                                    <%}%>
                                 </table>
-                                </form>
 
                                 <%-------------------------------------------MEMBERS RESULT-------------------------------------------%>
                                 <br>
-
                                 <h3>Members</h3>
                                 <hr>
-
                                 <%
                                     List<Member> memberList = (List<Member>) request.getAttribute("searchResultMember");
                                     int memberListSize = memberList.size();
@@ -341,7 +332,6 @@
                                 <table class="table">
                                     <tr>
                                         <th width="3%">No</th>
-                                        <th width="3%">Id</th>
                                         <th>Name</th>
                                         <th>Surname</th>
                                         <th>Position</th>
@@ -351,17 +341,12 @@
                                     </tr>
                                     <%
                                         for (int i = 0; i < memberListSize; i++) {
-                                            int memberId = memberList.get(i).getId();
+                                            int tournamentId = memberList.get(i).getTournamentId();
                                     %>
 
                                     <tr>
                                         <td>
-                                            <%=i%>
-                                        </td>
-
-                                        <%--Id--%>
-                                        <td>
-                                            <%=memberId%>
+                                            <%=i + 1%>
                                         </td>
 
                                         <%--Name--%>
@@ -391,11 +376,11 @@
 
                                         <%--TournamentName--%>
                                         <%
-                                            Tournament tournament = BeanProvider.getTournamentService().
-                                                    getTournamentById(memberList.get(i).getTournamentId());
+                                            Tournament tournamentM = tournamentService.getTournamentById(tournamentId);
+                                            String tournamentName = tournamentM.getTournamentName();
                                         %>
                                         <td>
-                                            <%=tournament.getTournamentName()%>
+                                            <%=tournamentName%>
 
                                         </td>
                                     </tr>
@@ -425,13 +410,11 @@
 
 <!-- jQuery -->
 <script src="<c:url value="/resources/js/jquery-3.1.0.js" />"></script>
-<%--<script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>--%>
 
 <%--Custom JS--%>
 <script src="<c:url value="/resources/js/custom.js" />"></script>
 
 <script src='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
-<%--<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>--%>
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js'></script>
 </body>

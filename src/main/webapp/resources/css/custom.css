@@ -28,7 +28,6 @@ h1 {
     letter-spacing: 1px;
 }
 
-
 .hidden-element {
     display: none !important;
 }
@@ -127,12 +126,12 @@ h1 {
     /*color: #E89980;*/
 }
 
-.button-custom{
+.button-custom {
     background-color: #006dcc;
     border-color: #0044cc;
 }
 
-.button-custom:hover{
+.button-custom:hover {
     background-color: #0044cc;
 }
 
@@ -149,7 +148,7 @@ h1 {
     height: auto;
 }
 
-.btn-location-2{
+.btn-location-2 {
     width: auto;
     height: auto;
     margin-left: 55px;
@@ -177,4 +176,10 @@ h1 {
     position: relative;
     left: 0px;
     top: 51px;
+}
+
+.textarea-custom {
+    resize: vertical;
+    max-height: 200px;
+
 }

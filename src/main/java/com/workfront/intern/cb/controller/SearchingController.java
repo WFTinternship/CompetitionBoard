@@ -2,6 +2,7 @@ package com.workfront.intern.cb.controller;
 
 import com.workfront.intern.cb.common.Group;
 import com.workfront.intern.cb.common.Member;
+import com.workfront.intern.cb.common.Team;
 import com.workfront.intern.cb.common.Tournament;
 import com.workfront.intern.cb.service.GroupService;
 import com.workfront.intern.cb.service.ParticipantService;
@@ -58,6 +59,11 @@ public class SearchingController {
         int memberListSize = memberList.size();
         allListSize.add(memberListSize);
 
+        // Result by member list
+        List<Team> teamListList = (List<Team>) participantService.getParticipantListByName(Team.class, searchStr);
+        int teamListListSize = teamListList.size();
+        allListSize.add(teamListListSize);
+
         int sumSize = 0;
         for (Integer anAllListSize : allListSize) {
             sumSize += anAllListSize;
@@ -67,6 +73,7 @@ public class SearchingController {
             request.setAttribute("searchResultTournament", tournamentList);
             request.setAttribute("searchResultGroup", groupList);
             request.setAttribute("searchResultMember", memberList);
+            request.setAttribute("searchResultTeam", teamListList);
         } else {
             model.addAttribute("noSearchResultMsg", "No matches with provided search criteria");
 

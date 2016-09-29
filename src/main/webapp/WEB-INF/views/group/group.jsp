@@ -117,7 +117,8 @@
                         <ul class="nav nav-pills nav-stacked">
                             <li>
                                 <form action="add-group-page" method="get">
-                                    <button type="submit" class="btn btn-primary button-custom visible-when-logged-in page-scroll">
+                                    <button type="submit"
+                                            class="btn btn-primary button-custom visible-when-logged-in page-scroll">
                                         <B>Create Group</B>
                                     </button>
                                 </form>
@@ -157,11 +158,16 @@
                                         List<Group> groups = (List<Group>) request.getAttribute("groupsByManager");
                                         int size = groups.size();
                                     %>
+
+                                    <div class="err-msg">
+                                        <c:out value="${errMsgNextRoundParticipants}"/>
+                                    </div>
+
                                     <table class="table" id="updateGroupTable">
                                         <tr>
                                             <th width="1%">Check</th>
                                             <th width="3%">No</th>
-                                            <th>Name</th>
+                                            <th>Group name</th>
                                             <th>Participant count</th>
                                             <th>Round</th>
                                             <th>Next round participants</th>
@@ -194,7 +200,8 @@
                                             </td>
 
                                             <%--Participant count--%>
-                                            <td contenteditable="false" data-name="participantCount" data-updatable="false">
+                                            <td contenteditable="false" data-name="participantCount"
+                                                data-updatable="false">
                                                 <%=BeanProvider.getParticipantService().getParticipantsCountByGroupId(groupIDSelected)%>
                                             </td>
 
@@ -204,7 +211,8 @@
                                             </td>
 
                                             <%--Next Round Participants--%>
-                                            <td contenteditable="false" data-name="nextRoundParticipants" data-updatable="false">
+                                            <td contenteditable="false" data-name="nextRoundParticipants"
+                                                data-updatable="true">
                                                 <%=groups.get(i).getNextRoundParticipants()%>
                                             </td>
 

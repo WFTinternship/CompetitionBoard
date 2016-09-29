@@ -95,7 +95,7 @@ public class Helpers {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(props.getProperty("mail.smtp.from")));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(props.getProperty("mail.smtp.to")));
-            message.setSubject("From form");
+            message.setSubject("From...");
             message.setText(inputMsg);
 
             // Send email

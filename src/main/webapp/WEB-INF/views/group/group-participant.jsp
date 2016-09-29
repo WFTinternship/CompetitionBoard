@@ -200,7 +200,7 @@
                                         <th width="1%">Check</th>
                                         <th width="3%">No</th>
                                         <th width="3%">Id</th>
-                                        <th width="50%">Name</th>
+                                        <th width="50%">Group name</th>
                                         <th width="50%">Surname</th>
                                     </tr>
                                     <%

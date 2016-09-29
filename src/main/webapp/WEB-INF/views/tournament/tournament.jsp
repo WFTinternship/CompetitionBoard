@@ -166,12 +166,11 @@
                                         <tr class="thCustom">
                                             <th>Check</th>
                                             <th>No</th>
-
                                             <th>Name</th>
-                                            <th>StartDate</th>
-                                            <th>EndDate</th>
+                                            <th width="5%">StartDate</th>
+                                            <th width="5%">EndDate</th>
                                             <th>Location</th>
-                                            <th>Description</th>
+                                            <th width="35%">Description</th>
                                             <th>Format</th>
                                             <th>Owner</th>
                                         </tr>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,9 +100,8 @@
                                     <div class="form-group">
                                         <label class="label-custom" for="form_phone">Phone *</label>
                                         <input id="form_phone" type="tel" name="phone" class="form-control"
-                                               placeholder="Please enter your phone *" required="required"
+                                               placeholder="Please enter your phone (71234567890)*" required="required"
                                                pattern="[0-9]{1}[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}">
-
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -152,7 +152,6 @@
 
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
 </nav>
 </body>
 </html>
