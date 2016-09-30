@@ -1,9 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.workfront.intern.cb.common.Group" %>
-<%@ page import="com.workfront.intern.cb.service.TournamentService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.workfront.intern.cb.web.beans.BeanProvider" %>
+<%@ page import="com.workfront.intern.cb.common.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,6 +36,7 @@
 <%--Gets specific atributes from http session--%>
 
 <%@ include file="../layout/layout.jsp" %>
+<%@ include file="../layout/bean-provider-layout.jsp" %>
 
 <body class="backgroundTournament">
 
@@ -72,22 +71,22 @@
                     </a>
                 </li>
 
-                    <%--Groups--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
-                        </a>
-                    </li>
+                <%--Groups--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificGroupPage%>"><%=allGroups%>
+                    </a>
+                </li>
 
-                    <%--Match--%>
-                    <li>
-                        <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
-                        </a>
-                    </li>
+                <%--Match--%>
+                <li>
+                    <a class=" page-scroll" href="<%=hrefToSpecificMatchPage%>"><%=allMatches%>
+                    </a>
+                </li>
 
 
                 <%--Gallery--%>
                 <li>
-                    <a class="page-scroll" href="#portfolio">Gallery</a>
+                    <a class="page-scroll" href="#">Gallery</a>
                 </li>
 
                 <%--Contact Us--%>
@@ -143,6 +142,11 @@
                         <div class="container">
                             <div id="table" class="table-editable">
 
+                                <%
+                                    List<Match> matchList = matchService.getAllMatchList();
+                                    int size = matchList.size();
+                                %>
+
                                 <%--Update Button--%>
                                 <div class="btn-location-1">
                                     <button class="btn btn-warning" type="button" onclick="">
@@ -163,7 +167,7 @@
                                     <table class="table" id="updateGroupTable">
                                         <tr>
                                             <th width="3%">No</th>
-                                            <th width="10%">Match Id</th>
+                                            <%--<th width="10%">Match Id</th>--%>
                                             <th width="10%">Group name</th>
                                             <th>Participant 1</th>
                                             <th>Participant 2</th>
@@ -171,48 +175,71 @@
                                             <th width="10%">Score Participant 2</th>
                                             <th width="10%">Match Score</th>
                                         </tr>
+                                        <%
+                                            for (int i = 0; i < size; i++) {
+                                                int matchId = matchList.get(i).getMatchId();
+                                        %>
 
                                         <tr>
-
                                             <%--No--%>
                                             <td>
+                                                <%=i + 1%>
                                             </td>
 
                                             <%--Id--%>
-                                            <td contenteditable="false" data-name="groupIDSelected"
-                                                data-updatable="false">
-                                            </td>
+                                            <%--<td>--%>
+                                            <%--<%=matchId%>--%>
+                                            <%--</td>--%>
 
-                                            <%--Name--%>
+                                            <%--Group Name--%>
                                             <td contenteditable="false" data-name="groupName" data-updatable="true">
                                                 <a href="participant-page?groupName="
                                                    class="a-custom" name="hrefTournamentName">
                                                 </a>
+                                                <%
+                                                    int groupId = matchList.get(i).getGroupId();
+                                                    Group group = groupService.getGroupById(groupId);
+                                                    String groupName = group.getGroupName();
+                                                %>
+                                                <%=groupName%>
                                             </td>
 
-                                            <%--Participant count--%>
-                                            <td contenteditable="false" data-name="participantCount"
-                                                data-updatable="false">
+                                            <%--Participant 1--%>
+                                            <td>
+                                                <%
+                                                    int participantOneId = matchList.get(i).getParticipantOneId();
+                                                    Team participantOne = (Team) participantService.getOne(Team.class, participantOneId);
+                                                    String participantOneName = participantOne.getTeamName();
+                                                %>
+                                                <%=participantOneName%>
                                             </td>
 
-                                            <%--Round--%>
-                                            <td contenteditable="false" data-name="round" data-updatable="false">
+                                            <%--Participant 2--%>
+                                            <td>
+                                                <%
+                                                    int participantTwoId = matchList.get(i).getParticipantTwoId();
+                                                    Team participantTwo = (Team) participantService.getOne(Team.class, participantTwoId);
+                                                    String participantTwoName = participantTwo.getTeamName();
+                                                %>
+                                                <%=participantTwoName%>
                                             </td>
 
-                                            <%--Next Round Participants--%>
-                                            <td contenteditable="false" data-name="nextRoundParticipants"
-                                                data-updatable="false">
+                                            <%--Score Participant 1--%>
+                                            <td>
+                                                <%= matchList.get(i).getScoreParticipantOne()%>
                                             </td>
 
-                                            <%--Tournament Id--%>
-                                            <td contenteditable="false" data-name="tournamentId" data-updatable="false">
+                                            <%--Score Participant 2--%>
+                                            <td>
+                                                <%= matchList.get(i).getScoreParticipantTwo()%>
                                             </td>
 
-                                            <%--Tournament name--%>
-                                            <td contenteditable="false" data-name="tournamentName"
-                                                data-updatable="false">
+                                            <%--Match score--%>
+                                            <td contenteditable="false" data-name="matchScore" data-updatable="true">
+                                                <%=matchList.get(i).getMatchScore()%>
                                             </td>
                                         </tr>
+                                        <%}%>
                                     </table>
                                 </form>
 

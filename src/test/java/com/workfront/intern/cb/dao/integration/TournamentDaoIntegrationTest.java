@@ -53,6 +53,8 @@ public class TournamentDaoIntegrationTest extends BaseTest {
         // Save to DB
         tournamentDao.addTournament(testTournament);
         assertTrue(testTournament.getTournamentId() > 0);
+
+        printTestCaseInfo(this.getClass(), testCase.getMethodName());
     }
 
     @After

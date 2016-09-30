@@ -65,6 +65,8 @@ public class MediaDaoIntegrationTest extends BaseTest {
         // Save to DB
         mediaDao.addPhoto(testMedia);
         assertTrue(testTournament.getTournamentId() > 0);
+
+        printTestCaseInfo(this.getClass(), testCase.getMethodName());
     }
 
     @After

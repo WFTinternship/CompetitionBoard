@@ -76,6 +76,8 @@ public class MatchDaoIntegrationTest extends BaseTest {
         // Save to DB
         matchDao.addMatch(testMatch);
         assertTrue(testMatch.getMatchId() > 0);
+
+        printTestCaseInfo(this.getClass(), testCase.getMethodName());
     }
 
     @After

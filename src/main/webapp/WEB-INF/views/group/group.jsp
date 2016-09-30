@@ -171,7 +171,7 @@
                                             <th>Participant count</th>
                                             <th>Round</th>
                                             <th>Next round participants</th>
-                                            <th>Tournament Id</th>
+                                            <%--<th>Tournament Id</th>--%>
                                             <th>Tournament name</th>
                                         </tr>
                                         <%
@@ -221,9 +221,9 @@
                                                 int tournamentIdSelected = groups.get(i).getTournamentId();
                                                 session.setAttribute("tournamentIdSelected", tournamentIdSelected);
                                             %>
-                                            <td contenteditable="false" data-name="tournamentId" data-updatable="false">
-                                                <%=tournamentIdSelected%>
-                                            </td>
+                                            <%--<td contenteditable="false" data-name="tournamentId" data-updatable="false">--%>
+                                                <%--<%=tournamentIdSelected%>--%>
+                                            <%--</td>--%>
 
                                             <%--Tournament name--%>
                                             <%

@@ -2,6 +2,7 @@
 <%@ page import="com.workfront.intern.cb.common.Tournament" %>
 <%@ page import="com.workfront.intern.cb.common.TournamentFormat" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.workfront.intern.cb.common.Group" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -156,6 +157,10 @@
 
                                         <%--TournamentName--%>
                                         <td>
+                                            <%
+                                                List <Group> groupByTournamentList
+                                                        = groupService.getTournamentGroups(tournamentList.get(i).getTournamentId());
+                                            %>
                                             <%=tournamentList.get(i).getTournamentName()%>
                                         </td>
 

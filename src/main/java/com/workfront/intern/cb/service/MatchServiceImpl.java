@@ -83,6 +83,18 @@ public class MatchServiceImpl implements MatchService {
     }
 
     /**
+     * Returns all matches
+     */
+    @Override
+    public List<Match> getAllMatchList() {
+        try {
+            return matchDao.getAllMatchList();
+        } catch (FailedOperationException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    /**
      * Updates match in db
      */
     @Override

@@ -98,6 +98,35 @@ public class MatchDaoImpl extends GenericDao implements MatchDao {
     }
 
     /**
+     * Returns all match list
+     */
+    @Override
+    public List<Match> getAllMatchList() throws FailedOperationException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Match> matchList = new ArrayList<>();
+
+        String sql = "SELECT * from competition_board.`match` m " +
+                "INNER JOIN `group` g on m.group_id=g.group_id " +
+                "INNER JOIN tournament t on g.tournament_id=t.tournament_id ";
+        try {
+            // Acquire connection
+            conn = dataSource.getConnection();
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            matchList = mapList(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+            throw new FailedOperationException(e.getMessage(), e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return matchList;
+    }
+
+    /**
      * Adds match in to db
      */
     @Override

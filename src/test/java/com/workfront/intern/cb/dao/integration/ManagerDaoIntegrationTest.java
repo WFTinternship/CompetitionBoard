@@ -39,6 +39,8 @@ public class ManagerDaoIntegrationTest extends BaseTest {
 
         // Validate ID
         assertTrue(testManager.getId() > 0);
+
+        printTestCaseInfo(this.getClass(), testCase.getMethodName());
     }
 
     @After()

@@ -72,6 +72,8 @@ public class GroupDaoIntegrationTest extends BaseTest {
 
         groupDao.assignParticipant(testTournament.getTournamentId(), testGroup.getGroupId(), testMember);
         assertTrue(testMember.getId() > 0);
+
+        printTestCaseInfo(this.getClass(), testCase.getMethodName());
     }
 
     @After

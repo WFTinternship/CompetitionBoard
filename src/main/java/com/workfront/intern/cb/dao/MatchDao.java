@@ -16,6 +16,7 @@ public interface MatchDao {
     Match getMatchByGroupId(int id) throws FailedOperationException, ObjectNotFoundException;
     List<Match> getMatchListByGroup(int id) throws FailedOperationException;
     List<Match> getMatchListByManager(int managerId) throws FailedOperationException;
+    List<Match> getAllMatchList() throws FailedOperationException;
 
     // UPDATE
     void updateMatch(int id, Match match) throws ObjectNotFoundException, FailedOperationException;

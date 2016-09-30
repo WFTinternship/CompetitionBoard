@@ -257,9 +257,6 @@ public class GroupDaoImpl extends GenericDao implements GroupDao {
 
 		PreparedStatement ps = null;
 		try {
-			// Acquire connection
-			transaction = dataSource.getConnection();
-
 			if (tournamentId == (participant.getTournamentId())) {
 				int participantId = participant.getId();
 

@@ -42,6 +42,8 @@ public class ParticipantDaoIntegrationTest extends BaseTest {
 
         groupDao.assignParticipant(testTournament2.getTournamentId(), testGroup2.getGroupId(), testTeam1);
         groupDao.assignParticipant(testTournament2.getTournamentId(), testGroup2.getGroupId(), testTeam2);
+
+        printTestCaseInfo(this.getClass(), testCase.getMethodName());
     }
 
     @After

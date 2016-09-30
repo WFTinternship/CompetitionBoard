@@ -14,7 +14,7 @@ public interface MatchService {
     Match getMatchByGroupId(int id);
     List<Match> getMatchListByGroup(int id);
     List<Match> getMatchListByManager(int managerId);
-
+    List<Match> getAllMatchList();
 
     // UPDATE
     void updateMatch(int id, Match match);

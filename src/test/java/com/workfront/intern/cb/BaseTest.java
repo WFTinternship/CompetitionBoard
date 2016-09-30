@@ -1,13 +1,20 @@
 package com.workfront.intern.cb;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.workfront.intern.cb.common.*;
 import com.workfront.intern.cb.dao.*;
 import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.sql.DataSource;
+
+import java.sql.SQLException;
 
 import static com.workfront.intern.cb.DataHelper.*;
 import static org.junit.Assert.assertEquals;
@@ -51,6 +58,28 @@ public class BaseTest {
     protected Group testGroup2;
     protected Team testTeam1;
     protected Team testTeam2;
+
+    @Autowired
+    DataSource dataSource;
+    @Rule
+    public TestName testCase = new TestName();
+
+    protected void printTestCaseInfo(Class clazz, String method) {
+        String name = clazz.getSimpleName();
+        System.out.println(String.format("Class: %s; Method: %s", name, method));
+
+        printDBConnectionsInfo();
+    }
+
+    protected void printDBConnectionsInfo() {
+        try {
+            int busy = ((ComboPooledDataSource) dataSource).getNumBusyConnections();
+            int idle = ((ComboPooledDataSource) dataSource).getNumIdleConnections();
+            System.out.println(String.format("Busy connections: " + busy + "; Idle connections: " + idle));
+        } catch (SQLException sql0) {
+            System.out.println(String.format("Unable to print Pool size because of error: %s", sql0.getMessage()));
+        }
+    }
 
     // region <MANAGER>
 
