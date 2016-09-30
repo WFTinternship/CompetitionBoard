@@ -171,7 +171,7 @@
                                             <th>Participant count</th>
                                             <th>Round</th>
                                             <th>Next round participants</th>
-                                            <th>Tournament Id</th>
+                                            <%--<th>Tournament Id</th>--%>
                                             <th>Tournament name</th>
                                         </tr>
                                         <%
@@ -214,14 +214,14 @@
                                                 <%=groupList.get(i).getNextRoundParticipants()%>
                                             </td>
 
-                                            <%--Tournament Id--%>
-                                            <%
-                                                int tournamentIdSelected = groupList.get(i).getTournamentId();
-                                                // session.setAttribute("tournamentIdSelected", tournamentIdSelected);
-                                            %>
-                                            <td contenteditable="false" data-name="tournamentId" data-updatable="false">
-                                                <%=tournamentIdSelected%>
-                                            </td>
+                                            <%--&lt;%&ndash;Tournament Id&ndash;%&gt;--%>
+                                            <%--<%--%>
+                                                <%--int tournamentIdSelected = groupList.get(i).getTournamentId();--%>
+                                                <%--// session.setAttribute("tournamentIdSelected", tournamentIdSelected);--%>
+                                            <%--%>--%>
+                                            <%--<td contenteditable="false" data-name="tournamentId" data-updatable="false">--%>
+                                                <%--<%=tournamentIdSelected%>--%>
+                                            <%--</td>--%>
 
                                             <%--Tournament name--%>
                                             <td contenteditable="false" data-name="tournamentName" data-updatable="false">
